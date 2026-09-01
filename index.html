@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>strop — see the cut before you make it</title>
+<meta name="description" content="strop is a modal text editor in Rust: Neovim's hands, Helix's spine, rootle's eyes, GitLens' memory.">
+<link rel="stylesheet" href="assets/site.css?v=1">
+</head>
+<body>
+<main class="hero">
+  <h1 class="brand">strop<span class="caret" aria-hidden="true"></span></h1>
+  <p class="tagline">see the cut before you make it.</p>
+  <p class="lineage">Neovim's hands · Helix's spine · rootle's eyes · GitLens' memory</p>
+
+  <p class="status"><span class="chip">in the forge</span></p>
+
+  <!-- demo slot: revealed when the first GIF lands in img/ (plan 0004 §2)
+  <img class="demo" src="img/demo.gif" alt="strop demo — operator-pending preview">
+  -->
+
+  <!-- install slot: revealed at first release (plan 0004 §5)
+  <pre class="install"><code>curl -fsSL https://strop.dev/install.sh | sh</code></pre>
+  -->
+
+  <nav class="links">
+    <a href="https://github.com/stropdev/strop">github</a>
+  </nav>
+</main>
+<footer class="foot">
+  <span class="version" id="version-chip" hidden></span>
+</footer>
+<script>
+// Version chip: latest release, client-side until the build step exists
+// (plan 0004 §2). Hidden when there is nothing to say.
+fetch("https://api.github.com/repos/stropdev/strop/releases/latest")
+  .then(r => r.ok ? r.json() : null)
+  .then(rel => {
+    if (!rel || !rel.tag_name) return;
+    const chip = document.getElementById("version-chip");
+    chip.textContent = rel.tag_name;
+    chip.hidden = false;
+  })
+  .catch(() => {});
+</script>
+</body>
+</html>

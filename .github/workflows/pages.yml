@@ -1,0 +1,42 @@
+name: pages
+
+# strop.dev — pure static at placeholder stage (plan 0004 §2): no build
+# step until docs exist, then adopt the rootle build.py pattern.
+# The app repo's demo/release workflows ping us to redeploy (fresh demo
+# GIF + version chip) — needs SITE_REPO_TOKEN on their side.
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [rebuild]
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "assets/**"
+      - "img/**"
+      - "CNAME"
+      - ".github/workflows/pages.yml"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deploy
+        uses: actions/deploy-pages@v4
