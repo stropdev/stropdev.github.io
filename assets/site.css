@@ -1,13 +1,86 @@
 /* strop.dev — house style (plan 0003 §5): one accent color, desaturated
-   dark base, warm white text, clean Unicode, zero animation theater. */
+   base, warm text, clean Unicode, zero animation theater (the caret is
+   the editor's heartbeat — allowed, plan 0004 §2).
 
-:root {
-  --base: #16161e;        /* desaturated near-black */
-  --mantle: #1c1c26;
-  --text: #e8e4da;        /* warm white */
-  --muted: #6b6f7e;       /* muted gray */
-  --accent: #f0a35e;      /* the one accent: sharpening-steel amber */
-  --border: #2a2c3a;
+   Palettes: :root carries the default "strop" palette; each
+   [data-palette] block overrides the full var set. The logo SVG is
+   inlined in index.html and painted entirely from these vars, so it
+   re-themes live with the page (rootle does this swap at build time;
+   the placeholder site has no build step, so vars do it client-side). */
+
+:root,
+[data-palette="strop"] {
+  --base: #16161e; --mantle: #1c1c26; --text: #e8e4da; --muted: #6b6f7e;
+  --accent: #f0a35e; --border: #2a2c3a;
+  --syn-kw: #c58ae8; --syn-fn: #7fb4ca; --syn-str: #a9c47c; --syn-dim: #8a8fa3;
+  --logo-backdrop: #101018; --logo-modeline: #12121a; --logo-on-accent: #16161e;
+  --swatch-ring: var(--text);
+}
+[data-palette="catppuccin-mocha"] {
+  --base: #1e1e2e; --mantle: #181825; --text: #cdd6f4; --muted: #6c7086;
+  --accent: #89b4fa; --border: #313244;
+  --syn-kw: #cba6f7; --syn-fn: #89b4fa; --syn-str: #a6e3a1; --syn-dim: #7f849c;
+  --logo-backdrop: #11111b; --logo-modeline: #11111b; --logo-on-accent: #11111b;
+}
+[data-palette="tokyo-night"] {
+  --base: #1a1b26; --mantle: #16161e; --text: #c0caf5; --muted: #565f89;
+  --accent: #7aa2f7; --border: #292e42;
+  --syn-kw: #bb9af7; --syn-fn: #7aa2f7; --syn-str: #9ece6a; --syn-dim: #7982a9;
+  --logo-backdrop: #13141c; --logo-modeline: #13141c; --logo-on-accent: #13141c;
+}
+[data-palette="gruvbox-dark"] {
+  --base: #282828; --mantle: #1d2021; --text: #ebdbb2; --muted: #928374;
+  --accent: #83a598; --border: #3c3836;
+  --syn-kw: #d3869b; --syn-fn: #8ec07c; --syn-str: #b8bb26; --syn-dim: #a89984;
+  --logo-backdrop: #17191a; --logo-modeline: #17191a; --logo-on-accent: #1d2021;
+}
+[data-palette="nord"] {
+  --base: #2e3440; --mantle: #272c36; --text: #d8dee9; --muted: #4c566a;
+  --accent: #88c0d0; --border: #3b4252;
+  --syn-kw: #81a1c1; --syn-fn: #88c0d0; --syn-str: #a3be8c; --syn-dim: #707a8c;
+  --logo-backdrop: #242933; --logo-modeline: #242933; --logo-on-accent: #2e3440;
+}
+[data-palette="dracula"] {
+  --base: #282a36; --mantle: #21222c; --text: #f8f8f2; --muted: #6272a4;
+  --accent: #bd93f9; --border: #44475a;
+  --syn-kw: #ff79c6; --syn-fn: #50fa7b; --syn-str: #f1fa8c; --syn-dim: #9096b4;
+  --logo-backdrop: #191a21; --logo-modeline: #191a21; --logo-on-accent: #282a36;
+}
+[data-palette="one-dark"] {
+  --base: #282c34; --mantle: #21252b; --text: #abb2bf; --muted: #5c6370;
+  --accent: #61afef; --border: #3e4451;
+  --syn-kw: #c678dd; --syn-fn: #61afef; --syn-str: #98c379; --syn-dim: #7f848e;
+  --logo-backdrop: #1b1f24; --logo-modeline: #1b1f24; --logo-on-accent: #21252b;
+}
+[data-palette="solarized-dark"] {
+  --base: #002b36; --mantle: #073642; --text: #93a1a1; --muted: #586e75;
+  --accent: #268bd2; --border: #0e4b5c;
+  --syn-kw: #859900; --syn-fn: #268bd2; --syn-str: #2aa198; --syn-dim: #657b83;
+  --logo-backdrop: #00222b; --logo-modeline: #00222b; --logo-on-accent: #002b36;
+}
+[data-palette="catppuccin-latte"] {
+  --base: #eff1f5; --mantle: #e6e9ef; --text: #4c4f69; --muted: #9ca0b0;
+  --accent: #1e66f5; --border: #ccd0da;
+  --syn-kw: #8839ef; --syn-fn: #1e66f5; --syn-str: #40a02b; --syn-dim: #7c7f93;
+  --logo-backdrop: #dce0e8; --logo-modeline: #dce0e8; --logo-on-accent: #eff1f5;
+}
+[data-palette="github-light"] {
+  --base: #ffffff; --mantle: #f6f8fa; --text: #1f2328; --muted: #59636e;
+  --accent: #0969da; --border: #d1d9e0;
+  --syn-kw: #cf222e; --syn-fn: #8250df; --syn-str: #0a3069; --syn-dim: #6e7781;
+  --logo-backdrop: #eaeef2; --logo-modeline: #eaeef2; --logo-on-accent: #ffffff;
+}
+[data-palette="one-light"] {
+  --base: #fafafa; --mantle: #f0f0f1; --text: #383a42; --muted: #a0a1a7;
+  --accent: #4078f2; --border: #e5e5e6;
+  --syn-kw: #a626a4; --syn-fn: #4078f2; --syn-str: #50a14f; --syn-dim: #696c77;
+  --logo-backdrop: #e6e6e8; --logo-modeline: #e6e6e8; --logo-on-accent: #fafafa;
+}
+[data-palette="solarized-light"] {
+  --base: #fdf6e3; --mantle: #eee8d5; --text: #657b83; --muted: #93a1a1;
+  --accent: #268bd2; --border: #e3dcc8;
+  --syn-kw: #859900; --syn-fn: #268bd2; --syn-str: #2aa198; --syn-dim: #839496;
+  --logo-backdrop: #e9e2cb; --logo-modeline: #e9e2cb; --logo-on-accent: #fdf6e3;
 }
 
 * { box-sizing: border-box; }
@@ -18,6 +91,7 @@ html, body {
   background: var(--base);
   color: var(--text);
   font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  transition: background 120ms ease, color 120ms ease;
 }
 
 .hero {
@@ -27,33 +101,25 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  padding: 2rem;
+  padding: 3rem 2rem;
   text-align: center;
 }
 
-.brand {
-  font-size: clamp(3rem, 10vw, 5.5rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin: 0;
+.logo svg {
+  width: min(480px, 88vw);
+  height: auto;
+  display: block;
 }
 
-/* The editor's heartbeat — allowed animation (plan 0004 §2). */
-.caret {
-  display: inline-block;
-  width: 0.55ch;
-  height: 0.95em;
-  margin-left: 0.12ch;
-  background: var(--accent);
-  vertical-align: text-bottom;
-  animation: blink 1.06s steps(1) infinite;
-}
+/* The editor's heartbeat — the only permitted animation. Applies inside
+   the inline SVG too (page CSS reaches inline SVG, unlike <img>). */
+.caret { animation: blink 1.06s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 
 .tagline {
   font-size: clamp(1.05rem, 3vw, 1.5rem);
   color: var(--accent);
-  margin: 0.2rem 0 0;
+  margin: 1.2rem 0 0;
 }
 
 .lineage {
@@ -62,7 +128,7 @@ html, body {
   margin: 0.4rem 0 0;
 }
 
-.status { margin: 2.2rem 0 0; }
+.status { margin: 1.8rem 0 0; }
 
 .chip {
   display: inline-block;
@@ -71,6 +137,47 @@ html, body {
   border-radius: 6px;
   color: var(--accent);
   font-size: 0.85rem;
+}
+
+.palettes { margin-top: 2.4rem; max-width: 720px; }
+.section-head {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--muted);
+  margin: 0 0 0.9rem;
+}
+
+.palette-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+}
+.palette-bar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.35em 0.8em;
+  background: var(--mantle);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.palette-bar button:hover { color: var(--text); border-color: var(--accent); }
+.palette-bar button.active { color: var(--accent); border-color: var(--accent); }
+.palette-bar .sw {
+  width: 0.7em; height: 0.7em;
+  border-radius: 2px;
+  background: var(--sw);
+}
+
+.note {
+  color: var(--muted);
+  font-size: 0.75rem;
+  margin-top: 1rem;
 }
 
 .demo {

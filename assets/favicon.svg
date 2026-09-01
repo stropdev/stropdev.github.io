@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" font-family="ui-monospace, Menlo, Consolas, monospace">
+  <!-- favicon: fixed strop palette (favicons can't follow the page palette) -->
+  <rect width="64" height="64" rx="14" fill="#16161e"/>
+  <text x="26" y="44" text-anchor="middle" font-size="38" font-weight="bold" fill="#e8e4da">s</text>
+  <rect x="40" y="16" width="8" height="30" rx="2" fill="#f0a35e"/>
+</svg>
