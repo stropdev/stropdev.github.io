@@ -212,3 +212,71 @@ html, body {
   color: var(--muted);
   font-size: 0.75rem;
 }
+
+/* --- install box (rootle pattern, strop vars) --- */
+.installbox {
+  margin-top: 2.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: var(--mantle);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.55em 0.9em;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 92vw;
+}
+.installbox .tab-bar {
+  display: inline-flex;
+  gap: 0.15rem;
+  background: var(--base);
+  border-radius: 7px;
+  padding: 0.2rem;
+}
+.installbox .tab-bar button {
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.82rem;
+  padding: 0.28em 0.7em;
+  cursor: pointer;
+}
+.installbox .tab-bar button:hover { color: var(--text); }
+.installbox .tab-bar button.active {
+  background: var(--mantle);
+  color: var(--accent);
+}
+.ib-cmd {
+  font-size: 0.88rem;
+  color: var(--text);
+  white-space: nowrap;
+  overflow-x: auto;
+  max-width: 100%;
+}
+.ib-cmd .p { color: var(--accent); font-weight: 700; }
+.installbox .copy {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.78rem;
+  padding: 0.3em 0.7em;
+  cursor: pointer;
+}
+.installbox .copy:hover { color: var(--accent); border-color: var(--accent); }
+.installbox .copy.copied { color: var(--accent); border-color: var(--accent); }
+
+.alt {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin: 0.9rem 0 0;
+  max-width: 620px;
+}
+.alt code { color: var(--text); }
+.alt a { color: var(--muted); border-bottom: 1px solid var(--border); text-decoration: none; }
+.alt a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.update-line { margin-top: 1.1rem; }

@@ -105,10 +105,19 @@
     ships — the same eleven palettes rootle.dev offers, plus our own.</p>
   </section>
 
-  <pre class="install"><code>curl -fsSL https://strop.dev/install.sh | sh</code></pre>
+  <div class="installbox">
+    <span class="tab-bar">
+      <button data-install="curl" class="active" aria-pressed="true">curl</button><button data-install="brew" aria-pressed="false">brew</button><button data-install="cargo" aria-pressed="false">cargo</button><button data-install="mise" aria-pressed="false">mise</button>
+    </span>
+    <span class="ib-cmd"><span class="p">$</span> <span data-install-cmd>curl -fsSL https://strop.dev/install.sh | sh</span></span>
+    <button class="copy" data-install-copy data-copy="curl -fsSL https://strop.dev/install.sh | sh">copy</button>
+  </div>
+  <p class="alt update-line">already installed? <code data-install-update>strop update</code> — checks, verifies, swaps itself · <a href="https://github.com/stropdev/strop/releases">what's new ↗</a></p>
+  <p class="alt" data-install-note>prebuilt static binary · x86_64 + arm64 · linux + macOS · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a></p>
 
   <nav class="links">
     <a href="https://github.com/stropdev/strop">github</a>
+    <a href="https://github.com/stropdev/strop/releases">what's new</a>
   </nav>
 </main>
 <footer class="foot">
