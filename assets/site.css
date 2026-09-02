@@ -287,3 +287,51 @@ html, body {
   border-left: 1px solid var(--border);
   padding-left: 0.9rem;
 }
+
+/* header + footer (rootle shape, strop vars) */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--base) 88%, transparent);
+  backdrop-filter: blur(6px);
+  z-index: 10;
+}
+.topbar .brand-mini {
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+}
+.topbar .brand-mini::after {
+  content: "▏";
+  color: var(--accent);
+  animation: blink 1.06s steps(1) infinite;
+}
+.topbar nav a {
+  color: var(--muted);
+  text-decoration: none;
+  margin-left: 1.1rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid transparent;
+}
+.topbar nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+.foot {
+  position: static;
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  padding: 0.8rem 1.2rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+.foot a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+.foot a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.foot-right { margin-left: auto; }
+.caret-dot { display: inline-block; width: 0.5ch; height: 0.9em; background: var(--accent); vertical-align: text-bottom; animation: blink 1.06s steps(1) infinite; }
+.hero { padding-top: 4rem; }
