@@ -280,3 +280,10 @@ html, body {
 .alt a { color: var(--muted); border-bottom: 1px solid var(--border); text-decoration: none; }
 .alt a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 .update-line { margin-top: 1.1rem; }
+
+.installbox .ib-os {
+  color: var(--muted);
+  font-size: 0.72rem;
+  border-left: 1px solid var(--border);
+  padding-left: 0.9rem;
+}
