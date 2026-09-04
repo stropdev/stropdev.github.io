@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" data-palette="strop">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>strop — roadmap</title>
+<meta name="description" content="Where strop is going: safety first, then identity and coordinates, then the input registry, then git as a data model.">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/site.css?v=2">
+<style>
+  main.roadmap { max-width: 52rem; margin: 0 auto; padding: 5.5rem 1.25rem 4rem; }
+  .roadmap h1 { color: var(--accent); font-size: 1.6rem; margin: 0 0 .5rem; }
+  .roadmap h2 { color: var(--text); font-size: 1.15rem; margin: 2.5rem 0 .5rem; border-bottom: 1px solid var(--border); padding-bottom: .4rem; }
+  .roadmap h3 { color: var(--accent); font-size: .95rem; margin: 1.5rem 0 .25rem; }
+  .roadmap p, .roadmap li { color: var(--muted); line-height: 1.65; }
+  .roadmap code { color: var(--syn-str); }
+  .roadmap strong { color: var(--text); }
+  .roadmap ul { padding-left: 1.25rem; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand-mini" href="/">strop</a>
+  <nav>
+    <a href="./docs.html">docs</a>
+    <a href="./roadmap.html">roadmap</a>
+    <a href="./changelog.html">changelog</a>
+    <a href="https://github.com/stropdev/strop">github</a>
+  </nav>
+</header>
+<main class="roadmap">
+<h1>roadmap</h1>
+<p>Where strop is going. Order is priority: editing safety first, new
+surface area last. The load-bearing detail lives in the repo's
+<code>plans/</code> — this page is the public summary.</p>
+
+<h2>Shipped</h2>
+<ul>
+<li>The operator-pending preview: <code>d3w</code> shows the cut before
+you make it, and preview/execute share one resolver.</li>
+<li>Multicursor (<code>Q</code> toggle, <code>Space c</code> stack),
+mirrored edits, one undo unit per cascade.</li>
+<li>Git surfaces as real buffers: commit browser, file history, blame
+gutter + card, hunk stage/undo/preview, permalinks — all readonly,
+yankable, searchable text.</li>
+<li>LSP: hover, goto-definition, diagnostics gutter + picker, clangd's
+source↔header switch (<code>gs</code>), layered
+<code>languages.toml</code> (project over user over embedded).</li>
+<li>Pickers with streaming rg, file/line previews, and modal input
+fields (Esc → vim normal mode on the query itself).</li>
+<li>Global replace (<code>Space R</code>) with row/file exclusion and a
+full-frame apply preview.</li>
+<li>The 0.3.9/0.4.0 hardening: unicode-honest word motions, arrow keys
+everywhere, atomic saves with external-change refusal, readonly
+enforced at the mutation boundary, honest LSP versions + position
+encoding.</li>
+</ul>
+
+<h2>Next</h2>
+<p>Order is priority. Waves 2–4 of
+<code>plans/0014-safety-and-restructure.md</code>:</p>
+<ul>
+<li><strong>Stable identities, not indexes</strong> — generational
+DocumentId/ViewId/PaneId; the parallel-vectors invariant moves into the
+type system. A document owns text+history+syntax; a view owns
+selections+scroll; panes place views.</li>
+<li><strong>Typed coordinates</strong> — ByteOffset / LineIndex /
+ByteColumn / Utf16Column / DisplayColumn with centralised conversions;
+a unified SelectionSet for cursor, visual, and multicursor.</li>
+<li><strong>The input registry</strong> (0008 grown up): a key-event
+trie + typed parser state, one command registry driving dispatch,
+which-key, help, dot-repeat (semantic, not string replay), and
+macros.</li>
+<li><strong>ActionPlan everywhere</strong> — every command resolves to
+edits + selections + registers + mode + effects; preview and execute
+apply the same object. "The preview cannot lie" becomes structural.</li>
+<li><strong>The neovim differential gate</strong> (0006 tier 3): one
+pinned nvim, property-generated corpora, every new motion ships with
+diff cases.</li>
+<li><strong>Git as a data model</strong> — HEAD → index → worktree →
+live document as four explicit states; revisioned SourceLocations;
+line/selection/symbol history and changed-symbol navigation ahead of
+more staging UI.</li>
+<li><strong>Motion canon</strong> — ZZ, <code>{</code>/<code>}</code>,
+<code>(</code>/<code>)</code>, ge/gE, H/M/L, zz/zt/zb,
+Ctrl-d/u/f/b, <code>gv</code>, <code>gi</code>, <code>g;</code>/<code>g,</code>,
+visual block, <code>:%s</code> and ex ranges, <code>ctrl-^</code>.</li>
+<li><strong>LSP depth</strong> — a server pool (rust + pyright + clangd
+in one session), references/implementation/symbols/diagnostic
+traversal, tree-sitter text objects (<code>daf</code>,
+<code>yic</code>).</li>
+<li><strong>Grapheme clusters</strong> (0001 §5.9) and measured perf:
+snapshot-based diff/LSP sync, an interval index for the gutter, real
+benchmarks before any rope surgery.</li>
+</ul>
+
+<h2>North star</h2>
+<p>A reader-first, git-native editor in which every consequential
+operation is inspectable before it becomes real — vim's grammar,
+exactly, with git history as a navigable dimension of the document.</p>
+</main>
+</body>
+</html>
