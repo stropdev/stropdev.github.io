@@ -65,8 +65,9 @@ hover/definition are gated on what the server actually advertises.</p>
 
 <h2>keybindings</h2>
 <p>In the editor: <code>:help</code> (or <code>Space ?</code>) opens the full table as a real,
-searchable buffer — <code>/</code> searches it, <code>q</code> closes. The table is generated
-from the dispatch tables, so it can't drift. Planned-but-unshipped keys render muted with a
+searchable buffer — <code>/</code> searches it, <code>q</code> closes. Dispatch and the table are pinned
+together by tests (a key that dispatches without a row, or a live row that no-ops, fails the
+build) — drift is a test failure, not a doc bug. Planned-but-unshipped keys render muted with a
 <code>(soon)</code> mark.</p>
 
 <h2>sessions</h2>
