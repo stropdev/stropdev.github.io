@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" data-palette="strop">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>strop — docs</title>
+<meta name="description" content="strop configuration: languages.toml, config.toml, keybindings.">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/site.css?v=2">
+<style>
+  main.docs { max-width: 52rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  .docs h1 { color: var(--accent); font-size: 1.6rem; margin: 0 0 .5rem; }
+  .docs h2 { color: var(--text); font-size: 1.1rem; margin: 2.5rem 0 .75rem; border-bottom: 1px solid var(--border); padding-bottom: .4rem; }
+  .docs p, .docs li { color: var(--muted); line-height: 1.65; }
+  .docs p code, .docs li code { color: var(--syn-str); }
+  .docs strong { color: var(--text); }
+  .docs pre { background: var(--mantle); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; overflow-x: auto; line-height: 1.55; }
+  .docs pre code { color: var(--text); }
+  .docs .k { color: var(--syn-kw); }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand-mini" href="/">strop</a>
+  <nav>
+    <a href="./docs.html">docs</a>
+    <a href="./changelog.html">changelog</a>
+    <a href="https://github.com/stropdev/strop/releases">what's new</a>
+    <a href="https://github.com/stropdev/strop">github</a>
+  </nav>
+</header>
+<main class="docs">
+<h1>configuring strop</h1>
+<p>Zero-config by default — every knob below is optional. Two files, both TOML, both layered
+(project over user over embedded defaults):</p>
+
+<h2><code>config.toml</code> — the two editor knobs</h2>
+<p>At <code>$XDG_CONFIG_HOME/strop/config.toml</code> (usually <code>~/.config/strop/config.toml</code>).
+Run <code>strop config</code> to print the live values.</p>
+<pre><code><span class="k">tab_size</span> = 4
+<span class="k">indent_guides</span> = true</code></pre>
+
+<h2><code>languages.toml</code> — language servers, helix-shaped</h2>
+<p>Per-project at <code>.strop/languages.toml</code> (next to your code, committed if you like),
+globally at <code>~/.config/strop/languages.toml</code>. Project wins per key; unknown keys are
+ignored, so helix files paste clean. The workspace root anchors at the <code>.strop</code>
+directory.</p>
+<p>Point a server at a different binary (absolute paths skip the PATH probe):</p>
+<pre><code>[<span class="k">language-server</span>.pyright]
+<span class="k">command</span> = <strong>"/opt/venvs/bin/pyright-langserver"</strong>
+<span class="k">args</span> = [<strong>"--stdio"</strong>]</code></pre>
+<p>Pass server configuration — it lands in <code>initializationOptions</code> verbatim. The
+classic venv + extraPaths setup:</p>
+<pre><code>[<span class="k">language-server</span>.pyright.config.python]
+<span class="k">pythonPath</span> = <strong>"/workarea/pbpilsvc/.venv/bin/python"</strong>
+
+[<span class="k">language-server</span>.pyright.config.python.analysis]
+<span class="k">extraPaths</span> = [<strong>"/opt/bb/lib/python3.12/site-packages"</strong>]</code></pre>
+<p>Reassign a language to different servers (first resolvable wins; anything unresolvable
+falls back to the embedded registry):</p>
+<pre><code>[<span class="k">language</span>.python]
+<span class="k">language-servers</span> = [<strong>"pyright"</strong>, <strong>"mypy-lsp"</strong>]</code></pre>
+<p>Servers stay out of your way: a missing one shows its install hint once per session, and
+hover/definition are gated on what the server actually advertises.</p>
+
+<h2>keybindings</h2>
+<p>In the editor: <code>:help</code> (or <code>Space ?</code>) opens the full table as a real,
+searchable buffer — <code>/</code> searches it, <code>q</code> closes. The table is generated
+from the dispatch tables, so it can't drift. Planned-but-unshipped keys render muted with a
+<code>(soon)</code> mark.</p>
+
+<h2>sessions</h2>
+<p>Per-project sessions restore buffers and undo history across restarts. Nothing to
+configure; quitting and reopening in the same directory picks up where you left off.</p>
+</main>
+<footer class="foot">
+  <a href="/">strop.dev</a>
+  <span class="foot-right">MIT · © 2026 strop</span>
+</footer>
+</body>
+</html>

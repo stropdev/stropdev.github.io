@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en" data-palette="strop">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>strop — changelog</title>
+<meta name="description" content="strop release changelog.">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/site.css?v=2">
+<style>
+  main.changelog { max-width: 52rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  .changelog h1 { color: var(--accent); font-size: 1.6rem; margin: 0 0 .5rem; }
+  .changelog h2 { color: var(--text); font-size: 1.15rem; margin: 2.5rem 0 .5rem; border-bottom: 1px solid var(--border); padding-bottom: .4rem; }
+  .changelog h3 { color: var(--accent); font-size: .95rem; margin: 1.5rem 0 .25rem; }
+  .changelog p, .changelog li { color: var(--muted); line-height: 1.65; }
+  .changelog code { color: var(--syn-str); }
+  .changelog strong { color: var(--text); }
+  .changelog ul { padding-left: 1.25rem; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand-mini" href="/">strop</a>
+  <nav>
+    <a href="./docs.html">docs</a>
+    <a href="./changelog.html">changelog</a>
+    <a href="https://github.com/stropdev/strop/releases">what's new</a>
+    <a href="https://github.com/stropdev/strop">github</a>
+  </nav>
+</header>
+<main class="changelog">
+<h1>changelog</h1>
+
+<h2>0.3.5 — 2026-09-04</h2>
+
+<p>The first-external-review release: a week of real use, seven confirmed</p>
+<p>bugs, all fixed.</p>
+
+<h3>Fixed</h3>
+
+<ul><li></ul><strong>Counts on non-operator commands</strong> never abort anymore: <code>2x</code>, <code>3p</code>,</li>
+<p>  <code>2u</code>, <code>4.</code>, <code>3rx</code>, counted inserts (<code>3iX</code> types X three times, <code>2o</code></p>
+<p>  repeats the opened line) — vim&#x27;s multiply rule. (Highest-ranked by</p>
+<p>  the reviewer: silent keystroke loss is the worst kind.)</p>
+<ul><li></ul><strong><code>{count}G</code></strong> jumps to that line instead of the end of file; bare</li>
+<p>  <code>G</code> still goes to the end. The two used to disagree silently.</p>
+<ul><li></ul><strong><code>cc</code>/<code>S</code></strong> clear the line&#x27;s content and keep the newline + indent</li>
+<p>  — no more merging with the next line; counted <code>2cc</code> collapses N</p>
+<p>  lines into one fresh line (vim semantics).</p>
+<ul><li></ul><strong><code>C</code></strong> enters insert at the deletion start, not one column early</li>
+<p>  (typed text used to land before the last surviving char).</p>
+<ul><li></ul><strong>Permalinks with ssh host aliases</strong> (<code>bbgithub:org/repo.git</code>)</li>
+<p>  resolve via <code>~/.ssh/config</code> Host blocks, with a bare-host fallback.</p>
+<ul><li></ul><strong>Permalink errors say what happened</strong>: not a repo / no remote</li>
+<p>  configured / <code>unsupported remote URL: &lt;it&gt;</code> — the old</p>
+<p>  <code>no remote / not a repo</code> conflated all three.</p>
+<ul><li></ul><strong><code>--headless</code> with a missing script</strong> prints a clean error (exit 2)</li>
+<p>  instead of panicking.</p>
+
+<h3>Added</h3>
+
+<ul><li></ul><strong><code>^</code></strong> (first non-blank, works with operators: <code>d^</code>, <code>y^</code>), <strong><code>I</code></strong></li>
+<p>  (insert there), <strong><code>~</code></strong> (toggle case, advances), <strong><code>S</code></strong> (= <code>cc</code>).</p>
+<ul><li></ul><strong>Unknown bare keys are loud</strong>: <code>not an editor command: &lt;key&gt;</code> —</li>
+<p>  silent swallowing made absent features indistinguishable from broken</p>
+<p>  ones.</p>
+<ul><li></ul><strong>Release attestation</strong>: every release tarball now gets signed</li>
+<p>  build provenance (<code>gh attestation verify &lt;file&gt; -R stropdev/strop</code>),</p>
+<p>  ported from gripsack&#x27;s pipeline.</p>
+
+<h3>Notes</h3>
+
+<ul><li></ul>The reviewer&#x27;s https-enterprise permalink failure (their row 5) does</li>
+<p>  not reproduce on 0.3.4 — verified with the exact release artifact and</p>
+<p>  their exact URL shape. If it still fails for them, the actual remote</p>
+<p>  string is the next datum needed.</p>
+
+<h2>0.3.4 — 2026-09-04</h2>
+
+<p>Crash fix and a vim-gap sweep.</p>
+
+<h3>Fixed</h3>
+
+<ul><li></ul><strong>Replace-picker crash</strong> (<code>index out of bounds, len 0</code>): typing in</li>
+<p>  <code>Space R</code> respawns rg per keystroke; the respawn cleared items but</p>
+<p>  not rows, and the renderer indexed a stale row. Rows clear with the</p>
+<p>  respawn now, plus defensive lookups (regression test included).</p>
+<ul><li></ul><strong>Sidebar <code>│</code> alignment</strong>: non-current file rows were one column</li>
+<p>  wider than the current row — the divider wobbled in and out.</p>
+<ul><li></ul><strong><code>:30</code></strong> jumps to a line (clamps to the last content line, never the</li>
+<p>  phantom past a trailing newline); <strong><code>:noh</code></strong> clears the persistent</p>
+<p>  search highlight.</p>
+<ul><li></ul><strong><code>30j</code>-style counts</strong>: <code>0</code> after a count digit is a digit, not the</li>
+<p>  line-start motion — counts above 9 work now.</p>
+<ul><li></ul><strong>Visual <code>&lt;</code> / <code>&gt;</code></strong> indent and dedent the selection (one undo unit).</li>
+<ul><li></ul><strong>Visual pending no longer swallows keys</strong>: invalid sequences clear</li>
+<p>  with a message instead of accumulating forever (which also made later</p>
+<p>  keys vanish).</p>
+
+<h3>Verified</h3>
+
+<ul><li></ul><code>.</code> repeats deletes and change+insert (dot-repeat tests pinned).</li>
+
+<h2>0.3.3 — 2026-09-04</h2>
+
+<p>The git-flow and command-line round, plus a vim-fidelity sweep.</p>
+
+<h3>Added</h3>
+
+<ul><li></ul><strong>Tab focus-cycle in commit diffs</strong> (tuicr&#x27;s model): Tab/Shift-Tab</li>
+<p>  hops between the file sidebar and the diff content; focused j/k steps</p>
+<p>  files in place; the current file wears rootle&#x27;s <code>▸</code> when focused.</p>
+<ul><li></ul><strong>Syntax highlighting in diff views</strong>: commit deltas highlight code</li>
+<p>  under the origin tint (delta&#x27;s look); the highlighter follows <code>]f</code></p>
+<p>  file steps.</p>
+<ul><li></ul><strong><code>:</code> autocomplete</strong>: ex candidates render under the command card</li>
+<p>  with doc strings; Tab cycles them.</p>
+<ul><li></ul><strong><code>:!cmd</code></strong>: run a shell command in a job, output opens as a real</li>
+<p>  readonly buffer (search it, yank it, q closes).</p>
+<ul><li></ul><strong><code>|cmd</code> (helix&#x27;s pipe)</strong>: visual selections pipe through a command</li>
+<p>  and get replaced by stdout (one undo unit, never-clobber verified);</p>
+<p>  bare <code>|cmd</code> pipes the current line.</p>
+<ul><li></ul>**<code>*</code> / <code>#</code><strong>: whole-word search for the word under the cursor,</li>
+<p>  wrapping; <code>;</code> / <code>,</code> repeat f/F/t/T finds (<code>, </code> inverts).</p>
+<ul><li></ul></strong>Persistent search highlight<strong>: matches stay lit after the search</li>
+<p>  commits (rootle rule); the current match is underlined. Works on</p>
+<p>  readonly surfaces too, with n/N.</p>
+
+<h3>Fixed</h3>
+
+<ul><li></ul></strong>Undo<strong>: a lone paste never committed its revision — <code>u</code> after</li>
+<p>  yank+paste claimed &quot;already at oldest change&quot;. Every command now</p>
+<p>  commits exactly one undo unit (nvim&#x27;s rule).</p>
+<ul><li></ul></strong>Ctrl-W on some terminals<strong>: keys that arrive as raw control bytes</li>
+<p>  (<code>\x12</code>/<code>\x17</code>/<code>\x18</code>/<code>\x03</code>) now map to Ctrl-R/W/X/C — C-w pane</p>
+<p>  cycling works on Windows Terminal → WSL.</p>
+
+<h2>0.3.2 — 2026-09-04</h2>
+
+<p>The finish-line polish round: dots, gaps, hues, and a diff that reads</p>
+<p>like delta&#x27;s.</p>
+
+<h3>Added</h3>
+
+<ul><li></ul></strong>Intra-line emphasis in diffs<strong> (delta-style, two-tier): del/add</li>
+<p>  runs pair line-by-line within a hunk, shared prefix/suffix trims, and</p>
+<p>  the changed span gets a brighter background + bold over the row tint.</p>
+<p>  Pure adds/deletes keep the quiet full-row tint.</p>
+<ul><li></ul></strong>Blame gaps<strong> (rootle rule): a commit&#x27;s gutter cell prints only on</li>
+<p>  the first line of its run — the blame column breathes.</p>
+<ul><li></ul></strong>Diagnostics<strong>: severity <code>●</code> dot in the gutter (color reads faster</li>
+<p>  than letters), colored underline on the offending span</p>
+<p>  (<code>underline_color</code>; wavy undercurl lands when ratatui bumps to 0.30),</p>
+<p>  multiline messages join with <code> · </code> in the EOL note.</p>
+<ul><li></ul></strong><code>:help</code> palette<strong>: section-hued key columns (blue normal, purple</li>
+<p>  visual, green insert, amber leader, cyan git, yellow ex), section</p>
+<p>  headers with a trailing rule, bold keys.</p>
+
+<h3>Fixed</h3>
+
+<ul><li></ul></strong>Demo hiccup<strong>: the multicursor tape section typed <code>strop</li>
+<p>  proj/demo.rs</code> into the still-open editor (the splits <code>:q</code> closes a</p>
+<p>  pane, not the app) and mangled line 1. The tape continues in the</p>
+<p>  existing buffer now.</p>
+
+<h3>Decided (research)</h3>
+
+<ul><li></ul>Side-by-side diff (JetBrains-style) is rejected for now — it pairs</li>
+<p>  two logical rows into one display row, breaking the surface-as-buffer</p>
+<p>  contract (cursor/search/yank mirror). git-delta and tuicr made the</p>
+<p>  same call; the run pairing built for emphasis is the alignment engine</p>
+<p>  if a split view ever lands (0010 amendment).</p>
+
+<h2>0.3.1 — 2026-09-04</h2>
+
+<p>Polish round: the demo is clean again, help wears color, and the E now</p>
+<p>tells you what it is.</p>
+
+<h3>Added</h3>
+
+<ul><li></ul></strong>Diagnostics UX<strong>: the cursor line shows its worst diagnostic as an</li>
+<p>  end-of-line note (severity-colored, italic, scoped to one line — no</p>
+<p>  inline-hints machinery); severity colors unified across the gutter</p>
+<p>  and the note.</p>
+<ul><li></ul></strong><code>:help</code> decoration<strong>: section headers and key columns in accent,</li>
+<p>  planned <code>(soon)</code> rows muted.</p>
+<ul><li></ul>Seeded key-soup fuzz test (12k keystrokes across buffer shapes + a</li>
+<p>  frame render per shape) — it pays rent immediately (see fixes).</p>
+
+<h3>Fixed</h3>
+
+<ul><li></ul></strong>async-lsp panic in the demo<strong> (&quot;Sender is alive&quot;): quitting dropped</li>
+<p>  the client socket while the server mainloop was still running. The</p>
+<p>  runtime thread is now joined on quit (with a leak-not-panic timeout</p>
+<p>  fallback).</p>
+<ul><li></ul></strong>Byte/char units in rope mutations<strong> (found by the fuzz): <code>insert</code>,</li>
+<p>  <code>delete</code>, and history replay passed byte offsets to ropey&#x27;s char-index</p>
+<p>  APIs — any multibyte content (our own undo-tree buffer uses ↵/←/⑂)</p>
+<p>  could panic. <code>delete</code> also clamps stale ranges instead of panicking.</p>
+<ul><li></ul></strong>Paste mutated readonly buffers<strong> (found by the fuzz): <code>p</code> on a</li>
+<p>  git surface or the undo tree now refuses like every other edit.</p>
+<ul><li></ul>Multiline diagnostic messages join with <code> · </code> in the EOL note.</li>
+
+<h2>0.3.0 — 2026-09-04</h2>
+
+<p>Multicursor lands, help becomes a buffer, the demo&#x27;s LSP section is</p>
+<p>real again.</p>
+
+<h3>Added</h3>
+
+<ul><li></ul></strong>Multicursor<strong> (plan 0013, nvim-0.13 interaction over a cascade</li>
+<p>  executor): <code>Q</code> toggles a cursor at point, <code>Space c</code> stacks one onto</p>
+<p>  the next line (helix&#x27;s <code>C</code>). Motions, <code>n</code>/<code>N</code>, operators, yank, paste,</p>
+<p>  and insert mode all cascade — deletes apply bottom-up, mirrored edits</p>
+<p>  shift-remap, stacked cursors edit once. Normal-mode Esc collapses to</p>
+<p>  the primary cursor; <code>u</code> reverts a whole cascade as one unit. Secondary</p>
+<p>  cursors render as solid blocks. v1 deferrals (visual-mode multi-range,</p>
+<p>  mouse placement, select-next-match) are documented in 0013.</p>
+<ul><li></ul></strong><code>:help</code><strong> — the keybinding table as a real readonly buffer: <code>/</code></li>
+<p>  searches it, motions walk it, <code>q</code> closes. <code>Space ?</code> opens the same.</p>
+<p>  The floating keybinds popup is gone (a buffer you can search beats a</p>
+<p>  card you can only scroll).</p>
+<ul><li></ul>Headless <code>state</code> now reports <code>message</code> and <code>extra_cursors</code>.</li>
+
+<h3>Fixed</h3>
+
+<ul><li></ul></strong>Demo LSP section<strong>: the vhs image now installs a rustup toolchain</li>
+<p>  with the <code>rust-analyzer</code> + <code>rust-src</code> components (apt&#x27;s rust lacks</p>
+<p>  rust-src; the standalone binary half-worked and then errored).</p>
+<ul><li></ul></strong>Graceful LSP shutdown<strong>: quit sends the <code>shutdown</code>/<code>exit</code> sequence —</li>
+<p>  every session used to end with the server dying &quot;client exited</p>
+<p>  without proper shutdown&quot; and a fake failure on the statusline.</p>
+<ul><li></ul></strong>vim fidelity: <code>cw</code>/<code>cW</code><strong> resolve like <code>ce</code>/<code>cE</code> — the trailing</li>
+<p>  whitespace is no longer eaten, and at a word&#x27;s last char only that</p>
+<p>  word changes (pinned in the grammar contract tests).</p>
+<ul><li></ul>Commit-diff sidebar width fits the file list (clamped 12–24) instead</li>
+<p>  of a fixed 28 columns.</p>
+
+<h2>0.2.2 — 2026-09-03</h2>
+
+<p>Hardening + daily-driver release. The crash-on-quit class is dead, the</p>
+<p>editor opens directories, the system clipboard works, and the git</p>
+<p>surfaces got the rootle-grade navigation treatment.</p>
+
+<h3>Fixed (trust)</h3>
+
+<ul><li></ul></strong>Quit crash<strong>: <code>:q</code>/<code>:q!</code>/<code>:wq</code> on the last buffer with an LSP</li>
+<p>  attached panicked in the post-feed drain (<code>lsp_sync_changed</code> indexed</p>
+<p>  an emptied buffer list). The TUI breaks on <code>should_quit</code> before the</p>
+<p>  drains now, and the sync is empty-list-safe. This was visible in the</p>
+<p>  demo tape.</p>
+<ul><li></ul>Panic hook restores the terminal (raw mode + alt screen) on any crash.</li>
+<ul><li></ul>Hunk-restore underflows at file top (<code>Space g u</code> on a hunk at line 0).</li>
+<ul><li></ul>Undo cursor lands at the start of the undone change (vim semantics),</li>
+<p>  not the tail of the replayed op list; redo distinguishes insert/delete</p>
+<p>  placement. History replay clamps both bounds to char boundaries.</p>
+<ul><li></ul><code>n</code>/<code>N</code> actually work now — the keymap advertised search repeat with</li>
+<p>  no dispatch behind it (found by the new coverage test).</p>
+
+<h3>Added</h3>
+
+<ul><li></ul></strong>Directory open<strong>: <code>strop dir/</code> cds and lands on the file picker</li>
+<p>  (helix&#x27;s <code>hx .</code>) instead of dying on EISDIR.</p>
+<ul><li></ul></strong>System clipboard<strong>: <code>Space y</code> / <code>Space p</code> / <code>Space P</code> (helix-style)</li>
+<p>  on top of vim&#x27;s <code>&quot;+</code> register — yank stages OSC52 (works over ssh),</p>
+<p>  paste reads via wl-paste/xclip/xsel/pbpaste off the input path.</p>
+<ul><li></ul></strong>Global replace** (plan 0007): <code>Space R</code> — two fields, live</li>
+<p>  replacement preview per row, <code>ctrl-x</code> excludes a match, Enter applies</p>
+<p>  with one undo revision per buffer, span-verified and mtime-guarded,</p>
+<p>  atomic file writes. Grep queries take rg filters (<code>-t rs</code>,</p>
+<p>  <code>--glob &#x27;!target/*&#x27;</code>). Grep and replace render full-frame.</p>
+<ul><li></ul><strong>Undo-tree browser</strong>: <code>Space u</code> — the revision tree as a real</li>
+<p>  readonly buffer; Enter restores any revision (branches included), q</p>
+<p>  closes.</p>
+<ul><li></ul><strong>Blame gutter</strong> (0011): <code>Space g b</code> toggles a left-margin blame</li>
+<p>  column (<code>sha · author · age</code>); Enter on a line dives into that line&#x27;s</p>
+<p>  commit. The blame card stays as the loading fallback.</p>
+<ul><li></ul><strong>Commit diff sidebar</strong>: a commit&#x27;s file delta shows the changed-files</li>
+<p>  list in a left sidebar (tuicr-style); <code>]f</code> / <code>[f</code> step through the</p>
+<p>  commit&#x27;s files in place.</p>
+<ul><li></ul><strong>Surface stack</strong> (0011): q/close on any git surface restores the</li>
+<p>  origin buffer unconditionally, works in splits, and stale job results</p>
+<p>  are generation-guarded.</p>
+<ul><li></ul><strong>Project LSP config</strong> (0012): <code>.strop/languages.toml</code> over XDG</li>
+<p>  <code>languages.toml</code> over the embedded registry — helix-flavored</p>
+<p>  <code>[language-server.NAME.config]</code> passthrough (pyright <code>extraPaths</code></p>
+<p>  works), absolute commands skip the PATH probe, server capabilities now</p>
+<p>  gate hover/goto.</p>
+<ul><li></ul><strong>Syntax</strong>: fish, lua, sql grammars + vendored highlight queries; cpp</li>
+<p>  uses the vendored query now; extensionless shell scripts resolve by</p>
+<p>  basename (<code>.bashrc</code>, <code>PKGBUILD</code>) and shebang.</p>
+<ul><li></ul><strong>Commit graph lanes</strong>: the log surface colors each graph lane</li>
+<p>  distinctly, nodes bold in their lane color.</p>
+
+<h3>Changed</h3>
+
+<ul><li></ul>The keybinds popup (<code>Space ?</code>) and all which-key cards render from the</li>
+<p>  one <code>keymap.rs</code> table; a coverage test pins every dispatchable</p>
+<p>  sequence to a row (0003 §5.7). &quot;(soon)&quot; rows render muted as planned,</p>
+<p>  never as live.</p>
+<ul><li></ul>Picker previews read files on worker threads — no more blocking IO in</li>
+<p>  the render path (0001 §3).</p>
+
+<h3>Plans</h3>
+
+<ul><li></ul>New: 0011 surface stack, 0012 project config, 0013 multicursor</li>
+<p>  (nvim-0.13 interaction over helix machinery — the next big rock).</p>
+<ul><li></ul>Amended: 0005/0009 (config filename reconciliation), 0007 (status +</li>
+<p>  form-factor notes).</p>
+
+</main>
+<footer class="foot">
+  <a href="/">strop.dev</a>
+  <span class="foot-right">MIT · © 2026 strop</span>
+</footer>
+</body>
+</html>
