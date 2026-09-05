@@ -30,6 +30,30 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.5.0 — 2026-09-05</h2>
+<p>The restructure release. All four waves of <code>plans/0014</code> landed: the editor&#x27;s centre is identity-typed and selection-unified, the input layer is becoming data, and git is a data model, not a sidebar.</p>
+<h3>Changed (architecture)</h3>
+<ul>
+<li><strong>Generational document ids</strong> (<code>strop_core::id::Arena</code>): buffers, panes, marks, jumplist, surfaces, hunk origins, picker payloads all hold stable <code>DocumentId</code>s — closing a buffer can never alias another. The parallel-vectors alignment invariant is one <code>Document</code> struct now.</li>
+<li><strong>One selection model</strong> (<code>strop_core::selection::SelectionSet</code>): normal = collapsed primary, visual = stretched primary, multicursor = extras. The three old fields could disagree; the set owns the invariants.</li>
+<li><strong><code>MotionShape</code></strong> replaces <code>Range { linewise: bool }</code>: <code>Characterwise { inclusive }</code> carries what dfx-vs-dtx need; Blockwise is the enum&#x27;s extension point for visual block.</li>
+<li><strong>LSP server pool</strong>: one client per (workspace root, server) — Rust + Python + C++ in one session, each with its negotiated encoding.</li>
+<li><strong>Leaf commands are data</strong> (<code>editor/registry.rs</code>, plan 0008 stage 1): 44 normal-mode leaves dispatch from a static table; a parity test fuses dispatch and docs. Caught a dormant bug on day one: <code>W</code>/<code>B</code>/<code>E</code> never moved the cursor (the grammar&#x27;s cursor_after lacked BigWord arms).</li>
+<li><strong><code>editor/mod.rs</code> split</strong> (1817 → ~400 lines): document, cursor, diagnostics, registers modules; tests live beside the behavior they pin. git_memory split into dive/blame/permalink.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Paste lands the cursor on the last pasted char</strong> (vim), found by the new differential harness.</li>
+<li><strong><code>f</code>/<code>t</code> find multibyte chars</strong> (<code>f é</code> works; found bytes before). All dynamic command args are <code>char</code>, never <code>u8</code>.</li>
+</ul>
+<h3>Added</h3>
+<ul>
+<li><strong>The nvim differential harness</strong> (0006 tier 1): 40 cases drive strop headless and pinned nvim over the same keys; text + cursor must agree. Runs in the docker gate.</li>
+<li><strong>Semantic dot-repeat</strong>: <code>.</code> re-resolves the parsed command from the current position instead of replaying a key string.</li>
+<li><strong>ActionPlan</strong>: <code>strop_grammar::plan(buf, cursors, cmd)</code> is the single object preview renders and execute applies — multicursor previews highlight every cursor&#x27;s target now.</li>
+<li><strong>Git as four states</strong>: HEAD → index → worktree → live document are separate diffable edges. The gutter shows staged lines in the committed-adjacent tint; <code>Space g s</code> stages (live→index), <code>Space g S</code> unstages (index→HEAD), <code>Space g u</code> discards unstaged (restore from index, not HEAD).</li>
+<li><strong>Selection history</strong>: visual mode <code>Space g h</code> = <code>git log -L</code> on the selected lines. Permalinks from commit surfaces pin that commit.</li>
+</ul>
 <h2>0.4.0 — 2026-09-04</h2>
 <p>The safety release. An external architecture review (now <code>plans/0014</code>) audited the mutation and protocol boundaries; every confirmed P0 is fixed and pinned by a failing-first test.</p>
 <h3>Fixed — safety</h3>
