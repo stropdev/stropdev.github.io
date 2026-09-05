@@ -87,14 +87,6 @@ encoding.</li>
 <p>Ordered by ROI: daily-driver value first, foundations that compound
 next, far-future last. Within a row, cheaper keys land first.</p>
 <ul>
-<li><strong>The motion canon</strong> — the daily-driver keys, cheapest
-first: <code>Ctrl-d/u/f/b</code>, <code>zz/zt/zb</code>,
-<code>H/M/L</code>, <code>{</code>/<code>}</code>,
-<code>ge/gE</code>, <code>gv</code>, <code>gi</code>,
-<code>g;</code>/<code>g,</code>, <code>ctrl-^</code>, ZZ; then visual
-block and <code>:%s</code> + ex ranges. This is what "vim grammar" means
-when strop is your only editor — and every motion arrives with
-differential cases against nvim.</li>
 <li><strong>One input machine</strong> (0016, 0.7) — the walker emits
 typed commands, never strings; every key event, macro, and dot-repeat
 traverses it; aliases become semantic commands; the compatibility
@@ -112,11 +104,15 @@ patches), <code>Revision</code> spans live/worktree/index/commit/
 merge-base; service envelopes give every async reply a document
 revision; per-workspace language config; a unified event source kills
 the 500ms idle latency.</li>
-<li><strong>LSP navigation depth</strong> — the reader-first promise:
-references (<code>gr</code>), implementation, type definition, document
-symbols, diagnostic traversal (<code>]d</code>/<code>[d</code>). The
-pool and encoding seams already exist; these are new request types on a
-proven boundary.</li>
+<li><strong>Debugger</strong> (0019, researched — deliberately later) —
+DAP over three toolchains only (Rust/C/C++ via <code>lldb-dap</code>,
+Python via <code>debugpy</code>), zero-config scenario discovery, and
+<code>.vscode/launch.json</code> read-compat behind a
+<code>.strop/debug.json</code> primary. UI is editor-native: gutter
+breakpoints and the instruction arrow on the real document, stack and
+variables as readonly tree buffers in a split, stepping as
+<code>Space D</code> motions. Editor experience lands first — no new
+subsystem before 0016–0018.</li>
 <li><strong>The differential gate grows teeth</strong> — every fix so far
 became a corpus case; next is property-generated command streams and
 register/mark/jumplist comparison. Cheap, and it compounds: every future
@@ -129,9 +125,6 @@ resolvers on typed syntax, with lexical fallbacks.</li>
 changed-symbol navigation, branch review as a file sequence. The dive
 chain + <code>log -L</code> already cover the common case; these are the
 power layers on top, and they ride SourceLocation.</li>
-<li><strong>Grapheme clusters</strong> (0001 §5.9) — astral-plane and
-combining-mark text. Real correctness, narrow blast radius; the
-char-boundary work of 0.3.9 made this an increment, not a rewrite.</li>
 <li><strong>Measured perf</strong> — snapshot-based diff/LSP sync,
 gutter interval index, real benchmarks (1/10/100MB opens, 100k-line
 navigation, 1000 cursors) before any rope surgery. No measured pain, no
