@@ -30,6 +30,18 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.6.0 — 2026-09-05</h2>
+<p>The input layer lands (plan 0008, fully): key events walk a typed state machine, and the doc table IS the dispatch table.</p>
+<h3>Changed (architecture)</h3>
+<ul>
+<li><strong>The input walker</strong> (<code>editor/input.rs</code>): counts, registers, operators, and prefixes are typed parser state — pending strings survive only as free-text line content (<code>:</code> <code>/</code> <code>?</code> <code>|</code>, the modal text fields of 0003 §1) and as the grammar&#x27;s assembly interchange.</li>
+<li><strong>One command table</strong>: every BINDINGS row carries a stable <code>id</code> plus its dispatch handler — <code>Space ?</code>, which-key cards, and dispatch read the same rows. Parameterized rows (<code>r&lt;c&gt;</code>, <code>m&lt;a&gt;</code>) match by placeholder; the coverage tests tokenize exactly like dispatch.</li>
+<li><strong>Panes own their selections and scroll</strong> (the ViewModel split): <code>Pane { doc, sels, view_top }</code> — switching panes never copies state back and forth; the active pane&#x27;s state IS the editor&#x27;s.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>Found by the new dispatch-coverage tests: <code>,</code> didn&#x27;t reverse the find (shared row handlers ignored the completing key — <code>;</code>/<code>N</code>/<code>#</code>/ <code>[c</code>/<code>P</code> all key-aware now); <code>ctrl-w</code> pane keys route through the walker; counts reach leaf commands through the table (2x, 3rx, 2p).</li>
+</ul>
 <h2>0.5.0 — 2026-09-05</h2>
 <p>The restructure release. All four waves of <code>plans/0014</code> landed: the editor&#x27;s centre is identity-typed and selection-unified, the input layer is becoming data, and git is a data model, not a sidebar.</p>
 <h3>Changed (architecture)</h3>
