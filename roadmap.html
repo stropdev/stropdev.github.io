@@ -75,25 +75,44 @@ encoding.</li>
 </ul>
 
 <h2>Next</h2>
-<p>Order is priority. What remains of
-<code>plans/0014-safety-and-restructure.md</code> after 0.5.0:</p>
+<p>Ordered by ROI: daily-driver value first, foundations that compound
+next, far-future last. Within a row, cheaper keys land first.</p>
 <ul>
-<li><strong>The differential gate grows teeth</strong> — wider corpora,
-register/mark/jumplist comparison, property-generated command streams.</li>
-<li><strong>Git depth</strong> — symbol history, changed-symbol
-navigation, branch review as a file sequence; explicit unsupported states
-(binary, renames, CRLF, modes, merges, conflicts).</li>
-<li><strong>Motion canon</strong> — ZZ, <code>{</code>/<code>}</code>,
-<code>(</code>/<code>)</code>, ge/gE, H/M/L, zz/zt/zb,
-Ctrl-d/u/f/b, <code>gv</code>, <code>gi</code>, <code>g;</code>/<code>g,</code>,
-visual block, <code>:%s</code> and ex ranges, <code>ctrl-^</code>.</li>
-<li><strong>LSP depth</strong> — a server pool (rust + pyright + clangd
-in one session), references/implementation/symbols/diagnostic
-traversal, tree-sitter text objects (<code>daf</code>,
-<code>yic</code>).</li>
-<li><strong>Grapheme clusters</strong> (0001 §5.9) and measured perf:
-snapshot-based diff/LSP sync, an interval index for the gutter, real
-benchmarks before any rope surgery.</li>
+<li><strong>The motion canon</strong> — the daily-driver keys, cheapest
+first: <code>Ctrl-d/u/f/b</code>, <code>zz/zt/zb</code>,
+<code>H/M/L</code>, <code>{</code>/<code>}</code>,
+<code>ge/gE</code>, <code>gv</code>, <code>gi</code>,
+<code>g;</code>/<code>g,</code>, <code>ctrl-^</code>, ZZ; then visual
+block and <code>:%s</code> + ex ranges. This is what "vim grammar" means
+when strop is your only editor — and every motion arrives with
+differential cases against nvim.</li>
+<li><strong>LSP navigation depth</strong> — the reader-first promise:
+references (<code>gr</code>), implementation, type definition, document
+symbols, diagnostic traversal (<code>]d</code>/<code>[d</code>). The
+pool and encoding seams already exist; these are new request types on a
+proven boundary.</li>
+<li><strong>The differential gate grows teeth</strong> — every fix so far
+became a corpus case; next is property-generated command streams and
+register/mark/jumplist comparison. Cheap, and it compounds: every future
+grammar change is free to land.</li>
+<li><strong>Tree-sitter text objects</strong> — <code>daf</code>,
+<code>yic</code>, argument/call objects through the same operator
+resolver and preview. The grammar's object layer exists; these are new
+resolvers on typed syntax, with lexical fallbacks.</li>
+<li><strong>Git archaeology depth</strong> — symbol history,
+changed-symbol navigation, branch review as a file sequence. The dive
+chain + <code>log -L</code> already cover the common case; these are the
+power layers on top, and they ride SourceLocation.</li>
+<li><strong>Grapheme clusters</strong> (0001 §5.9) — astral-plane and
+combining-mark text. Real correctness, narrow blast radius; the
+char-boundary work of 0.3.9 made this an increment, not a rewrite.</li>
+<li><strong>Measured perf</strong> — snapshot-based diff/LSP sync,
+gutter interval index, real benchmarks (1/10/100MB opens, 100k-line
+navigation, 1000 cursors) before any rope surgery. No measured pain, no
+rewrite.</li>
+<li><strong>A plugin boundary</strong> — post-registry-maturity: stable
+command ids and typed events first; a sandboxed process/WASM edge later.
+Freezing unstable internals into a public contract is the failure mode.</li>
 </ul>
 
 <h2>North star</h2>
