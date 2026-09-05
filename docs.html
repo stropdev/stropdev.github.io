@@ -68,7 +68,9 @@ hover/definition are gated on what the server actually advertises.</p>
 searchable buffer — <code>/</code> searches it, <code>q</code> closes. Dispatch and the table are pinned
 together by tests (a key that dispatches without a row, or a live row that no-ops, fails the
 build) — drift is a test failure, not a doc bug. Planned-but-unshipped keys render muted with a
-<code>(soon)</code> mark.</p>
+<code>(soon)</code> mark. The full table also exists as
+<a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md">docs/vim-compat.md</a>,
+generated from the same source (<code>strop --dump-compat</code>) and pinned fresh by the gate.</p>
 
 <h2>sessions</h2>
 <p>Per-project sessions restore buffers and undo history across restarts. Nothing to

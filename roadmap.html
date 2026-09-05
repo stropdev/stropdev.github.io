@@ -36,6 +36,21 @@ surface area last. The load-bearing detail lives in the repo's
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.9.0 — revision-native git + services</strong> (0018):
+byte-precise diffs, structured index mutation (no patch text anywhere),
+<code>GitRevision</code> spans head/index/worktree/commit/merge-base,
+and one app event channel — async results paint the instant they land;
+per-workspace <code>languages.toml</code>; stale-answer guards on
+hover and diagnostics.</li>
+<li><strong>0.8.0 — text &amp; terminal correctness</strong> (0017):
+<code>LineLayout</code> owns the byte↔cell seam; grapheme-honest
+rendering, unicode <code>*</code>/<code>#</code>, char-counted
+<code>r</code>, visual block (<code>ctrl-v</code>) on cell columns,
+bracketed paste, pane-exact caret.</li>
+<li><strong>0.7.0 — one input machine</strong> (0016): every key event
+traverses one typed state machine; the table IS the trie; macros
+(<code>q</code>/<code>@</code>); semantic aliases; the generated
+compat report (<code>strop --dump-compat</code>).</li>
 <li><strong>0.6.1 — the trust release</strong> (plan 0015): every exit
 respects dirty documents (ctrl-c warns once, then forces); a pathless
 <code>:w</code> errors instead of lying; a failed shell filter never
@@ -87,17 +102,6 @@ encoding.</li>
 <p>Ordered by ROI: daily-driver value first, foundations that compound
 next, far-future last. Within a row, cheaper keys land first.</p>
 <ul>
-<li><strong>One input machine</strong> (0016, 0.7) — the walker emits
-typed commands, never strings; every key event, macro, and dot-repeat
-traverses it; aliases become semantic commands; the compatibility
-report generates from the same table. This is the grammar's final form.
-</li>
-<li><strong>Text and terminal correctness</strong> (0017, 0.8) —
-<code>LineLayout</code> (byte↔cell maps, grapheme boundaries) for every
-visible-line consumer; Unicode-honest <code>*</code>/<code>#</code> and
-<code>r</code>; visual block; pane-relative cursor geometry; bracketed
-paste. The work that makes real human text correct, not just ASCII.
-</li>
 <li><strong>Revision-native git + services</strong> (0018, 0.9) —
 byte-precise git content, structured index mutation (no hand-serialized
 patches), <code>Revision</code> spans live/worktree/index/commit/

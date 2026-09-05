@@ -30,6 +30,17 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.9.0 — 2026-09-05</h2>
+<p>Revision-native git and services (plan 0018): git content is byte-precise, index mutation is structured, and every async result wakes the UI.</p>
+<h3>Changed (architecture)</h3>
+<ul>
+<li><strong>Byte-precise git</strong>: <code>DiffLine</code> holds raw bytes + a newline flag; git&#x27;s &quot;\\ No newline at end of file&quot; marker is data now, never text that leaks into a staged blob.</li>
+<li><strong>Structured index mutation</strong>: staging/unstaging edits the index blob directly through libgit2 — no hand-serialized patches, no shell-outs, no path-quoting or CRLF hazards. Stage/unstage round-trips a missing final newline exactly (new tests pin it).</li>
+<li><strong><code>GitRevision</code> spans the four states</strong>: Head, Commit, Index, Worktree, MergeBase — with byte-level readers; permalinks resolve merge-bases.</li>
+<li><strong>Unified event source</strong>: one app channel; a reader thread translates terminal input; every job&#x27;s results forward the moment they land. The 500ms idle poll is gone — hover/diagnostics/shell/git results paint immediately.</li>
+<li><strong>Per-workspace language config</strong>: the process-global OnceLock is gone; <code>languages.toml</code> merges are cached per workspace root (a second project no longer reads the first project&#x27;s config).</li>
+<li><strong>Stale-answer guards</strong>: diagnostics carry the server&#x27;s document version (older batches are dropped, not misplaced); a hover that arrives after an edit never opens over changed text.</li>
+</ul>
 <h2>0.8.0 — 2026-09-05</h2>
 <p>Text and terminal correctness (plan 0017): one layout layer owns the byte↔cell seam, and the editor is honest on real human text.</p>
 <h3>Added</h3>
