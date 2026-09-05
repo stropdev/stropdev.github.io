@@ -30,6 +30,22 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.8.0 — 2026-09-05</h2>
+<p>Text and terminal correctness (plan 0017): one layout layer owns the byte↔cell seam, and the editor is honest on real human text.</p>
+<h3>Added</h3>
+<ul>
+<li><strong><code>LineLayout</code></strong> (strop-core): per-visible-line grapheme spans with byte↔display-cell maps — the single translation seam every visible-line consumer now reads.</li>
+<li><strong>Visual block mode</strong> (<code>ctrl-v</code>): rectangle select on CELL columns (wide chars and tabs can&#x27;t skew the columns apart), <code>x</code>/<code>d</code>/<code>y</code> on the rectangle, <code>c</code>/<code>I</code>/<code>A</code> with per-row text replication at Esc.</li>
+<li><strong>Bracketed paste</strong>: pastes insert as one undo unit of TEXT — no key interpretation, no <code>:</code> puns; normal-mode paste behaves like <code>p</code>.</li>
+<li><strong>The caret is cell-accurate</strong>: wide chars and tabs place it right, and splits place it in the RIGHT pane (the pane origin was never applied).</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>The paint loop walks graphemes with byte offsets — syntax, search, selection, diagnostic, and preview overlays no longer drift after the first multibyte char on a line.</li>
+<li><code>l</code>/<code>h</code> step char boundaries (a byte step from a multibyte lead clamped straight back — the &quot;stuck at é&quot; bug).</li>
+<li><code>r</code> counts characters, not bytes (<code>2rX</code> over ü is two chars).</li>
+<li><code>*</code>/<code>#</code> classify word chars by Unicode, not ASCII — café, münchen, and 変数 are words.</li>
+</ul>
 <h2>0.7.0 — 2026-09-05</h2>
 <p>One input machine (plan 0016, landed fully). Every normal-mode key event — letters, arrows, ctrl keys, Enter, Tab — traverses a single typed state machine whose trie IS the command table; the machine emits typed actions (a table row with count/register, or a grammar Command) and never an assembled string.</p>
 <h3>Added</h3>
