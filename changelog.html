@@ -30,6 +30,13 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.9.2 — 2026-09-05</h2>
+<p>The structural half of plan 0020.</p>
+<h3>Changed (architecture)</h3>
+<ul>
+<li><strong>Universal anchor mapping</strong>: every committed transaction emits its ops through one ChangeMap applied to marks, jumplists, and every OTHER pane&#x27;s selections of the document (the active pane&#x27;s cursors remain each command&#x27;s own job; a watermark guarantees an op never shifts an anchor twice, even across multi-commit revisions).</li>
+<li><strong>Project-config trust gate</strong>: a project&#x27;s <code>.strop/languages.toml</code> that supplies the server <code>command</code>/<code>args</code> is executable content — attach is refused until <code>:trust</code> (once, remembered per project root in the state dir). Init-options-only configs (pythonPath-style) stay free.</li>
+</ul>
 <h2>0.9.1 — 2026-09-05</h2>
 <p>The third review round (plan 0020): fourteen contract fixes, each with its regression test.</p>
 <h3>Fixed</h3>

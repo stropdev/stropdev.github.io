@@ -36,6 +36,13 @@ surface area last. The load-bearing detail lives in the repo's
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.9.1/0.9.2 — contracts, not callers</strong> (0020):
+overwrite-safe <code>:w {path}</code>, streaming pickers tagged by
+generation, byte-exact replace past Unicode, composition previews from
+the typed plan, revision-keyed syntax cache, LSP answers checked
+against the server's own clock, git discard as one undo unit,
+unopened-file replaces as real buffers, anchor mapping through every
+transaction, and a trust gate on project-supplied executables.</li>
 <li><strong>0.9.0 — revision-native git + services</strong> (0018):
 byte-precise diffs, structured index mutation (no patch text anywhere),
 <code>GitRevision</code> spans head/index/worktree/commit/merge-base,
@@ -108,6 +115,13 @@ patches), <code>Revision</code> spans live/worktree/index/commit/
 merge-base; service envelopes give every async reply a document
 revision; per-workspace language config; a unified event source kills
 the 500ms idle latency.</li>
+<li><strong>1.0 hardening</strong> — incremental tree-sitter (revision-
+tagged edits into the old tree), <code>DocumentSource</code> (file/
+scratch/git-revision/output/help formalizes surfaces-as-buffers),
+<code>PathBuf</code> document paths, and the perf bench suite (1/10/
+100MB, 100k-line navigation, 1k cursors, p50/p95/p99 input-to-frame)
+as the gate before any perf claims. Nucleo vs the custom picker
+scorer: an evaluation with numbers, not a swap on principle.</li>
 <li><strong>Debugger</strong> (0019, researched — deliberately later) —
 DAP over three toolchains only (Rust/C/C++ via <code>lldb-dap</code>,
 Python via <code>debugpy</code>), zero-config scenario discovery, and
