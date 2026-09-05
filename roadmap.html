@@ -36,6 +36,11 @@ surface area last. The load-bearing detail lives in the repo's
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.6.0 — the input layer</strong>: a key-event walker with
+typed parser state (counts/registers/operators/prefixes); one command
+table with stable ids drives dispatch, <code>Space ?</code>, and
+which-key; panes own their selections and scroll; coordinate newtypes
+guard the Buffer/LSP seams.</li>
 <li><strong>0.5.0 — the restructure</strong>: generational document ids
 (the index-alias bug class is dead), one SelectionSet for
 cursor/visual/multicursor, MotionShape, char-honest grammar args
@@ -73,15 +78,6 @@ encoding.</li>
 <p>Order is priority. What remains of
 <code>plans/0014-safety-and-restructure.md</code> after 0.5.0:</p>
 <ul>
-<li><strong>The input trie</strong> (0008 stage 2): pending strings die;
-a key-event trie + typed parser state absorbs operators/counts/registers;
-the registry and BINDINGS merge into one command table with stable IDs
-(macros, palette, config rebinds ride it).</li>
-<li><strong>ViewModel split</strong> — views own selections+scroll per
-pane (SelectionSet is unified; per-pane views remain).</li>
-<li><strong>Typed coordinate newtypes</strong> — ByteOffset/LineIndex/
-ByteColumn/Utf16Column/DisplayColumn as real types at the Buffer API
-(the conversion functions and boundary already exist).</li>
 <li><strong>The differential gate grows teeth</strong> — wider corpora,
 register/mark/jumplist comparison, property-generated command streams.</li>
 <li><strong>Git depth</strong> — symbol history, changed-symbol
