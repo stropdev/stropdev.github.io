@@ -36,6 +36,15 @@ surface area last. The load-bearing detail lives in the repo's
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.6.1 — the trust release</strong> (plan 0015): every exit
+respects dirty documents (ctrl-c warns once, then forces); a pathless
+<code>:w</code> errors instead of lying; a failed shell filter never
+touches the source; <code>:wq</code> closes the window, not the shared
+document; edit cascades can't stack phantom cursors; <code>d0</code>,
+count-capped accumulation, and count-aware arrows restore vim canon;
+session undo histories carry a content identity and never replay
+against changed disk text; <code>didClose</code> completes the LSP
+lifecycle.</li>
 <li><strong>0.6.0 — the input layer</strong>: a key-event walker with
 typed parser state (counts/registers/operators/prefixes); one command
 table with stable ids drives dispatch, <code>Space ?</code>, and
@@ -86,6 +95,23 @@ first: <code>Ctrl-d/u/f/b</code>, <code>zz/zt/zb</code>,
 block and <code>:%s</code> + ex ranges. This is what "vim grammar" means
 when strop is your only editor — and every motion arrives with
 differential cases against nvim.</li>
+<li><strong>One input machine</strong> (0016, 0.7) — the walker emits
+typed commands, never strings; every key event, macro, and dot-repeat
+traverses it; aliases become semantic commands; the compatibility
+report generates from the same table. This is the grammar's final form.
+</li>
+<li><strong>Text and terminal correctness</strong> (0017, 0.8) —
+<code>LineLayout</code> (byte↔cell maps, grapheme boundaries) for every
+visible-line consumer; Unicode-honest <code>*</code>/<code>#</code> and
+<code>r</code>; visual block; pane-relative cursor geometry; bracketed
+paste. The work that makes real human text correct, not just ASCII.
+</li>
+<li><strong>Revision-native git + services</strong> (0018, 0.9) —
+byte-precise git content, structured index mutation (no hand-serialized
+patches), <code>Revision</code> spans live/worktree/index/commit/
+merge-base; service envelopes give every async reply a document
+revision; per-workspace language config; a unified event source kills
+the 500ms idle latency.</li>
 <li><strong>LSP navigation depth</strong> — the reader-first promise:
 references (<code>gr</code>), implementation, type definition, document
 symbols, diagnostic traversal (<code>]d</code>/<code>[d</code>). The
