@@ -36,6 +36,19 @@ surface area last. The load-bearing detail lives in the repo's
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.5.0 — the restructure</strong>: generational document ids
+(the index-alias bug class is dead), one SelectionSet for
+cursor/visual/multicursor, MotionShape, char-honest grammar args
+(<code>f é</code> works), an LSP server pool, the leaf command registry,
+semantic dot-repeat, ActionPlan (preview and execute share one object),
+and the nvim differential harness in the CI gate.</li>
+<li><strong>Git as a data model</strong>: HEAD → index → worktree → live
+are four real states; the gutter tints staged lines; verbs name their
+edge (stage <code>Space g s</code>, unstage <code>Space g S</code>,
+discard-unstaged <code>Space g u</code>); permalinks pin the surface's
+commit; visual <code>Space g h</code> is <code>git log -L</code> on the
+selection.</li>
+
 <li>The operator-pending preview: <code>d3w</code> shows the cut before
 you make it, and preview/execute share one resolver.</li>
 <li>Multicursor (<code>Q</code> toggle, <code>Space c</code> stack),
@@ -57,30 +70,23 @@ encoding.</li>
 </ul>
 
 <h2>Next</h2>
-<p>Order is priority. Waves 2–4 of
-<code>plans/0014-safety-and-restructure.md</code>:</p>
+<p>Order is priority. What remains of
+<code>plans/0014-safety-and-restructure.md</code> after 0.5.0:</p>
 <ul>
-<li><strong>Stable identities, not indexes</strong> — generational
-DocumentId/ViewId/PaneId; the parallel-vectors invariant moves into the
-type system. A document owns text+history+syntax; a view owns
-selections+scroll; panes place views.</li>
-<li><strong>Typed coordinates</strong> — ByteOffset / LineIndex /
-ByteColumn / Utf16Column / DisplayColumn with centralised conversions;
-a unified SelectionSet for cursor, visual, and multicursor.</li>
-<li><strong>The input registry</strong> (0008 grown up): a key-event
-trie + typed parser state, one command registry driving dispatch,
-which-key, help, dot-repeat (semantic, not string replay), and
-macros.</li>
-<li><strong>ActionPlan everywhere</strong> — every command resolves to
-edits + selections + registers + mode + effects; preview and execute
-apply the same object. "The preview cannot lie" becomes structural.</li>
-<li><strong>The neovim differential gate</strong> (0006 tier 3): one
-pinned nvim, property-generated corpora, every new motion ships with
-diff cases.</li>
-<li><strong>Git as a data model</strong> — HEAD → index → worktree →
-live document as four explicit states; revisioned SourceLocations;
-line/selection/symbol history and changed-symbol navigation ahead of
-more staging UI.</li>
+<li><strong>The input trie</strong> (0008 stage 2): pending strings die;
+a key-event trie + typed parser state absorbs operators/counts/registers;
+the registry and BINDINGS merge into one command table with stable IDs
+(macros, palette, config rebinds ride it).</li>
+<li><strong>ViewModel split</strong> — views own selections+scroll per
+pane (SelectionSet is unified; per-pane views remain).</li>
+<li><strong>Typed coordinate newtypes</strong> — ByteOffset/LineIndex/
+ByteColumn/Utf16Column/DisplayColumn as real types at the Buffer API
+(the conversion functions and boundary already exist).</li>
+<li><strong>The differential gate grows teeth</strong> — wider corpora,
+register/mark/jumplist comparison, property-generated command streams.</li>
+<li><strong>Git depth</strong> — symbol history, changed-symbol
+navigation, branch review as a file sequence; explicit unsupported states
+(binary, renames, CRLF, modes, merges, conflicts).</li>
 <li><strong>Motion canon</strong> — ZZ, <code>{</code>/<code>}</code>,
 <code>(</code>/<code>)</code>, ge/gE, H/M/L, zz/zt/zb,
 Ctrl-d/u/f/b, <code>gv</code>, <code>gi</code>, <code>g;</code>/<code>g,</code>,
