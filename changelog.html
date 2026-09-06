@@ -30,6 +30,16 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.13.0 — 2026-09-06</h2>
+<p>PathBuf paths end to end (plan 0026) + the file-size split wave.</p>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Non-UTF-8 filenames work end to end</strong>: the argv file operand comes from <code>args_os</code>, <code>open_document</code>/<code>open_buffer</code>/<code>save_as</code>/<code>for_path</code> take <code>Path</code>, and the LSP/picker <code>display().to_string()</code> roundtrips are gone — a <code>b&quot;\xff.rs&quot;</code> file opens, highlights, saves, and a gd into it lands (regression test pins it).</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li>File-size discipline wave (no behavior change, public APIs unchanged): <code>strop-core</code> lib.rs → buffer.rs + range.rs; <code>strop-grammar</code> resolve.rs → resolve/{mod,motions,objects,search}; <code>strop-git</code> lib.rs → {diff,repo,revision}; <code>strop-lsp</code> lib.rs → {caps,client,convert}; <code>editor/picker.rs</code> → picker/{mod,drain,accept, replace,preview,tests}; <code>editor/tests.rs</code> → tests/ one file per module. Keymap table exempt per AGENTS.md.</li>
+</ul>
 <h2>0.12.0 — 2026-09-06</h2>
 <p>The 1.0 perf gate (plan 0025) + jumplist fixes.</p>
 <h3>Fixed</h3>

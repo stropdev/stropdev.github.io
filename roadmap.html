@@ -39,6 +39,11 @@ surface area last. The load-bearing detail lives in the repo's
 <li><strong>0.10.2 — backtracking-safe incremental parse</strong>:
 the rope-chunk callback is random-access (tree-sitter backtracks on
 error recovery; the forward-only assumption crashed).</li>
+<li><strong>0.13.0 — PathBuf paths + the split wave</strong> (0026):
+non-UTF-8 filenames open/highlight/save end to end (args_os, Path APIs,
+no display() roundtrips); over-ceiling files split by responsibility
+(strop-core, resolve, strop-git, strop-lsp, picker, editor tests) with
+public APIs unchanged.</li>
 <li><strong>0.12.0 — the 1.0 perf gate</strong> (0025):
 <code>strop --bench</code> measures 1/10/100MB buffers, 100k-line
 navigation, 1k cursors, and p50/p95/p99 input-to-frame on the
@@ -137,7 +142,8 @@ next, far-future last. Within a row, cheaper keys land first.</p>
 <ul>
 <li><strong>1.0 hardening</strong> — <em>perf gate shipped (0.12.0)</em>;
 the suite is the standing regression surface. What remains for 1.0:
-<code>DocumentSource</code> (0020), PathBuf paths, and whatever the
+<del><code>DocumentSource</code></del> (0021) and <del>PathBuf
+paths</del> (0026) are done — 1.0 is now hardening plus whatever the
 bench numbers surface as usage grows.</li>
 <li><strong>Debugger</strong> (0019, researched — deliberately later) —
 DAP over three toolchains only (Rust/C/C++ via <code>lldb-dap</code>,
