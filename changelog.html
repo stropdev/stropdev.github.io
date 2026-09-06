@@ -30,6 +30,15 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.10.0 — 2026-09-06</h2>
+<p>Document identity and the last 0018 seams (plan 0021). No new user-visible features — the document model is formalized and the render path is clean.</p>
+<h3>Changed (architecture)</h3>
+<ul>
+<li><strong>The gutter never diffs on the render path</strong>: edits mark the hunk snapshot stale; a worker computes against a shared rope clone and posts the revision-keyed result. Stale snapshots drop and re-enqueue; signs clear honestly for the frame instead of painting wrong lines.</li>
+<li><strong>Every interactive LSP reply is stale-droppable by construction</strong>: goto/locations answers carry the asking document&#x27;s revision; a reply against another edit state never navigates.</li>
+<li><strong><code>Buffer.path</code> is <code>PathBuf</code></strong> (0020 review): the filesystem model isn&#x27;t UTF-8 — a file with non-UTF-8 bytes in its name opens, edits, and round-trips (test-pinned).</li>
+<li><strong><code>DocumentSource</code></strong> (File / Scratch / Surface / Output): readonly and save refusal derive from the source at construction — no more <code>readonly</code>/<code>name</code>/path conventions kept in sync by callers. The document layer splits into <code>document/{mod,surfaces}.rs</code>; the git surface model lives with the payload, and <code>:w</code> on a readonly buffer names it.</li>
+</ul>
 <h2>0.9.2 — 2026-09-05</h2>
 <p>The structural half of plan 0020.</p>
 <h3>Changed (architecture)</h3>
