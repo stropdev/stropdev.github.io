@@ -30,6 +30,28 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.10.3 — 2026-09-06</h2>
+<p>The consolidation round (plan 0023): review 4&#x27;s 18 contract probes ship in the repo as the acceptance suite (<code>editor/contract_probes.rs</code>) — all green.</p>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Split from scratch no longer strands the pane</strong> (panes rebind before the scratch drops).</li>
+<li><strong>Clipboard replies retain their destination document</strong> — a switch mid-read drops the paste with a message instead of inserting into the wrong buffer.</li>
+<li><strong>Saving through a symlink writes through</strong> (vim&#x27;s rule: the link survives).</li>
+<li><strong>More panes than cells renders</strong> instead of panicking.</li>
+<li><strong><code>df2</code> deletes through <code>2</code></strong> (a digit after <code>f</code> is the target).</li>
+<li><strong><code>:1y</code> fills the register <code>p</code> reads.</strong></li>
+<li><strong>Stale replacement ranges over Unicode edits report stale</strong>, never panic; search previews never start mid-char.</li>
+<li><strong>Unicode picker rows match</strong> (the ASCII-only scorer input was library misuse); match columns are char indices.</li>
+<li><strong>Tab glyph and caret read one layout</strong> (config&#x27;s tab width drives both; one LineLayout per line, not per grapheme).</li>
+</ul>
+<h3>Changed (architecture)</h3>
+<ul>
+<li><strong><code>epoch</code> is THE text clock</strong> — syntax invalidation, the tree bridge, and LSP freshness all read the counter that moves on every mutation, including mid-insert-session and through undo. Anchor mapping runs on undo/redo too, and its watermark is per-document.</li>
+<li><strong>Git gutter results carry their document id</strong> — a snapshot can&#x27;t populate the wrong buffer.</li>
+<li><strong>The release target builds from the test stage</strong> — a tag that fails the gate can&#x27;t ship. The installer&#x27;s checksum verification is mandatory, matching the updater.</li>
+<li><strong>Preview claims are precise</strong>: composition windows (search, replace, git) preview live; instant operator+object chords execute at the completing key. The site says so.</li>
+<li>The scorebench example measures the real <code>Picker::refilter</code> path.</li>
+</ul>
 <h2>0.10.2 — 2026-09-06</h2>
 <h3>Fixed</h3>
 <ul>
