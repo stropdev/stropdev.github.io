@@ -119,17 +119,10 @@ encoding.</li>
 <p>Ordered by ROI: daily-driver value first, foundations that compound
 next, far-future last. Within a row, cheaper keys land first.</p>
 <ul>
-<li><strong>Revision-native git + services</strong> (0018, 0.9) —
-byte-precise git content, structured index mutation (no hand-serialized
-patches), <code>Revision</code> spans live/worktree/index/commit/
-merge-base; service envelopes give every async reply a document
-revision; per-workspace language config; a unified event source kills
-the 500ms idle latency.</li>
 <li><strong>1.0 hardening</strong> — the perf bench suite (1/10/100MB,
 100k-line navigation, 1k cursors, p50/p95/p99 input-to-frame) as the
-gate before any perf claims. <em>Landed: incremental tree-sitter
-(property-pinned incremental==fresh) and the nucleo scorer swap
-(4× on the 100k refilter — docs/nucleo-decision.md).</em></li>
+gate before any perf claims, plus whatever the numbers surface. No
+measured pain, no rewrite.</li>
 <li><strong>Debugger</strong> (0019, researched — deliberately later) —
 DAP over three toolchains only (Rust/C/C++ via <code>lldb-dap</code>,
 Python via <code>debugpy</code>), zero-config scenario discovery, and
@@ -137,8 +130,8 @@ Python via <code>debugpy</code>), zero-config scenario discovery, and
 <code>.strop/debug.json</code> primary. UI is editor-native: gutter
 breakpoints and the instruction arrow on the real document, stack and
 variables as readonly tree buffers in a split, stepping as
-<code>Space D</code> motions. Editor experience lands first — no new
-subsystem before 0016–0018.</li>
+<code>Space D</code> motions. Editor experience landed — this is the next subsystem after the
+1.0 hardening gate.</li>
 <li><strong>The differential gate grows teeth</strong> — every fix so far
 became a corpus case; next is property-generated command streams and
 register/mark/jumplist comparison. Cheap, and it compounds: every future
@@ -151,10 +144,6 @@ resolvers on typed syntax, with lexical fallbacks.</li>
 changed-symbol navigation, branch review as a file sequence. The dive
 chain + <code>log -L</code> already cover the common case; these are the
 power layers on top, and they ride SourceLocation.</li>
-<li><strong>Measured perf</strong> — snapshot-based diff/LSP sync,
-gutter interval index, real benchmarks (1/10/100MB opens, 100k-line
-navigation, 1000 cursors) before any rope surgery. No measured pain, no
-rewrite.</li>
 <li><strong>A plugin boundary</strong> — post-registry-maturity: stable
 command ids and typed events first; a sandboxed process/WASM edge later.
 Freezing unstable internals into a public contract is the failure mode.</li>
