@@ -30,6 +30,11 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.10.2 — 2026-09-06</h2>
+<h3>Fixed</h3>
+<ul>
+<li><strong>A crash (and a release-build garbage-read) in incremental syntax highlighting</strong>: the rope-chunk parse callback assumed tree-sitter requests bytes monotonically. On error recovery in large template-heavy files it backtracks; <code>byte - offset</code> underflowed and panicked in debug, and could feed garbage slices in release. Repro: gd into <code>/usr/include/c++/13/optional</code> and back. The callback now uses ropey&#x27;s random-access <code>chunk_at_byte</code>. Regression test pins backtracking-heavy inputs.</li>
+</ul>
 <h2>0.10.1 — 2026-09-06</h2>
 <p>The 1.0-hardening remainder (plan 0022): incremental tree-sitter and the nucleo decision.</p>
 <h3>Changed</h3>
