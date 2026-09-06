@@ -39,6 +39,12 @@ surface area last. The load-bearing detail lives in the repo's
 <li><strong>0.10.2 — backtracking-safe incremental parse</strong>:
 the rope-chunk callback is random-access (tree-sitter backtracks on
 error recovery; the forward-only assumption crashed).</li>
+<li><strong>0.11.0 — the transaction gateway, verified</strong> (0024):
+one validated <code>apply()</code> for atomic edits (replace, git
+discard) on the same commit seam as typing; the editor protocol is
+model-checked in TLC (<code>specs/EditorProtocol.tla</code>, mutant
+caught) and a model-based conformance harness drives generated streams
+through the production path.</li>
 <li><strong>0.10.1 — incremental tree-sitter + nucleo</strong> (0022):
 the parse tree tracks every edit transaction (InputEdits at commit,
 reparse from rope chunks against the old tree); the picker scores with

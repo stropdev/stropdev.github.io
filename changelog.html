@@ -30,6 +30,14 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.11.0 — 2026-09-06</h2>
+<p>The transaction gateway + verified state machine (plan 0024).</p>
+<h3>Added</h3>
+<ul>
+<li><strong>The gateway</strong>: <code>apply(document, base_revision, changeset)</code> — typed validation (stale revision, readonly, invalid range, missing document), one undo unit, and every side effect (history, anchors, tree bridge, clock) in one place. Project replace and git discard flow through it; the typing path flows through the same commit seam.</li>
+<li><strong><code>specs/EditorProtocol.tla</code></strong> — the editor&#x27;s document/pane/ transaction/service protocol model-checked by TLC: NoStalePane, NoMisapply, NoPartialCommit, monotonic clock. The kept mutant (an unguarded Deliver) is caught by the gate — the invariants have teeth. In the docker gate (<code>compose run model</code>) and CI.</li>
+<li><strong>The conformance harness</strong> — a String reference model and the real editor run the same generated streams through the production path; text equality + invariants asserted every step (found vim&#x27;s insert-Esc cursor move and the welcome card&#x27;s first key on day one).</li>
+</ul>
 <h2>0.10.3 — 2026-09-06</h2>
 <p>The consolidation round (plan 0023): review 4&#x27;s 18 contract probes ship in the repo as the acceptance suite (<code>editor/contract_probes.rs</code>) — all green.</p>
 <h3>Fixed</h3>
