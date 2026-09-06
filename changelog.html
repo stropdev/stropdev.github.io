@@ -30,6 +30,13 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.10.1 — 2026-09-06</h2>
+<p>The 1.0-hardening remainder (plan 0022): incremental tree-sitter and the nucleo decision.</p>
+<h3>Changed</h3>
+<ul>
+<li><strong>Syntax highlighting parses incrementally</strong>: the highlighter keeps the parse tree; every transaction (typing, undo, redo, git discard, ex edits) applies its ops as tree-sitter InputEdits at commit time — a cheap pointer walk — and the reparse runs from rope chunks against the old tree, never a from-scratch parse and never a materialized document String. Correctness is property-pinned: incremental spans equal a fresh parse across edit scripts.</li>
+<li><strong>The picker&#x27;s scorer is nucleo-matcher</strong> (docs/nucleo-decision.md): 42–50ms → 12ms on a 100k-item refilter, identical hit sets, boundary-preferred match columns for the accent render. Adopted on numbers, not principle — the bench lives at <code>cargo run -p strop-picker --example scorebench --release</code>.</li>
+</ul>
 <h2>0.10.0 — 2026-09-06</h2>
 <p>Document identity and the last 0018 seams (plan 0021). No new user-visible features — the document model is formalized and the render path is clean.</p>
 <h3>Changed (architecture)</h3>

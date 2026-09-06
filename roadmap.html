@@ -36,6 +36,10 @@ surface area last. The load-bearing detail lives in the repo's
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.10.1 — incremental tree-sitter + nucleo</strong> (0022):
+the parse tree tracks every edit transaction (InputEdits at commit,
+reparse from rope chunks against the old tree); the picker scores with
+nucleo-matcher, adopted on bench numbers.</li>
 <li><strong>0.10.0 — document identity</strong> (0021): the gutter never
 diffs on the render path (revision-keyed snapshots, workers own the
 diff); every interactive LSP reply is stale-droppable by construction;
@@ -121,11 +125,11 @@ patches), <code>Revision</code> spans live/worktree/index/commit/
 merge-base; service envelopes give every async reply a document
 revision; per-workspace language config; a unified event source kills
 the 500ms idle latency.</li>
-<li><strong>1.0 hardening</strong> — incremental tree-sitter (revision-
-tagged edits into the old tree) + the perf bench suite (1/10/100MB,
+<li><strong>1.0 hardening</strong> — the perf bench suite (1/10/100MB,
 100k-line navigation, 1k cursors, p50/p95/p99 input-to-frame) as the
-gate before any perf claims. Nucleo vs the custom picker scorer: an
-evaluation with numbers, not a swap on principle.</li>
+gate before any perf claims. <em>Landed: incremental tree-sitter
+(property-pinned incremental==fresh) and the nucleo scorer swap
+(4× on the 100k refilter — docs/nucleo-decision.md).</em></li>
 <li><strong>Debugger</strong> (0019, researched — deliberately later) —
 DAP over three toolchains only (Rust/C/C++ via <code>lldb-dap</code>,
 Python via <code>debugpy</code>), zero-config scenario discovery, and
