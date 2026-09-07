@@ -30,6 +30,23 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.16.0 — 2026-09-07</h2>
+<p>Trustworthy diagnostics and the first verified SSH log-reading milestone (plans 0033/0034). The broader remote workspace work is tracked separately in 0036.</p>
+<h3>Added</h3>
+<ul>
+<li><code>strop-remote</code>, an independent crate for validated remote identities and owned read-only SSH/SFTP transport. Open <code>ssh://[user@]host[:port]/absolute/path</code> from the CLI, <code>:e</code>, <code>:view</code> or a path-bearing split.</li>
+<li>Real remote buffers support existing search/navigation/selection/yank. Escape cancels a pending read; <code>:e!</code> refreshes a snapshot without losing split positions. Authentication uses existing OpenSSH configuration noninteractively, with strict host-key checking. Native Unix path bytes survive the wire; snapshots are bounded.</li>
+<li><code>+LINE FILE</code> and local <code>FILE:LINE</code> CLI locations, with checked line numbers and <code>--</code> for literal colon-suffixed filenames.</li>
+<li>Bounded SFTP/lifecycle TLA+ models, fairness-qualified progress checks, non-vacuity witnesses and deliberate fault variants, tied to Rust and real SSH interoperability checks. This is not an unbounded proof of the implementation.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>Permalinks retain full hosts, schemes, ports and nested repository paths. OpenSSH evaluates aliases (including dotted aliases); unresolved failures cannot copy guessed URLs. Native source paths remain separate from display labels.</li>
+<li>Malformed language configuration reaches both modeline and structured trace. Missing executables report their command and a useful installation/configuration hint; startup no longer leaves orphaned version-probe processes.</li>
+<li>Invalid completed normal input no longer disappears into pending state. First-nonblank insert retains one command identity for macro/repeat behavior.</li>
+<li>Closing the last read-only surface no longer reads a dead current document.</li>
+<li>Full replay preserves remote provenance rather than decoding an SSH URI as a legacy local path. Release publication follows actual workspace dependencies.</li>
+</ul>
 <h2>0.15.1 — 2026-09-07</h2>
 <p>Modeline and Git-surface polish, separately from the 0.15.0 correctness release (plan 0032).</p>
 <h3>Changed</h3>
