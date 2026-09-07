@@ -335,3 +335,8 @@ html, body {
 .foot-right { margin-left: auto; }
 .caret-dot { display: inline-block; width: 0.5ch; height: 0.9em; background: var(--accent); vertical-align: text-bottom; animation: blink 1.06s steps(1) infinite; }
 .hero { padding-top: 4rem; }
+
+/* Documentation links remain readable in every palette; anchors clear the topbar. */
+.docs a, .roadmap a { color: var(--accent); text-underline-offset: .2em; }
+.docs a:hover, .roadmap a:hover { color: var(--text); }
+.docs h2, .roadmap h2, .roadmap h3 { scroll-margin-top: 4.5rem; }

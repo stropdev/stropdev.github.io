@@ -6,7 +6,7 @@
 <title>strop — see the cut before you make it</title>
 <meta name="description" content="strop is a modal text editor in Rust: Neovim's hands, Helix's spine, rootle's eyes, GitLens' memory.">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/site.css?v=2">
+<link rel="stylesheet" href="assets/site.css?v=3">
 </head>
 <body>
 <header class="topbar">
@@ -90,7 +90,7 @@
   <p class="tagline">see the cut before you make it.</p>
   <p class="lineage">Neovim's hands · Helix's spine · rootle's eyes · GitLens' memory</p>
 
-  <p class="status"><span class="chip">in the forge</span></p>
+  <p class="status"><span class="chip">v0.16 — owned SSH log buffers</span></p>
 
   <img class="demo" src="img/demo.gif" alt="strop demo — operator-pending preview, picker, git hunks">
 
@@ -124,6 +124,14 @@
   </div>
   <p class="alt update-line">already installed? <code data-install-update>strop update</code> — checks, verifies, swaps itself · <a href="./changelog.html">changelog</a> · <a href="./roadmap.html">roadmap</a></p>
   <p class="alt" data-install-note>prebuilt static binary · x86_64 + arm64 · linux + macOS · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a></p>
+  <section aria-labelledby="remote-heading">
+    <h2 class="section-head" id="remote-heading">read remote logs with the same editor</h2>
+    <p class="alt"><code>strop ssh://devbox/var/log/app.log</code><br>
+    Real read-only buffers, normal search and yank, cancellable loading, and existing
+    OpenSSH configuration. No remote setup daemon, no local filename stand-in.</p>
+    <p class="alt"><a href="./docs.html#ssh">SSH usage and guarantees</a> ·
+    <a href="./roadmap.html#remote-workspaces">the broader remote workspace roadmap</a></p>
+  </section>
 
   <nav class="links">
     <a href="./docs.html">docs</a>

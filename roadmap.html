@@ -6,7 +6,7 @@
 <title>strop — roadmap</title>
 <meta name="description" content="Where strop is going: safety first, then identity and coordinates, then the input registry, then git as a data model.">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/site.css?v=2">
+<link rel="stylesheet" href="assets/site.css?v=3">
 <style>
   main.roadmap { max-width: 52rem; margin: 0 auto; padding: 5.5rem 1.25rem 4rem; }
   .roadmap h1 { color: var(--accent); font-size: 1.6rem; margin: 0 0 .5rem; }
@@ -33,9 +33,35 @@
 <p>Where strop is going. Order is priority: editing safety first, new
 surface area last. The load-bearing detail lives in the repo's
 <code>plans/</code> — this page is the public summary.</p>
+<h2 id="remote-workspaces">Remote workspaces — current delivery sequence</h2>
+<p><strong>v0.16:</strong> read-only SSH/SFTP snapshots, an independent
+<code>strop-remote</code> crate, strict host-key/authentication policy, cancellable
+native-byte reads and bounded protocol models.</p>
+<p><strong>Next accepted delivery:</strong> byte ranges, bounded tail/follow with
+reset handling; non-authenticating host/path completion; shared owned connections;
+read-only remote directory browsing; remote LSP and read-oriented Git semantics.
+These use the same buffer, job, identity and replay boundaries, with new protocol
+models and real runtime checks before release.</p>
+<p><strong>Later:</strong> conflict-safe remote writes and file operations, credentials
+and elevation, more transports, caches/backup/locks, archives and encrypted resources.
+The full <a href="https://github.com/stropdev/strop/blob/main/plans/0035-remote-workflow-roadmap.md">TRAMP-style capability inventory</a>
+has priorities and acceptance gates rather than a blanket parity promise.</p>
+<h3>Dev Containers complement remote access</h3>
+<p>A container transport accesses a running container; Dev Containers provisions and
+configures a workspace from <code>devcontainer.json</code>. The
+<a href="https://github.com/stropdev/strop/blob/main/plans/0037-devcontainers-and-workspace-contexts.md">researched Dev Containers plan</a>
+keeps those layers separate while reusing filesystem, process, workspace identity,
+LSP and Git semantics. Builds, Features, mounts and lifecycle hooks require explicit
+trust. Implementation is planned for later, not part of v0.16.</p>
+
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.16.0 — trustworthy failures and SSH log buffers</strong>:
+full permalink hosts/aliases, visible LSP configuration/startup errors, CLI line
+locations, and owned read-only remote transport with model/runtime verification.</li>
+<li><strong>0.15.0 / 0.15.1 — correctness and presentation</strong>:
+the P1/P2 correctness program and separately shipped modeline/Git polish.</li>
 <li><strong>0.10.2 — backtracking-safe incremental parse</strong>:
 the rope-chunk callback is random-access (tree-sitter backtracks on
 error recovery; the forward-only assumption crashed).</li>
@@ -136,9 +162,9 @@ enforced at the mutation boundary, honest LSP versions + position
 encoding.</li>
 </ul>
 
-<h2>Next</h2>
-<p>Ordered by ROI: daily-driver value first, foundations that compound
-next, far-future last. Within a row, cheaper keys land first.</p>
+<h2>Other later work</h2>
+<p>The remote workspace sequence above is the current priority. These independent
+directions remain subject to their own design and verification gates.</p>
 <ul>
 <li><strong>1.0 hardening</strong> — <em>perf gate shipped (0.12.0)</em>;
 the suite is the standing regression surface. What remains for 1.0:
@@ -152,8 +178,8 @@ Python via <code>debugpy</code>), zero-config scenario discovery, and
 <code>.strop/debug.json</code> primary. UI is editor-native: gutter
 breakpoints and the instruction arrow on the real document, stack and
 variables as readonly tree buffers in a split, stepping as
-<code>Space D</code> motions. Editor experience landed — this is the next subsystem after the
-1.0 hardening gate.</li>
+<code>Space D</code> motions. This remains a later subsystem, not implied by the
+remote snapshot release.</li>
 <li><strong>The differential gate grows teeth</strong> — every fix so far
 became a corpus case; next is property-generated command streams and
 register/mark/jumplist comparison. Cheap, and it compounds: every future
