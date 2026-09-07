@@ -166,6 +166,11 @@ encoding.</li>
 <p>The remote workspace sequence above is the current priority. These independent
 directions remain subject to their own design and verification gates.</p>
 <ul>
+<li><strong>GUI feasibility evaluation — no commitment</strong>: investigate IME,
+accessibility, font/HiDPI and native input benefits against packaging, performance
+and maintenance costs. Any prototype must share editor/workspace semantics with the
+TUI, not fork them. Helix's frontend-separation work is a research lead, not a claim
+that a GUI is decided or shipped. A documented no-go remains a valid outcome.</li>
 <li><strong>1.0 hardening</strong> — <em>perf gate shipped (0.12.0)</em>;
 the suite is the standing regression surface. What remains for 1.0:
 <del><code>DocumentSource</code></del> (0021) and <del>PathBuf
