@@ -30,6 +30,31 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.15.0 — 2026-09-07</h2>
+<p>The complete P1/P2 correctness roadmap (0031).</p>
+<h3>Fixed</h3>
+<ul>
+<li>LSP replies carry their initiating request, server, document incarnation, revision and negotiated encoding. Reordered replies and revision zero cannot bypass ownership checks; closing and reopening a file starts a fresh lifecycle.</li>
+<li>Session and trust updates use private exclusive staging and atomic replacement. Failures preserve the old snapshot and are reported. Native filenames round-trip without opening a lossy Unicode alias; ambiguous legacy paths are rejected.</li>
+<li>Counted incremental searches retain every cursor&#x27;s original selection and view. Prompt edits, acceptance and cancellation share one reducer. Block selection, yank and paste use configured tab/display-cell geometry; edits preserve CRLF.</li>
+<li>Search uses a bounded Vim-magic regex dialect with explicit unsupported-syntax errors and actual match ranges. Unicode collections retain complete ranges.</li>
+<li>File opens, saves, session persistence and native Git work run off input dispatch. Delayed results cannot steal focus, overwrite newer edits or mark them saved. Each pane keeps its own horizontal display-cell viewport and aligned overlays.</li>
+<li>Every worker result is owned and terminal, including failure, panic and cancellation. Failed or cancelled previews no longer masquerade as empty files or perpetually loading content. Git index mutations are serialized.</li>
+<li>Hunk discard replaces the matching full old/new extent without duplicating context. File saves retain cursor placement while unrelated anchors follow the edit journal.</li>
+</ul>
+<h3>Added</h3>
+<ul>
+<li><code>--replay TRACE</code> reconstructs a complete full-content capture and injects recorded service events without repeating filesystem reads, shell commands or LSP traffic. Logical state and run-length-encoded terminal cell/style observations must agree.</li>
+<li><code>--export-metadata TRACE</code> emits only event categories and sequence numbers: no keys, paths, content, commands, messages or arbitrary payloads. It is explicitly not replayable. Capture caps produce a visible terminal/incomplete marker.</li>
+<li>Stateful transaction/service oracles generate, shrink and replay failing recipes; the protocol gate checks the clean model and its deliberately stale-delivery mutant.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li>Rope/history mutation is sealed behind validated transactions with pre-edit coordinates, typed revision checks and whole-batch overlap validation.</li>
+<li>Diagnostic severity, byte/line/display/server coordinates, request identities and register shape use named domains at the boundaries.</li>
+<li>Command-table lookup is compiled once. Query parsing/emission, Git job types, test delivery helpers and conformance streams are split by responsibility.</li>
+<li>Changed async regressions receive terminal events instead of sleeping or sharing fixed <code>/tmp</code> files. Fixture-only drain paths are absent from production builds.</li>
+</ul>
 <h2>0.14.1 — 2026-09-07</h2>
 <p>Search/terminal correctness, diagnostic session traces, and a safety review (plans 0027–0030).</p>
 <p>The 0.14.0 tag stopped before publication: the strengthened macOS verification correctly ran but its allowlist omitted Apple&#x27;s system zlib. This release accepts that system library while still rejecting non-system dependencies; tags were not moved. All application changes below are included in 0.14.1.</p>
