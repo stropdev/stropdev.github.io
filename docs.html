@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>strop — docs</title>
-<meta name="description" content="strop configuration, SSH log buffers, language servers, keybindings and verified protocol boundaries.">
+<meta name="description" content="strop configuration, read-only SSH workspaces, remote LSP/Git, log following and verified protocol boundaries.">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/site.css?v=3">
 <style>
@@ -63,28 +63,57 @@ falls back to the embedded registry):</p>
 <p>Servers stay out of your way: a missing one shows its install hint once per session, and
 hover/definition are gated on what the server actually advertises.</p>
 
-<h2 id="ssh">SSH log buffers — v0.16</h2>
+<h2 id="ssh">Read-only SSH workspaces — v0.17</h2>
 <pre><code>strop +120 ssh://user@devbox/var/log/app.log
-
-:e ssh://devbox/var/log/app.log
-:e!</code></pre>
-<p>Open an absolute remote path using your existing OpenSSH aliases, keys, agent and
-ProxyJump configuration. Authentication is noninteractive and host keys must already
-be trusted. <code>Escape</code> cancels a pending open; <code>:e!</code> refreshes the
-current snapshot. Normal motions, <code>/</code>/<code>?</code>, visual selection,
-yank and splits use the same real buffer behavior as local text.</p>
-<p>Snapshots are read-only, valid UTF-8 text and bounded to 256 MiB. Percent-encode
-reserved path bytes (<code>%20</code>, <code>%23</code>, <code>%25</code>); native Unix
-filenames remain byte-exact. Remote content is not silently cached or restored from
-sessions, and local Git/LSP services do not attach to the remote path.</p>
-<p>The reusable <code>strop-remote</code> crate owns identity and transport.
-<a href="https://github.com/stropdev/strop/blob/main/plans/0034-ssh-log-buffers.md">The contract and verification notes</a>
-link bounded TLA+ safety/progress checks, deliberate fault variants, Rust oracles and
-real OpenSSH/TUI/replay evidence. They are not an unbounded proof of the implementation
-or OpenSSH cryptography.</p>
-<p>Tail/follow, remote directory browsing, completion, shared connections and remote
-workspace services are the <a href="./roadmap.html#remote-workspaces">next delivery</a>,
-not capabilities implied by the v0.16 snapshot reader.</p>
+strop --tail 65536 ssh://devbox/var/log/app.log
+strop --range 1048576:65536 ssh://devbox/var/log/app.log
+strop --follow ssh://devbox/var/log/app.log
+strop ssh://devbox/~/project/src/lib.rs</code></pre>
+<p>Use existing OpenSSH aliases, keys, agent and ProxyJump configuration.
+Authentication is noninteractive; host keys must already be trusted. Normal motions,
+<code>/</code>/<code>?</code>, visual selection, yank and splits use real buffers.
+<code>Escape</code> cancels loading or stops following; <code>:e!</code> refreshes.
+Follow stays at EOF only while you do. Changed content or shrinking windows report
+resets; size and mtime are not treated as file identity. Partial windows show their
+byte range in the modeline and use window-relative line numbers.</p>
+<pre><code>:tail 65536 ssh://devbox/var/log/app.log
+:range 1048576 65536 ssh://devbox/var/log/app.log
+:follow
+:unfollow
+:browse ssh://devbox/var/log/
+:filter app
+:remote connect ssh://devbox
+:remote list
+:remote disconnect ssh://devbox
+:remote clear</code></pre>
+<p>Directory listings are searchable buffers: Enter opens an entry, <code>../</code>
+opens its parent, and an empty <code>:filter</code> restores the listing.
+Tab completes hosts and paths without initiating authentication. Remote candidates
+require a live authorized connection or cached data. Documents and explicit connection
+pins share endpoint-owned SFTP sessions; cleanup never kills external SSH masters.</p>
+<p>Full snapshots support <strong>remote LSP diagnostics, hover, definition/references
+and source/header navigation</strong>, plus <strong>Git context, staged/unstaged diffs,
+log, blame, commit/file navigation and source links</strong>. Services run on the
+remote host, never against a local lookalike path. Project-command <code>:trust</code>
+is scoped to that endpoint and workspace root. Partial/follow windows refuse
+full-document language services. Remote writes, Git mutations and shell/filter
+commands remain unsupported.</p>
+<p>Reads are bounded to 256 MiB of UTF-8 text. Tail/range edges omit incomplete UTF-8
+characters. Percent-encode reserved bytes (<code>%20</code>, <code>%23</code>,
+<code>%25</code>); native Unix filenames remain byte-exact. Home expansion requires
+<code>expand-path@openssh.com</code>. Remote content is not persisted or automatically
+restored from sessions.</p>
+<p>SFTP reading needs no remote shell or setup daemon. Remote Git/LSP additionally
+require a POSIX environment, <code>python3</code>, and Git/the selected language
+server. Supervised process groups are cleaned up once the server observes lease
+loss. Network partitions delay detection, descendants creating new sessions can
+escape the group, and supervisor death cannot guarantee cleanup.</p>
+<p>The reusable <code>strop-remote</code> crate owns identity, transport and execution.
+The <a href="https://github.com/stropdev/strop/blob/main/plans/0036-remote-workspace-execution.md">workspace contract</a>
+links bounded model gates, deliberate fault variants, Rust oracles and real SSH,
+terminal and replay evidence. This is not an unbounded proof or a replacement for
+OpenSSH's security boundary. See the <a href="./roadmap.html#remote-workspaces">prioritized roadmap</a>
+for write safety, additional transports and Dev Containers.</p>
 
 <h2>keybindings</h2>
 <p>In the editor: <code>:help</code> (or <code>Space ?</code>) opens the full table as a real,
@@ -96,8 +125,8 @@ build) — drift is a test failure, not a doc bug. Planned-but-unshipped keys re
 generated from the same source (<code>strop --dump-compat</code>) and pinned fresh by the gate.</p>
 
 <h2>sessions</h2>
-<p>Per-project sessions restore buffers and undo history across restarts. Nothing to
-configure; quitting and reopening in the same directory picks up where you left off.</p>
+<p>Per-project sessions restore local buffers and undo history across restarts.
+Remote snapshots are excluded: reopening them is an explicit network action.</p>
 </main>
 <footer class="foot">
   <span><span class="caret-dot"></span> © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></span>

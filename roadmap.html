@@ -8,7 +8,7 @@
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/site.css?v=3">
 <style>
-  main.roadmap { max-width: 52rem; margin: 0 auto; padding: 5.5rem 1.25rem 4rem; }
+  main.roadmap { max-width: 52rem; margin: 0 auto; padding: 5.5rem 1.25rem 4rem; overflow-wrap: anywhere; }
   .roadmap h1 { color: var(--accent); font-size: 1.6rem; margin: 0 0 .5rem; }
   .roadmap h2 { color: var(--text); font-size: 1.15rem; margin: 2.5rem 0 .5rem; border-bottom: 1px solid var(--border); padding-bottom: .4rem; }
   .roadmap h3 { color: var(--accent); font-size: .95rem; margin: 1.5rem 0 .25rem; }
@@ -33,30 +33,34 @@
 <p>Where strop is going. Order is priority: editing safety first, new
 surface area last. The load-bearing detail lives in the repo's
 <code>plans/</code> — this page is the public summary.</p>
-<h2 id="remote-workspaces">Remote workspaces — current delivery sequence</h2>
-<p><strong>v0.16:</strong> read-only SSH/SFTP snapshots, an independent
-<code>strop-remote</code> crate, strict host-key/authentication policy, cancellable
-native-byte reads and bounded protocol models.</p>
-<p><strong>Next accepted delivery:</strong> byte ranges, bounded tail/follow with
-reset handling; non-authenticating host/path completion; shared owned connections;
-read-only remote directory browsing; remote LSP and read-oriented Git semantics.
-These use the same buffer, job, identity and replay boundaries, with new protocol
-models and real runtime checks before release.</p>
-<p><strong>Later:</strong> conflict-safe remote writes and file operations, credentials
-and elevation, more transports, caches/backup/locks, archives and encrypted resources.
-The full <a href="https://github.com/stropdev/strop/blob/main/plans/0035-remote-workflow-roadmap.md">TRAMP-style capability inventory</a>
-has priorities and acceptance gates rather than a blanket parity promise.</p>
+<h2 id="remote-workspaces">Remote workspaces — delivered and next</h2>
+<p><strong>v0.16:</strong> read-only SSH/SFTP snapshots, the independent
+<code>strop-remote</code> crate and strict host-key/authentication policy.</p>
+<p><strong>v0.17:</strong> byte ranges, bounded tail/follow with content-based resets;
+non-authenticating completion and negotiated homes; shared owned SFTP connections;
+read-only directory buffers; supervised execution for remote LSP and read-oriented
+Git. Document, endpoint, repository and request identities stay separate. Rust,
+real SSH/terminal/replay and bounded protocol gates cover the delivered boundaries.</p>
+<p><strong>Later (P3, safety-gated):</strong> conflict-safe writes and file operations,
+arbitrary remote commands, credentials/MFA and elevation, additional transports,
+caches/backups/locks, archives and encrypted resources. None is implied by read-only
+workspace access. The full
+<a href="https://github.com/stropdev/strop/blob/main/plans/0035-remote-workflow-roadmap.md">TRAMP-style capability inventory</a>
+records dependencies and acceptance rather than a blanket parity promise.</p>
 <h3>Dev Containers complement remote access</h3>
 <p>A container transport accesses a running container; Dev Containers provisions and
 configures a workspace from <code>devcontainer.json</code>. The
 <a href="https://github.com/stropdev/strop/blob/main/plans/0037-devcontainers-and-workspace-contexts.md">researched Dev Containers plan</a>
 keeps those layers separate while reusing filesystem, process, workspace identity,
 LSP and Git semantics. Builds, Features, mounts and lifecycle hooks require explicit
-trust. Implementation is planned for later, not part of v0.16.</p>
+trust. Implementation remains planned, not part of the read-only workspace release.</p>
 
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.17.0 — read-only SSH workspaces</strong>: ranges and log following,
+completion, shared connection lifecycle, directory browsing, remote language services
+and native Git, with source-owned coordinates and protocol release gates.</li>
 <li><strong>0.16.0 — trustworthy failures and SSH log buffers</strong>:
 full permalink hosts/aliases, visible LSP configuration/startup errors, CLI line
 locations, and owned read-only remote transport with model/runtime verification.</li>
@@ -183,8 +187,8 @@ Python via <code>debugpy</code>), zero-config scenario discovery, and
 <code>.strop/debug.json</code> primary. UI is editor-native: gutter
 breakpoints and the instruction arrow on the real document, stack and
 variables as readonly tree buffers in a split, stepping as
-<code>Space D</code> motions. This remains a later subsystem, not implied by the
-remote snapshot release.</li>
+<code>Space D</code> motions. This is a later P3 subsystem, not implied by remote
+LSP or Git support.</li>
 <li><strong>The differential gate grows teeth</strong> — every fix so far
 became a corpus case; next is property-generated command streams and
 register/mark/jumplist comparison. Cheap, and it compounds: every future

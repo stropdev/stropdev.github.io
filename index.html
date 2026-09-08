@@ -90,7 +90,7 @@
   <p class="tagline">see the cut before you make it.</p>
   <p class="lineage">Neovim's hands · Helix's spine · rootle's eyes · GitLens' memory</p>
 
-  <p class="status"><span class="chip">v0.16 — owned SSH log buffers</span></p>
+  <p class="status"><span class="chip">v0.17 — read-only SSH workspaces</span></p>
 
   <img class="demo" src="img/demo.gif" alt="strop demo — operator-pending preview, picker, git hunks">
 
@@ -125,12 +125,12 @@
   <p class="alt update-line">already installed? <code data-install-update>strop update</code> — checks, verifies, swaps itself · <a href="./changelog.html">changelog</a> · <a href="./roadmap.html">roadmap</a></p>
   <p class="alt" data-install-note>prebuilt static binary · x86_64 + arm64 · linux + macOS · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a></p>
   <section aria-labelledby="remote-heading">
-    <h2 class="section-head" id="remote-heading">read remote logs with the same editor</h2>
-    <p class="alt"><code>strop ssh://devbox/var/log/app.log</code><br>
-    Real read-only buffers, normal search and yank, cancellable loading, and existing
-    OpenSSH configuration. No remote setup daemon, no local filename stand-in.</p>
-    <p class="alt"><a href="./docs.html#ssh">SSH usage and guarantees</a> ·
-    <a href="./roadmap.html#remote-workspaces">the broader remote workspace roadmap</a></p>
+    <h2 class="section-head" id="remote-heading">follow logs and inspect remote code</h2>
+    <p class="alt"><code>strop --follow ssh://devbox/var/log/app.log</code><br>
+    Bounded tails, real directory buffers, remote LSP and Git history.
+    Existing OpenSSH configuration; no local filename stand-in. Remote content stays read-only.</p>
+    <p class="alt"><a href="./docs.html#ssh">SSH usage, prerequisites and guarantees</a> ·
+    <a href="./roadmap.html#remote-workspaces">what remains on the remote roadmap</a></p>
   </section>
 
   <nav class="links">
