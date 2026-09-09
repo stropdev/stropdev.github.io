@@ -90,7 +90,7 @@
   <p class="tagline">see the cut before you make it.</p>
   <p class="lineage">Neovim's hands · Helix's spine · rootle's eyes · GitLens' memory</p>
 
-  <p class="status"><span class="chip">v0.18 — responsive editing · 23 languages</span></p>
+  <p class="status"><span class="chip">v0.19 — explicit remote editing · 23 languages</span></p>
 
   <img class="demo" src="img/demo.gif" alt="strop demo — operator-pending preview, picker, git hunks">
 
@@ -125,10 +125,13 @@
   <p class="alt update-line">already installed? <code data-install-update>strop update</code> — checks, verifies, swaps itself · <a href="./changelog.html">changelog</a> · <a href="./roadmap.html">roadmap</a></p>
   <p class="alt" data-install-note>prebuilt static binary · x86_64 + arm64 · linux + macOS · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a></p>
   <section aria-labelledby="remote-heading">
-    <h2 class="section-head" id="remote-heading">choose a host, browse real buffers</h2>
-    <p class="alt">Press <code>Space o</code> to connect explicitly, then browse directories with
-    file kinds, permissions and sizes. Remote LSP, Git history and bounded log following
-    use your OpenSSH configuration. Remote content stays read-only in v0.18.</p>
+    <h2 class="section-head" id="remote-heading">browse and edit remote files</h2>
+    <p class="alt">Press <code>Space o</code> to connect and browse real buffers.
+    Files open read-only; <code>:remote edit</code> verifies a full snapshot and enables
+    editing, then <code>:w</code> saves through an owned atomic transaction.</p>
+    <p class="alt">Content/metadata conflicts preserve local edits. Locks coordinate
+    remote-save participants, not arbitrary external writers; unconfirmed outcomes
+    use explicit <code>:remote verify</code>.</p>
     <p class="alt"><a href="./docs.html#ssh">SSH usage, prerequisites and guarantees</a> ·
     <a href="./roadmap.html#remote-workspaces">what remains on the remote roadmap</a></p>
   </section>

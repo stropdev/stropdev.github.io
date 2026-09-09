@@ -63,7 +63,7 @@ falls back to the embedded registry):</p>
 <p>Servers stay out of your way: a missing one shows its install hint once per session, and
 hover/definition are gated on what the server actually advertises.</p>
 
-<h2 id="ssh">Read-only SSH workspaces — v0.18</h2>
+<h2 id="ssh">SSH workspaces — v0.19</h2>
 <pre><code>strop +120 ssh://user@devbox/var/log/app.log
 strop --tail 65536 ssh://devbox/var/log/app.log
 strop --range 1048576:65536 ssh://devbox/var/log/app.log
@@ -71,8 +71,9 @@ strop --follow ssh://devbox/var/log/app.log
 strop ssh://devbox/~/project/src/lib.rs
 strop ssh://devbox/etc/</code></pre>
 <p>Use existing OpenSSH aliases, keys, agent and ProxyJump configuration.
-Authentication is noninteractive; host keys must already be trusted. Normal motions,
-<code>/</code>/<code>?</code>, visual selection, yank and splits use real buffers.
+Authentication is noninteractive; host keys must already be trusted. Files open
+read-only by default. Normal motions, <code>/</code>/<code>?</code>, visual selection,
+yank and splits use real buffers.
 <code>Escape</code> cancels loading or stops following; <code>:e!</code> refreshes.
 Follow stays at EOF only while you do. Changed content or shrinking windows report
 resets; size and mtime are not treated as file identity. Partial windows show their
@@ -105,15 +106,47 @@ and source/header navigation</strong>, plus <strong>Git context, staged/unstaged
 log, blame, commit/file navigation and source links</strong>. Services run on the
 remote host, never against a local lookalike path. Project-command <code>:trust</code>
 is scoped to that endpoint and workspace root. Partial/follow windows refuse
-full-document language services. Remote writes, Git mutations and shell/filter
+full-document language services. Git mutations, save-as and arbitrary shell/filter
 commands remain unsupported.</p>
 <p>Reads are bounded to 256 MiB of UTF-8 text. Tail/range edges omit incomplete UTF-8
 characters. Percent-encode reserved bytes (<code>%20</code>, <code>%23</code>,
 <code>%25</code>); native Unix filenames remain byte-exact. Home expansion requires
 <code>expand-path@openssh.com</code>. Remote content is not persisted or automatically
 restored from sessions.</p>
-<p>SFTP reading needs no remote shell or setup daemon. Remote Git/LSP additionally
-require a POSIX environment, Python 3.8+ and Git/the selected language server.
+<h3 id="remote-editing">Explicit remote editing</h3>
+<pre><code>:remote edit
+:w
+:remote verify</code></pre>
+<p><code>:remote edit</code> checks a complete, non-following snapshot against the
+server and grants this document write authority. Edit normally and use <code>:w</code>
+or <code>:wq</code>. Saving runs off the input thread; a receipt for an older revision
+never clears newer unsaved edits. <code>:w!</code> cannot grant authority or bypass
+remote conflict checks.</p>
+<p>The helper uses a stable cooperative lock, a private 0700 transaction directory,
+metadata-preserving staging, atomic replacement and file/directory syncing. It
+requires an owned regular single-link file, exact stored path spelling and no
+symlink components. Unsupported mode/ownership/mtime/attribute preservation refuses
+the save. Edited content is bounded to 256 MiB.</p>
+<p><strong>Cooperative locking is not universal compare-and-swap.</strong>
+Remote-save protocol participants coordinate, but another program can race the final
+comparison/rename window. Completed external changes are detected before commit.
+Private lock files retain stable identity and must not be removed while active.</p>
+<p>Normal-mode Escape requests cancellation. If a save may have crossed rename,
+the result is unconfirmed and local edits remain dirty. <code>:remote verify</code>
+compares the original and intended states, syncing matching saved content before
+acknowledgment. It does not blindly retry, overwrite or roll back. A conflict
+preserves local edits; forced close can leave an unconfirmed outcome or private
+orphan stage.</p>
+<p>Successful <code>:e!</code> refresh revokes the permit; pending/unconfirmed
+saves must settle or be verified first. Failed refresh preserves edits and authority.
+Reselecting an already-open file does not discard its draft. Remote content,
+permits and live writes are never restored from persisted sessions.</p>
+<p>The <a href="https://github.com/stropdev/strop/blob/main/plans/0040-remote-editing-and-saving.md">remote-save contract</a>
+records safety assumptions, bounded models, fault-injected real SSH checks and
+native-free replay evidence.</p>
+
+<p>SFTP reading needs no remote Python or setup daemon. Remote editing and execution
+require a POSIX environment and Python 3.8+; Git/LSP also need their respective tools.
 Versioned interpreters on PATH are discovered; set local
 <code>STROP_REMOTE_PYTHON=/opt/tools/python3.11</code> to select an explicit remote
 executable. Invalid overrides fail instead of choosing a fallback.
@@ -125,7 +158,7 @@ The <a href="https://github.com/stropdev/strop/blob/main/plans/0036-remote-works
 links bounded model gates, deliberate fault variants, Rust oracles and real SSH,
 terminal and replay evidence. This is not an unbounded proof or a replacement for
 OpenSSH's security boundary. See the <a href="./roadmap.html#remote-workspaces">prioritized roadmap</a>
-for write safety, additional transports and Dev Containers.</p>
+for additional transports, directory mutations and Dev Containers.</p>
 
 <h2 id="syntax">Static syntax coverage</h2>
 <p>23 detected languages: Rust, Python, JavaScript, TypeScript, TSX, Go, C, C++,

@@ -44,10 +44,12 @@ real SSH/terminal/replay and bounded protocol gates cover the delivered boundari
 <p><strong>v0.18:</strong> in-editor host choice, truthful directory metadata,
 structural indentation rails, worker-owned ranking/search/syntax and indexed Git
 display data. Static coverage includes CMake, Markdown and 21 other languages.</p>
-<p><strong>Next requested release (P1, RW4 safety gate):</strong> explicit remote
-file editing and conflict-aware atomic saves, preserving permissions and remote
-identity. The write protocol must state its concurrency and cancellation guarantees
-honestly; read-only browsing does not itself grant write authority.</p>
+<p><strong>v0.19 — RW4 delivered:</strong> explicit <code>:remote edit</code>,
+conditional <code>:w</code>/<code>:wq</code>, protected atomic staging and
+<code>:remote verify</code>. Read-only remains the default; cooperative exclusion
+does not claim CAS against nonparticipating writers. The
+<a href="https://github.com/stropdev/strop/blob/main/plans/0040-remote-editing-and-saving.md">write contract</a>
+records metadata, cancellation, path and ownership guarantees and their limits.</p>
 <p><strong>Later (P3):</strong> writable directory operations, arbitrary remote
 commands, credentials/MFA and elevation, additional transports, caches/backups,
 archives and encrypted resources. The full
@@ -64,6 +66,9 @@ trust. Implementation remains planned, not part of the read-only workspace relea
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.19.0 — explicit remote editing and saving</strong>: per-document
+authority, content/metadata conflicts, private staging, durable receipt verification,
+and qualified safety backed by model, filesystem, real SSH and replay checks.</li>
 <li><strong>0.18.0 — remote browsing, responsiveness and syntax</strong>: explicit
 host opening, directory attributes, structural guides, asynchronous workspace
 ranking and analysis, and 23 statically linked detected languages.</li>
