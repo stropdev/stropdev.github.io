@@ -179,6 +179,12 @@ encoding.</li>
 <p>The remote workspace sequence above is the current priority. These independent
 directions remain subject to their own design and verification gates.</p>
 <ul>
+<li><strong>P2 — WORD text-object fidelity</strong>: <code>ciW</code> is currently
+unsupported. Extend the shared grammar and Neovim differential corpus, not a
+frontend-only approximation.</li>
+<li><strong>P2 — large forensic payloads</strong>: the current per-value trace
+cap refuses oversized results explicitly. Bounded chunking is needed before
+promising complete forensic replay of arbitrarily large Git/picker results.</li>
 <li><strong>GUI research complete; implementation remains P3</strong>: retain the
 TUI and share editor/workspace semantics. GPUI + gpui_platform + AccessKit is the
 preferred prototype direction, gated on native Windows GPU behavior, IME,
