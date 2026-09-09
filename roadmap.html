@@ -41,10 +41,16 @@ non-authenticating completion and negotiated homes; shared owned SFTP connection
 read-only directory buffers; supervised execution for remote LSP and read-oriented
 Git. Document, endpoint, repository and request identities stay separate. Rust,
 real SSH/terminal/replay and bounded protocol gates cover the delivered boundaries.</p>
-<p><strong>Later (P3, safety-gated):</strong> conflict-safe writes and file operations,
-arbitrary remote commands, credentials/MFA and elevation, additional transports,
-caches/backups/locks, archives and encrypted resources. None is implied by read-only
-workspace access. The full
+<p><strong>v0.18:</strong> in-editor host choice, truthful directory metadata,
+structural indentation rails, worker-owned ranking/search/syntax and indexed Git
+display data. Static coverage includes CMake, Markdown and 21 other languages.</p>
+<p><strong>Next requested release (P1, RW4 safety gate):</strong> explicit remote
+file editing and conflict-aware atomic saves, preserving permissions and remote
+identity. The write protocol must state its concurrency and cancellation guarantees
+honestly; read-only browsing does not itself grant write authority.</p>
+<p><strong>Later (P3):</strong> writable directory operations, arbitrary remote
+commands, credentials/MFA and elevation, additional transports, caches/backups,
+archives and encrypted resources. The full
 <a href="https://github.com/stropdev/strop/blob/main/plans/0035-remote-workflow-roadmap.md">TRAMP-style capability inventory</a>
 records dependencies and acceptance rather than a blanket parity promise.</p>
 <h3>Dev Containers complement remote access</h3>
@@ -58,6 +64,9 @@ trust. Implementation remains planned, not part of the read-only workspace relea
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.18.0 — remote browsing, responsiveness and syntax</strong>: explicit
+host opening, directory attributes, structural guides, asynchronous workspace
+ranking and analysis, and 23 statically linked detected languages.</li>
 <li><strong>0.17.0 — read-only SSH workspaces</strong>: ranges and log following,
 completion, shared connection lifecycle, directory browsing, remote language services
 and native Git, with source-owned coordinates and protocol release gates.</li>
@@ -146,8 +155,8 @@ discard-unstaged <code>Space g u</code>); permalinks pin the surface's
 commit; visual <code>Space g h</code> is <code>git log -L</code> on the
 selection.</li>
 
-<li>The operator-pending preview: <code>d3w</code> shows the cut before
-you make it, and preview/execute share one resolver.</li>
+<li>Operator-pending previews such as <code>d/pattern</code> share the execution
+resolver; completed object chords execute at their completing key.</li>
 <li>Multicursor (<code>Q</code> toggle, <code>Space c</code> stack),
 mirrored edits, one undo unit per cascade.</li>
 <li>Git surfaces as real buffers: commit browser, file history, blame
@@ -170,11 +179,12 @@ encoding.</li>
 <p>The remote workspace sequence above is the current priority. These independent
 directions remain subject to their own design and verification gates.</p>
 <ul>
-<li><strong>GUI feasibility evaluation — no commitment</strong>: investigate IME,
-accessibility, font/HiDPI and native input benefits against packaging, performance
-and maintenance costs. Any prototype must share editor/workspace semantics with the
-TUI, not fork them. Helix's frontend-separation work is a research lead, not a claim
-that a GUI is decided or shipped. A documented no-go remains a valid outcome.</li>
+<li><strong>GUI research complete; implementation remains P3</strong>: retain the
+TUI and share editor/workspace semantics. GPUI + gpui_platform + AccessKit is the
+preferred prototype direction, gated on native Windows GPU behavior, IME,
+accessibility and packaging proof. No GUI implementation is included in v0.18.
+The <a href="https://github.com/stropdev/strop/blob/main/plans/0038-remote-experience-and-responsiveness.md">sourced evaluation</a>
+records alternatives and the go/no-go boundary.</li>
 <li><strong>1.0 hardening</strong> — <em>perf gate shipped (0.12.0)</em>;
 the suite is the standing regression surface. What remains for 1.0:
 <del><code>DocumentSource</code></del> (0021) and <del>PathBuf

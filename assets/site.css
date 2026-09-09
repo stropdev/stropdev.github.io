@@ -146,6 +146,7 @@ html, body {
   color: var(--muted);
   margin: 0 0 0.9rem;
 }
+.hero > section[aria-labelledby] { margin-top: 2rem; max-width: 720px; }
 
 .palette-bar {
   display: flex;
