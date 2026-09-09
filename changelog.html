@@ -30,6 +30,16 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.19.1 — 2026-09-09</h2>
+<p>Enterprise-remote fixes from the first RHEL/NFS field report.</p>
+<h3>Fixed</h3>
+<ul>
+<li>Bracketed paste now reaches picker and popup inputs (the <code>:remote</code> chooser, the connect-to-remote address field, replace fields): it edits the focused field instead of being silently dropped. Multi-line pastes are refused with a message; paste into the buffer and <code>:</code> line is unchanged.</li>
+<li><code>:remote edit</code> and remote saves accept paths with symlinked ancestor directories (the NFS-mounted-home norm, e.g. <code>/home/user -&gt; /home24/user</code>). Intermediate links are resolved component-wise under a bounded no-follow walk; a symlink as the final component, non-regular targets and hard links stay refused.</li>
+<li>Saving into an NFS directory no longer fails at cleanup: the stage handle is closed before unlink and a transient silly-rename ENOTEMPTY is retried, so a committed save reports committed and the staging directory is removed.</li>
+<li>Language servers whose startup sends <code>window/logMessage</code> (pyright does, unconditionally) are no longer killed as &quot;unhandled notification&quot;. Server notifications a client need not handle are traced and ignored, <code>window/showMessage</code> reaches the status line, and attach failures now name the real reason (initialize refusal/timeout, protocol error, stderr) alongside the install hint.</li>
+<li><code>strop ssh://host/path/file.txt:LINE</code> accepts the same <code>:LINE</code> suffix as local files; <code>--help</code> now points at the remote command surface (<code>:help</code>).</li>
+</ul>
 <h2>0.19.0 — 2026-09-09</h2>
 <p>Explicit remote editing and conflict-aware saving (plan 0040).</p>
 <h3>Added</h3>
