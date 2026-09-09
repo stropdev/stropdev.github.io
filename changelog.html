@@ -30,6 +30,28 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.18.0 — 2026-09-09</h2>
+<p>Remote browsing, responsive large-workspace editing, and broader static syntax coverage (plans 0038/0039).</p>
+<h3>Added</h3>
+<ul>
+<li><code>Space o</code> / <code>:remote</code> opens a host chooser with explicit connection, host entry, and privately remembered successful destinations. New hosts begin at the remote root; <code>:remote home</code> and <code>:remote root</code> remain explicit navigation actions.</li>
+<li>Remote directory rows show file kind, POSIX permissions and server-reported byte size. Missing attributes are visibly unknown, not confused with zero; parent navigation restores the selected child.</li>
+<li>Structural indentation rails follow real nesting transitions rather than marking every whitespace tab stop or continuation alignment column.</li>
+<li>Ten more detected languages: CMake, Markdown, Java, C#, Ruby, PHP, TOML, YAML, HTML and CSS. The binary now contains 23 detected languages and Markdown&#x27;s additional inline grammar. Markdown emphasis, links and fenced languages, plus HTML script/style injections, share the native highlighter and palette.</li>
+<li>Discoverable headless directives, bounded <code>settle [MS]</code>, explicit <code>wait MS</code>, local/headless file locations, and documented remote-directory CLI usage.</li>
+<li>Explicit headless project trust and configured/versioned remote Python support. <code>STROP_REMOTE_PYTHON</code> selects an absolute remote interpreter; an invalid override fails rather than silently choosing another executable.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>File pickers no longer re-score, clone and sort the accumulated workspace on each source batch or keystroke. An owned ranking actor publishes immutable results; superseded queries cannot overwrite the current selection.</li>
+<li>Large grammar reads, syntax/injection parsing, search summaries, indentation analysis and long-line layout preparation run on persistent CPU owners. Accepted commands preserve typeahead, repeat and macro ordering through replay.</li>
+<li>Sparse grapheme checkpoints avoid repeated whole-prefix walks when navigating or typing near the end of a long line. LSP requests capture owned rope slices instead of materializing entire source lines.</li>
+<li>Git workers prepare diff text, row indexes, gutters, intra-line emphasis and commit file trees. Rendering and file stepping borrow those projections instead of reconstructing entire hunks or sidebars. Added-line emphasis uses its own byte coordinates, including unequal-length Unicode replacements.</li>
+<li>Remote home expansion decodes OpenSSH&#x27;s documented NAME reply instead of expecting an extended-reply packet. Repositories without configured remotes retain valid Git context.</li>
+<li>Protocol builds pin the checksum-verified stable TLA+ release instead of a moving prerelease asset. Temporal fault checks verify the sole configured property and require a rejecting exit status; checker failures never count as successful fault detection.</li>
+</ul>
+<h3>Scope</h3>
+<p>Remote files remain read-only in this release. Explicit writable admission and conflict-aware atomic saving are the separately requested next release, behind RW4&#x27;s transport, metadata, cancellation and concurrency safety gate.</p>
 <h2>0.17.0 — 2026-09-08</h2>
 <p>Read-only SSH workspaces: bounded log following, directory buffers, remote language services and native Git semantics (plan 0036).</p>
 <h3>Added</h3>
