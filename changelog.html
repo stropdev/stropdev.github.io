@@ -30,6 +30,15 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.22.1 — 2026-09-10</h2>
+<p>Field-report fixes from a 0.21.0 review against real pyright and remote hosts.</p>
+<h3>Fixed</h3>
+<ul>
+<li>pyright (and any server that discovers project config through the workspace) now sees it: <code>initialize</code> carries <code>workspaceFolders</code> alongside the deprecated <code>rootUri</code> — rootUri alone has been insufficient since LSP 3.6, so <code>pyrightconfig.json</code>&#x27;s <code>extraPaths</code> / <code>venvPath</code> never applied and every non-relative import failed.</li>
+<li>The languages.toml <code>[language-server.NAME.config]</code> block is no longer inert for servers that read settings the standard way: strop advertises <code>workspace.configuration</code> and answers <code>workspace/configuration</code> pulls from the block, section-scoped.</li>
+<li>The remote destinations picker keeps <code>Add a host…</code> visible under filtering (pinned row), and Enter on filter text that matched no listed destination carries the text into the address box as the draft — typed hostnames are no longer swallowed.</li>
+<li><code>--log-content</code> traces now carry LSP frame bodies (<code>payload</code> on <code>lsp_message</code> events), so initialize params and diagnostics are readable in a capture instead of requiring a hand-rolled client.</li>
+</ul>
 <h2>0.22.0 — 2026-09-10</h2>
 <p>The engine extraction (0046): one <code>strop-engine</code>, the terminal as a consumer.</p>
 <h3>Changed</h3>
