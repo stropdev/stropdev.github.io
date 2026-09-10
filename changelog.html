@@ -30,6 +30,20 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.23.0 — 2026-09-10</h2>
+<p>Escape is preserved at the terminal boundary (0048), and navigation state becomes visible (0047): document symbols, the jumplist as a picker, and mark cards that show the marks.</p>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Escape could be lost on legacy terminals.</strong> Pressing Esc and typing immediately coalesced into one byte batch that crossterm decodes as Alt+key, and strop dropped the Alt bit — the mode never left Insert and the letters landed in the buffer. The terminal adapter now treats Alt as an Escape prefix consistently (strop has no Alt bindings): Escape, then the base key, in FIFO order. Capable terminals are additionally asked for unambiguous Escape encoding (kitty keyboard protocol <code>DISAMBIGUATE_ESCAPE_CODES</code>, popped idempotently on exit), and the CSI-u Control aliases (Ctrl-[/I/M) keep their legacy meanings. Verified on a real PTY: coalesced <code>ESC hkl</code> saves the typed text with the letters as Normal-mode motions.</li>
+<li>Code-action and symbol pickers whose items arrive after the initial ranking now re-rank — the list no longer renders empty until the first keystroke.</li>
+<li>Grep and symbol hits from a picker now record a jumplist entry (quickfix jumps enter the jumplist in vim), so <code>Ctrl-O</code> returns to where the picker was accepted — remote hits included.</li>
+</ul>
+<h3>Added</h3>
+<ul>
+<li><strong>Document symbols</strong> (0047 §1): <code>Space s</code> or <code>:symbols</code> opens the current file&#x27;s symbols as a streaming picker — flat rows with the container path, kind and line; fuzzy-matches against the container. Both LSP reply shapes (hierarchical and flat) flatten to the same rows. Works over <code>ssh://</code> through the workspace URI seam. <code>Space S</code> is reserved for workspace symbols.</li>
+<li><strong>Jumplist picker</strong> (0047 §2): <code>Space j</code> or <code>:jumps</code> — vim <code>:jumps</code> as a menu: past newest-first, the current position marked, dead documents filtered; Enter jumps and records the spot for <code>Ctrl-O</code>.</li>
+<li><strong>Mark cards</strong> (0047 §3): <code>m</code>, <code>&#x27;</code> and `<code> </code> `<code> which-key cards label the absorb key as </code>a-z` and list the live marks with their landing lines — for the jump cards the list is the menu.</li>
+</ul>
 <h2>0.22.1 — 2026-09-10</h2>
 <p>Field-report fixes from a 0.21.0 review against real pyright and remote hosts.</p>
 <h3>Fixed</h3>
