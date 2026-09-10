@@ -30,6 +30,22 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.20.1 — 2026-09-10</h2>
+<p>Interaction fixes from hands-on field reports, plus the verified kernel.</p>
+<h3>Fixed</h3>
+<ul>
+<li>A hover or blame card landing mid-insert no longer eats the next key: transient overlays dismiss AND forward in insert mode (the &quot;Esc needs a second press&quot; report). Elsewhere they consume as before.</li>
+<li>Syntax highlighting no longer blanks for a frame after each edit: the previous analysis frame serves the interim, spans clipped to the live text.</li>
+</ul>
+<h3>Added</h3>
+<ul>
+<li><code>:qa</code> / <code>:qall</code> (<code>:qa!</code> to discard) quit the editor across all buffers; unsaved buffers refuse without the bang, per vim.</li>
+<li>The input dispatch is now a computed <code>InputOwner</code> (editor/dispatch.rs): owner priority and insert-mode policy are data, not if-chain order.</li>
+</ul>
+<h3>Verified</h3>
+<ul>
+<li>The anchor-mapping kernel (<code>strop-core/src/editmap.rs</code>, called by <code>editor/transact.rs</code> for every mark/cursor/selection remap) carries its proof in-tree: spec equivalence, monotonicity, in-bounds — verified by the checksum-pinned Verus image (<code>docker compose run --build --rm verify</code>, now a CI job). Proof work already paid: the no-overflow precondition and <code>start &lt;= new_end</code> invariant are now explicit where they were implicit.</li>
+</ul>
 <h2>0.20.0 — 2026-09-10</h2>
 <p>Shared workspace identity, semantic editing, editable collections, and existing-container browsing (plans 0042/0043/0044, 0037 DC1a).</p>
 <h3>Added</h3>
