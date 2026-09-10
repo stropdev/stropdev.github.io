@@ -30,6 +30,23 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.20.0 — 2026-09-10</h2>
+<p>Shared workspace identity, semantic editing, editable collections, and existing-container browsing (plans 0042/0043/0044, 0037 DC1a).</p>
+<h3>Added</h3>
+<ul>
+<li><code>strop-workspace</code> owns resource identity for every consumer: remote address forms moved out of the transport, one <code>Filesystem</code> namespace type, one <code>ResourceLocation</code>, and a checked <code>ContainerId</code>. The editor binds a workspace context per filesystem in use, with incarnation counters across reconnects.</li>
+<li><code>:explain</code> renders the editor&#x27;s actual decision records: workspace bindings, the current document&#x27;s routing and LSP binding, server readiness and attach refusals with their actionable reasons, and effective configuration.</li>
+<li>Semantic editing through shared change plans: <code>:format</code>, <code>:rename NEW</code>, <code>Space a</code> code actions, and <code>:undo-change</code> grouped undo. One plan, one revision-checked gateway application, one receipt; unbound, stale or conflicting targets are named refusals. Verified against real rust-analyzer. <code>ChangePlan.tla</code> models the lifecycle with mutants killed and witnesses reached.</li>
+<li>Editable code collections (0044): <code>ctrl-o</code> in a references/diagnostics/grep picker opens the hits as one real buffer of source excerpts; editing an excerpt writes back to its source through the change-plan gateway. Headers are protected, boundary-crossing edits refuse, sources that moved on refuse by name.</li>
+<li>Existing containers (0037 DC1a): <code>:containers</code> attaches to a running local Docker container — no SSH daemon, no provisioning, no tools required inside (distroless works). Read-only listings and bounded file reads stream through supervised <code>docker cp</code>; restarts and same-name recreations are detected as stale identities. Detach never touches the container&#x27;s lifecycle.</li>
+<li>WORD text objects: <code>ciW</code>/<code>diW</code>/<code>daW</code> and full nvim-faithful word-object semantics (punct runs, blank-run objects, around-blank rules), arbitrated by new differential cases against nvim.</li>
+<li>Trace schema 3: oversize forensic values chunk with digest and completeness checks; replay assembles them; metadata exports stay payload-free.</li>
+<li>Bench stress fixtures: 100k-result picker stream, 1 MiB line, large project replace, cancel/reopen, dropped stale results.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>Word objects are nvim-faithful where they previously deviated: <code>aw</code> includes trailing (or leading) blanks, <code>iw</code> on punctuation selects the punct run, and blank runs are selectable objects. One cursor-only divergence on a refused command is recorded in <code>KNOWN_DIVERGENCES</code> with its reason.</li>
+</ul>
 <h2>0.19.1 — 2026-09-09</h2>
 <p>Enterprise-remote fixes from the first RHEL/NFS field report.</p>
 <h3>Fixed</h3>
