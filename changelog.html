@@ -30,6 +30,17 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.22.0 — 2026-09-10</h2>
+<p>The engine extraction (0046): one <code>strop-engine</code>, the terminal as a consumer.</p>
+<h3>Changed</h3>
+<ul>
+<li>The full editor orchestration — documents, grammar dispatch, services, sessions, replay — lives in <code>strop-engine</code> with no Ratatui/Crossterm in its production dependency graph (verified with <code>cargo tree</code>). The binary keeps the physical terminal, cell rendering, CLI, bench and headless frame output. Zero behavior change: the whole suite (839 tests across 29 suites), the nvim differential corpus, and the forensic replay oracle pass unchanged.</li>
+<li>Trace frame capture is injected at the composition root: the engine records logical observations; cell grids are the frontend&#x27;s. A GUI can attach to the same engine later without terminal types — no GUI work is in this release.</li>
+</ul>
+<h3>Added</h3>
+<ul>
+<li>Collections v2 (unreleased under 0.21.x): multi-region write-back, async background loading of unopened sources, remote sources gated on 0040 write permits.</li>
+</ul>
 <h2>0.21.0 — 2026-09-10</h2>
 <p>Containers become real workspaces (0037 DC1b), and directory listings scale.</p>
 <h3>Added</h3>
