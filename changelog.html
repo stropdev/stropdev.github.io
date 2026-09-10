@@ -30,6 +30,16 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.24.0 — 2026-09-10</h2>
+<p>External-header LSP continuity (0049 §4): a definition jump out of the working tree keeps its language service.</p>
+<h3>Fixed</h3>
+<ul>
+<li><code>gd</code> from a project file into a library/system header (e.g. <code>vector.hpp</code>) no longer loses the language server: the jump carries the replying server&#x27;s context as a routing hint, <code>didOpen</code> follows through it, and the next <code>gd</code> inside the header answers. Verified against real clangd: extensionless <code>vector</code> opens with <code>languageId: cpp</code>.</li>
+<li>Extensionless and ambiguous C/C++ headers (<code>.h</code>) inherit the navigation&#x27;s language instead of falling to plaintext or C.</li>
+<li>The same external header reached from two projects keeps the first navigation&#x27;s context — no silent compile-context switch.</li>
+<li>A manually opened file no server covers gets a truthful route (&quot;no language context for this file — reach it via gd from a served file, or add its root to languages.toml&quot;) instead of install advice; the install hint is reserved for languages with no server at all.</li>
+<li>Namespaces never cross: a remote jump context never binds a local document, and server death drops both bindings and carried contexts.</li>
+</ul>
 <h2>0.23.0 — 2026-09-10</h2>
 <p>Escape is preserved at the terminal boundary (0048), and navigation state becomes visible (0047): document symbols, the jumplist as a picker, and mark cards that show the marks.</p>
 <h3>Fixed</h3>
