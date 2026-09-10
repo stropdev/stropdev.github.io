@@ -30,6 +30,18 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.21.0 — 2026-09-10</h2>
+<p>Containers become real workspaces (0037 DC1b), and directory listings scale.</p>
+<h3>Added</h3>
+<ul>
+<li>Language servers run inside attached containers: <code>:containers</code> → browse → open a file, and the server&#x27;s LSP session rides <code>docker exec</code> stdio — no SSH daemon, no tools required inside (distroless-safe), no local-path fallback. Attach discovery uses XDG/embedded layers; in-container project layers join the trust gate when they&#x27;re read.</li>
+<li>Git in containers: repository discovery (<code>rev-parse</code>) and context inside the container through the same bounded exec boundary; per-commit diffs inside containers refuse by name this round.</li>
+<li>Container directory listings stream: retention is direct-children only, so a 114 MiB image root lists instantly instead of refusing at the 16 MiB archive cap. <code>strop-core</code> gained the supervised streaming primitive (<code>stream_with</code>) behind it.</li>
+</ul>
+<h3>Decided</h3>
+<ul>
+<li>Container write policy: read-only. <code>docker cp</code> into a container is not an atomic conditional save; <code>:w</code>/<code>:w!</code>/<code>:wq</code> on container documents refuse with the policy named, never a local-path fallback.</li>
+</ul>
 <h2>0.20.1 — 2026-09-10</h2>
 <p>Interaction fixes from hands-on field reports, plus the verified kernel.</p>
 <h3>Fixed</h3>
