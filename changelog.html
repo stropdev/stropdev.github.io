@@ -30,6 +30,26 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.25.0 — 2026-09-11</h2>
+<p>The multibuffer becomes trustworthy (0049 §§5–8 core): collections undo, redo, save, navigate and never show stale text — plus occurrence selection, reviewable changes, indent inference and format-on-save.</p>
+<h3>Added</h3>
+<ul>
+<li><strong>Occurrence selection</strong> (0049 §7): <code>gb</code> selects the word under the caret, then the next occurrence per press (wraps once, exhaustion named); <code>gB</code> selects all. A visual selection seeds its literal text. <code>:select-next|:select-all|:select-skip|:select-pop</code> for help and completion. Selections are real anchor/head ranges through motions, <code>c</code>/<code>d</code>/<code>y</code>, insert and undo — one edit group per action. In a collection, only editable excerpt bodies can match or seed.</li>
+<li><strong>Reviewable changes</strong> (0049 §8): multi-file rename/code-action plans open a real-buffer diff review first — per-file unified diffs, named refusals, pinned base revisions. <code>:apply-change</code> applies exactly what was shown (a source edited since is refused by name; nothing is recomputed silently), <code>:cancel-change</code> discards. Single-document plans keep applying directly. The review buffer stays as the receipt.</li>
+<li><strong>Indent inference and style config</strong> — <code>indent_style = &quot;spaces&quot;|&quot;tabs&quot;</code>, <code>indent_detect = true</code> (per-document detection from content on open), <code>tab_size</code> as the fallback width. Tab in insert mode now inserts the document&#x27;s indent unit; <code>&gt;&gt;</code>/<code>&lt;&lt;</code>, auto-indent, guides, display width and the LSP format request all follow the document.</li>
+<li><strong>Format on save</strong> (helix parity): <code>auto_format = true</code> formats through the language server before a plain <code>:w</code>; a formatter failure or refusal never blocks the write. Local documents.</li>
+</ul>
+<h3>Fixed — the multibuffer correctness contract (0049 §5)</h3>
+<ul>
+<li>A relative startup path no longer drops collection hits — excerpt identity uses the owner-aware <code>matches_target</code>/<code>file_identity</code> rule like ordinary open dedup.</li>
+<li>Plain <code>u</code>/<code>Ctrl-R</code> in a collection undo/redo the collection&#x27;s own edit group across its actual sources (scoped receipts; the global <code>:undo-change</code> tail is not consulted). Preflight refuses by name when a source moved on; the receipt is never consumed on refusal. Redo preflights history depth — a monotonic revision cannot name an undone position.</li>
+<li>Every source edit — pane, undo/redo, LSP, reload — refreshes dependent collection views immediately (single-excerpt splice, full re-render at span edges), preserving the logical caret; unsynced user input is never regenerated away. No stale text survives an acknowledged undo.</li>
+<li><code>:w</code> in a collection saves the dirty sources through their own save paths with per-file outcomes; <code>:w PATH</code> refuses (the view is not a file); <code>:wq</code> closes only after every scoped save confirms; <code>:q</code> closes the view with the sources and their edits intact. The false &quot;q closes&quot; title is gone — macros are intact.</li>
+<li><code>g&lt;Space&gt;</code>, Enter on a header row, and <code>:collection source</code> open the full source at the caret — the live document, unsaved edits included — recording the jump so <code>Ctrl-O</code> returns to the collection context.</li>
+<li>Collection background source loading no longer stalls: parallel loads no longer supersede each other, and a background open never steals focus from the pristine scratch.</li>
+<li>The 2,000-excerpt sync stall: line diffs trim common prefix/suffix first; the quadratic LCS only ever sees the changed middle.</li>
+<li>Collection views present source line numbers in the gutter, accent chrome on title/header rows, and a real provenance name in the modeline — never <code>[scratch]</code>. (Full per-source syntax projection and boxed cards remain on the roadmap.)</li>
+</ul>
 <h2>0.24.0 — 2026-09-10</h2>
 <p>External-header LSP continuity (0049 §4): a definition jump out of the working tree keeps its language service.</p>
 <h3>Fixed</h3>
