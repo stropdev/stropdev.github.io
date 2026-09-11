@@ -30,6 +30,25 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.28.0 — 2026-09-11</h2>
+<p>Picker visual polish (0050) and the multibuffer&#x27;s missing paint.</p>
+<h3>Added — picker rows rebuilt per kind (0050)</h3>
+<ul>
+<li><strong>Symbols</strong>: fixed-width quiet kind chips (all names share one left edge across <code>fn</code>/<code>field</code>/<code>variant</code>), container in the secondary role, location right-aligned. Four quiet kind families (callables/types/ data/modules); chips are passive type info, never bright buttons.</li>
+<li><strong>Files</strong>: basename first and bright, the parent path secondary at the right edge, middle-elided without dropping the disambiguator; query matches emphasize in whichever field they hit.</li>
+<li><strong>Grep</strong>: two-line hits — filename + directory, then a code window built around the REAL <code>rg</code> submatch (never the first 80 chars of the line), with the match amber/bold. Line numbers in the secondary role.</li>
+<li><strong>Selection is one band</strong>: the whole allocated row — marker, fields, blanks — carries the selection background; query evidence survives on top of it.</li>
+<li><strong>Honest counts and states</strong>: filtered lists show <code>visible / total</code>; an empty filter explains itself (<code>No symbols match “zzz”</code> + the way out); errors stay actionable.</li>
+<li><strong>Responsive layout</strong>: the decision list takes ~60% (65% for grep) of the card; narrow terminals stack a short preview below instead of two slivers; the scrollbar column is reserved before text budgets and never overwrites evidence. Preview headers identify <code>file:line</code> first.</li>
+</ul>
+<h3>Added — multibuffer paint (0049 §6 remainder)</h3>
+<ul>
+<li><strong>Syntax highlighting in excerpts</strong>: body rows project the source document&#x27;s own analysis spans into the view — never a synthetic combined parse.</li>
+<li><strong>Query hits paint in excerpt bodies</strong> (amber/bold), sourced from the picker&#x27;s real submatch geometry; LSP/symbol navigation payloads never fabricate a one-byte match.</li>
+<li><strong>Focused card</strong>: the caret&#x27;s card brightens its border and path.</li>
+<li><strong><code>]f</code> / <code>[f</code></strong> walk file cards (next/previous), recorded in the jumplist.</li>
+</ul>
+<p>The picker renderer split into <code>render/picker/{mod,rows,preview}.rs</code> by responsibility (0050 §9).</p>
 <h2>0.27.0 — 2026-09-11</h2>
 <p>The multibuffer gets its presentation (0049 §6), and picker rows gain structure coloring.</p>
 <h3>Added</h3>
