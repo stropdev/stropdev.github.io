@@ -30,6 +30,13 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.27.0 — 2026-09-11</h2>
+<p>The multibuffer gets its presentation (0049 §6), and picker rows gain structure coloring.</p>
+<h3>Added</h3>
+<ul>
+<li><strong>Collection cards</strong>: one rounded card per source file — top border with the path in accent, language and modified badges, excerpt bodies guttering their SOURCE line numbers, a <code>⋮ N source lines omitted</code> gap row between disjoint excerpts of one file, and a full-width bottom border. Cards present in path order. The title row reports matches, files and dirty sources. Chrome rows are typed, addressable and protected (edits refuse and the view refreshes) — structure is data (<code>CollectionRow</code>), never parsed back from text.</li>
+<li><strong>Picker locator dimming</strong>: file rows dim the directory portion and keep the name bright; grep/jump/remote hits dim the <code>path:line</code> locator — computed from payload fields, not text parsing.</li>
+</ul>
 <h2>0.26.0 — 2026-09-11</h2>
 <h3>Fixed</h3>
 <ul>
