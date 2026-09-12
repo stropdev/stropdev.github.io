@@ -30,6 +30,34 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.29.0 — 2026-09-12</h2>
+<p>Whole-editor polish and one query language (0051).</p>
+<h3>Added</h3>
+<ul>
+<li>Shared <code>language:</code>, <code>path:</code>, <code>glob:</code>, <code>text:</code>, <code>regex:</code>, visibility and case qualifiers across file finding, grep and replacement. Filter-only file queries work; invalid/incomplete queries cannot silently broaden a search or apply edits.</li>
+<li>Parser-driven highlighting and Ctrl-Space query suggestions, shared modal field geometry, and separate visible hidden/ignored controls. Unignored dotfiles are included by default; repository internals remain excluded.</li>
+<li>Source-specific indentation controls (<code>:tab-size</code>, numeric/Auto forms and <code>:indent-style</code>) with conservative detection and explicit provenance.</li>
+<li>Passive source-aware delimiter highlighting through the shared cancellable resolver, including collection projection and stale-result rejection.</li>
+<li>Explicit replacement review, Apply and Save stages. <code>:save-change</code> opens an owned per-file persistence receipt; open and previously unopened files behave alike.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li>Collection edits publish to sources and other views while typing, with source syntax, context expansion, independent match counts and ordinary Insert grouping.</li>
+<li>Temporary outputs and jump history share complete, journal-remapped view records. Modelines identify the effective input owner; split identity, source settings, Unicode clipping and full logical-row selection share display-cell geometry.</li>
+<li>Replacement rows and review buffers use source identities and exact diff roles. Shell output preserves command/cwd, both streams and the completion/failure stage.</li>
+<li>Ranking coalesces updates while one snapshot is in flight. The 100k-result probe fell from roughly 2 GB peak live heap to 51 MB, rather than queueing a snapshot for every stream batch.</li>
+<li>Source-to-view publication uses exact journal edits, preserving collection carets, marks and jump history through undo and structural source refreshes.</li>
+<li>Oversized collection, renderer, LSP and regression modules are split by responsibility.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>Dirty source previews refresh on picker re-entry; cancelled/failed reads are retryable without relabeling old content as a new source.</li>
+<li>Replacement checks complete line witnesses, including regex context and empty matches. Edited review buffers cannot apply a hidden older proposal.</li>
+<li>Collection save/close tracks admitted source writes, including remote receipts; unrelated completions, failures and newer edits cannot close the view.</li>
+<li>Grouped collection history preflights every source&#x27;s authority and revision capacity. Formatter warnings survive persistence, and stale formatting cannot save newer edits.</li>
+<li>Late hover replies cannot consume typing; query diagnostics remain visible without overlapping titles or advertising controls that the active field does not own.</li>
+</ul>
+<p>Migration: old <code>-t</code>/<code>-g</code> picker syntax is now ordinary literal text; use the named qualifiers and <code>:help query</code>. In-buffer Vim search is unchanged. Replacement values remain literal, including <code>$1</code>. Older unversioned semantic captures refuse replay.</p>
 <h2>0.28.0 — 2026-09-11</h2>
 <p>Picker visual polish (0050) and the multibuffer&#x27;s missing paint.</p>
 <h3>Added — picker rows rebuilt per kind (0050)</h3>
