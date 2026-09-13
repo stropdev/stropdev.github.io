@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>strop — docs</title>
-<meta name="description" content="strop configuration, explicit remote editing and cooperative atomic saves, SSH browsing, remote LSP/Git and static syntax coverage.">
+<meta name="description" content="strop configuration, namespace-aware directories and checked filesystem operations, explicit remote editing, SSH browsing and static syntax coverage.">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/site.css?v=4">
 <style>
@@ -63,7 +63,45 @@ falls back to the embedded registry):</p>
 <p>Servers stay out of your way: a missing one shows its install hint once per session, and
 hover/definition are gated on what the server actually advertises.</p>
 
-<h2 id="ssh">SSH workspaces — v0.19</h2>
+<h2 id="filesystem">Filesystem workspace</h2>
+<p>Open a Directory buffer with <code>strop DIRECTORY</code>, <code>:e DIRECTORY</code>
+or <code>:browse</code>. <code>Space e</code> reveals the current source. Enter opens
+an entry; <code>-</code>/Backspace goes to its parent. Browsing does not change cwd.</p>
+<pre><code>:fs create nested/new.txt
+:fs mkdir new-directory
+:fs rename new-name.txt
+:fs move destination-directory
+:fs copy stored stored-copy.txt
+:fs copy buffer edited-copy.txt
+:fs trash
+:fs remove
+:apply-change
+:cancel-change
+:fs operations
+:fs verify OPERATION STEP
+:fs undo OPERATION STEP</code></pre>
+<p>Relative destinations use the current Directory or source parent. Review lists
+missing parents explicitly. Creation and rename/move never silently replace an
+occupied name. Stored-copy and buffer-copy select different versions without
+saving the original.</p>
+<p><code>:fs edit</code> opens a name-only filename draft. Ordinary motions, edits,
+whole-line yank/paste and undo change the draft, not disk. <code>:w</code> prepares
+review; Apply performs the checked operations. Cancel returns to the intact draft;
+<code>:fs discard</code> discards it explicitly.</p>
+<p><code>:fs search</code> opens the shared Search workspace at the captured local
+or SSH root. Remote search requires remote <code>rg</code> and is read-only:
+With/Review is unavailable, with no local or whole-file-download fallback.</p>
+<p>Supported POSIX/Python SSH hosts execute real protected operations. Remote
+relocation retains unsaved text but revokes the old write permit; use
+<code>:remote edit</code> again before saving. Containers remain read-only.
+Local Trash is supported where available; remote Trash never becomes unlink.
+Recursive permanent removal and unsafe alias/root operations are refused.</p>
+<p>Receipts survive leaving their view. Verify never retries a mutation, and
+recovery requires the recorded post-publication version, not pathname occupancy.
+Receipts are in-memory, not crash recovery. Unresolved outcomes block graceful
+global exit; explicit <code>:qa!</code> reports them and exits unsuccessfully.</p>
+
+<h2 id="ssh">SSH workspaces</h2>
 <pre><code>strop +120 ssh://user@devbox/var/log/app.log
 strop --tail 65536 ssh://devbox/var/log/app.log
 strop --range 1048576:65536 ssh://devbox/var/log/app.log

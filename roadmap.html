@@ -50,9 +50,13 @@ conditional <code>:w</code>/<code>:wq</code>, protected atomic staging and
 does not claim CAS against nonparticipating writers. The
 <a href="https://github.com/stropdev/strop/blob/main/plans/0040-remote-editing-and-saving.md">write contract</a>
 records metadata, cancellation, path and ownership guarantees and their limits.</p>
-<p><strong>Later (P3):</strong> writable directory operations, arbitrary remote
-commands, credentials/MFA and elevation, additional transports, caches/backups,
-archives and encrypted resources. The full
+<p><strong>v0.31.1:</strong> shared local/SSH Directory buffers, checked creation,
+rename/move, explicit stored/buffer copy and removal, modal filename drafts and
+read-only SSH Search-here. Receipts retain partial and unconfirmed outcomes;
+verification never retries a mutation.</p>
+<p><strong>Later:</strong> remote Trash, recursive/cross-namespace transfers,
+credentials/MFA and elevation, additional transports, archives and encrypted
+resources. The full
 <a href="https://github.com/stropdev/strop/blob/main/plans/0035-remote-workflow-roadmap.md">TRAMP-style capability inventory</a>
 records dependencies and acceptance rather than a blanket parity promise.</p>
 <h3>Dev Containers complement remote access</h3>
@@ -61,11 +65,35 @@ configures a workspace from <code>devcontainer.json</code>. The
 <a href="https://github.com/stropdev/strop/blob/main/plans/0037-devcontainers-and-workspace-contexts.md">researched Dev Containers plan</a>
 keeps those layers separate while reusing filesystem, process, workspace identity,
 LSP and Git semantics. Builds, Features, mounts and lifecycle hooks require explicit
-trust. Implementation remains planned, not part of the read-only workspace release.</p>
+trust. Running-container browsing and language/Git services are available;
+Dev Container provisioning remains separate planned work.</p>
 
+
+<h2>Next: terminal, architecture, then whole-core verification</h2>
+<ol>
+<li><a href="https://github.com/stropdev/strop/blob/main/plans/0055-embedded-terminal-tui-and-gui.md">Embedded TUI terminal</a>:
+compare actual Alacritty and Ghostty prototypes, then ship one real bounded PTY,
+input, projection and lifecycle integration.</li>
+<li><a href="https://github.com/stropdev/strop/blob/main/plans/0056-architecture-prerequisites.md">Architecture prerequisites</a>:
+readonly rendering, admitted APIs, private draft recovery, bounded ownership,
+real UI protocol and verified installation/release boundaries.</li>
+<li><a href="https://github.com/stropdev/strop/blob/main/plans/0057-core-verification-and-assurance.md">Whole-core verification</a>:
+production correspondence, native evidence, calibrated models and proofs before
+more editor features.</li>
+<li>Then the shared native worker, completion and debugger. All GUI implementation
+is deferred until the desired functionality and bug-hardening are complete.</li>
+</ol>
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.31.1 — one filesystem workspace</strong>: local/SSH Directory buffers,
+checked operations, modal filename drafts, source-preview gutters and retained
+operation/recovery evidence.</li>
+<li><strong>0.30.0 — one Search workspace</strong>: retained source investigation,
+optional replacement, owned review and explicit Apply/Save.</li>
+<li><strong>0.20–0.29</strong>: reviewed changes, editable collections, engine
+extraction, shared query language and editor polish.
+See the <a href="./changelog.html">release-by-release changelog</a>.</li>
 <li><strong>0.19.0 — explicit remote editing and saving</strong>: per-document
 authority, content/metadata conflicts, private staging, durable receipt verification,
 and qualified safety backed by model, filesystem, real SSH and replay checks.</li>
@@ -181,21 +209,17 @@ encoding.</li>
 </ul>
 
 <h2>Other later work</h2>
-<p>The remote workspace sequence above is the current priority. These independent
-directions remain subject to their own design and verification gates.</p>
+<p>The terminal/architecture/verification sequence above is the current priority.
+Other directions retain their own design and verification gates.</p>
 <ul>
-<li><strong>P2 — WORD text-object fidelity</strong>: <code>ciW</code> is currently
-unsupported. Extend the shared grammar and Neovim differential corpus, not a
-frontend-only approximation.</li>
-<li><strong>P2 — large forensic payloads</strong>: the current per-value trace
-cap refuses oversized results explicitly. Bounded chunking is needed before
-promising complete forensic replay of arbitrarily large Git/picker results.</li>
-<li><strong>GUI research complete; implementation remains P3</strong>: retain the
-TUI and share editor/workspace semantics. GPUI + gpui_platform + AccessKit is the
-preferred prototype direction, gated on native Windows GPU behavior, IME,
-accessibility and packaging proof. No GUI implementation is included in v0.18.
-The <a href="https://github.com/stropdev/strop/blob/main/plans/0038-remote-experience-and-responsiveness.md">sourced evaluation</a>
-records alternatives and the go/no-go boundary.</li>
+<li><strong>Bounded forensic evidence</strong>: capacity failures remain explicit;
+whole-core verification checks record/replay correspondence rather than promising
+unbounded capture.</li>
+<li><strong>GUI deferred</strong>: retain the TUI and share editor/workspace semantics.
+Native Windows rendering with WSL execution still requires real GPU, IME,
+accessibility and packaging evidence. The
+<a href="https://github.com/stropdev/strop/blob/main/plans/0061-gui-windows-and-wsl.md">GUI contract</a>
+owns that later gate; it is not part of the current release.</li>
 <li><strong>1.0 hardening</strong> — <em>perf gate shipped (0.12.0)</em>;
 the suite is the standing regression surface. What remains for 1.0:
 <del><code>DocumentSource</code></del> (0021) and <del>PathBuf

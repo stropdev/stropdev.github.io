@@ -90,7 +90,7 @@
   <p class="tagline">see the cut before you make it.</p>
   <p class="lineage">Neovim's hands · Helix's spine · rootle's eyes · GitLens' memory</p>
 
-  <p class="status"><span class="chip">v0.19 — explicit remote editing · 23 languages</span></p>
+  <p class="status"><span class="chip">v0.31.1 — unified filesystem workspace · 23 languages</span></p>
 
   <img class="demo" src="img/demo.gif" alt="strop demo — operator-pending preview, picker, git hunks">
 
@@ -124,6 +124,16 @@
   </div>
   <p class="alt update-line">already installed? <code data-install-update>strop update</code> — checks, verifies, swaps itself · <a href="./changelog.html">changelog</a> · <a href="./roadmap.html">roadmap</a></p>
   <p class="alt" data-install-note>prebuilt static binary · x86_64 + arm64 · linux + macOS · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a></p>
+  <section aria-labelledby="filesystem-heading">
+    <h2 class="section-head" id="filesystem-heading">one filesystem workspace</h2>
+    <p class="alt">Browse local and SSH directories as real buffers. Create, rename,
+    move and copy through <strong>Review → Apply → Receipt</strong>; edit filenames
+    with ordinary motions, yank/paste and undo without touching disk until Apply.</p>
+    <p class="alt"><code>Space e</code> reveals the current source.
+    <code>:fs search</code> captures its directory scope; capable SSH hosts search
+    remotely without a local fallback. Containers stay read-only.</p>
+    <p class="alt"><a href="./docs.html#filesystem">Filesystem commands, copy versions and recovery limits</a></p>
+  </section>
   <section aria-labelledby="remote-heading">
     <h2 class="section-head" id="remote-heading">browse and edit remote files</h2>
     <p class="alt">Press <code>Space o</code> to connect and browse real buffers.
