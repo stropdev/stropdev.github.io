@@ -30,6 +30,34 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.31.1 — 2026-09-13</h2>
+<p>One filesystem workspace: browse, edit names, review operations (0054).</p>
+<p>The 0.31.0 tag was not published: its hosted release gate caught a scheduler-dependent trace-capture failure. This release includes the correction without moving the existing tag.</p>
+<h3>Added</h3>
+<ul>
+<li>One namespace-aware Directory buffer for local, SSH and read-only container browsing, with current-file reveal, native-name completion, filtering and preview.</li>
+<li>Checked filesystem creation, rename/move, stored/buffer copy, local Trash and explicit permanent removal. Missing parents are reviewed separately; occupied destinations are never silently replaced.</li>
+<li>Modal filename drafts use ordinary edits, yank/paste and undo without touching disk. Review and Apply share the explicit filesystem-operation planner.</li>
+<li>Filesystem receipts retain committed, cancelled, partial and unconfirmed outcomes independently of their views, with verification and checked recovery.</li>
+<li>Directory <strong>Search here</strong> (<code>:fs search</code> / <code>Space a</code>) captures a local or SSH namespace/root without changing cwd. Capable SSH hosts run read-only <code>rg</code> through supervised argv transport; source previews, opening and collection loading preserve endpoint and native filename identity.</li>
+<li>Search source previews have absolute line-number gutters and focused-hit markers. SSH Search explicitly disables With/Review.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>Trace admission uses the capture&#x27;s byte/event budgets rather than a 64-record scheduling window. Valid bursts survive a delayed writer without blocking input; real capture limits and writer failures still produce incomplete traces.</li>
+<li>Filesystem operations explicitly unlock cooperative name locks when they end. A concurrent process fork can no longer retain a completed operation&#x27;s lock through an inherited descriptor and spuriously refuse the next batch step.</li>
+<li>Search grouping, exclusions, preview caches and tab-width lookup distinguish local files and different SSH hosts even when native paths are identical.</li>
+<li>Invalid rg records, escaped paths, unsupported source text and oversized records fail explicitly instead of disappearing from the result set.</li>
+<li>Filename-review cancellation returns directly to the intact draft. Browsing or refreshing its directory preserves edited names, undo history and provenance.</li>
+<li>Directory selections follow confirmed renames through re-sorting and name reuse. Stale path completions and transferred LSP navigation cannot restore old bindings; deferred format-and-save work blocks conflicting relocation.</li>
+<li>Native Ex open operands remain local outside Directory buffers. Directory operands and completion share the captured directory namespace.</li>
+<li>Search bounds decoded batches, source enumeration, total result rows and retained row data; a small rg record cannot amplify into an unbounded batch.</li>
+<li>Local save/save-as and filesystem mutations serialize in both directions, including unresolved symlinked-parent destinations.</li>
+<li>Move verification and recovery require an owned post-publication version; pathname occupancy or a reused inode cannot authorize recovery.</li>
+<li>Empty-directory removal can retire validated, quiescent protocol locks without splitting active lock domains. Cancellation retains confirmed cleanup counts.</li>
+<li>Admitted effects keep their actual receipts through cancellation and cleanup failures; uncertain Trash publication retains its recovery metadata.</li>
+<li>Remote source identity stays with the filename under modeline width pressure, rather than disappearing with optional Git context.</li>
+</ul>
 <h2>0.30.0 — 2026-09-12</h2>
 <p>One Search workspace, replacement on demand (0053).</p>
 <h3>Changed</h3>
