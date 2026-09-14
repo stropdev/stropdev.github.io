@@ -87,6 +87,11 @@ is deferred until the desired functionality and bug-hardening are complete.</li>
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.32.2 — honest captures through terminal floods</strong>: sustained
+  terminal output no longer breaks the opt-in forensic trace — frames serialize as
+  cell runs with the projection derived on decode, diagnostic records carry bounded
+  excerpts instead of whole buffers, and a degraded capture reports itself in the
+  file instead of failing the editor's exit.</li>
 <li><strong>0.32.1 — picker previews and terminal navigation</strong>: preparation
   admits the preview read and syntax analysis the readonly-rendering split orphaned
   (find-file loading forever, grep/symbols without highlighting); terminal input gains
