@@ -87,6 +87,10 @@ is deferred until the desired functionality and bug-hardening are complete.</li>
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.32.4 — interned frame rows</strong>: rows repeating within a terminal frame travel
+  once, referenced by index runs (unique rows stay inline) — the same flooded session records
+  ~0.7 MB instead of ~2.4 MB, still complete and replayable, with every earlier trace still
+  decoding.</li>
 <li><strong>0.32.3 — tenth-size terminal captures</strong>: rows stop shipping their
   trailing padding (the frame geometry re-derives it) and per-action checks witness
   document text by digest instead of serializing it — the same flooded session
