@@ -209,9 +209,14 @@ and identical in every build.</p>
 <code>Ctrl-R</code>, Alt- and function-keys mean what the child expects.
 <code>Ctrl-\ Ctrl-N</code> (legacy terminals may spell it <code>Ctrl-4 Ctrl-N</code>)
 enters editor Normal mode over a pinned read-only snapshot of the grid; <code>i</code>/<code>a</code>
-follow the live cursor again. An exited session stays readable and never restarts implicitly.</p>
+follow the live cursor again. From terminal input, <code>Ctrl-W</code> is the editor's
+window prefix (Vim's terminal grammar): <code>h/j/k/l/w</code> or arrows move and cycle
+panes, <code>N</code> enters the pinned inspection, <code>.</code> delivers the literal byte to
+the child, and any other follow-up passes through unchanged. An exited session stays readable and never restarts implicitly.</p>
 <p>Terminal buffers are read-only text buffers with the usual motions, search, selection
-and yank. Splits mirror the live cell grid; the focused view owns the PTY geometry so
+and yank — and they are real switchable buffers: the buffer picker lists each session
+with Vim's <code>!</code> job badge and its live phase (<code>terminal #N · dir · running</code>),
+and entering a terminal records a jump so <code>Ctrl-O</code> returns to your editing position. Splits mirror the live cell grid; the focused view owns the PTY geometry so
 two views never fight over one size. <code>:terminal-stop</code> stops and drains;
 <code>:terminal-paste</code>/<code>:terminal-paste-cancel</code> hold multiline or
 control-character pastes for explicit consent; <code>:qa</code> refuses live sessions

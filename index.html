@@ -90,7 +90,7 @@
   <p class="tagline">see the cut before you make it.</p>
   <p class="lineage">Neovim's hands · Helix's spine · rootle's eyes · GitLens' memory</p>
 
-  <p class="status"><span class="chip">v0.32.0 — embedded local terminals · 23 languages</span></p>
+  <p class="status"><span class="chip">v0.32.1 — embedded local terminals · 23 languages</span></p>
 
   <img class="demo" src="img/demo.gif" alt="strop demo — operator-pending preview, picker, git hunks">
 
@@ -132,8 +132,10 @@
     <code>/</code> search, selection and yank just work; splits mirror the live grid while
     the focused view owns its size.</p>
     <p class="alt">Editor keys stay editor keys: <code>Esc</code>, <code>Ctrl-C</code> and
-    chords go to the child; <code>Ctrl-\ Ctrl-N</code> steps out to inspect a pinned
-    snapshot, and <code>i</code>/<code>a</code> return to the live cursor. Multiline and
+    chords go to the child; <code>Ctrl-\ Ctrl-N</code> (or <code>Ctrl-W N</code>) steps out to inspect a pinned
+    snapshot, and <code>i</code>/<code>a</code> return to the live cursor. <code>Ctrl-W h/j/k/l</code>
+    moves panes straight from terminal input, and terminals list in the
+    buffer picker with their live phase. Multiline and
     control-character pastes ask first; <code>:qa</code> refuses to quit on live sessions.</p>
     <p class="alt">Terminal content never enters traces — recording downgrades to
     metadata unless you explicitly opt in with <code>--log-terminal-content</code>.</p>
