@@ -71,9 +71,10 @@ Dev Container provisioning remains separate planned work.</p>
 
 <h2>Next: terminal, architecture, then whole-core verification</h2>
 <ol>
-<li><a href="https://github.com/stropdev/strop/blob/main/plans/0055-embedded-terminal-tui-and-gui.md">Embedded TUI terminal</a>:
-compare actual Alacritty and Ghostty prototypes, then ship one real bounded PTY,
-input, projection and lifecycle integration.</li>
+<li><a id="terminal-plan" href="https://github.com/stropdev/strop/blob/main/plans/0055-embedded-terminal-tui-and-gui.md">Embedded terminal, TUI-first</a>:
+local terminals shipped in 0.32.0 (Ghostty VT, PTY helper, terminal buffers, privacy,
+replay); remaining TUI polish tracks real usage, and every GUI surface stays deferred
+until the TUI is complete and bug-hardened.</li>
 <li><a href="https://github.com/stropdev/strop/blob/main/plans/0056-architecture-prerequisites.md">Architecture prerequisites</a>:
 readonly rendering, admitted APIs, private draft recovery, bounded ownership,
 real UI protocol and verified installation/release boundaries.</li>
@@ -86,6 +87,10 @@ is deferred until the desired functionality and bug-hardening are complete.</li>
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.32.0 — embedded local terminals</strong>: a real PTY-backed shell in the
+editor over the pinned static Ghostty VT engine; terminal buffers, splits, paste consent,
+trace privacy and full replay; full-screen picker workspace with preview line numbers and
+grep hit markers; folder-view polish and the readonly rendering split.</li>
 <li><strong>0.31.1 — one filesystem workspace</strong>: local/SSH Directory buffers,
 checked operations, modal filename drafts, source-preview gutters and retained
 operation/recovery evidence.</li>

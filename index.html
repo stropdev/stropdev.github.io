@@ -90,7 +90,7 @@
   <p class="tagline">see the cut before you make it.</p>
   <p class="lineage">Neovim's hands · Helix's spine · rootle's eyes · GitLens' memory</p>
 
-  <p class="status"><span class="chip">v0.31.1 — unified filesystem workspace · 23 languages</span></p>
+  <p class="status"><span class="chip">v0.32.0 — embedded local terminals · 23 languages</span></p>
 
   <img class="demo" src="img/demo.gif" alt="strop demo — operator-pending preview, picker, git hunks">
 
@@ -124,6 +124,22 @@
   </div>
   <p class="alt update-line">already installed? <code data-install-update>strop update</code> — checks, verifies, swaps itself · <a href="./changelog.html">changelog</a> · <a href="./roadmap.html">roadmap</a></p>
   <p class="alt" data-install-note>prebuilt static binary · x86_64 + arm64 · linux + macOS · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a></p>
+  <section aria-labelledby="terminal-heading">
+    <h2 class="section-head" id="terminal-heading">terminals live in your editor</h2>
+    <p class="alt"><code>:terminal</code> opens a real PTY-backed shell — a pinned static
+    Ghostty VT engine renders it, so every escape sequence means the same thing it does in
+    your standalone terminal. Terminal buffers are real read-only buffers: motions,
+    <code>/</code> search, selection and yank just work; splits mirror the live grid while
+    the focused view owns its size.</p>
+    <p class="alt">Editor keys stay editor keys: <code>Esc</code>, <code>Ctrl-C</code> and
+    chords go to the child; <code>Ctrl-\ Ctrl-N</code> steps out to inspect a pinned
+    snapshot, and <code>i</code>/<code>a</code> return to the live cursor. Multiline and
+    control-character pastes ask first; <code>:qa</code> refuses to quit on live sessions.</p>
+    <p class="alt">Terminal content never enters traces — recording downgrades to
+    metadata unless you explicitly opt in with <code>--log-terminal-content</code>.</p>
+    <p class="alt"><a href="./docs.html#terminals">Terminal commands, keys and privacy</a> ·
+    <a href="./roadmap.html#terminal-plan">what remains on the terminal roadmap</a></p>
+  </section>
   <section aria-labelledby="filesystem-heading">
     <h2 class="section-head" id="filesystem-heading">one filesystem workspace</h2>
     <p class="alt">Browse local and SSH directories as real buffers. Create, rename,

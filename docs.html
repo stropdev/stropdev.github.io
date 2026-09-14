@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>strop — docs</title>
-<meta name="description" content="strop configuration, namespace-aware directories and checked filesystem operations, explicit remote editing, SSH browsing and static syntax coverage.">
+<meta name="description" content="strop configuration, embedded local terminals, namespace-aware directories and checked filesystem operations, explicit remote editing, SSH browsing and static syntax coverage.">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/site.css?v=4">
 <style>
@@ -198,6 +198,34 @@ terminal and replay evidence. This is not an unbounded proof or a replacement fo
 OpenSSH's security boundary. See the <a href="./roadmap.html#remote-workspaces">prioritized roadmap</a>
 for additional transports, directory mutations and Dev Containers.</p>
 
+<h2 id="terminals">Embedded terminals</h2>
+<p><code>:terminal</code> (or <code>:terminal COMMAND</code>) opens a local shell in a
+real PTY supervised by a same-binary helper process; the directory context offers
+<em>Terminal here</em>, and <code>:terminal-local</code> forces a local shell from
+SSH/container contexts — interactive execution there is refused, never silently
+redirected. The VT engine is the pinned static Ghostty core: mode-aware, bounded,
+and identical in every build.</p>
+<p>Input ownership: while the terminal is focused, <code>Esc</code>, <code>Ctrl-C</code>,
+<code>Ctrl-R</code>, Alt- and function-keys mean what the child expects.
+<code>Ctrl-\ Ctrl-N</code> (legacy terminals may spell it <code>Ctrl-4 Ctrl-N</code>)
+enters editor Normal mode over a pinned read-only snapshot of the grid; <code>i</code>/<code>a</code>
+follow the live cursor again. An exited session stays readable and never restarts implicitly.</p>
+<p>Terminal buffers are read-only text buffers with the usual motions, search, selection
+and yank. Splits mirror the live cell grid; the focused view owns the PTY geometry so
+two views never fight over one size. <code>:terminal-stop</code> stops and drains;
+<code>:terminal-paste</code>/<code>:terminal-paste-cancel</code> hold multiline or
+control-character pastes for explicit consent; <code>:qa</code> refuses live sessions
+and <code>:qa!</code> stops them.</p>
+<p>Privacy and replay: terminal content is excluded from traces even with
+<code>--log-content</code>; entering a terminal records an opaque marker and downgrades
+the capture to metadata. <code>--log-terminal-content</code> is the separate explicit
+consent, visibly marked REC. Full <code>--replay</code> reproduces terminal sessions
+with no PTY, process, clipboard or network effects.</p>
+<p>Source builds compile the Ghostty VT core and require an explicitly installed
+Zig 0.16.0; prebuilt binaries need neither. See the
+<a href="https://github.com/stropdev/strop/blob/main/plans/0055-embedded-terminal-tui-and-gui.md">terminal plan</a>
+for the delivered TUI milestones and the deferred GUI work.</p>
+
 <h2 id="syntax">Static syntax coverage</h2>
 <p>23 detected languages: Rust, Python, JavaScript, TypeScript, TSX, Go, C, C++,
 JSON, Bash, Fish, Lua, SQL, CMake, Markdown, Java, C#, Ruby, PHP, TOML, YAML, HTML
@@ -221,7 +249,7 @@ settle 5000
 keys /needle&lt;cr&gt;
 frame
 state</code></pre>
-<p><code>settle [MS]</code> drains finite owned jobs, defaults to 30,000 ms and
+<p><code>settle [MS]</code> drains finite owned jobs, defaults to 120,000 ms and
 fails on timeout. <code>wait MS</code> deliberately waits. Scripts retain ordered
 grammar typeahead; explicitly settle before relying on filesystem/service results.
 Headless <code>:trust</code> uses the same per-project/endpoint consent and private
