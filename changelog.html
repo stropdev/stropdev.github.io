@@ -30,6 +30,17 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.32.1 — 2026-09-14</h2>
+<p>Picker previews and terminal navigation, from first real-use feedback.</p>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Picker previews never loaded</strong> (find-file stuck on <code>loading…</code>, grep and symbols without syntax highlighting): the readonly-rendering split left the preview&#x27;s bounded read and syntax analysis with no admission site — paint only reads caches. Frame preparation now admits both with exactly the window paint will query, restoring content, line numbers, the ▶ hit marker and syntax colors across all workspace pickers.</li>
+</ul>
+<h3>Added</h3>
+<ul>
+<li><strong><code>Ctrl-W</code> is an editor window prefix inside terminal input</strong> (Vim&#x27;s documented <code>t_CTRL-W</code> grammar): <code>h/j/k/l/w</code> (and arrows) move or cycle panes, <code>N</code> enters the pinned-snapshot inspection (same as <code>Ctrl-\ Ctrl-N</code>), and <code>.</code> delivers the literal byte to the child. Any other follow-up passes through unchanged, and the message line hints the grammar while the prefix is open.</li>
+<li><strong>Terminals are real switchable buffers</strong>: the buffers picker lists them with Vim&#x27;s <code>!</code> job badge and their live phase (<code>terminal #N · dir · running</code>), jump rows use the same truthful labels, and entering a terminal records a jump so <code>Ctrl-O</code> returns to your editing position.</li>
+</ul>
 <h2>0.32.0 — 2026-09-13</h2>
 <p>Embedded local terminals, full-screen pickers with wider previews, and a folder-view refresh (plans 0054/0055 TUI milestones; all GUI work remains deferred).</p>
 <h3>Added</h3>
