@@ -87,6 +87,10 @@ is deferred until the desired functionality and bug-hardening are complete.</li>
 
 <h2>Shipped</h2>
 <ul>
+<li><strong>0.32.3 — tenth-size terminal captures</strong>: rows stop shipping their
+  trailing padding (the frame geometry re-derives it) and per-action checks witness
+  document text by digest instead of serializing it — the same flooded session
+  records ~2.4 MB instead of ~20 MB, still complete and replayable.</li>
 <li><strong>0.32.2 — honest captures through terminal floods</strong>: sustained
   terminal output no longer breaks the opt-in forensic trace — frames serialize as
   cell runs with the projection derived on decode, diagnostic records carry bounded
