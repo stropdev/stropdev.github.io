@@ -30,6 +30,30 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.33.0 — 2026-09-16</h2>
+<p>One canonical query language across every search surface, automatic workspace symbols, per-pane scrollbars with a Git overview, and the optional cursor fade.</p>
+<h3>Added</h3>
+<ul>
+<li><strong>One typed Boolean query grammar everywhere</strong>: standalone <code>AND</code>/<code>OR</code>/ <code>NOT</code> (balanced-paren grouping, NOT &gt; AND &gt; OR, juxtaposition is an implicit AND), <code>kind:</code>/<code>repo:</code> qualifiers decided exactly from the syntax-fallback index and project catalog, and three-valued admission that never drops a line on undecidable evidence. Files, Search, Replace, the Directory filter and both symbol pickers share the one parser; operator-free queries behave byte-identically to before.</li>
+<li><strong>Workspace symbols without ceremony</strong> (<code>Space S</code>): open a parent directory and every declaration is listed through the bounded syntax-fallback index — nested repositories, worktrees and marker projects discovered automatically, no repository list to configure. Eligible unopened projects warm their language servers behind the picker (at most four in flight) and merge server symbols into the same list; per-project status rows name missing or blocked server configuration (<code>cold</code>, <code>no srv</code>, <code>trust</code>, <code>no exec</code>) instead of leaving silence, and Enter on a status row opens the project.</li>
+<li><strong>Per-pane scrollbars</strong>: every editor and terminal pane reserves its rightmost column for a quiet track carrying the fractional viewport thumb and the document&#x27;s added/changed/deleted Git spans; terminal panes show position over their bounded history.</li>
+<li><strong>Optional cursor fade</strong>: the Normal-mode block cursor fades back in over 160 ms after focus returns or a large jump (<code>cursor_fade = false</code> in config.toml disables it wholesale).</li>
+<li><strong>Stored-query syntax versioning</strong>: persisted queries carry an explicit syntax version with typed rejection of unknown versions and a fixed-point v1→v2 migration that keeps previously-literal operator words and qualifiers literal.</li>
+</ul>
+<h3>Improved</h3>
+<ul>
+<li><strong>Replacement through the Boolean grammar</strong>: With/Review decides one identifiable target by NOT-parity and re-checks every span, so foreign or stale provider spans never edit.</li>
+<li><strong>Symbol pickers filter with the real query</strong>: document and workspace symbols narrow by content and <code>kind:</code> through the same admission as search; only bare content text ever reaches language servers, and replies are filtered locally before merging.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Query-wide options no longer leak into Boolean branches</strong>: <code>case:</code>/<code>hidden:</code>/<code>ignored:</code> inside an operator expression used to become inert atoms that silently broadened <code>OR</code> admission; they now live only as query-wide options and canonical formatting places them in a leading preamble.</li>
+<li><strong>Wildcard globs match unanchored stars correctly</strong>: <code>*.rs</code> no longer misses <code>a/src/x.rs</code> (found by the differential reference interpreter).</li>
+</ul>
+<h3>Verification</h3>
+<ul>
+<li>The search lifecycle is modeled in TLA+ with a kept mutant the model checker kills on exactly the named invariants; the publication boundary&#x27;s guards are a Verus-verified kernel the production handlers call, with model traces replayed through the real admission paths; and the end-to-end mixed-directory fixture now covers worktrees, dirty sources, cancellation, supersede, Unicode locations and remote namespace isolation.</li>
+</ul>
 <h2>0.32.4 — 2026-09-14</h2>
 <p>Captures of terminal sessions cost a third of 0.32.3&#x27;s bytes.</p>
 <h3>Improved</h3>
