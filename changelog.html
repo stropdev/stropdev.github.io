@@ -30,6 +30,18 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.35.0 — 2026-09-17</h2>
+<p>Filesystem notifications: the editor watches the workspace natively and search stays fresh without rescanning everything.</p>
+<h3>Added</h3>
+<ul>
+<li><strong>Filesystem notifications reach the editor</strong> (0058 S7): strop subscribes to the opened workspace through the local worker — a thin direct inotify binding with generation-stamped subscriptions, parent/name guard watches, honest overflow/loss reporting, and bounded coalescing that never silently drops staleness. External changes to clean buffers reload guarded (binding and revision re-checked at publication, your own saves never echo); dirty buffers keep your edits and show &quot;changed on disk; the buffer keeps your edits (:w! forces)&quot;; ambiguous renames never relocate a document; directories re-list and Git signs refresh lazily. Unsupported filesystems degrade visibly, never to an invisible crawl.</li>
+<li><strong>Incremental search and symbol freshness</strong> (0063 residual): unchanged files and unhinted catalog subtrees are reused (stat-validated, so a missed hint self-heals) while hinted ones rescan — edits on disk show up in the next search without a full walk.</li>
+<li><strong>The native worker foundation</strong> (0058 WK01–WK04): one bounded, versioned worker protocol (incarnation-keyed handshake, typed refusals, first-class notify family), a real <code>strop --worker-stdio</code> local mode serving filesystem and exec requests through the shared strop-fs kernel, and a Rust process supervisor with leased TERM/grace/KILL group cleanup. Local file operations ride the worker; a killed worker is a typed failure, never a silent fallback.</li>
+</ul>
+<h3>Verification</h3>
+<ul>
+<li>The notification lifecycle is modeled in TLA+ (specs/Notify.tla): eleven safety invariants — events are hints, stale identities never act, dirty buffers are never clobbered, scan completion never erases newer invalidations — with nine kept mutants each killed by exactly its named property, gated in the model lane.</li>
+</ul>
 <h2>0.34.0 — 2026-09-17</h2>
 <p>The architecture release: readonly rendering behind a narrow admitted API, real draft recovery, a modal terminal, vim grammar in every input field, a process UI protocol, and the first whole-core verification lanes.</p>
 <h3>Added</h3>
