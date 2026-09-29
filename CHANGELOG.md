@@ -1,5 +1,56 @@
 # Changelog
 
+## Unreleased
+
+## 0.37.1 — 2026-09-29
+
+### Added
+
+- **Source-owned code completion** (0059): Insert-mode language-server and
+  incremental current-source word suggestions, a caret-anchored menu, selected
+  documentation, and validated whole-operation acceptance. `Ctrl-Space` requests
+  both providers, `Ctrl-X Ctrl-O` requests the language service, `Ctrl-N/P`
+  chooses, `Ctrl-Y` accepts, and `Ctrl-E` dismisses. Enter/Tab accept only after
+  deliberate selection; one Escape dismisses and leaves Insert mode.
+  `[completion] enabled = false` retires completion-only work;
+  `auto_popup = false` keeps manual completion and its active prefix updates.
+
+### Fixed
+
+- **Release artifact ownership**: the runner creates `dist/` before the Docker
+  bind mount, so host-side qualification can write its report beside root-owned
+  binary exports. This fixes publication without weakening artifact checks.
+
+- **Crate publication respects versioned test dependencies**: the publication
+  graph now places workspace dev-dependencies before their consumers because
+  Cargo needs their registry versions when packaging the lockfile. Path-only
+  local test helpers remain excluded. This fixes the ordering that stalled the
+  initial 0.36.0 publication without changing its qualified tag or binaries.
+- **Language-server mutation positions reject invalid coordinates** rather than
+  clamping an out-of-range edit onto valid source text. UTF-16 conversion uses
+  indexed rope coordinates, including surrogate-boundary and CRLF checks.
+- **Completion ownership survives neither a service rebind nor a revoked source
+  capability**: prepared edits recheck the original server, root, language,
+  namespace, source window and write authority independently of cancellation.
+  Represented imports and primary edits join the Insert undo group, including
+  collection excerpts whose import lies outside the displayed source window.
+- **Completion-aware macro continuation** waits for the recorded provider
+  selection and owned acceptance before consuming the next generated key;
+  Escape cannot overtake a pending completion in a replayed macro. Repaint
+  (`Ctrl-L`) preserves the current query and deliberate selection.
+- **Language services follow the source's workspace**: a file opened through a
+  symlinked directory or outside the editor's current repository no longer
+  loses its language-server binding. Discovery falls back to the file's own
+  directory and refuses an unrelated current Git root. Explicit `:trust` uses
+  the owning project language layer even when the source is in a nested folder.
+
+
+## 0.37.0 — unpublished tag
+
+The qualified tag remains immutable. Linux shipping-artifact qualification
+passed but could not write its report into Docker's root-owned export directory;
+the release job never published. 0.37.1 contains the same editor behavior and
+the corrected artifact-directory creation.
 
 ## 0.36.0 — 2026-09-27
 
