@@ -29,7 +29,7 @@
   var INSTALLS = {
     curl: {
       cmd: "curl -fsSL https://strop.dev/install.sh | sh",
-      note: 'prebuilt static binary · x86_64 + arm64 · linux + macOS · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a>',
+      note: 'prebuilt static binary · Linux x86_64 + arm64 · macOS Apple Silicon · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a>',
       update: "strop update",
     },
     brew: {

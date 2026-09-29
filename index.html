@@ -90,7 +90,7 @@
   <p class="tagline">see the cut before you make it.</p>
   <p class="lineage">Neovim's hands · Helix's spine · rootle's eyes · GitLens' memory</p>
 
-  <p class="status"><span class="chip">v0.32.4 — embedded local terminals · 23 languages</span></p>
+  <p class="status"><span class="chip"><span id="hero-version" hidden></span>nonblocking code completion · 23 languages</span></p>
 
   <img class="demo" src="img/demo.gif" alt="strop demo — operator-pending preview, picker, git hunks">
 
@@ -123,7 +123,17 @@
     <span class="ib-os">linux · macOS</span>
   </div>
   <p class="alt update-line">already installed? <code data-install-update>strop update</code> — checks, verifies, swaps itself · <a href="./changelog.html">changelog</a> · <a href="./roadmap.html">roadmap</a></p>
-  <p class="alt" data-install-note>prebuilt static binary · x86_64 + arm64 · linux + macOS · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a></p>
+  <p class="alt" data-install-note>prebuilt static binary · Linux x86_64 + arm64 · macOS Apple Silicon · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a></p>
+  <section aria-labelledby="completion-heading">
+    <h2 class="section-head" id="completion-heading">completion without blocking your next key</h2>
+    <p class="alt">Language-server suggestions and current-buffer words share a
+    caret-anchored menu. <code>Ctrl-N</code>/<code>Ctrl-P</code> select,
+    <code>Ctrl-Y</code> accepts, and <code>Ctrl-E</code> dismisses without changing
+    what you typed. Selected documentation, resolved imports and undo use the
+    same source-owned edits; unsupported snippets are refused, not approximated.</p>
+    <p class="alt"><a href="https://github.com/stropdev/strop#code-completion">Completion controls and settings</a> ·
+    <a href="./changelog.html">release notes</a></p>
+  </section>
   <section aria-labelledby="terminal-heading">
     <h2 class="section-head" id="terminal-heading">terminals live in your editor</h2>
     <p class="alt"><code>:terminal</code> opens a real PTY-backed shell — a pinned static
@@ -187,8 +197,8 @@
 </footer>
 <script src="assets/site.js?v=2"></script>
 <script>
-// Version chip: latest release, client-side until the build step exists
-// (plan 0004 §2). Hidden when there is nothing to say.
+// Both version chips share the published release; never hard-code a second
+// version in the hero. Leave them hidden if the API is unavailable.
 fetch("https://api.github.com/repos/stropdev/strop/releases/latest")
   .then(r => r.ok ? r.json() : null)
   .then(rel => {
@@ -196,6 +206,9 @@ fetch("https://api.github.com/repos/stropdev/strop/releases/latest")
     const chip = document.getElementById("version-chip");
     chip.textContent = rel.tag_name;
     chip.hidden = false;
+    const hero = document.getElementById("hero-version");
+    hero.textContent = rel.tag_name + " — ";
+    hero.hidden = false;
   })
   .catch(() => {});
 </script>
