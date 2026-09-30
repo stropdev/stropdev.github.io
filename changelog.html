@@ -30,7 +30,12 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
-<h2>Unreleased</h2>
+<h2>0.38.0 — 2026-09-29</h2>
+<h3>Changed</h3>
+<ul>
+<li>The shared UI protocol owns no Linux editor/service dependency. Normalized key data and streaming script notation now live in <code>strop-core</code>; engine, headless and protocol callers use that same implementation. A native MSVC lane exercises the existing framing and readonly-client contracts.</li>
+<li>The dispatch keymap adapts the shared <code>strop-core</code> command inventory, so <code>Space ?</code>, which-key and key dispatch read one table whose command data a native frontend can consume without the Linux engine. Dispatch handlers and coverage are unchanged.</li>
+</ul>
 <h2>0.37.1 — 2026-09-29</h2>
 <h3>Added</h3>
 <ul>
