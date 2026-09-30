@@ -30,6 +30,11 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.38.1 — 2026-09-30</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>Tab live-preview completion cycling</strong> (0059 §6.1, user-requested): with the completion menu open, <code>Tab</code> focuses the popup and inserts the first candidate as a live preview; <code>Tab</code>/<code>Shift-Tab</code> cycle with wrap-around and each highlighted option is previewed in the buffer, imports included. <code>Escape</code>/<code>Ctrl-E</code> restores the exact typed text, <code>Ctrl-Y</code>/<code>Enter</code> commits the shown candidate as the usual single undo unit, and typing keeps refining from the real prefix. Preview edits join the insert undo unit and never create separate undo steps; the menu footer and the <code>?</code> insert rows document the cycle keys.</li>
+</ul>
 <h2>0.38.0 — 2026-09-29</h2>
 <h3>Changed</h3>
 <ul>
