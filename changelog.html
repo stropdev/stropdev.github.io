@@ -30,6 +30,14 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.39.0 — 2026-10-04</h2>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Stable syntax highlighting while typing</strong> (0066): ordinary edits and scrolls no longer blank the pane&#x27;s colors for a frame. Previously an edit changed the viewport&#x27;s byte window, defeated the interim cache and repainted every visible token in the default foreground until fresh analysis landed — measured at 98 unrelated cells flashing on a single inserted space, including an untouched function below the edit. The engine now keeps the accepted syntax on screen at coordinates mapped through the mutation journal (spans keep their fragments around an edit, coverage tracks what was analyzed, indent rails survive single-line edits and re-seat on multi-line ones), and the next exact result atomically replaces it — including genuinely changed syntax such as a newly opened string or comment. Genuine syntax reinterpretation still applies; only the delivery flash is gone. Search hit counts, modeline counts and line layouts remain current-revision-only, declared pane bounds stay truthfully loading while an interim frame is painted, failed analysis invalidates its window rather than looking settled, and input-to-render never waits on analysis. Typing on an 830 KB file renders no slower than before (median frame cost improved in the release-build measurement).</li>
+</ul>
+<ul>
+<li><strong>Acknowledged actions publish before the ack</strong> (0066 release evidence): a <code>--ui-stdio</code> action that changes semantic state without moving the view generation — dismissing the completion menu — was acknowledged before its delta was published, so a client reading to the acknowledgement could observe the pre-action state; the completion qualification caught this as &quot;dismissal retained obsolete query authority&quot;. The publication now precedes both the action and viewport acknowledgements, with a pipe-level regression test that fails on the old ordering.</li>
+</ul>
 <h2>0.38.1 — 2026-09-30</h2>
 <h3>Added</h3>
 <ul>
