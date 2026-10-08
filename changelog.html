@@ -30,6 +30,16 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.42.0 — 2026-10-08</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>Snippet completion engine</strong> (0069 §1, 0059 §12 D05): LSP snippet items (<code>insertTextFormat: 2</code>) now expand instead of refusing. Accepting a snippet inserts the expanded text as one undo unit and selects the first placeholder (painted like the selection); typing replaces it, Tab/Shift- Tab cycle tabstops with linked placeholders moving together, <code>$0</code> ends the session with the caret there, Esc ends and forwards. Choices expand to the first option; malformed snippets refuse with a named error and insert nothing.</li>
+<li><strong>Commit-character acceptance</strong> (0069 §2): typing one of the deliberately selected completion item&#x27;s <code>commitCharacters</code> accepts it, then the character types normally. Only a chosen item commits — the menu alone never does.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li><strong>Hygiene run</strong> (0069 §3): the over-ceiling <code>editor/notify.rs</code> (1,109 lines) is split by owner into <code>notify/{mod,queue,subscribe,reconcile}.rs</code>; the 782-line <code>terminal_editor</code> test harness is split into <code>{main,harness,journeys,perf}.rs</code>. No behavior changes; the notify and real-PTY suites pass unchanged.</li>
+</ul>
 <h2>0.41.0 — 2026-10-08</h2>
 <h3>Changed</h3>
 <ul>
