@@ -1,5 +1,52 @@
 # Changelog
 
+## 0.43.1 — 2026-10-08
+
+Release recovery for the unpublished 0.43.0 candidate. Includes its Sovel
+syntax preview, built-in light theme and LSP file-rename changes below;
+the existing 0.43.0 source tag is preserved.
+
+### Fixed
+
+- **Worker cancellation under backpressure**: synchronize cancellation and
+  session-stop wakeups with the scheduler's wait lock. Previously a producer
+  could miss the wakeup between checking its cancellation flag and parking,
+  leaving a full stream queue blocked indefinitely. Cancellation callbacks
+  still run outside that lock. The Loom regression now exposes the native
+  token's scheduling gaps and checks callback reentry as well.
+- **Release assurance configuration**: update the LSP queue's Loom fixture
+  for file-rename requests and notifications so the concurrency gate compiles
+  with the same request and queue types as the shipped client.
+
+## 0.43.0 — 2026-10-08
+
+### Added
+
+- **Semantic file rename through the LSP** (0054 §12): applying a reviewed
+  `:fs rename`/`move` now asks every ready server advertising
+  `workspace/willRenameFiles` for preparation edits before the mutation
+  runs. Returned edits apply straight to open buffers through the
+  revision-checked gateway; the reviewed steps then execute, and
+  `workspace/didRenameFiles` reports only the receipts that committed.
+  Servers without the capability (or with no open documents) change
+  nothing; `:cancel-change` while waiting abandons the stage untouched.
+- **Sovel — experimental syntax highlighting** (0070): `.sov` files open
+  with a dedicated Tree-sitter presentation grammar (ABI 15, statically
+  linked, pinned regeneration recipe under
+  `crates/strop-syntax/grammars/sovel/`). Modules, contextual/dependency/
+  effect clauses, generics, traits, regions, tasks, attributes, macro
+  quotes/splices and `extern "C"` blocks highlight through the current
+  theme; effect spellings stay contextual (an ordinary `read` identifier
+  is not an effect). Preview only: no Sovel server, formatter, symbols or
+  validation is spawned or implied, and a colored tree is not a proof of
+  source validity.
+- **Built-in light theme**: `theme = "light"` in config.toml, `--theme
+  light` at launch, or `:theme` mid-session (bare opens the selector,
+  `:theme dark|light` switches directly). Same hue family as the dark
+  default — amber accent, violet keywords, teal types — inked down for
+  paper; the terminal's default palette follows on the same frame.
+  Palette overrides stay 0005's follow-on.
+
 ## 0.42.0 — 2026-10-08
 
 ### Added

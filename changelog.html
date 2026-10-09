@@ -30,6 +30,20 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.43.1 — 2026-10-08</h2>
+<p>Release recovery for the unpublished 0.43.0 candidate. Includes its Sovel syntax preview, built-in light theme and LSP file-rename changes below; the existing 0.43.0 source tag is preserved.</p>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Worker cancellation under backpressure</strong>: synchronize cancellation and session-stop wakeups with the scheduler&#x27;s wait lock. Previously a producer could miss the wakeup between checking its cancellation flag and parking, leaving a full stream queue blocked indefinitely. Cancellation callbacks still run outside that lock. The Loom regression now exposes the native token&#x27;s scheduling gaps and checks callback reentry as well.</li>
+<li><strong>Release assurance configuration</strong>: update the LSP queue&#x27;s Loom fixture for file-rename requests and notifications so the concurrency gate compiles with the same request and queue types as the shipped client.</li>
+</ul>
+<h2>0.43.0 — 2026-10-08</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>Semantic file rename through the LSP</strong> (0054 §12): applying a reviewed <code>:fs rename</code>/<code>move</code> now asks every ready server advertising <code>workspace/willRenameFiles</code> for preparation edits before the mutation runs. Returned edits apply straight to open buffers through the revision-checked gateway; the reviewed steps then execute, and <code>workspace/didRenameFiles</code> reports only the receipts that committed. Servers without the capability (or with no open documents) change nothing; <code>:cancel-change</code> while waiting abandons the stage untouched.</li>
+<li><strong>Sovel — experimental syntax highlighting</strong> (0070): <code>.sov</code> files open with a dedicated Tree-sitter presentation grammar (ABI 15, statically linked, pinned regeneration recipe under <code>crates/strop-syntax/grammars/sovel/</code>). Modules, contextual/dependency/ effect clauses, generics, traits, regions, tasks, attributes, macro quotes/splices and <code>extern &quot;C&quot;</code> blocks highlight through the current theme; effect spellings stay contextual (an ordinary <code>read</code> identifier is not an effect). Preview only: no Sovel server, formatter, symbols or validation is spawned or implied, and a colored tree is not a proof of source validity.</li>
+<li><strong>Built-in light theme</strong>: <code>theme = &quot;light&quot;</code> in config.toml, <code>--theme light</code> at launch, or <code>:theme</code> mid-session (bare opens the selector, <code>:theme dark|light</code> switches directly). Same hue family as the dark default — amber accent, violet keywords, teal types — inked down for paper; the terminal&#x27;s default palette follows on the same frame. Palette overrides stay 0005&#x27;s follow-on.</li>
+</ul>
 <h2>0.42.0 — 2026-10-08</h2>
 <h3>Added</h3>
 <ul>
