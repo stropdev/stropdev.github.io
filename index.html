@@ -120,10 +120,15 @@
     </span>
     <span class="ib-cmd"><span class="p">$</span> <span data-install-cmd>curl -fsSL https://strop.dev/install.sh | sh</span></span>
     <button class="copy" data-install-copy data-copy="curl -fsSL https://strop.dev/install.sh | sh">copy</button>
-    <span class="ib-os">linux · macOS</span>
+    <span class="ib-os">Linux / WSL · x86_64 only</span>
   </div>
   <p class="alt update-line">already installed? <code data-install-update>strop update</code> — checks, verifies, swaps itself · <a href="./changelog.html">changelog</a> · <a href="./roadmap.html">roadmap</a></p>
-  <p class="alt" data-install-note>prebuilt static binary · x86_64 + arm64 · linux + macOS · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a></p>
+  <p class="alt" data-install-note>prebuilt static binary · Linux / WSL x86_64 only · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a></p>
+  <p class="alt">Install and run inside Linux, including a Linux x86_64 WSL distribution.
+  macOS, ARM/aarch64 and native Windows are unsupported; expansion requires an explicit
+  decision and fresh target-specific qualification. No native Windows installer is offered.
+  Source builds require Rust and Zig 0.16.0.
+  <a href="./docs.html#platforms">Platform and installation policy</a>.</p>
   <section aria-labelledby="remote-heading">
     <h2 class="section-head" id="remote-heading">browse and edit remote files</h2>
     <p class="alt">Press <code>Space o</code> to connect and browse real buffers.
@@ -157,7 +162,7 @@
   <a href="https://github.com/stropdev/strop">source</a>
   <span class="foot-right"><span class="version" id="version-chip" hidden></span></span>
 </footer>
-<script src="assets/site.js?v=2"></script>
+<script src="assets/site.js?v=linux-x64"></script>
 <script>
 // Version chip: latest release, client-side until the build step exists
 // (plan 0004 §2). Hidden when there is nothing to say.

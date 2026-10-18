@@ -30,7 +30,34 @@
   </nav>
 </header>
 <main class="docs">
-<h1>configuring strop</h1>
+<h1>using strop</h1>
+<h2 id="platforms">Supported platforms and installation</h2>
+<p><strong>Linux x86_64 only</strong>, including Linux x86_64 distributions inside
+WSL. Run these commands inside Linux, not PowerShell. ARM WSL, macOS and native
+Windows executables/installers are unsupported. Expansion requires an explicit
+support decision and fresh target-specific qualification.</p>
+<pre><code>curl -fsSL https://strop.dev/install.sh | sh</code></pre>
+<p>The installer selects <code>x86_64-unknown-linux-musl</code>, verifies its
+checksum and installs into <code>~/.local/bin</code> by default. Set
+<code>STROP_INSTALL_DIR</code> for another destination or
+<code>STROP_VERSION</code> for a published version. Unsupported hosts are refused
+before download or staging. This does not provision or configure WSL.</p>
+<p>Tarball installs update with <code>strop update</code>. Source-build alternatives
+are <code>brew install stropdev/tap/strop</code>,
+<code>cargo install strop-editor --locked</code> and
+<code>mise use cargo:strop-editor</code>, all within the same Linux x86_64 boundary.
+Source builds require Rust and Zig 0.16.0. Use the owning package manager for
+updates and uninstall; no macOS cask is offered.</p>
+<p>For a default tarball uninstall, remove only the installed
+<code>~/.local/bin/strop</code> executable and its
+<code>~/.local/bin/.strop-install.json</code> receipt (use the chosen install
+directory if customized). Preserve projects, user data, WSL distributions and
+independently installed tools.</p>
+<p>Linux editor, worker, protocol and assurance obligations remain required.
+Historical releases and evidence are preserved, not qualification for changed
+source. This policy update makes no new qualification claim.</p>
+
+<h2>Configuration</h2>
 <p>Zero-config by default — every knob below is optional. Two files, both TOML, both layered
 (project over user over embedded defaults):</p>
 

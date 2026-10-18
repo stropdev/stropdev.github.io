@@ -29,22 +29,22 @@
   var INSTALLS = {
     curl: {
       cmd: "curl -fsSL https://strop.dev/install.sh | sh",
-      note: 'prebuilt static binary · x86_64 + arm64 · linux + macOS · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a>',
+      note: 'prebuilt static binary · Linux / WSL x86_64 only · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a>',
       update: "strop update",
     },
     brew: {
       cmd: BREW,
-      note: "homebrew formula — builds from source · macOS cask is prebuilt",
+      note: "Linux / WSL x86_64 only · Homebrew source formula · requires Zig 0.16.0",
       update: BREW_UP,
     },
     cargo: {
       cmd: "cargo install strop-editor --locked",
-      note: "from crates.io — builds from source · needs a rust toolchain",
+      note: "Linux / WSL x86_64 only · crates.io source build · requires Rust and Zig 0.16.0",
       update: "cargo install strop-editor --locked",
     },
     mise: {
       cmd: "mise use cargo:strop-editor",
-      note: "pinned per-project via mise's cargo backend",
+      note: "Linux / WSL x86_64 only · mise Cargo backend · requires Rust and Zig 0.16.0",
       update: "mise up strop-editor",
     },
   };

@@ -33,6 +33,18 @@
 <p>Where strop is going. Order is priority: editing safety first, new
 surface area last. The load-bearing detail lives in the repo's
 <code>plans/</code> — this page is the public summary.</p>
+<h2 id="platforms">Active platform scope</h2>
+<p><strong>Linux / WSL x86_64 only.</strong> The static release artifact is
+<code>x86_64-unknown-linux-musl</code>; native GNU/Linux qualification remains
+required. macOS, ARM/aarch64 and native Windows GUI, signing and installer
+channels are deferred until an explicit expansion decision and fresh
+target-specific qualification. WSL support means running inside a Linux x86_64
+distribution, not a Windows-native frontend or ARM WSL.</p>
+<p>Linux editor, worker, terminal, protocol and assurance obligations are retained.
+The older release summaries below are historical context, not current platform
+support or qualification for changed source.
+<a href="https://github.com/stropdev/strop/blob/main/plans/0028-roadmap-and-review.md">The active policy and re-entry requirements</a>
+govern the retained Windows design plans.</p>
 <h2 id="remote-workspaces">Remote workspaces — delivered and next</h2>
 <p><strong>v0.16:</strong> read-only SSH/SFTP snapshots, the independent
 <code>strop-remote</code> crate and strict host-key/authentication policy.</p>
@@ -190,12 +202,13 @@ frontend-only approximation.</li>
 <li><strong>P2 — large forensic payloads</strong>: the current per-value trace
 cap refuses oversized results explicitly. Bounded chunking is needed before
 promising complete forensic replay of arbitrarily large Git/picker results.</li>
-<li><strong>GUI research complete; implementation remains P3</strong>: retain the
-TUI and share editor/workspace semantics. GPUI + gpui_platform + AccessKit is the
-preferred prototype direction, gated on native Windows GPU behavior, IME,
-accessibility and packaging proof. No GUI implementation is included in v0.18.
-The <a href="https://github.com/stropdev/strop/blob/main/plans/0038-remote-experience-and-responsiveness.md">sourced evaluation</a>
-records alternatives and the go/no-go boundary.</li>
+<li><strong>Native Windows GUI and onboarding deferred</strong>: retain the shared
+Linux editor, worker and UI protocol obligations. Windows presentation, GPU,
+IME, accessibility, signing and packaging need an explicit expansion decision
+and fresh native qualification before work resumes or support is advertised.
+The retained <a href="https://github.com/stropdev/strop/blob/main/plans/0061-gui-windows-and-wsl.md">GUI design</a>
+and <a href="https://github.com/stropdev/strop/blob/main/plans/0062-distribution-and-wsl-onboarding.md">distribution design</a>
+are future re-entry contracts, not current delivery promises.</li>
 <li><strong>1.0 hardening</strong> — <em>perf gate shipped (0.12.0)</em>;
 the suite is the standing regression surface. What remains for 1.0:
 <del><code>DocumentSource</code></del> (0021) and <del>PathBuf
