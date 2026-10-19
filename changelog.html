@@ -30,6 +30,19 @@
 </header>
 <main class="changelog">
 <h1>changelog</h1>
+<h2>0.44.0 — 2026-10-19</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>A curated six-theme collection</strong>: Catppuccin Mocha, Catppuccin Latte, Nord and the original Strop Ink join Dark and Light. Ink uses graphite, ivory and restrained brass/slate for a quieter coding surface. Dark remains the zero-config default. <code>:theme</code> lists searchable canonical names and descriptions; <code>:theme NAME</code>, <code>--theme NAME</code> and the <code>theme</code> config key select the same compiled-in palettes.</li>
+<li><strong>Bundled theme attribution</strong>: <code>strop --licenses</code> prints the full Catppuccin and Nord MIT notices; source packages include both licenses.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Theme coverage across the editor</strong>: picker previews, diff rows and intraline emphasis, help, statusline, mode chips, guides, separators, symbol badges and dimmed text use semantic palette roles rather than hardcoded dark colors. Comments and punctuation have contrast-tuned ink.</li>
+<li><strong>Existing terminal sessions follow theme changes</strong> through their owning asynchronous service, even when the child is idle. Child truecolor and OSC palette overrides remain intact; resets use the new theme defaults.</li>
+<li><strong>Terminal input credit survives appearance changes and resizes</strong>: correlate zero-based worker input acknowledgments with the service&#x27;s own input/resize sequence. Empty focus emissions settle without waiting for a child acknowledgment that cannot arrive.</li>
+<li><strong>Startup and replay agree on the selected theme</strong>: UI-stdio respects config/CLI selection, and full replay retains the effective startup palette even when <code>--theme</code> overrode the config file.</li>
+</ul>
 <h2>0.43.1 — 2026-10-08</h2>
 <p>Release recovery for the unpublished 0.43.0 candidate. Includes its Sovel syntax preview, built-in light theme and LSP file-rename changes below; the existing 0.43.0 source tag is preserved.</p>
 <h3>Fixed</h3>
