@@ -25,33 +25,43 @@ HEAD = """<!doctype html>
 <title>strop — changelog</title>
 <meta name="description" content="strop release changelog.">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/site.css?v=2">
-<style>
-  main.changelog { max-width: 52rem; margin: 0 auto; padding: 5.5rem 1.25rem 4rem; }
-  .changelog h1 { color: var(--accent); font-size: 1.6rem; margin: 0 0 .5rem; }
-  .changelog h2 { color: var(--text); font-size: 1.15rem; margin: 2.5rem 0 .5rem; border-bottom: 1px solid var(--border); padding-bottom: .4rem; }
-  .changelog h3 { color: var(--accent); font-size: .95rem; margin: 1.5rem 0 .25rem; }
-  .changelog p, .changelog li { color: var(--muted); line-height: 1.65; }
-  .changelog code { color: var(--syn-str); }
-  .changelog strong { color: var(--text); }
-  .changelog ul { padding-left: 1.25rem; }
-</style>
+<link rel="stylesheet" href="assets/site.css?v=5">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="topbar">
-  <a class="brand-mini" href="/">strop</a>
-  <nav>
-    <a href="./docs.html">docs</a>
-    <a href="./roadmap.html">roadmap</a>
-    <a href="./changelog.html">changelog</a>
-    <a href="https://github.com/stropdev/strop">github</a>
-  </nav>
+  <div class="shell nav-inner">
+    <a class="brand-mini" href="/" aria-label="strop home">strop</a>
+    <nav aria-label="Primary navigation">
+      <a href="./docs.html">Docs</a>
+      <a href="./roadmap.html">Roadmap</a>
+      <a href="./changelog.html" aria-current="page">Changelog</a>
+      <a href="https://github.com/stropdev/strop">GitHub</a>
+    </nav>
+  </div>
 </header>
-<main class="changelog">
-<h1>changelog</h1>
+<main class="page-shell changelog" id="main-content">
+<div class="page-intro">
+  <p class="eyebrow">Release history</p>
+  <h1>Changelog</h1>
+  <p>Release notes and development history. Browse <a href="https://github.com/stropdev/strop/releases">all published releases on GitHub</a>.</p>
+</div>
+<div class="prose">
 """
 
-FOOT = """</main>
+FOOT = """</div>
+</main>
+<footer class="foot">
+  <div class="shell footer-inner">
+    <p><span class="caret-dot"></span>© 2026 <a href="https://github.com/tknawara">Tarek Nawara</a> · MIT license</p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="https://github.com/stropdev">stropdev</a>
+      <a href="https://github.com/stropdev/strop">Source</a>
+    </nav>
+    <p class="footer-right"><a class="version" data-latest-release href="https://github.com/stropdev/strop/releases/latest">Latest release</a></p>
+  </div>
+</footer>
+<script src="assets/site.js?v=3"></script>
 </body>
 </html>
 """
@@ -91,7 +101,9 @@ def render(md: str) -> str:
         if line.startswith("## "):
             flush_para()
             close_list()
-            out.append(f"<h2>{inline(line[3:])}</h2>")
+            heading = line[3:]
+            anchor = re.sub(r"[^a-z0-9]+", "-", heading.lower()).strip("-")
+            out.append(f'<h2 id="release-{anchor}">{inline(heading)}</h2>')
         elif line.startswith("### "):
             flush_para()
             close_list()

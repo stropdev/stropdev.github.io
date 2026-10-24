@@ -6,31 +6,29 @@
 <title>strop — changelog</title>
 <meta name="description" content="strop release changelog.">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/site.css?v=2">
-<style>
-  main.changelog { max-width: 52rem; margin: 0 auto; padding: 5.5rem 1.25rem 4rem; }
-  .changelog h1 { color: var(--accent); font-size: 1.6rem; margin: 0 0 .5rem; }
-  .changelog h2 { color: var(--text); font-size: 1.15rem; margin: 2.5rem 0 .5rem; border-bottom: 1px solid var(--border); padding-bottom: .4rem; }
-  .changelog h3 { color: var(--accent); font-size: .95rem; margin: 1.5rem 0 .25rem; }
-  .changelog p, .changelog li { color: var(--muted); line-height: 1.65; }
-  .changelog code { color: var(--syn-str); }
-  .changelog strong { color: var(--text); }
-  .changelog ul { padding-left: 1.25rem; }
-</style>
+<link rel="stylesheet" href="assets/site.css?v=5">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="topbar">
-  <a class="brand-mini" href="/">strop</a>
-  <nav>
-    <a href="./docs.html">docs</a>
-    <a href="./roadmap.html">roadmap</a>
-    <a href="./changelog.html">changelog</a>
-    <a href="https://github.com/stropdev/strop">github</a>
-  </nav>
+  <div class="shell nav-inner">
+    <a class="brand-mini" href="/" aria-label="strop home">strop</a>
+    <nav aria-label="Primary navigation">
+      <a href="./docs.html">Docs</a>
+      <a href="./roadmap.html">Roadmap</a>
+      <a href="./changelog.html" aria-current="page">Changelog</a>
+      <a href="https://github.com/stropdev/strop">GitHub</a>
+    </nav>
+  </div>
 </header>
-<main class="changelog">
-<h1>changelog</h1>
-<h2>0.44.0 — 2026-10-19</h2>
+<main class="page-shell changelog" id="main-content">
+<div class="page-intro">
+  <p class="eyebrow">Release history</p>
+  <h1>Changelog</h1>
+  <p>Release notes and development history. Browse <a href="https://github.com/stropdev/strop/releases">all published releases on GitHub</a>.</p>
+</div>
+<div class="prose">
+<h2 id="release-0-44-0-2026-10-19">0.44.0 — 2026-10-19</h2>
 <h3>Added</h3>
 <ul>
 <li><strong>A curated six-theme collection</strong>: Catppuccin Mocha, Catppuccin Latte, Nord and the original Strop Ink join Dark and Light. Ink uses graphite, ivory and restrained brass/slate for a quieter coding surface. Dark remains the zero-config default. <code>:theme</code> lists searchable canonical names and descriptions; <code>:theme NAME</code>, <code>--theme NAME</code> and the <code>theme</code> config key select the same compiled-in palettes.</li>
@@ -43,21 +41,21 @@
 <li><strong>Terminal input credit survives appearance changes and resizes</strong>: correlate zero-based worker input acknowledgments with the service&#x27;s own input/resize sequence. Empty focus emissions settle without waiting for a child acknowledgment that cannot arrive.</li>
 <li><strong>Startup and replay agree on the selected theme</strong>: UI-stdio respects config/CLI selection, and full replay retains the effective startup palette even when <code>--theme</code> overrode the config file.</li>
 </ul>
-<h2>0.43.1 — 2026-10-08</h2>
+<h2 id="release-0-43-1-2026-10-08">0.43.1 — 2026-10-08</h2>
 <p>Release recovery for the unpublished 0.43.0 candidate. Includes its Sovel syntax preview, built-in light theme and LSP file-rename changes below; the existing 0.43.0 source tag is preserved.</p>
 <h3>Fixed</h3>
 <ul>
 <li><strong>Worker cancellation under backpressure</strong>: synchronize cancellation and session-stop wakeups with the scheduler&#x27;s wait lock. Previously a producer could miss the wakeup between checking its cancellation flag and parking, leaving a full stream queue blocked indefinitely. Cancellation callbacks still run outside that lock. The Loom regression now exposes the native token&#x27;s scheduling gaps and checks callback reentry as well.</li>
 <li><strong>Release assurance configuration</strong>: update the LSP queue&#x27;s Loom fixture for file-rename requests and notifications so the concurrency gate compiles with the same request and queue types as the shipped client.</li>
 </ul>
-<h2>0.43.0 — 2026-10-08</h2>
+<h2 id="release-0-43-0-2026-10-08">0.43.0 — 2026-10-08</h2>
 <h3>Added</h3>
 <ul>
 <li><strong>Semantic file rename through the LSP</strong> (0054 §12): applying a reviewed <code>:fs rename</code>/<code>move</code> now asks every ready server advertising <code>workspace/willRenameFiles</code> for preparation edits before the mutation runs. Returned edits apply straight to open buffers through the revision-checked gateway; the reviewed steps then execute, and <code>workspace/didRenameFiles</code> reports only the receipts that committed. Servers without the capability (or with no open documents) change nothing; <code>:cancel-change</code> while waiting abandons the stage untouched.</li>
 <li><strong>Sovel — experimental syntax highlighting</strong> (0070): <code>.sov</code> files open with a dedicated Tree-sitter presentation grammar (ABI 15, statically linked, pinned regeneration recipe under <code>crates/strop-syntax/grammars/sovel/</code>). Modules, contextual/dependency/ effect clauses, generics, traits, regions, tasks, attributes, macro quotes/splices and <code>extern &quot;C&quot;</code> blocks highlight through the current theme; effect spellings stay contextual (an ordinary <code>read</code> identifier is not an effect). Preview only: no Sovel server, formatter, symbols or validation is spawned or implied, and a colored tree is not a proof of source validity.</li>
 <li><strong>Built-in light theme</strong>: <code>theme = &quot;light&quot;</code> in config.toml, <code>--theme light</code> at launch, or <code>:theme</code> mid-session (bare opens the selector, <code>:theme dark|light</code> switches directly). Same hue family as the dark default — amber accent, violet keywords, teal types — inked down for paper; the terminal&#x27;s default palette follows on the same frame. Palette overrides stay 0005&#x27;s follow-on.</li>
 </ul>
-<h2>0.42.0 — 2026-10-08</h2>
+<h2 id="release-0-42-0-2026-10-08">0.42.0 — 2026-10-08</h2>
 <h3>Added</h3>
 <ul>
 <li><strong>Snippet completion engine</strong> (0069 §1, 0059 §12 D05): LSP snippet items (<code>insertTextFormat: 2</code>) now expand instead of refusing. Accepting a snippet inserts the expanded text as one undo unit and selects the first placeholder (painted like the selection); typing replaces it, Tab/Shift- Tab cycle tabstops with linked placeholders moving together, <code>$0</code> ends the session with the caret there, Esc ends and forwards. Choices expand to the first option; malformed snippets refuse with a named error and insert nothing.</li>
@@ -67,12 +65,12 @@
 <ul>
 <li><strong>Hygiene run</strong> (0069 §3): the over-ceiling <code>editor/notify.rs</code> (1,109 lines) is split by owner into <code>notify/{mod,queue,subscribe,reconcile}.rs</code>; the 782-line <code>terminal_editor</code> test harness is split into <code>{main,harness,journeys,perf}.rs</code>. No behavior changes; the notify and real-PTY suites pass unchanged.</li>
 </ul>
-<h2>0.41.0 — 2026-10-08</h2>
+<h2 id="release-0-41-0-2026-10-08">0.41.0 — 2026-10-08</h2>
 <h3>Changed</h3>
 <ul>
 <li><strong>Full UI polish</strong> (0068): every card breathes. The <code>Space</code> which-key overlay and its submenus are rebuilt: bottom-centered, width fitted to content, one padded key column, descriptions ellipsized with padding on both sides — never a mid-word cut against the border — and a <code>+N more</code> footer instead of silently dropped rows. The <code>:</code> command card sizes its completion-name column to the candidates and right-aligns the live match count; the hover card sizes from a render-verified wrapped-row estimate (wrapped content was silently cut at the bottom border); the blame card fits its content; cursor-line diagnostic notes ellipsize at the row&#x27;s real width (tab-aware); picker borders go quiet (MUTED, like the welcome card) and the rule line reads the palette; the modeline moves dirty/multicursor/ transient state off the accent so the mode chip is the only one left; scrollbar thumbs now size to the visible fraction; narrow input fields and long diff paths ellipsize instead of vanishing or hiding their stats.</li>
 </ul>
-<h2>0.40.0 — 2026-10-07</h2>
+<h2 id="release-0-40-0-2026-10-07">0.40.0 — 2026-10-07</h2>
 <h3>Fixed</h3>
 <ul>
 <li><strong><code>strop &lt;new-file&gt;</code> saves on the first <code>:w</code></strong> (0067 §1): opening a file that does not exist yet and writing it failed with <code>write failed: InvalidPath: an absolute non-control resource path is required</code> — the CLI open keeps the relative name when <code>canonicalize</code> cannot resolve a missing file, and the store guard rightly refuses relative targets. The save admission now resolves the target against the editor&#x27;s cwd; existing files were never affected.</li>
@@ -84,7 +82,7 @@
 <ul>
 <li><strong>Diagnostics don&#x27;t repaint while you&#x27;re typing</strong> (0067 §3): with LSP enabled, partial words used to get amber underlines on every keystroke — everything looks broken mid-thought. Language servers genuinely publish that eagerly, so strop adopts Neovim&#x27;s <code>update_in_insert = false</code> default: while the edited document is in Insert mode its diagnostic publishes are stashed instead of displayed (publishes for other documents stay live, so split panes keep working), and the latest set applies the moment Insert ends. No timers, no debounce — the mode transition is the signal. The frozen set also stops matching on the first edit, so nothing paints stale positions mid-word.</li>
 </ul>
-<h2>0.39.0 — 2026-10-04</h2>
+<h2 id="release-0-39-0-2026-10-04">0.39.0 — 2026-10-04</h2>
 <h3>Fixed</h3>
 <ul>
 <li><strong>Stable syntax highlighting while typing</strong> (0066): ordinary edits and scrolls no longer blank the pane&#x27;s colors for a frame. Previously an edit changed the viewport&#x27;s byte window, defeated the interim cache and repainted every visible token in the default foreground until fresh analysis landed — measured at 98 unrelated cells flashing on a single inserted space, including an untouched function below the edit. The engine now keeps the accepted syntax on screen at coordinates mapped through the mutation journal (spans keep their fragments around an edit, coverage tracks what was analyzed, indent rails survive single-line edits and re-seat on multi-line ones), and the next exact result atomically replaces it — including genuinely changed syntax such as a newly opened string or comment. Genuine syntax reinterpretation still applies; only the delivery flash is gone. Search hit counts, modeline counts and line layouts remain current-revision-only, declared pane bounds stay truthfully loading while an interim frame is painted, failed analysis invalidates its window rather than looking settled, and input-to-render never waits on analysis. Typing on an 830 KB file renders no slower than before (median frame cost improved in the release-build measurement).</li>
@@ -92,18 +90,18 @@
 <ul>
 <li><strong>Acknowledged actions publish before the ack</strong> (0066 release evidence): a <code>--ui-stdio</code> action that changes semantic state without moving the view generation — dismissing the completion menu — was acknowledged before its delta was published, so a client reading to the acknowledgement could observe the pre-action state; the completion qualification caught this as &quot;dismissal retained obsolete query authority&quot;. The publication now precedes both the action and viewport acknowledgements, with a pipe-level regression test that fails on the old ordering.</li>
 </ul>
-<h2>0.38.1 — 2026-09-30</h2>
+<h2 id="release-0-38-1-2026-09-30">0.38.1 — 2026-09-30</h2>
 <h3>Added</h3>
 <ul>
 <li><strong>Tab live-preview completion cycling</strong> (0059 §6.1, user-requested): with the completion menu open, <code>Tab</code> focuses the popup and inserts the first candidate as a live preview; <code>Tab</code>/<code>Shift-Tab</code> cycle with wrap-around and each highlighted option is previewed in the buffer, imports included. <code>Escape</code>/<code>Ctrl-E</code> restores the exact typed text, <code>Ctrl-Y</code>/<code>Enter</code> commits the shown candidate as the usual single undo unit, and typing keeps refining from the real prefix. Preview edits join the insert undo unit and never create separate undo steps; the menu footer and the <code>?</code> insert rows document the cycle keys.</li>
 </ul>
-<h2>0.38.0 — 2026-09-29</h2>
+<h2 id="release-0-38-0-2026-09-29">0.38.0 — 2026-09-29</h2>
 <h3>Changed</h3>
 <ul>
 <li>The shared UI protocol owns no Linux editor/service dependency. Normalized key data and streaming script notation now live in <code>strop-core</code>; engine, headless and protocol callers use that same implementation. A native MSVC lane exercises the existing framing and readonly-client contracts.</li>
 <li>The dispatch keymap adapts the shared <code>strop-core</code> command inventory, so <code>Space ?</code>, which-key and key dispatch read one table whose command data a native frontend can consume without the Linux engine. Dispatch handlers and coverage are unchanged.</li>
 </ul>
-<h2>0.37.1 — 2026-09-29</h2>
+<h2 id="release-0-37-1-2026-09-29">0.37.1 — 2026-09-29</h2>
 <h3>Added</h3>
 <ul>
 <li><strong>Source-owned code completion</strong> (0059): Insert-mode language-server and incremental current-source word suggestions, a caret-anchored menu, selected documentation, and validated whole-operation acceptance. <code>Ctrl-Space</code> requests both providers, <code>Ctrl-X Ctrl-O</code> requests the language service, <code>Ctrl-N/P</code> chooses, <code>Ctrl-Y</code> accepts, and <code>Ctrl-E</code> dismisses. Enter/Tab accept only after deliberate selection; one Escape dismisses and leaves Insert mode. <code>[completion] enabled = false</code> retires completion-only work; <code>auto_popup = false</code> keeps manual completion and its active prefix updates.</li>
@@ -119,9 +117,9 @@
 <li><strong>Completion-aware macro continuation</strong> waits for the recorded provider selection and owned acceptance before consuming the next generated key; Escape cannot overtake a pending completion in a replayed macro. Repaint (<code>Ctrl-L</code>) preserves the current query and deliberate selection.</li>
 <li><strong>Language services follow the source&#x27;s workspace</strong>: a file opened through a symlinked directory or outside the editor&#x27;s current repository no longer loses its language-server binding. Discovery falls back to the file&#x27;s own directory and refuses an unrelated current Git root. Explicit <code>:trust</code> uses the owning project language layer even when the source is in a nested folder.</li>
 </ul>
-<h2>0.37.0 — unpublished tag</h2>
+<h2 id="release-0-37-0-unpublished-tag">0.37.0 — unpublished tag</h2>
 <p>The qualified tag remains immutable. Linux shipping-artifact qualification passed but could not write its report into Docker&#x27;s root-owned export directory; the release job never published. 0.37.1 contains the same editor behavior and the corrected artifact-directory creation.</p>
-<h2>0.36.0 — 2026-09-27</h2>
+<h2 id="release-0-36-0-2026-09-27">0.36.0 — 2026-09-27</h2>
 <h3>Added</h3>
 <ul>
 <li><strong>SSH worker transport and consent-gated deployment</strong> (0058 WK07): an SSH workspace whose host admits a worker now deploys the matching release binary through the verified-cache state machine (SFTP upload provider over the same OpenSSH policy and SFTP v3 codec, activated only after the real protocol handshake binds the endpoint&#x27;s exact release/target/incarnation) and then serves open/list/read, reviewed filesystem mutations and filesystem-notification subscriptions through <code>strop --worker-stdio</code> over the ssh exec channel — the same protocol as local, with no Python prerequisite and one audited POSIX discovery line (no PATH/rc/image mutation). The first deployment to an endpoint requires an explicit worker-using action and names the selected target, version and destination on refusal; a previously authorized endpoint quietly reuses its verified cache. Restricted or SFTP-only hosts keep the exact read-only SFTP behavior, with mutations answered by the typed refusal — never an alternate write path.</li>
@@ -184,7 +182,7 @@
 <li><strong>Mutant calibration and worker admission proof</strong> (0057 VF19 / 0058 WK17–WK18): <code>verification/mutants.json</code> maps 20 seams to 99 named kill obligations. Four refined cache-model faults violate their named invariants; the two executable Rust GC mutants die under the real lock and second-worker tests in the core-assurance gate. The native session classifier verifies against the pinned Verus toolchain; OS and deployment premises are not discharged by that pure admission proof.</li>
 <li><strong>Same-source worker admission proofs</strong> (0058 WK18): the wire decoder, recovered-Store verifier, effect resolver, deploy compatibility/ activation and GC call verified <code>strop-core</code> kernels. The proof covers those pure decisions, not codec byte scanning, SSH/Docker/OS effects, receipt provenance, host durability or cross-client GC. Live worker journeys include a lost acknowledgment and a lost or stale activation receipt. Native effects and performance are qualified separately from these pure proofs in the retained-target evidence bundle.</li>
 </ul>
-<h2>0.35.0 — 2026-09-17</h2>
+<h2 id="release-0-35-0-2026-09-17">0.35.0 — 2026-09-17</h2>
 <p>Filesystem notifications: the editor watches the workspace natively and search stays fresh without rescanning everything.</p>
 <h3>Added</h3>
 <ul>
@@ -196,7 +194,7 @@
 <ul>
 <li>The notification lifecycle is modeled in TLA+ (specs/Notify.tla): eleven safety invariants — events are hints, stale identities never act, dirty buffers are never clobbered, scan completion never erases newer invalidations — with nine kept mutants each killed by exactly its named property, gated in the model lane.</li>
 </ul>
-<h2>0.34.0 — 2026-09-17</h2>
+<h2 id="release-0-34-0-2026-09-17">0.34.0 — 2026-09-17</h2>
 <p>The architecture release: readonly rendering behind a narrow admitted API, real draft recovery, a modal terminal, vim grammar in every input field, a process UI protocol, and the first whole-core verification lanes.</p>
 <h3>Added</h3>
 <ul>
@@ -226,7 +224,7 @@
 <ul>
 <li>The 0057 whole-core assurance programme opened: a machine-readable boundary/claim inventory with hash-pinned evidence and candidate freeze tooling guards the tree in CI (VF01); a pinned TLAPS lane proves the search lifecycle&#x27;s safety invariants inductively — with the kept mutant failing proof on exactly its own steps — and the 0045 batch-composition obligation is now proved in production editmap.rs (Verus); new Verus kernels verify mutation authority, projection admission, recovery cohort, UI freshness and ID-exhaustion decisions the production guards call; admission-freshness trace correspondence replays the protocol model through the real handlers; new gated TLA+ models cover terminal and install domains with kept mutants and witnesses (VF02–VF04, VF12, VF16–VF18 partial — the recovery and LSP-wire models exist but are not gate-chained yet: state-space calibration resumes in 0.35.0).</li>
 </ul>
-<h2>0.33.0 — 2026-09-16</h2>
+<h2 id="release-0-33-0-2026-09-16">0.33.0 — 2026-09-16</h2>
 <p>One canonical query language across every search surface, automatic workspace symbols, per-pane scrollbars with a Git overview, and the optional cursor fade.</p>
 <h3>Added</h3>
 <ul>
@@ -250,25 +248,25 @@
 <ul>
 <li>The search lifecycle is modeled in TLA+ with a kept mutant the model checker kills on exactly the named invariants; the publication boundary&#x27;s guards are a Verus-verified kernel the production handlers call, with model traces replayed through the real admission paths; and the end-to-end mixed-directory fixture now covers worktrees, dirty sources, cancellation, supersede, Unicode locations and remote namespace isolation.</li>
 </ul>
-<h2>0.32.4 — 2026-09-14</h2>
+<h2 id="release-0-32-4-2026-09-14">0.32.4 — 2026-09-14</h2>
 <p>Captures of terminal sessions cost a third of 0.32.3&#x27;s bytes.</p>
 <h3>Improved</h3>
 <ul>
 <li><strong>Repeating rows travel once per frame</strong>: rows that recur anywhere in a terminal frame serialize into a first-appearance dictionary and are referenced by index runs; unique rows stay inline, so varied content pays nothing. A flooded frame collapses to its few distinct rows and repeated positions decode back to one shared row — the same session that recorded ~2.4 MB now records ~0.7 MB, complete and replayable, and slow-runner drains halve. Traces from every earlier version still decode.</li>
 </ul>
-<h2>0.32.3 — 2026-09-14</h2>
+<h2 id="release-0-32-3-2026-09-14">0.32.3 — 2026-09-14</h2>
 <p>Captures of terminal sessions cost a tenth of the bytes.</p>
 <h3>Improved</h3>
 <ul>
 <li><strong>Terminal frames and per-action checks stopped shipping padding and duplicate text</strong>: each row&#x27;s trailing default-styled space padding is re-derived from the frame&#x27;s geometry on decode, and observation checks witness document text by SHA-256 digest plus its true byte length instead of serializing the whole buffer every action (the startup seed still carries full text). The same flooded-terminal session that recorded ~20 MB now records ~2.4 MB, still complete and replayable — cheaper captures, faster drains on slow runners. Traces written by earlier versions still replay.</li>
 </ul>
-<h2>0.32.2 — 2026-09-14</h2>
+<h2 id="release-0-32-2-2026-09-14">0.32.2 — 2026-09-14</h2>
 <p>Forensic captures survive real terminal sessions.</p>
 <h3>Fixed</h3>
 <ul>
 <li><strong>A flooded terminal no longer fails the editor&#x27;s exit</strong> (<code>:qa</code> after sustained output exited 1 with <code>incomplete trace</code>): three stacked capture bugs, each fixed at its source. Terminal frames now serialize as cell runs with the projection derived on decode, so a full-history frame costs its content size instead of ~180 MB; mutation, history, document and paste records carry bounded, explicitly-marked text excerpts beside true byte counts, so opening a large buffer can no longer degrade the whole capture; and an honestly-degraded capture (value or budget cap) is reported by the file&#x27;s terminal marker instead of failing the process exit — writer I/O failures remain fatal. The opt-in capture byte bound rose to 512 MB to match what consented interactive terminal sessions legitimately record. Captures written by earlier versions still replay; the sustained-output test now asserts the trace stays complete and replays execution-free.</li>
 </ul>
-<h2>0.32.1 — 2026-09-14</h2>
+<h2 id="release-0-32-1-2026-09-14">0.32.1 — 2026-09-14</h2>
 <p>Picker previews and terminal navigation, from first real-use feedback.</p>
 <h3>Fixed</h3>
 <ul>
@@ -279,7 +277,7 @@
 <li><strong><code>Ctrl-W</code> is an editor window prefix inside terminal input</strong> (Vim&#x27;s documented <code>t_CTRL-W</code> grammar): <code>h/j/k/l/w</code> (and arrows) move or cycle panes, <code>N</code> enters the pinned-snapshot inspection (same as <code>Ctrl-\ Ctrl-N</code>), and <code>.</code> delivers the literal byte to the child. Any other follow-up passes through unchanged, and the message line hints the grammar while the prefix is open.</li>
 <li><strong>Terminals are real switchable buffers</strong>: the buffers picker lists them with Vim&#x27;s <code>!</code> job badge and their live phase (<code>terminal #N · dir · running</code>), jump rows use the same truthful labels, and entering a terminal records a jump so <code>Ctrl-O</code> returns to your editing position.</li>
 </ul>
-<h2>0.32.0 — 2026-09-13</h2>
+<h2 id="release-0-32-0-2026-09-13">0.32.0 — 2026-09-13</h2>
 <p>Embedded local terminals, full-screen pickers with wider previews, and a folder-view refresh (plans 0054/0055 TUI milestones; all GUI work remains deferred).</p>
 <h3>Added</h3>
 <ul>
@@ -298,7 +296,7 @@
 <li>Picker previews keep the rootle-style line gutter (▶ marker on the focused line, right-aligned numbers, <code>│</code> divider) across files, grep and symbols; the marker now reads accent+bold on the selection band.</li>
 <li>Rendering is readonly (0056 AR01 core): an idempotent preparation step owns every paint-path admission and viewport adjustment behind a state/geometry stamp; repeated paints allocate no worker tickets and painting itself is a pure <code>&amp;Editor</code> query.</li>
 </ul>
-<h2>0.31.1 — 2026-09-13</h2>
+<h2 id="release-0-31-1-2026-09-13">0.31.1 — 2026-09-13</h2>
 <p>One filesystem workspace: browse, edit names, review operations (0054).</p>
 <p>The 0.31.0 tag was not published: its hosted release gate caught a scheduler-dependent trace-capture failure. This release includes the correction without moving the existing tag.</p>
 <h3>Added</h3>
@@ -326,7 +324,7 @@
 <li>Admitted effects keep their actual receipts through cancellation and cleanup failures; uncertain Trash publication retains its recovery metadata.</li>
 <li>Remote source identity stays with the filename under modeline width pressure, rather than disappearing with optional Git context.</li>
 </ul>
-<h2>0.30.0 — 2026-09-12</h2>
+<h2 id="release-0-30-0-2026-09-12">0.30.0 — 2026-09-12</h2>
 <p>One Search workspace, replacement on demand (0053).</p>
 <h3>Changed</h3>
 <ul>
@@ -344,7 +342,7 @@
 <li>Long captured roots cannot overwrite Search error headlines.</li>
 <li>Container integration gates include the Docker client and fail, rather than silently skip, when an explicitly required engine is unavailable.</li>
 </ul>
-<h2>0.29.0 — 2026-09-12</h2>
+<h2 id="release-0-29-0-2026-09-12">0.29.0 — 2026-09-12</h2>
 <p>Whole-editor polish and one query language (0051).</p>
 <h3>Added</h3>
 <ul>
@@ -372,7 +370,7 @@
 <li>Late hover replies cannot consume typing; query diagnostics remain visible without overlapping titles or advertising controls that the active field does not own.</li>
 </ul>
 <p>Migration: old <code>-t</code>/<code>-g</code> picker syntax is now ordinary literal text; use the named qualifiers and <code>:help query</code>. In-buffer Vim search is unchanged. Replacement values remain literal, including <code>$1</code>. Older unversioned semantic captures refuse replay.</p>
-<h2>0.28.0 — 2026-09-11</h2>
+<h2 id="release-0-28-0-2026-09-11">0.28.0 — 2026-09-11</h2>
 <p>Picker visual polish (0050) and the multibuffer&#x27;s missing paint.</p>
 <h3>Added — picker rows rebuilt per kind (0050)</h3>
 <ul>
@@ -391,14 +389,14 @@
 <li><strong><code>]f</code> / <code>[f</code></strong> walk file cards (next/previous), recorded in the jumplist.</li>
 </ul>
 <p>The picker renderer split into <code>render/picker/{mod,rows,preview}.rs</code> by responsibility (0050 §9).</p>
-<h2>0.27.0 — 2026-09-11</h2>
+<h2 id="release-0-27-0-2026-09-11">0.27.0 — 2026-09-11</h2>
 <p>The multibuffer gets its presentation (0049 §6), and picker rows gain structure coloring.</p>
 <h3>Added</h3>
 <ul>
 <li><strong>Collection cards</strong>: one rounded card per source file — top border with the path in accent, language and modified badges, excerpt bodies guttering their SOURCE line numbers, a <code>⋮ N source lines omitted</code> gap row between disjoint excerpts of one file, and a full-width bottom border. Cards present in path order. The title row reports matches, files and dirty sources. Chrome rows are typed, addressable and protected (edits refuse and the view refreshes) — structure is data (<code>CollectionRow</code>), never parsed back from text.</li>
 <li><strong>Picker locator dimming</strong>: file rows dim the directory portion and keep the name bright; grep/jump/remote hits dim the <code>path:line</code> locator — computed from payload fields, not text parsing.</li>
 </ul>
-<h2>0.26.0 — 2026-09-11</h2>
+<h2 id="release-0-26-0-2026-09-11">0.26.0 — 2026-09-11</h2>
 <h3>Fixed</h3>
 <ul>
 <li><code>gb</code>/<code>gB</code> work in Visual mode: occurrence seeding enters Visual, so the repeat key must dispatch there — the visual walker now runs visual-section Leaf rows (with the path replayed into the grammar on fall-through, so <code>gg</code> &amp; friends parse whole), and keymap rows declare their modes (<code>sections</code>), letting one binding live in both.</li>
@@ -407,7 +405,7 @@
 <ul>
 <li>The symbol picker renders a colored kind chip before each row (<code>fn</code>, <code>struct</code>, <code>enum</code>, <code>mod</code>, …) — the icon column without an icon font. Rows slim to name · container · line.</li>
 </ul>
-<h2>0.25.0 — 2026-09-11</h2>
+<h2 id="release-0-25-0-2026-09-11">0.25.0 — 2026-09-11</h2>
 <p>The multibuffer becomes trustworthy (0049 §§5–8 core): collections undo, redo, save, navigate and never show stale text — plus occurrence selection, reviewable changes, indent inference and format-on-save.</p>
 <h3>Added</h3>
 <ul>
@@ -427,7 +425,7 @@
 <li>The 2,000-excerpt sync stall: line diffs trim common prefix/suffix first; the quadratic LCS only ever sees the changed middle.</li>
 <li>Collection views present source line numbers in the gutter, accent chrome on title/header rows, and a real provenance name in the modeline — never <code>[scratch]</code>. (Full per-source syntax projection and boxed cards remain on the roadmap.)</li>
 </ul>
-<h2>0.24.0 — 2026-09-10</h2>
+<h2 id="release-0-24-0-2026-09-10">0.24.0 — 2026-09-10</h2>
 <p>External-header LSP continuity (0049 §4): a definition jump out of the working tree keeps its language service.</p>
 <h3>Fixed</h3>
 <ul>
@@ -437,7 +435,7 @@
 <li>A manually opened file no server covers gets a truthful route (&quot;no language context for this file — reach it via gd from a served file, or add its root to languages.toml&quot;) instead of install advice; the install hint is reserved for languages with no server at all.</li>
 <li>Namespaces never cross: a remote jump context never binds a local document, and server death drops both bindings and carried contexts.</li>
 </ul>
-<h2>0.23.0 — 2026-09-10</h2>
+<h2 id="release-0-23-0-2026-09-10">0.23.0 — 2026-09-10</h2>
 <p>Escape is preserved at the terminal boundary (0048), and navigation state becomes visible (0047): document symbols, the jumplist as a picker, and mark cards that show the marks.</p>
 <h3>Fixed</h3>
 <ul>
@@ -451,7 +449,7 @@
 <li><strong>Jumplist picker</strong> (0047 §2): <code>Space j</code> or <code>:jumps</code> — vim <code>:jumps</code> as a menu: past newest-first, the current position marked, dead documents filtered; Enter jumps and records the spot for <code>Ctrl-O</code>.</li>
 <li><strong>Mark cards</strong> (0047 §3): <code>m</code>, <code>&#x27;</code> and `<code> </code> `<code> which-key cards label the absorb key as </code>a-z` and list the live marks with their landing lines — for the jump cards the list is the menu.</li>
 </ul>
-<h2>0.22.1 — 2026-09-10</h2>
+<h2 id="release-0-22-1-2026-09-10">0.22.1 — 2026-09-10</h2>
 <p>Field-report fixes from a 0.21.0 review against real pyright and remote hosts.</p>
 <h3>Fixed</h3>
 <ul>
@@ -460,7 +458,7 @@
 <li>The remote destinations picker keeps <code>Add a host…</code> visible under filtering (pinned row), and Enter on filter text that matched no listed destination carries the text into the address box as the draft — typed hostnames are no longer swallowed.</li>
 <li><code>--log-content</code> traces now carry LSP frame bodies (<code>payload</code> on <code>lsp_message</code> events), so initialize params and diagnostics are readable in a capture instead of requiring a hand-rolled client.</li>
 </ul>
-<h2>0.22.0 — 2026-09-10</h2>
+<h2 id="release-0-22-0-2026-09-10">0.22.0 — 2026-09-10</h2>
 <p>The engine extraction (0046): one <code>strop-engine</code>, the terminal as a consumer.</p>
 <h3>Changed</h3>
 <ul>
@@ -471,7 +469,7 @@
 <ul>
 <li>Collections v2 (unreleased under 0.21.x): multi-region write-back, async background loading of unopened sources, remote sources gated on 0040 write permits.</li>
 </ul>
-<h2>0.21.0 — 2026-09-10</h2>
+<h2 id="release-0-21-0-2026-09-10">0.21.0 — 2026-09-10</h2>
 <p>Containers become real workspaces (0037 DC1b), and directory listings scale.</p>
 <h3>Added</h3>
 <ul>
@@ -483,7 +481,7 @@
 <ul>
 <li>Container write policy: read-only. <code>docker cp</code> into a container is not an atomic conditional save; <code>:w</code>/<code>:w!</code>/<code>:wq</code> on container documents refuse with the policy named, never a local-path fallback.</li>
 </ul>
-<h2>0.20.1 — 2026-09-10</h2>
+<h2 id="release-0-20-1-2026-09-10">0.20.1 — 2026-09-10</h2>
 <p>Interaction fixes from hands-on field reports, plus the verified kernel.</p>
 <h3>Fixed</h3>
 <ul>
@@ -499,7 +497,7 @@
 <ul>
 <li>The anchor-mapping kernel (<code>strop-core/src/editmap.rs</code>, called by <code>editor/transact.rs</code> for every mark/cursor/selection remap) carries its proof in-tree: spec equivalence, monotonicity, in-bounds — verified by the checksum-pinned Verus image (<code>docker compose run --build --rm verify</code>, now a CI job). Proof work already paid: the no-overflow precondition and <code>start &lt;= new_end</code> invariant are now explicit where they were implicit.</li>
 </ul>
-<h2>0.20.0 — 2026-09-10</h2>
+<h2 id="release-0-20-0-2026-09-10">0.20.0 — 2026-09-10</h2>
 <p>Shared workspace identity, semantic editing, editable collections, and existing-container browsing (plans 0042/0043/0044, 0037 DC1a).</p>
 <h3>Added</h3>
 <ul>
@@ -516,7 +514,7 @@
 <ul>
 <li>Word objects are nvim-faithful where they previously deviated: <code>aw</code> includes trailing (or leading) blanks, <code>iw</code> on punctuation selects the punct run, and blank runs are selectable objects. One cursor-only divergence on a refused command is recorded in <code>KNOWN_DIVERGENCES</code> with its reason.</li>
 </ul>
-<h2>0.19.1 — 2026-09-09</h2>
+<h2 id="release-0-19-1-2026-09-09">0.19.1 — 2026-09-09</h2>
 <p>Enterprise-remote fixes from the first RHEL/NFS field report.</p>
 <h3>Fixed</h3>
 <ul>
@@ -526,7 +524,7 @@
 <li>Language servers whose startup sends <code>window/logMessage</code> (pyright does, unconditionally) are no longer killed as &quot;unhandled notification&quot;. Server notifications a client need not handle are traced and ignored, <code>window/showMessage</code> reaches the status line, and attach failures now name the real reason (initialize refusal/timeout, protocol error, stderr) alongside the install hint.</li>
 <li><code>strop ssh://host/path/file.txt:LINE</code> accepts the same <code>:LINE</code> suffix as local files; <code>--help</code> now points at the remote command surface (<code>:help</code>).</li>
 </ul>
-<h2>0.19.0 — 2026-09-09</h2>
+<h2 id="release-0-19-0-2026-09-09">0.19.0 — 2026-09-09</h2>
 <p>Explicit remote editing and conflict-aware saving (plan 0040).</p>
 <h3>Added</h3>
 <ul>
@@ -545,7 +543,7 @@
 </ul>
 <h3>Safety boundary</h3>
 <p>Locks coordinate remote-save protocol participants, not arbitrary external writers. There is no universal CAS guarantee in the final comparison/rename window. Symlinks, hard links, non-owned files, noncanonical path spellings and unsupported metadata preservation refuse writable admission. Git mutations, directory mutations, save-as, elevation and arbitrary remote commands remain outside this release. Cancellation or loss after commit begins is unconfirmed until a receipt or explicit verification establishes the durable current state.</p>
-<h2>0.18.0 — 2026-09-09</h2>
+<h2 id="release-0-18-0-2026-09-09">0.18.0 — 2026-09-09</h2>
 <p>Remote browsing, responsive large-workspace editing, and broader static syntax coverage (plans 0038/0039).</p>
 <h3>Added</h3>
 <ul>
@@ -567,7 +565,7 @@
 </ul>
 <h3>Scope</h3>
 <p>Remote files remain read-only in this release. Explicit writable admission and conflict-aware atomic saving are the separately requested next release, behind RW4&#x27;s transport, metadata, cancellation and concurrency safety gate.</p>
-<h2>0.17.0 — 2026-09-08</h2>
+<h2 id="release-0-17-0-2026-09-08">0.17.0 — 2026-09-08</h2>
 <p>Read-only SSH workspaces: bounded log following, directory buffers, remote language services and native Git semantics (plan 0036).</p>
 <h3>Added</h3>
 <ul>
@@ -588,7 +586,7 @@
 </ul>
 <h3>Scope</h3>
 <p>Remote content stays read-only. Writes, Git mutations, arbitrary remote shell jobs, Dev Containers and additional transports remain prioritized roadmap work. SFTP reading needs OpenSSH; remote Git/LSP also require a POSIX environment, <code>python3</code> and their respective tools. Process cleanup is conditional on disconnect detection and process-group membership, not a guarantee across partitions or escaped sessions.</p>
-<h2>0.16.0 — 2026-09-07</h2>
+<h2 id="release-0-16-0-2026-09-07">0.16.0 — 2026-09-07</h2>
 <p>Trustworthy diagnostics and the first verified SSH log-reading milestone (plans 0033/0034). The broader remote workspace work is tracked separately in 0036.</p>
 <h3>Added</h3>
 <ul>
@@ -605,7 +603,7 @@
 <li>Closing the last read-only surface no longer reads a dead current document.</li>
 <li>Full replay preserves remote provenance rather than decoding an SSH URI as a legacy local path. Release publication follows actual workspace dependencies.</li>
 </ul>
-<h2>0.15.1 — 2026-09-07</h2>
+<h2 id="release-0-15-1-2026-09-07">0.15.1 — 2026-09-07</h2>
 <p>Modeline and Git-surface polish, separately from the 0.15.0 correctness release (plan 0032).</p>
 <h3>Changed</h3>
 <ul>
@@ -626,7 +624,7 @@
 <li>In the 240-file review fixture, median traced debug-frame rendering fell from 106.9 ms to 5.8 ms (12 frames, same workstation). This is measured fixture behavior, not a portable timing guarantee.</li>
 <li>Layout, native-path navigation, control/Unicode labels and frame-text round trips have behavioral regressions; grammar and keybindings remain unchanged.</li>
 </ul>
-<h2>0.15.0 — 2026-09-07</h2>
+<h2 id="release-0-15-0-2026-09-07">0.15.0 — 2026-09-07</h2>
 <p>The complete P1/P2 correctness roadmap (0031).</p>
 <h3>Fixed</h3>
 <ul>
@@ -651,7 +649,7 @@
 <li>Command-table lookup is compiled once. Query parsing/emission, Git job types, test delivery helpers and conformance streams are split by responsibility.</li>
 <li>Changed async regressions receive terminal events instead of sleeping or sharing fixed <code>/tmp</code> files. Fixture-only drain paths are absent from production builds.</li>
 </ul>
-<h2>0.14.1 — 2026-09-07</h2>
+<h2 id="release-0-14-1-2026-09-07">0.14.1 — 2026-09-07</h2>
 <p>Search/terminal correctness, diagnostic session traces, and a safety review (plans 0027–0030).</p>
 <p>The 0.14.0 tag stopped before publication: the strengthened macOS verification correctly ran but its allowlist omitted Apple&#x27;s system zlib. This release accepts that system library while still rejecting non-system dependencies; tags were not moved. All application changes below are included in 0.14.1.</p>
 <h3>Fixed</h3>
@@ -676,7 +674,7 @@
 <li>Separate client transport, CLI, terminal, trace and keymap-query responsibilities; renderer tests no longer inflate the production renderer.</li>
 <li>Restored omitted smart-indent coverage and script tokens. Headless now keeps a persistent terminal and draws the real feed path after each scripted key.</li>
 </ul>
-<h2>0.13.0 — 2026-09-06</h2>
+<h2 id="release-0-13-0-2026-09-06">0.13.0 — 2026-09-06</h2>
 <p>PathBuf paths end to end (plan 0026) + the file-size split wave.</p>
 <h3>Fixed</h3>
 <ul>
@@ -686,7 +684,7 @@
 <ul>
 <li>File-size discipline wave (no behavior change, public APIs unchanged): <code>strop-core</code> lib.rs → buffer.rs + range.rs; <code>strop-grammar</code> resolve.rs → resolve/{mod,motions,objects,search}; <code>strop-git</code> lib.rs → {diff,repo,revision}; <code>strop-lsp</code> lib.rs → {caps,client,convert}; <code>editor/picker.rs</code> → picker/{mod,drain,accept, replace,preview,tests}; <code>editor/tests.rs</code> → tests/ one file per module. Keymap table exempt per AGENTS.md.</li>
 </ul>
-<h2>0.12.0 — 2026-09-06</h2>
+<h2 id="release-0-12-0-2026-09-06">0.12.0 — 2026-09-06</h2>
 <p>The 1.0 perf gate (plan 0025) + jumplist fixes.</p>
 <h3>Fixed</h3>
 <ul>
@@ -696,7 +694,7 @@
 <ul>
 <li><strong><code>strop --bench [scenario|all]</code></strong> — the perf gate suite (1/10/100MB buffers, 100k-line navigation, 1k cursors, p50/p95/p99 input-to-frame) on the production feed+render path, synthetic deterministic data, <code>docker compose run bench</code>. Baseline in <code>plans/0025-perf-gate.md</code>: input-to-frame p99 1.5ms, edits flat to 80MB, no cursor superlinearity. Perf claims now need these numbers.</li>
 </ul>
-<h2>0.11.0 — 2026-09-06</h2>
+<h2 id="release-0-11-0-2026-09-06">0.11.0 — 2026-09-06</h2>
 <p>The transaction gateway + verified state machine (plan 0024).</p>
 <h3>Added</h3>
 <ul>
@@ -704,7 +702,7 @@
 <li><strong><code>specs/EditorProtocol.tla</code></strong> — the editor&#x27;s document/pane/ transaction/service protocol model-checked by TLC: NoStalePane, NoMisapply, NoPartialCommit, monotonic clock. The kept mutant (an unguarded Deliver) is caught by the gate — the invariants have teeth. In the docker gate (<code>compose run model</code>) and CI.</li>
 <li><strong>The conformance harness</strong> — a String reference model and the real editor run the same generated streams through the production path; text equality + invariants asserted every step (found vim&#x27;s insert-Esc cursor move and the welcome card&#x27;s first key on day one).</li>
 </ul>
-<h2>0.10.3 — 2026-09-06</h2>
+<h2 id="release-0-10-3-2026-09-06">0.10.3 — 2026-09-06</h2>
 <p>The consolidation round (plan 0023): review 4&#x27;s 18 contract probes ship in the repo as the acceptance suite (<code>editor/contract_probes.rs</code>) — all green.</p>
 <h3>Fixed</h3>
 <ul>
@@ -726,19 +724,19 @@
 <li><strong>Preview claims are precise</strong>: composition windows (search, replace, git) preview live; instant operator+object chords execute at the completing key. The site says so.</li>
 <li>The scorebench example measures the real <code>Picker::refilter</code> path.</li>
 </ul>
-<h2>0.10.2 — 2026-09-06</h2>
+<h2 id="release-0-10-2-2026-09-06">0.10.2 — 2026-09-06</h2>
 <h3>Fixed</h3>
 <ul>
 <li><strong>A crash (and a release-build garbage-read) in incremental syntax highlighting</strong>: the rope-chunk parse callback assumed tree-sitter requests bytes monotonically. On error recovery in large template-heavy files it backtracks; <code>byte - offset</code> underflowed and panicked in debug, and could feed garbage slices in release. Repro: gd into <code>/usr/include/c++/13/optional</code> and back. The callback now uses ropey&#x27;s random-access <code>chunk_at_byte</code>. Regression test pins backtracking-heavy inputs.</li>
 </ul>
-<h2>0.10.1 — 2026-09-06</h2>
+<h2 id="release-0-10-1-2026-09-06">0.10.1 — 2026-09-06</h2>
 <p>The 1.0-hardening remainder (plan 0022): incremental tree-sitter and the nucleo decision.</p>
 <h3>Changed</h3>
 <ul>
 <li><strong>Syntax highlighting parses incrementally</strong>: the highlighter keeps the parse tree; every transaction (typing, undo, redo, git discard, ex edits) applies its ops as tree-sitter InputEdits at commit time — a cheap pointer walk — and the reparse runs from rope chunks against the old tree, never a from-scratch parse and never a materialized document String. Correctness is property-pinned: incremental spans equal a fresh parse across edit scripts.</li>
 <li><strong>The picker&#x27;s scorer is nucleo-matcher</strong> (docs/nucleo-decision.md): 42–50ms → 12ms on a 100k-item refilter, identical hit sets, boundary-preferred match columns for the accent render. Adopted on numbers, not principle — the bench lives at <code>cargo run -p strop-picker --example scorebench --release</code>.</li>
 </ul>
-<h2>0.10.0 — 2026-09-06</h2>
+<h2 id="release-0-10-0-2026-09-06">0.10.0 — 2026-09-06</h2>
 <p>Document identity and the last 0018 seams (plan 0021). No new user-visible features — the document model is formalized and the render path is clean.</p>
 <h3>Changed (architecture)</h3>
 <ul>
@@ -747,14 +745,14 @@
 <li><strong><code>Buffer.path</code> is <code>PathBuf</code></strong> (0020 review): the filesystem model isn&#x27;t UTF-8 — a file with non-UTF-8 bytes in its name opens, edits, and round-trips (test-pinned).</li>
 <li><strong><code>DocumentSource</code></strong> (File / Scratch / Surface / Output): readonly and save refusal derive from the source at construction — no more <code>readonly</code>/<code>name</code>/path conventions kept in sync by callers. The document layer splits into <code>document/{mod,surfaces}.rs</code>; the git surface model lives with the payload, and <code>:w</code> on a readonly buffer names it.</li>
 </ul>
-<h2>0.9.2 — 2026-09-05</h2>
+<h2 id="release-0-9-2-2026-09-05">0.9.2 — 2026-09-05</h2>
 <p>The structural half of plan 0020.</p>
 <h3>Changed (architecture)</h3>
 <ul>
 <li><strong>Universal anchor mapping</strong>: every committed transaction emits its ops through one ChangeMap applied to marks, jumplists, and every OTHER pane&#x27;s selections of the document (the active pane&#x27;s cursors remain each command&#x27;s own job; a watermark guarantees an op never shifts an anchor twice, even across multi-commit revisions).</li>
 <li><strong>Project-config trust gate</strong>: a project&#x27;s <code>.strop/languages.toml</code> that supplies the server <code>command</code>/<code>args</code> is executable content — attach is refused until <code>:trust</code> (once, remembered per project root in the state dir). Init-options-only configs (pythonPath-style) stay free.</li>
 </ul>
-<h2>0.9.1 — 2026-09-05</h2>
+<h2 id="release-0-9-1-2026-09-05">0.9.1 — 2026-09-05</h2>
 <p>The third review round (plan 0020): fourteen contract fixes, each with its regression test.</p>
 <h3>Fixed</h3>
 <ul>
@@ -773,7 +771,7 @@
 <li><strong>Sessions persist for every launch mode</strong>, including <code>strop file.rs</code>.</li>
 <li><code>strop-picker</code> is a workspace member.</li>
 </ul>
-<h2>0.9.0 — 2026-09-05</h2>
+<h2 id="release-0-9-0-2026-09-05">0.9.0 — 2026-09-05</h2>
 <p>Revision-native git and services (plan 0018): git content is byte-precise, index mutation is structured, and every async result wakes the UI.</p>
 <h3>Changed (architecture)</h3>
 <ul>
@@ -784,7 +782,7 @@
 <li><strong>Per-workspace language config</strong>: the process-global OnceLock is gone; <code>languages.toml</code> merges are cached per workspace root (a second project no longer reads the first project&#x27;s config).</li>
 <li><strong>Stale-answer guards</strong>: diagnostics carry the server&#x27;s document version (older batches are dropped, not misplaced); a hover that arrives after an edit never opens over changed text.</li>
 </ul>
-<h2>0.8.0 — 2026-09-05</h2>
+<h2 id="release-0-8-0-2026-09-05">0.8.0 — 2026-09-05</h2>
 <p>Text and terminal correctness (plan 0017): one layout layer owns the byte↔cell seam, and the editor is honest on real human text.</p>
 <h3>Added</h3>
 <ul>
@@ -800,7 +798,7 @@
 <li><code>r</code> counts characters, not bytes (<code>2rX</code> over ü is two chars).</li>
 <li><code>*</code>/<code>#</code> classify word chars by Unicode, not ASCII — café, münchen, and 変数 are words.</li>
 </ul>
-<h2>0.7.0 — 2026-09-05</h2>
+<h2 id="release-0-7-0-2026-09-05">0.7.0 — 2026-09-05</h2>
 <p>One input machine (plan 0016, landed fully). Every normal-mode key event — letters, arrows, ctrl keys, Enter, Tab — traverses a single typed state machine whose trie IS the command table; the machine emits typed actions (a table row with count/register, or a grammar Command) and never an assembled string.</p>
 <h3>Added</h3>
 <ul>
@@ -815,7 +813,7 @@
 <li>Model-based tests pin the machine&#x27;s invariants: every live row completes or pends VISIBLY; junk never poisons the next count; counts cap under adversarial input.</li>
 <li>The dead string-token dispatch path is deleted (clean cutover).</li>
 </ul>
-<h2>0.6.1 — 2026-09-05</h2>
+<h2 id="release-0-6-1-2026-09-05">0.6.1 — 2026-09-05</h2>
 <p>The trust release (plan 0015): the second review round&#x27;s destructive paths close, and the vim canon fills in.</p>
 <h3>Fixed (safety)</h3>
 <ul>
@@ -841,7 +839,7 @@
 <li><strong>LSP navigation</strong>: <code>gr</code> references, <code>gI</code> implementation, <code>gy</code> type definition, <code>gD</code> declaration — many results land in a picker with previews, one jumps directly; pre-init requests queue and flush. <code>]d</code>/<code>[d</code> traverse diagnostics with the message in the statusline.</li>
 <li><strong>Commit-viewer file sidebar is a tree</strong>: directories group as dim header rows, files indent by depth.</li>
 </ul>
-<h2>0.6.0 — 2026-09-05</h2>
+<h2 id="release-0-6-0-2026-09-05">0.6.0 — 2026-09-05</h2>
 <p>The input layer lands (plan 0008, fully): key events walk a typed state machine, and the doc table IS the dispatch table.</p>
 <h3>Changed (architecture)</h3>
 <ul>
@@ -853,7 +851,7 @@
 <ul>
 <li>Found by the new dispatch-coverage tests: <code>,</code> didn&#x27;t reverse the find (shared row handlers ignored the completing key — <code>;</code>/<code>N</code>/<code>#</code>/ <code>[c</code>/<code>P</code> all key-aware now); <code>ctrl-w</code> pane keys route through the walker; counts reach leaf commands through the table (2x, 3rx, 2p).</li>
 </ul>
-<h2>0.5.0 — 2026-09-05</h2>
+<h2 id="release-0-5-0-2026-09-05">0.5.0 — 2026-09-05</h2>
 <p>The restructure release. All four waves of <code>plans/0014</code> landed: the editor&#x27;s centre is identity-typed and selection-unified, the input layer is becoming data, and git is a data model, not a sidebar.</p>
 <h3>Changed (architecture)</h3>
 <ul>
@@ -877,7 +875,7 @@
 <li><strong>Git as four states</strong>: HEAD → index → worktree → live document are separate diffable edges. The gutter shows staged lines in the committed-adjacent tint; <code>Space g s</code> stages (live→index), <code>Space g S</code> unstages (index→HEAD), <code>Space g u</code> discards unstaged (restore from index, not HEAD).</li>
 <li><strong>Selection history</strong>: visual mode <code>Space g h</code> = <code>git log -L</code> on the selected lines. Permalinks from commit surfaces pin that commit.</li>
 </ul>
-<h2>0.4.0 — 2026-09-04</h2>
+<h2 id="release-0-4-0-2026-09-04">0.4.0 — 2026-09-04</h2>
 <p>The safety release. An external architecture review (now <code>plans/0014</code>) audited the mutation and protocol boundaries; every confirmed P0 is fixed and pinned by a failing-first test.</p>
 <h3>Fixed — safety</h3>
 <ul>
@@ -897,7 +895,7 @@
 <ul>
 <li><strong><code>|</code> is vim&#x27;s column motion again</strong>; pipe-through-shell moved to <code>Space |</code> (normal and visual). Restored before the deviation became muscle memory — see <code>plans/0014</code> §&quot;compatibility policy&quot;.</li>
 </ul>
-<h2>0.3.9 — 2026-09-04</h2>
+<h2 id="release-0-3-9-2026-09-04">0.3.9 — 2026-09-04</h2>
 <p>Headless QA sweep (the harness now drives the real binary across 60+ scenarios); every crash class found is fixed and pinned by a test.</p>
 <h3>Fixed</h3>
 <ul>
@@ -912,7 +910,7 @@
 <ul>
 <li><strong><code>gs</code> switches source ↔ header</strong> via clangd&#x27;s <code>textDocument/switchSourceHeader</code> — the C/C++ header jump. No server or no counterpart says so in the modeline, never silent.</li>
 </ul>
-<h2>0.3.8 — 2026-09-04</h2>
+<h2 id="release-0-3-8-2026-09-04">0.3.8 — 2026-09-04</h2>
 <h3>Fixed</h3>
 <ul>
 <li><strong>The lingering welcome screen</strong>: the untouched initial scratch buffer is replaced by the first real thing you open (vim&#x27;s <code>[No Name]</code> rule) — no more welcome card reappearing mid-quit, no keep-quitting to exit.</li>
@@ -922,7 +920,7 @@
 <li><strong>Readonly mode</strong> for real: <code>strop -R file</code> (vim&#x27;s <code>-R</code>), <code>:view</code> marks the current buffer readonly, <code>:view file</code> opens readonly. Modeline shows <code>[RO]</code>. (Research note: no editor — vim, nvim, helix — opens goto-definition targets readonly by default; editing the destination is intentional. <code>:view</code>/<code>-R</code> is the standard answer.)</li>
 <li><strong>The modeline grows up</strong>: mode chip · git branch (<code>*</code> marks a dirty worktree) · file · <code>[RO]</code> · cursor count (2×) · error/warning chips · line:col · percent.</li>
 </ul>
-<h2>0.3.7 — 2026-09-04</h2>
+<h2 id="release-0-3-7-2026-09-04">0.3.7 — 2026-09-04</h2>
 <h3>Added</h3>
 <ul>
 <li><strong>Jumplist</strong> (vim&#x27;s ctrl-o / ctrl-i — and ctrl-i is Tab in a terminal, same as vim): jumps record on <code>gg</code>/<code>G</code>/<code>%</code>, searches, <code>n</code>/<code>N</code>, marks, buffer switches, <code>:N</code>, and every surface dive; ctrl-o walks back across buffers, ctrl-i/Tab forward; a new jump truncates the forward path. On commit-diff surfaces Tab keeps its sidebar-focus job.</li>
@@ -931,7 +929,7 @@
 <ul>
 <li><code>what&#x27;s new</code> links removed (the changelog page serves it); docs/changelog content no longer hides under the fixed topbar; footers unified with the homepage&#x27;s.</li>
 </ul>
-<h2>0.3.6 — 2026-09-04</h2>
+<h2 id="release-0-3-6-2026-09-04">0.3.6 — 2026-09-04</h2>
 <p>Input boxes get modal, replace gets vscode-grade exclusion, and the LSP wire learns its manners.</p>
 <h3>Fixed</h3>
 <ul>
@@ -947,7 +945,7 @@
 <li><strong>Replace exclusion per file</strong>: ctrl-x excludes a match, ctrl-d toggles the row&#x27;s whole file (vscode&#x27;s file toggle); the count chip counts both; the hint line documents the <code>-t rs</code> / <code>--glob</code> filters.</li>
 <li><strong>strop.dev/docs + strop.dev/changelog</strong>: how to configure <code>languages.toml</code> (project <code>.strop/</code> over XDG, helix-shaped, the pyright venv+extraPaths recipe) and <code>config.toml</code>, plus the full per-release changelog.</li>
 </ul>
-<h2>0.3.5 — 2026-09-04</h2>
+<h2 id="release-0-3-5-2026-09-04">0.3.5 — 2026-09-04</h2>
 <p>The first-external-review release: a week of real use, seven confirmed bugs, all fixed.</p>
 <h3>Fixed</h3>
 <ul>
@@ -969,7 +967,7 @@
 <ul>
 <li>The reviewer&#x27;s https-enterprise permalink failure (their row 5) does not reproduce on 0.3.4 — verified with the exact release artifact and their exact URL shape. If it still fails for them, the actual remote string is the next datum needed.</li>
 </ul>
-<h2>0.3.4 — 2026-09-04</h2>
+<h2 id="release-0-3-4-2026-09-04">0.3.4 — 2026-09-04</h2>
 <p>Crash fix and a vim-gap sweep.</p>
 <h3>Fixed</h3>
 <ul>
@@ -984,7 +982,7 @@
 <ul>
 <li><code>.</code> repeats deletes and change+insert (dot-repeat tests pinned).</li>
 </ul>
-<h2>0.3.3 — 2026-09-04</h2>
+<h2 id="release-0-3-3-2026-09-04">0.3.3 — 2026-09-04</h2>
 <p>The git-flow and command-line round, plus a vim-fidelity sweep.</p>
 <h3>Added</h3>
 <ul>
@@ -1001,7 +999,7 @@
 <li><strong>Undo</strong>: a lone paste never committed its revision — <code>u</code> after yank+paste claimed &quot;already at oldest change&quot;. Every command now commits exactly one undo unit (nvim&#x27;s rule).</li>
 <li><strong>Ctrl-W on some terminals</strong>: keys that arrive as raw control bytes (<code>\x12</code>/<code>\x17</code>/<code>\x18</code>/<code>\x03</code>) now map to Ctrl-R/W/X/C — C-w pane cycling works on Windows Terminal → WSL.</li>
 </ul>
-<h2>0.3.2 — 2026-09-04</h2>
+<h2 id="release-0-3-2-2026-09-04">0.3.2 — 2026-09-04</h2>
 <p>The finish-line polish round: dots, gaps, hues, and a diff that reads like delta&#x27;s.</p>
 <h3>Added</h3>
 <ul>
@@ -1018,7 +1016,7 @@
 <ul>
 <li>Side-by-side diff (JetBrains-style) is rejected for now — it pairs two logical rows into one display row, breaking the surface-as-buffer contract (cursor/search/yank mirror). git-delta and tuicr made the same call; the run pairing built for emphasis is the alignment engine if a split view ever lands (0010 amendment).</li>
 </ul>
-<h2>0.3.1 — 2026-09-04</h2>
+<h2 id="release-0-3-1-2026-09-04">0.3.1 — 2026-09-04</h2>
 <p>Polish round: the demo is clean again, help wears color, and the E now tells you what it is.</p>
 <h3>Added</h3>
 <ul>
@@ -1033,7 +1031,7 @@
 <li><strong>Paste mutated readonly buffers</strong> (found by the fuzz): <code>p</code> on a git surface or the undo tree now refuses like every other edit.</li>
 <li>Multiline diagnostic messages join with <code> · </code> in the EOL note.</li>
 </ul>
-<h2>0.3.0 — 2026-09-04</h2>
+<h2 id="release-0-3-0-2026-09-04">0.3.0 — 2026-09-04</h2>
 <p>Multicursor lands, help becomes a buffer, the demo&#x27;s LSP section is real again.</p>
 <h3>Added</h3>
 <ul>
@@ -1048,7 +1046,7 @@
 <li><strong>vim fidelity: <code>cw</code>/<code>cW</code></strong> resolve like <code>ce</code>/<code>cE</code> — the trailing whitespace is no longer eaten, and at a word&#x27;s last char only that word changes (pinned in the grammar contract tests).</li>
 <li>Commit-diff sidebar width fits the file list (clamped 12–24) instead of a fixed 28 columns.</li>
 </ul>
-<h2>0.2.2 — 2026-09-03</h2>
+<h2 id="release-0-2-2-2026-09-03">0.2.2 — 2026-09-03</h2>
 <p>Hardening + daily-driver release. The crash-on-quit class is dead, the editor opens directories, the system clipboard works, and the git surfaces got the rootle-grade navigation treatment.</p>
 <h3>Fixed (trust)</h3>
 <ul>
@@ -1081,6 +1079,18 @@
 <li>New: 0011 surface stack, 0012 project config, 0013 multicursor (nvim-0.13 interaction over helix machinery — the next big rock).</li>
 <li>Amended: 0005/0009 (config filename reconciliation), 0007 (status + form-factor notes).</li>
 </ul>
+</div>
 </main>
+<footer class="foot">
+  <div class="shell footer-inner">
+    <p><span class="caret-dot"></span>© 2026 <a href="https://github.com/tknawara">Tarek Nawara</a> · MIT license</p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="https://github.com/stropdev">stropdev</a>
+      <a href="https://github.com/stropdev/strop">Source</a>
+    </nav>
+    <p class="footer-right"><a class="version" data-latest-release href="https://github.com/stropdev/strop/releases/latest">Latest release</a></p>
+  </div>
+</footer>
+<script src="assets/site.js?v=3"></script>
 </body>
 </html>

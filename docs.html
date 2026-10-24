@@ -6,41 +6,47 @@
 <title>strop — docs</title>
 <meta name="description" content="strop configuration, embedded local terminals, namespace-aware directories and checked filesystem operations, explicit remote editing, SSH browsing and static syntax coverage.">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/site.css?v=4">
-<style>
-  main.docs { max-width: 52rem; margin: 0 auto; padding: 5.5rem 1.25rem 4rem; }
-  .docs h1 { color: var(--accent); font-size: 1.6rem; margin: 0 0 .5rem; }
-  .docs h2 { color: var(--text); font-size: 1.1rem; margin: 2.5rem 0 .75rem; border-bottom: 1px solid var(--border); padding-bottom: .4rem; }
-  .docs p, .docs li { color: var(--muted); line-height: 1.65; }
-  .docs p code, .docs li code { color: var(--syn-str); }
-  .docs strong { color: var(--text); }
-  .docs pre { background: var(--mantle); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; overflow-x: auto; line-height: 1.55; }
-  .docs pre code { color: var(--text); }
-  .docs .k { color: var(--syn-kw); }
-</style>
+<link rel="stylesheet" href="assets/site.css?v=5">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="topbar">
-  <a class="brand-mini" href="/">strop</a>
-  <nav>
-    <a href="./docs.html">docs</a>
-    <a href="./roadmap.html">roadmap</a>
-    <a href="./changelog.html">changelog</a>
-    <a href="https://github.com/stropdev/strop">github</a>
-  </nav>
+  <div class="shell nav-inner">
+    <a class="brand-mini" href="/" aria-label="strop home">strop</a>
+    <nav aria-label="Primary navigation">
+      <a href="./docs.html" aria-current="page">Docs</a>
+      <a href="./roadmap.html">Roadmap</a>
+      <a href="./changelog.html">Changelog</a>
+      <a href="https://github.com/stropdev/strop">GitHub</a>
+    </nav>
+  </div>
 </header>
-<main class="docs">
-<h1>configuring strop</h1>
+<main class="page-shell docs" id="main-content">
+<div class="page-intro">
+  <p class="eyebrow">Documentation</p>
+  <h1>Configuring strop</h1>
+  <p>Configuration, remote workspaces, syntax coverage and headless scripting.</p>
+  <nav class="page-toc" aria-label="Documentation sections">
+    <a href="#configuration">Configuration</a>
+    <a href="#languages">Language servers</a>
+    <a href="#ssh">SSH workspaces</a>
+    <a href="#syntax">Syntax</a>
+    <a href="#headless">Headless</a>
+    <a href="#keybindings">Keybindings</a>
+    <a href="#sessions">Sessions</a>
+  </nav>
+</div>
+<div class="prose">
 <p>Zero-config by default — every knob below is optional. Two files, both TOML, both layered
 (project over user over embedded defaults):</p>
 
-<h2><code>config.toml</code> — the two editor knobs</h2>
+<h2 id="configuration"><code>config.toml</code> — the two editor knobs</h2>
 <p>At <code>$XDG_CONFIG_HOME/strop/config.toml</code> (usually <code>~/.config/strop/config.toml</code>).
 Run <code>strop config</code> to print the live values.</p>
 <pre><code><span class="k">tab_size</span> = 4
 <span class="k">indent_guides</span> = true</code></pre>
 
-<h2><code>languages.toml</code> — language servers, helix-shaped</h2>
+<h2 id="languages"><code>languages.toml</code> — language servers, helix-shaped</h2>
 <p>Per-project at <code>.strop/languages.toml</code> (next to your code, committed if you like),
 globally at <code>~/.config/strop/languages.toml</code>. Project wins per key; unknown keys are
 ignored, so helix files paste clean. The workspace root anchors at the <code>.strop</code>
@@ -261,7 +267,7 @@ Headless <code>:trust</code> uses the same per-project/endpoint consent and priv
 state store as the terminal UI. It never gives project configuration implicit
 permission to execute commands or automatically restores editor sessions.</p>
 
-<h2>keybindings</h2>
+<h2 id="keybindings">Keybindings</h2>
 <p>In the editor: <code>:help</code> (or <code>Space ?</code>) opens the full table as a real,
 searchable buffer — <code>/</code> searches it, <code>q</code> closes. Dispatch and the table are pinned
 together by tests (a key that dispatches without a row, or a live row that no-ops, fails the
@@ -270,16 +276,21 @@ build) — drift is a test failure, not a doc bug. Planned-but-unshipped keys re
 <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md">docs/vim-compat.md</a>,
 generated from the same source (<code>strop --dump-compat</code>) and pinned fresh by the gate.</p>
 
-<h2>sessions</h2>
+<h2 id="sessions">Sessions</h2>
 <p>Per-project sessions restore local buffers and undo history across restarts.
 Remote snapshots are excluded: reopening them is an explicit network action.</p>
+</div>
 </main>
 <footer class="foot">
-  <span><span class="caret-dot"></span> © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></span>
-  <span>MIT license</span>
-  <a href="https://github.com/stropdev">stropdev</a>
-  <a href="https://github.com/stropdev/strop">source</a>
-  <span class="foot-right"><span class="version" id="version-chip" hidden></span></span>
+  <div class="shell footer-inner">
+    <p><span class="caret-dot"></span>© 2026 <a href="https://github.com/tknawara">Tarek Nawara</a> · MIT license</p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="https://github.com/stropdev">stropdev</a>
+      <a href="https://github.com/stropdev/strop">Source</a>
+    </nav>
+    <p class="footer-right"><a class="version" data-latest-release href="https://github.com/stropdev/strop/releases/latest">Latest release</a></p>
+  </div>
 </footer>
+<script src="assets/site.js?v=3"></script>
 </body>
 </html>

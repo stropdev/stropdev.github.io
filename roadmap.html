@@ -6,30 +6,28 @@
 <title>strop — roadmap</title>
 <meta name="description" content="Where strop is going: safety first, then identity and coordinates, then the input registry, then git as a data model.">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/site.css?v=4">
-<style>
-  main.roadmap { max-width: 52rem; margin: 0 auto; padding: 5.5rem 1.25rem 4rem; overflow-wrap: anywhere; }
-  .roadmap h1 { color: var(--accent); font-size: 1.6rem; margin: 0 0 .5rem; }
-  .roadmap h2 { color: var(--text); font-size: 1.15rem; margin: 2.5rem 0 .5rem; border-bottom: 1px solid var(--border); padding-bottom: .4rem; }
-  .roadmap h3 { color: var(--accent); font-size: .95rem; margin: 1.5rem 0 .25rem; }
-  .roadmap p, .roadmap li { color: var(--muted); line-height: 1.65; }
-  .roadmap code { color: var(--syn-str); }
-  .roadmap strong { color: var(--text); }
-  .roadmap ul { padding-left: 1.25rem; }
-</style>
+<link rel="stylesheet" href="assets/site.css?v=5">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="topbar">
-  <a class="brand-mini" href="/">strop</a>
-  <nav>
-    <a href="./docs.html">docs</a>
-    <a href="./roadmap.html">roadmap</a>
-    <a href="./changelog.html">changelog</a>
-    <a href="https://github.com/stropdev/strop">github</a>
-  </nav>
+  <div class="shell nav-inner">
+    <a class="brand-mini" href="/" aria-label="strop home">strop</a>
+    <nav aria-label="Primary navigation">
+      <a href="./docs.html">Docs</a>
+      <a href="./roadmap.html" aria-current="page">Roadmap</a>
+      <a href="./changelog.html">Changelog</a>
+      <a href="https://github.com/stropdev/strop">GitHub</a>
+    </nav>
+  </div>
 </header>
-<main class="roadmap">
-<h1>roadmap</h1>
+<main class="page-shell roadmap" id="main-content">
+<div class="page-intro">
+  <p class="eyebrow">Direction and priorities</p>
+  <h1>Roadmap</h1>
+  <p>Safety first, then identity and coordinates, the input registry, and Git as a data model.</p>
+</div>
+<div class="prose">
 <p>Where strop is going. Order is priority: editing safety first, new
 surface area last. The load-bearing detail lives in the repo's
 <code>plans/</code> — this page is the public summary.</p>
@@ -278,6 +276,18 @@ Freezing unstable internals into a public contract is the failure mode.</li>
 <p>A reader-first, git-native editor in which every consequential
 operation is inspectable before it becomes real — vim's grammar,
 exactly, with git history as a navigable dimension of the document.</p>
+</div>
 </main>
+<footer class="foot">
+  <div class="shell footer-inner">
+    <p><span class="caret-dot"></span>© 2026 <a href="https://github.com/tknawara">Tarek Nawara</a> · MIT license</p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="https://github.com/stropdev">stropdev</a>
+      <a href="https://github.com/stropdev/strop">Source</a>
+    </nav>
+    <p class="footer-right"><a class="version" data-latest-release href="https://github.com/stropdev/strop/releases/latest">Latest release</a></p>
+  </div>
+</footer>
+<script src="assets/site.js?v=3"></script>
 </body>
 </html>

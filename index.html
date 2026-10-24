@@ -6,19 +6,36 @@
 <title>strop — see the cut before you make it</title>
 <meta name="description" content="strop is a modal text editor in Rust: Neovim's hands, Helix's spine, rootle's eyes, GitLens' memory.">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/site.css?v=4">
+<link rel="stylesheet" href="assets/site.css?v=5">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="topbar">
-  <a class="brand-mini" href="/">strop</a>
-  <nav>
-    <a href="./docs.html">docs</a>
-    <a href="./roadmap.html">roadmap</a>
-    <a href="./changelog.html">changelog</a>
-    <a href="https://github.com/stropdev/strop">github</a>
-  </nav>
+  <div class="shell nav-inner">
+    <a class="brand-mini" href="/" aria-label="strop home">strop</a>
+    <nav aria-label="Primary navigation">
+      <a href="./docs.html">Docs</a>
+      <a href="./roadmap.html">Roadmap</a>
+      <a href="./changelog.html">Changelog</a>
+      <a href="https://github.com/stropdev/strop">GitHub</a>
+    </nav>
+  </div>
 </header>
-<main class="hero">
+<main id="main-content">
+  <section class="hero shell" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow">A modal text editor in Rust</p>
+      <h1 id="hero-title">See the cut before you make it.</h1>
+      <p class="hero-lede">Neovim's hands · Helix's spine · rootle's eyes · GitLens' memory</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#install">Install strop</a>
+        <a class="button button-secondary" href="./docs.html">Read the docs</a>
+      </div>
+      <div class="release-line">
+        <a class="release-pill" data-latest-release href="https://github.com/stropdev/strop/releases/latest">Latest release</a>
+        <span>23 languages · remote workspaces</span>
+      </div>
+    </div>
 
   <!-- The logo scene: an editor card mid `ci[` — the pending cut tinted
        in the accent, caret at its start, the razor peeking over the top
@@ -87,131 +104,111 @@
     </svg>
   </div>
 
-  <p class="tagline">see the cut before you make it.</p>
-  <p class="lineage">Neovim's hands · Helix's spine · rootle's eyes · GitLens' memory</p>
+  </section>
 
-  <p class="status"><span class="chip"><span id="hero-version" hidden></span>nonblocking code completion · 23 languages</span></p>
-
-  <img class="demo" src="img/demo.gif" alt="strop demo — operator-pending preview, picker, git hunks">
-
-  <section class="palettes">
-    <h2 class="section-head">pick a palette — the logo re-themes live</h2>
-    <div class="palette-bar">
-      <button data-set-palette="strop"><span class="sw" style="--sw:#f0a35e"></span>strop</button>
-      <button data-set-palette="catppuccin-mocha"><span class="sw" style="--sw:#89b4fa"></span>catppuccin-mocha</button>
-      <button data-set-palette="tokyo-night"><span class="sw" style="--sw:#7aa2f7"></span>tokyo-night</button>
-      <button data-set-palette="gruvbox-dark"><span class="sw" style="--sw:#83a598"></span>gruvbox-dark</button>
-      <button data-set-palette="nord"><span class="sw" style="--sw:#88c0d0"></span>nord</button>
-      <button data-set-palette="dracula"><span class="sw" style="--sw:#bd93f9"></span>dracula</button>
-      <button data-set-palette="one-dark"><span class="sw" style="--sw:#61afef"></span>one-dark</button>
-      <button data-set-palette="solarized-dark"><span class="sw" style="--sw:#268bd2"></span>solarized-dark</button>
-      <button data-set-palette="catppuccin-latte"><span class="sw" style="--sw:#1e66f5"></span>catppuccin-latte</button>
-      <button data-set-palette="github-light"><span class="sw" style="--sw:#0969da"></span>github-light</button>
-      <button data-set-palette="one-light"><span class="sw" style="--sw:#4078f2"></span>one-light</button>
-      <button data-set-palette="solarized-light"><span class="sw" style="--sw:#268bd2"></span>solarized-light</button>
+  <section class="section" id="install" aria-labelledby="install-heading">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Get started</p>
+        <h2 id="install-heading">Install your way.</h2>
+        <p>Choose a prebuilt binary or build from source with your usual toolchain.</p>
+      </div>
+      <div class="installbox">
+        <div class="tab-bar" role="group" aria-label="Installation method">
+          <button type="button" data-install="curl" class="active" aria-pressed="true">curl</button>
+          <button type="button" data-install="brew" aria-pressed="false">brew</button>
+          <button type="button" data-install="cargo" aria-pressed="false">cargo</button>
+          <button type="button" data-install="mise" aria-pressed="false">mise</button>
+        </div>
+        <div class="command-row">
+          <code class="ib-cmd"><span class="p">$</span> <span data-install-cmd>curl -fsSL https://strop.dev/install.sh | sh</span></code>
+          <button type="button" class="copy" data-install-copy data-copy="curl -fsSL https://strop.dev/install.sh | sh">Copy</button>
+        </div>
+        <div class="install-meta">
+          <span class="ib-os">Linux · macOS Apple Silicon</span>
+          <span class="copy-status" data-copy-status role="status" aria-live="polite"></span>
+        </div>
+      </div>
+      <div class="install-notes">
+        <p class="alt" data-install-note>Prebuilt static binary · Linux x86_64/aarch64 · macOS arm64 · SHA-256 verified · <a href="https://github.com/stropdev/strop/releases">download tarballs</a></p>
+        <p class="alt update-line">Already installed? <code data-install-update>strop update</code> — checks, verifies, swaps itself.</p>
+      </div>
     </div>
-    <p class="note">The demo GIF will re-render in your pick once the forge
-    ships — the same eleven palettes rootle.dev offers, plus our own.</p>
   </section>
 
-  <div class="installbox">
-    <span class="tab-bar">
-      <button data-install="curl" class="active" aria-pressed="true">curl</button><button data-install="brew" aria-pressed="false">brew</button><button data-install="cargo" aria-pressed="false">cargo</button><button data-install="mise" aria-pressed="false">mise</button>
-    </span>
-    <span class="ib-cmd"><span class="p">$</span> <span data-install-cmd>curl -fsSL https://strop.dev/install.sh | sh</span></span>
-    <button class="copy" data-install-copy data-copy="curl -fsSL https://strop.dev/install.sh | sh">copy</button>
-    <span class="ib-os">linux · macOS</span>
-  </div>
-  <p class="alt update-line">already installed? <code data-install-update>strop update</code> — checks, verifies, swaps itself · <a href="./changelog.html">changelog</a> · <a href="./roadmap.html">roadmap</a></p>
-  <p class="alt" data-install-note>prebuilt static binary · Linux x86_64 + arm64 · macOS Apple Silicon · sha256-verified · <a href="https://github.com/stropdev/strop/releases">tarballs ↗</a></p>
-  <section aria-labelledby="completion-heading">
-    <h2 class="section-head" id="completion-heading">completion without blocking your next key</h2>
-    <p class="alt">Language-server suggestions and current-buffer words share a
-    caret-anchored menu. <code>Ctrl-N</code>/<code>Ctrl-P</code> select,
-    <code>Ctrl-Y</code> accepts, and <code>Ctrl-E</code> dismisses without changing
-    what you typed. Selected documentation, resolved imports and undo use the
-    same source-owned edits; unsupported snippets are refused, not approximated.</p>
-    <p class="alt"><a href="https://github.com/stropdev/strop#code-completion">Completion controls and settings</a> ·
-    <a href="./changelog.html">release notes</a></p>
-  </section>
-  <section aria-labelledby="terminal-heading">
-    <h2 class="section-head" id="terminal-heading">terminals live in your editor</h2>
-    <p class="alt"><code>:terminal</code> opens a real PTY-backed shell — a pinned static
-    Ghostty VT engine renders it, so every escape sequence means the same thing it does in
-    your standalone terminal. Terminal buffers are real read-only buffers: motions,
-    <code>/</code> search, selection and yank just work; splits mirror the live grid while
-    the focused view owns its size.</p>
-    <p class="alt">Editor keys stay editor keys: <code>Esc</code>, <code>Ctrl-C</code> and
-    chords go to the child; <code>Ctrl-\ Ctrl-N</code> (or <code>Ctrl-W N</code>) steps out to inspect a pinned
-    snapshot, and <code>i</code>/<code>a</code> return to the live cursor. <code>Ctrl-W h/j/k/l</code>
-    moves panes straight from terminal input, and terminals list in the
-    buffer picker with their live phase. Multiline and
-    control-character pastes ask first; <code>:qa</code> refuses to quit on live sessions.</p>
-    <p class="alt">Terminal content never enters traces — recording downgrades to
-    metadata unless you explicitly opt in with <code>--log-terminal-content</code>.</p>
-    <p class="alt"><a href="./docs.html#terminals">Terminal commands, keys and privacy</a> ·
-    <a href="./roadmap.html#terminal-plan">what remains on the terminal roadmap</a></p>
-  </section>
-  <section aria-labelledby="filesystem-heading">
-    <h2 class="section-head" id="filesystem-heading">one filesystem workspace</h2>
-    <p class="alt">Browse local and SSH directories as real buffers. Create, rename,
-    move and copy through <strong>Review → Apply → Receipt</strong>; edit filenames
-    with ordinary motions, yank/paste and undo without touching disk until Apply.</p>
-    <p class="alt"><code>Space e</code> reveals the current source.
-    <code>:fs search</code> captures its directory scope; capable SSH hosts search
-    remotely without a local fallback. Containers stay read-only.</p>
-    <p class="alt"><a href="./docs.html#filesystem">Filesystem commands, copy versions and recovery limits</a></p>
-  </section>
-  <section aria-labelledby="remote-heading">
-    <h2 class="section-head" id="remote-heading">browse and edit remote files</h2>
-    <p class="alt">Press <code>Space o</code> to connect and browse real buffers.
-    Files open read-only; <code>:remote edit</code> verifies a full snapshot and enables
-    editing, then <code>:w</code> saves through an owned atomic transaction.</p>
-    <p class="alt">Content/metadata conflicts preserve local edits. Locks coordinate
-    remote-save participants, not arbitrary external writers; unconfirmed outcomes
-    use explicit <code>:remote verify</code>.</p>
-    <p class="alt"><a href="./docs.html#ssh">SSH usage, prerequisites and guarantees</a> ·
-    <a href="./roadmap.html#remote-workspaces">what remains on the remote roadmap</a></p>
-  </section>
-  <section aria-labelledby="syntax-heading">
-    <h2 class="section-head" id="syntax-heading">CMake, Markdown and 21 more languages</h2>
-    <p class="alt">Static Tree-sitter grammars, Markdown emphasis and fenced code, HTML script/style
-    injections, and structural indentation guides. Worker-owned search, ranking and syntax
-    analysis keep large workspaces out of the keystroke path.</p>
-    <p class="alt"><a href="./docs.html#syntax">Language coverage</a> · <a href="./docs.html#headless">Headless scripting</a></p>
+  <section class="section" aria-labelledby="demo-heading">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">In the terminal</p>
+        <h2 id="demo-heading">See strop in action.</h2>
+        <p>Operator-pending preview, pickers and Git hunks in the editor.</p>
+      </div>
+      <div class="demo-frame">
+        <img class="demo" src="img/demo.gif" alt="strop demo showing operator-pending preview, picker and Git hunks" loading="lazy">
+      </div>
+    </div>
   </section>
 
-  <nav class="links">
-    <a href="./docs.html">docs</a>
-    <a href="./roadmap.html">roadmap</a>
-    <a href="./changelog.html">changelog</a>
-    <a href="https://github.com/stropdev/strop">github</a>
-  </nav>
+  <section class="section" aria-labelledby="features-heading">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Beyond the local buffer</p>
+        <h2 id="features-heading">Your workspace, within reach.</h2>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h3>Browse and edit remote files</h3>
+          <p>Press <code>Space o</code> to connect and browse real buffers. Files open read-only; <code>:remote edit</code> verifies a full snapshot and enables editing, then <code>:w</code> saves through an owned atomic transaction.</p>
+          <p>Content and metadata conflicts preserve local edits. Unconfirmed outcomes use explicit <code>:remote verify</code>.</p>
+          <p><a href="./docs.html#ssh">SSH usage and guarantees</a> · <a href="./roadmap.html#remote-workspaces">Remote roadmap</a></p>
+        </article>
+        <article class="feature-card">
+          <h3>CMake, Markdown and 21 more languages</h3>
+          <p>Static Tree-sitter grammars, Markdown emphasis and fenced code, HTML script/style injections, and structural indentation guides.</p>
+          <p>Worker-owned search, ranking and syntax analysis keep large workspaces out of the keystroke path.</p>
+          <p><a href="./docs.html#syntax">Language coverage</a> · <a href="./docs.html#headless">Headless scripting</a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section palettes" aria-labelledby="palette-heading">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Make it yours</p>
+        <h2 id="palette-heading">Pick a palette.</h2>
+        <p>The site and editor scene re-theme live. Your choice is remembered on this device.</p>
+      </div>
+      <div class="palette-panel">
+        <div class="palette-bar" role="group" aria-label="Site palette">
+          <button type="button" data-set-palette="strop" class="active" aria-pressed="true"><span class="sw" style="--sw:#f0a35e"></span>strop</button>
+          <button type="button" data-set-palette="catppuccin-mocha" aria-pressed="false"><span class="sw" style="--sw:#89b4fa"></span>catppuccin-mocha</button>
+          <button type="button" data-set-palette="tokyo-night" aria-pressed="false"><span class="sw" style="--sw:#7aa2f7"></span>tokyo-night</button>
+          <button type="button" data-set-palette="gruvbox-dark" aria-pressed="false"><span class="sw" style="--sw:#83a598"></span>gruvbox-dark</button>
+          <button type="button" data-set-palette="nord" aria-pressed="false"><span class="sw" style="--sw:#88c0d0"></span>nord</button>
+          <button type="button" data-set-palette="dracula" aria-pressed="false"><span class="sw" style="--sw:#bd93f9"></span>dracula</button>
+          <button type="button" data-set-palette="one-dark" aria-pressed="false"><span class="sw" style="--sw:#61afef"></span>one-dark</button>
+          <button type="button" data-set-palette="solarized-dark" aria-pressed="false"><span class="sw" style="--sw:#268bd2"></span>solarized-dark</button>
+          <button type="button" data-set-palette="catppuccin-latte" aria-pressed="false"><span class="sw" style="--sw:#1e66f5"></span>catppuccin-latte</button>
+          <button type="button" data-set-palette="github-light" aria-pressed="false"><span class="sw" style="--sw:#0969da"></span>github-light</button>
+          <button type="button" data-set-palette="one-light" aria-pressed="false"><span class="sw" style="--sw:#4078f2"></span>one-light</button>
+          <button type="button" data-set-palette="solarized-light" aria-pressed="false"><span class="sw" style="--sw:#268bd2"></span>solarized-light</button>
+        </div>
+        <p class="note">The demo GIF will re-render in your pick once the forge ships — the same eleven palettes rootle.dev offers, plus our own.</p>
+      </div>
+    </div>
+  </section>
 </main>
 <footer class="foot">
-  <span><span class="caret-dot"></span> © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></span>
-  <span>MIT license</span>
-  <a href="https://github.com/stropdev">stropdev</a>
-  <a href="https://github.com/stropdev/strop">source</a>
-  <a href="https://github.com/stropdev/strop/blob/main/SECURITY.md#code-signing-policy">code signing policy</a>
-  <span class="foot-right"><span class="version" id="version-chip" hidden></span></span>
+  <div class="shell footer-inner">
+    <p><span class="caret-dot"></span>© 2026 <a href="https://github.com/tknawara">Tarek Nawara</a> · MIT license</p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="https://github.com/stropdev">stropdev</a>
+      <a href="https://github.com/stropdev/strop">Source</a>
+    </nav>
+    <p class="footer-right"><a class="version" data-latest-release href="https://github.com/stropdev/strop/releases/latest">Latest release</a></p>
+  </div>
 </footer>
-<script src="assets/site.js?v=2"></script>
-<script>
-// Both version chips share the published release; never hard-code a second
-// version in the hero. Leave them hidden if the API is unavailable.
-fetch("https://api.github.com/repos/stropdev/strop/releases/latest")
-  .then(r => r.ok ? r.json() : null)
-  .then(rel => {
-    if (!rel || !rel.tag_name) return;
-    const chip = document.getElementById("version-chip");
-    chip.textContent = rel.tag_name;
-    chip.hidden = false;
-    const hero = document.getElementById("hero-version");
-    hero.textContent = rel.tag_name + " — ";
-    hero.hidden = false;
-  })
-  .catch(() => {});
-</script>
+<script src="assets/site.js?v=3"></script>
 </body>
 </html>
