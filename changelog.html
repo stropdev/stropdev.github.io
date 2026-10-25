@@ -28,6 +28,27 @@
   <p>Release notes and development history. Browse <a href="https://github.com/stropdev/strop/releases">all published releases on GitHub</a>.</p>
 </div>
 <div class="prose">
+<h2 id="release-0-45-0-2026-10-24">0.45.0 — 2026-10-24</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>Honest partial UI action acknowledgements</strong> (0071): UI protocol v2 distinguishes a published action prefix from a fully applied batch and a zero-application refusal. Clipboard effects are emitted only to clients that negotiated <code>clipboard_write</code>.</li>
+<li><strong>Complete command discoverability</strong>: generated help and Ex completion now include theme, jump, symbol, collection, recovery, quit, container-worker and selection commands.</li>
+<li><strong>Register differential coverage</strong>: the nvim harness compares unnamed registers as well as final text and cursor.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li><strong>Quiet diagnostics</strong> (0071): source ranges no longer carry straight severity underlines. Gutter signs, cursor-line messages, modeline counts and the diagnostics picker retain severity without painting amber blocks over code.</li>
+<li><strong>Strict, legible configuration</strong>: unreadable and unknown keys are named errors instead of silent defaults; <code>strop config</code> aligns real key/value widths and <code>:explain</code> reports session theme overrides truthfully.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Reproducible terminal source builds</strong>: required Zig packages are vendored and imported through Zig&#x27;s hash-verified local cache, removing GitHub/Codeberg response-header failures from clean BuildKit builds.</li>
+<li><strong>Split refresh</strong>: shrinking a shared document immediately reclamps inactive pane origins and UI snapshot line numbers instead of leaving stale/blank splits until focus changes.</li>
+<li><strong>Picker and async delivery</strong>: shrinking pinned project-status rows cannot index past the catalog; late LSP lifecycle events and picker terminal results backpressure instead of dropping; notify settlement cannot be lost to advisory queue pressure.</li>
+<li><strong>Completion</strong>: commit characters apply the selected item before inserting once, with later input deferred behind acceptance; snippet and commit-character capabilities are advertised to language servers.</li>
+<li><strong>Vim grammar</strong>: <code>X</code> deletes backward; direct-edit dot repeat no longer replays older operators; insert Tab, register counts, visual-change undo/repeat, and visual-block indent behave consistently. Named yanks also update the unnamed register.</li>
+<li><strong>Headless scripts</strong>: early quit cannot silently skip assertions, and <code>buffer</code> preserves terminal capture/keyboard composition settings.</li>
+</ul>
 <h2 id="release-0-44-0-2026-10-19">0.44.0 — 2026-10-19</h2>
 <h3>Added</h3>
 <ul>
