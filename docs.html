@@ -28,6 +28,7 @@
   <p>Configuration, remote workspaces, syntax coverage and headless scripting.</p>
   <nav class="page-toc" aria-label="Documentation sections">
     <a href="#configuration">Configuration</a>
+    <a href="#indentation">Indentation</a>
     <a href="#languages">Language servers</a>
     <a href="#ssh">SSH workspaces</a>
     <a href="#syntax">Syntax</a>
@@ -37,14 +38,39 @@
   </nav>
 </div>
 <div class="prose">
-<p>Zero-config by default — every knob below is optional. Two files, both TOML, both layered
-(project over user over embedded defaults):</p>
+<p>Zero-config by default. Editor preferences live in your user
+<code>config.toml</code>; language-server configuration has separate user and
+trusted project layers.</p>
 
-<h2 id="configuration"><code>config.toml</code> — the two editor knobs</h2>
+<h2 id="configuration"><code>config.toml</code> — editor preferences</h2>
 <p>At <code>$XDG_CONFIG_HOME/strop/config.toml</code> (usually <code>~/.config/strop/config.toml</code>).
-Run <code>strop config</code> to print the live values.</p>
+Run <code>strop config</code> to print configured values and <code>:explain</code>
+to inspect effective document settings. Invalid or unknown settings are reported;
+they do not silently become defaults.</p>
 <pre><code><span class="k">tab_size</span> = 4
-<span class="k">indent_guides</span> = true</code></pre>
+<span class="k">indent_style</span> = "spaces"
+<span class="k">indent_detect</span> = true
+<span class="k">indent_guides</span> = true
+<span class="k">theme</span> = "dark"</code></pre>
+<p>Indentation detection follows the opened document's convention.
+<code>:tab-size 2</code> and <code>:indent-style tabs</code> override it for the
+current document; <code>:tab-size auto</code> restores automatic width selection.
+The modeline shows the effective indentation. <code>:theme</code> selects a
+session palette without rewriting your configuration.</p>
+
+<h3 id="indentation">Structural indentation</h3>
+<p>Enter between <code>{}</code>, <code>[]</code> or <code>()</code> opens an
+indented inner line and leaves the closer aligned. A closer typed on an
+indentation-only line aligns with its matching opener, rather than removing
+one arbitrary indent level. Multiple cursors use their own source context.</p>
+<p>Supported delimiter languages are Rust, Python, JavaScript, TypeScript, Go,
+C, C++, JSON, Java, C# and CSS. Python also deepens indentation after a code
+colon. Strings and comments are excluded; tabs, CRLF and per-document settings
+are preserved. Undo and dot repeat retain the operation at its new location.</p>
+<p>Other named languages and prose inherit whitespace; unnamed scratch buffers
+retain generic brace behavior. This is not a formatter or keyword/tag indentation.
+Large-file syntax work stays on the revision-checked worker, not the input/render
+thread. Pasted text remains verbatim rather than being reinterpreted as typed keys.</p>
 
 <h2 id="languages"><code>languages.toml</code> — language servers, helix-shaped</h2>
 <p>Per-project at <code>.strop/languages.toml</code> (next to your code, committed if you like),
@@ -243,9 +269,27 @@ JSON, Bash, Fish, Lua, SQL, CMake, Markdown, Java, C#, Ruby, PHP, TOML, YAML, HT
 and CSS. Grammars and licensed highlight queries ship in the binary; no grammar
 downloads or language server are required.</p>
 <p>Markdown includes a separate inline parser, headings, emphasis, links, tables
-and recognized fenced languages. HTML embeds JavaScript and CSS. Syntax and
+and fenced code in any bundled language. HTML embeds JavaScript and CSS. Syntax and
 structural indentation guides are revision-owned worker results; stale results
 cannot paint newly edited text. Long-line layout uses sparse grapheme checkpoints.</p>
+<h3 id="documentation-code">Embedded languages in documentation</h3>
+<p>The same Tree-sitter injection pipeline highlights labelled code fences inside
+documentation comments. For example, Python inside a JavaScript documentation block:</p>
+<pre><code>/**
+ * ```python
+ * def answer():
+ *     return 42
+ * ```
+ */</code></pre>
+<p>Supported containers: Rust documentation comments; JavaScript, TypeScript,
+TSX, C, C++ and Java <code>/** ... */</code> blocks; Go block comments attached
+to top-level declarations; and initial module, class or function triple-quoted
+Python docstrings. Ordinary comments and arbitrary strings retain their host
+highlighting. Comment prefixes and delimiters keep their original styling.</p>
+<p>Explicit fence labels select any bundled language. Unknown labels remain plain
+code. Only Rust documentation defaults unlabelled fences to Rust and recognizes
+rustdoc attributes such as <code>no_run</code> and <code>compile_fail</code>.
+These attributes control highlighting only; no example is executed.</p>
 
 <h2 id="headless">Headless scripts</h2>
 <pre><code>strop --headless SCRIPT [+LINE] [FILE[:LINE]]</code></pre>
