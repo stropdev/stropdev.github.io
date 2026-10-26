@@ -72,6 +72,30 @@ retain generic brace behavior. This is not a formatter or keyword/tag indentatio
 Large-file syntax work stays on the revision-checked worker, not the input/render
 thread. Pasted text remains verbatim rather than being reinterpreted as typed keys.</p>
 
+<h2 id="search-and-editing">Search, input fields and comments</h2>
+<p>Buffer <code>/</code> and <code>?</code> search is case-insensitive by default.
+Begin the query with <code>case:sensitive</code> to require exact case, or
+<code>case:ignore</code> / <code>case:insensitive</code> to make insensitive
+matching explicit. Vim's <code>\C</code> and <code>\c</code> also work and
+persist through <code>n</code>, <code>N</code> and highlights.</p>
+<p><code>Space f</code> fuzzy-matches bare text against the full
+workspace-relative path. <code>path:src/</code> is a case-sensitive literal
+substring scope. Use workspace-relative paths without a leading slash.
+<code>fpath:</code> is a smart-case fuzzy path scope, including
+parent directories. For example, <code>fpath:modules/jweb/ parser</code> scopes
+matching directories while ranking <code>parser</code>. <code>-fpath:</code>
+excludes matching paths. Existing literal <code>path:</code> queries do not
+change meaning.</p>
+<p>In picker and search-prompt fields, <code>Ctrl-R {register}</code> inserts
+a yank at the caret; <code>Ctrl-R "</code> inserts the unnamed register.
+Field Normal <code>p</code> / <code>P</code> also pastes. Multiline registers
+are refused in a one-line field. Search's existing Ctrl-R replacement toggle
+is unchanged.</p>
+<p>Visual <code>Ctrl-C</code> toggles line comments over the selected lines
+with one undo step. Insert <code>Ctrl-C</code> returns to Normal. Ctrl-C never
+quits the editor; use <code>:q</code>. Embedded-terminal Ctrl-C still goes to
+the child process.</p>
+
 <h2 id="languages"><code>languages.toml</code> — language servers, helix-shaped</h2>
 <p>Per-project at <code>.strop/languages.toml</code> (next to your code, committed if you like),
 globally at <code>~/.config/strop/languages.toml</code>. Project wins per key; unknown keys are
