@@ -31,6 +31,8 @@
     <a href="#indentation">Indentation</a>
     <a href="#languages">Language servers</a>
     <a href="#ssh">SSH workspaces</a>
+    <a href="#containers">Containers</a>
+    <a href="#terminals">Terminals</a>
     <a href="#syntax">Syntax</a>
     <a href="#headless">Headless</a>
     <a href="#keybindings">Keybindings</a>
@@ -77,7 +79,8 @@ thread. Pasted text remains verbatim rather than being reinterpreted as typed ke
 Begin the query with <code>case:sensitive</code> to require exact case, or
 <code>case:ignore</code> / <code>case:insensitive</code> to make insensitive
 matching explicit. Vim's <code>\C</code> and <code>\c</code> also work and
-persist through <code>n</code>, <code>N</code> and highlights.</p>
+persist through <code>n</code>, <code>N</code> and highlights. The modeline
+shows <code>current/total</code> for the match under the cursor.</p>
 <p><code>Space f</code> fuzzy-matches bare text against the full
 workspace-relative path. <code>path:src/</code> is a case-sensitive literal
 substring scope. Use workspace-relative paths without a leading slash.
@@ -147,7 +150,8 @@ review; Apply performs the checked operations. Cancel returns to the intact draf
 <p><code>:fs search</code> opens the shared Search workspace at the captured local
 or SSH root. Remote search requires remote <code>rg</code> and is read-only:
 With/Review is unavailable, with no local or whole-file-download fallback.</p>
-<p>Supported POSIX/Python SSH hosts execute real protected operations. Remote
+<p>Supported SSH workspaces execute real protected operations through their
+verified native worker. Remote
 relocation retains unsaved text but revokes the old write permit; use
 <code>:remote edit</code> again before saving. Containers remain read-only.
 Local Trash is supported where available; remote Trash never becomes unlink.
@@ -172,8 +176,8 @@ yank and splits use real buffers.
 Follow stays at EOF only while you do. Changed content or shrinking windows report
 resets; size and mtime are not treated as file identity. Partial windows show their
 byte range in the modeline and use window-relative line numbers.</p>
-<p>Press <code>Space o</code> or run <code>:remote</code> to choose a known/connected host
-or add one. Enter <code>host</code>, <code>user@host:port</code> or an SSH path, then press
+<p>Press <code>Space o</code> or run <code>:remote</code> to choose a known/connected host,
+add one, or open the running-container chooser. Enter <code>host</code>, <code>user@host:port</code> or an SSH path, then press
 Enter to connect. New hosts start at <code>/</code>; successful directory choices are
 remembered privately. <code>:remote home</code> uses negotiated home expansion;
 <code>:remote root</code> returns to the root.</p>
@@ -239,20 +243,34 @@ permits and live writes are never restored from persisted sessions.</p>
 records safety assumptions, bounded models, fault-injected real SSH checks and
 native-free replay evidence.</p>
 
-<p>SFTP reading needs no remote Python or setup daemon. Remote editing and execution
-require a POSIX environment and Python 3.8+; Git/LSP also need their respective tools.
-Versioned interpreters on PATH are discovered; set local
-<code>STROP_REMOTE_PYTHON=/opt/tools/python3.11</code> to select an explicit remote
-executable. Invalid overrides fail instead of choosing a fallback.
-Supervised process groups are cleaned up once the server observes lease
-loss. Network partitions delay detection, descendants creating new sessions can
-escape the group, and supervisor death cannot guarantee cleanup.</p>
+<p>SFTP browsing and ranged reads need no remote worker or Python. Protected
+editing, Git, LSP and search run through a verified native worker on the selected
+host; admission may write its private executable cache. Restricted/SFTP-only
+accounts stay read-only with typed refusals, never local-path or SFTP-write
+fallbacks. The worker must match the target and protocol; a foreign-target
+artifact can be supplied with <code>STROP_WORKER_BINARY</code>. Git and LSP
+also need their respective programs in the remote workspace. Owned process
+groups are cleaned up after lease loss; network partitions delay detection,
+and descendants outside the owned group can outlive it.</p>
 <p>The reusable <code>strop-remote</code> crate owns identity, transport and execution.
 The <a href="https://github.com/stropdev/strop/blob/main/plans/0036-remote-workspace-execution.md">workspace contract</a>
 links bounded model gates, deliberate fault variants, Rust oracles and real SSH,
 terminal and replay evidence. This is not an unbounded proof or a replacement for
 OpenSSH's security boundary. See the <a href="./roadmap.html#remote-workspaces">prioritized roadmap</a>
 for additional transports, directory mutations and Dev Containers.</p>
+
+<h2 id="containers">Container workspaces</h2>
+<p>Choose <code>Space o → Containers</code> or run <code>:containers</code> to
+select a running container. Directory browsing, file reads and completion are
+read-only and install nothing. The first attached buffer names the next step:
+run <code>:container-worker</code> there to authorize verified Git, LSP and
+search services in that container's engine, identity, user and working directory.</p>
+<p>The default admission uploads the matching static worker into a private
+executable cache. For a shell-less image, set
+<code>STROP_CONTAINER_WORKER_PATH</code> to an already installed matching binary;
+it is verified in place. Missing tools, wrong targets and recycled containers
+refuse explicitly rather than executing against the host. Container files remain
+read-only.</p>
 
 <h2 id="terminals">Embedded terminals</h2>
 <p><code>:terminal</code> (or <code>:terminal COMMAND</code>) opens a local shell in a
@@ -264,8 +282,8 @@ and identical in every build.</p>
 <p>Input ownership: while the terminal is focused, <code>Esc</code>, <code>Ctrl-C</code>,
 <code>Ctrl-R</code>, Alt- and function-keys mean what the child expects.
 <code>Ctrl-\ Ctrl-N</code> (legacy terminals may spell it <code>Ctrl-4 Ctrl-N</code>)
-enters editor Normal mode over a pinned read-only snapshot of the grid; <code>i</code>/<code>a</code>
-follow the live cursor again. From terminal input, <code>Ctrl-W</code> is the editor's
+enters editor Normal mode over a pinned read-only snapshot of the grid; <code>i</code>, <code>I</code>,
+<code>a</code> or <code>A</code> follows the live cursor again. The modeline advertises both mode and pane escapes and expands a pending chord. From terminal input, <code>Ctrl-W</code> is the editor's
 window prefix (Vim's terminal grammar): <code>h/j/k/l/w</code> or arrows move and cycle
 panes, <code>N</code> enters the pinned inspection, <code>.</code> delivers the literal byte to
 the child, and any other follow-up passes through unchanged. An exited session stays readable and never restarts implicitly.</p>

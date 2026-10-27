@@ -157,10 +157,10 @@
       </div>
       <div class="feature-grid">
         <article class="feature-card">
-          <h3>Browse and edit remote files</h3>
-          <p>Press <code>Space o</code> to connect and browse real buffers. Files open read-only; <code>:remote edit</code> verifies a full snapshot and enables editing, then <code>:w</code> saves through an owned atomic transaction.</p>
-          <p>Content and metadata conflicts preserve local edits. Unconfirmed outcomes use explicit <code>:remote verify</code>.</p>
-          <p><a href="./docs.html#ssh">SSH usage and guarantees</a> · <a href="./roadmap.html#remote-workspaces">Remote roadmap</a></p>
+          <h3>Remote files and containers</h3>
+          <p>Press <code>Space o</code> for SSH destinations, a new host, or running containers. Everything opens in real buffers. Remote files start read-only; <code>:remote edit</code> verifies a full snapshot and enables editing, then <code>:w</code> saves through an owned atomic transaction.</p>
+          <p>Attach a container to browse immediately, then use <code>:container-worker</code> for verified Git, LSP and search services. Content and metadata conflicts preserve local edits; unconfirmed remote saves use explicit <code>:remote verify</code>.</p>
+          <p><a href="./docs.html#ssh">SSH usage</a> · <a href="./docs.html#containers">Container workspaces</a></p>
         </article>
         <article class="feature-card">
           <h3>Code, including the code in your docs</h3>
