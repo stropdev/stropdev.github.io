@@ -28,6 +28,18 @@
   <p>Release notes and development history. Browse <a href="https://github.com/stropdev/strop/releases">all published releases on GitHub</a>.</p>
 </div>
 <div class="prose">
+<h2 id="release-0-46-1-2026-10-27">0.46.1 — 2026-10-27</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>Register-aware input fields</strong> (0074): <code>Ctrl-R {register}</code> inserts a yank into picker and search-prompt fields; field Normal <code>p</code>/<code>P</code> also pastes. Named registers and Unicode work, while multiline payloads refuse without truncation. Insert-mode register text participates in ordinary undo and dot replay.</li>
+<li><strong>Fuzzy path scope</strong>: <code>fpath:</code> matches the complete workspace-relative path, including parent directories, with smart case. <code>-fpath:</code> excludes, and Boolean Search uses the same predicate. Existing literal <code>path:</code> behavior and older stored queries retain their meaning.</li>
+<li><strong>Visual line comments</strong>: Visual, Visual Line and Visual Block <code>Ctrl-C</code> toggle comments over whole selected lines using language-owned <code>//</code>, <code>#</code> or <code>--</code> tokens. Indentation and CRLF are preserved and one undo restores the selection.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li><strong>Buffer search is case-insensitive by default</strong>, including <code>*</code>/<code>#</code>. Leading <code>case:sensitive</code> forces exact case; <code>case:ignore</code> / <code>case:insensitive</code> and Vim <code>\c</code> select folding, while <code>\C</code> forces exact matching. The compiled query drives preview, repeat and highlights together.</li>
+<li><strong>Ctrl-C no longer quits the editor</strong>. Insert Ctrl-C returns to Normal; Visual Ctrl-C toggles comments. Use <code>:q</code> to quit. GUI close requests and Ctrl-C sent to an embedded terminal child remain distinct.</li>
+</ul>
 <h2 id="release-0-46-0-2026-10-25">0.46.0 — 2026-10-25</h2>
 <h3>Added</h3>
 <ul>
