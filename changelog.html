@@ -28,6 +28,20 @@
   <p>Release notes and development history. Browse <a href="https://github.com/stropdev/strop/releases">all published releases on GitHub</a>.</p>
 </div>
 <div class="prose">
+<h2 id="release-0-46-2-2026-10-27">0.46.2 — 2026-10-27</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>Search position on the modeline</strong> (0075): buffer search shows <code>current/total</code> beside the cursor position and follows <code>n</code>/<code>N</code>. Global ordinals come from the existing asynchronous search summary; navigation and painting do not rescan the buffer.</li>
+<li><strong>One remote and container door</strong>: <code>Space o</code> now offers running containers alongside SSH destinations and Add a host. First read-only remote/container opens name the exact worker or editing command that enables the next step.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li><strong>Discoverable terminal modes</strong>: terminal input advertises <code>Ctrl-\ Ctrl-N</code> and the <code>Ctrl-W</code> pane grammar, including while a chord is pending. Normal inspection accepts <code>i</code>, <code>I</code>, <code>a</code> and <code>A</code> for live input; readonly edit refusals explain that transition. Status text now distinguishes private input from recorded input and output.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Shifted letters reach the editor</strong>: lowercase scalar + <code>SHIFT</code> events are normalized after terminal ownership, so uppercase search/file-find input, Normal commands such as <code>G</code>, and terminal <code>Ctrl-W N</code> work with enhanced terminal keyboards. Child PTY input remains lossless.</li>
+</ul>
 <h2 id="release-0-46-1-2026-10-27">0.46.1 — 2026-10-27</h2>
 <h3>Added</h3>
 <ul>
