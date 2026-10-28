@@ -80,7 +80,15 @@ Begin the query with <code>case:sensitive</code> to require exact case, or
 <code>case:ignore</code> / <code>case:insensitive</code> to make insensitive
 matching explicit. Vim's <code>\C</code> and <code>\c</code> also work and
 persist through <code>n</code>, <code>N</code> and highlights. The modeline
-shows <code>current/total</code> for the match under the cursor.</p>
+shows <code>current/total</code> for the match under the cursor. Leading case
+directives use the same qualifier highlighting as picker qualifiers.</p>
+<p>Local enumeration and content matching run entirely in Rust using the
+<code>ignore</code> and <code>grep</code> crate families; <code>rg</code> is not
+required. Remote SSH search still uses remote <code>rg</code> where the files live.
+Jumplist rows show the live destination buffer and focus line through the same
+preview path as files and symbols. Picker terminal completion is admitted even
+when the event lane is full, and stalled Files/preview requests fail visibly
+instead of leaving indefinite streaming or creating more blocked workers.</p>
 <p><code>Space f</code> fuzzy-matches bare text against the full
 workspace-relative path. <code>path:src/</code> is a case-sensitive literal
 substring scope. Use workspace-relative paths without a leading slash.

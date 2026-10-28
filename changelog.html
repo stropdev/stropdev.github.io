@@ -28,6 +28,23 @@
   <p>Release notes and development history. Browse <a href="https://github.com/stropdev/strop/releases">all published releases on GitHub</a>.</p>
 </div>
 <div class="prose">
+<h2 id="release-0-46-4-2026-10-28">0.46.4 — 2026-10-28</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>Jumplist previews</strong> (0077): jump rows now show the live destination buffer and focus line through the same preview path as files and symbols.</li>
+<li><strong>Buffer-search case highlighting</strong>: leading <code>case:sensitive</code>, <code>case:ignore</code>, <code>case:insensitive</code>, <code>\c</code> and <code>\C</code> use the same qualifier styling as picker qualifiers; mid-pattern <code>case:</code> stays literal.</li>
+<li><strong>In-process self-updates</strong>: HTTP download, SHA-256 verification and tar.gz extraction now run entirely in Rust with rustls, SHA-2 and archive crates. <code>curl</code>, checksum utilities and <code>tar</code> are no longer required.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li><strong>Local Search no longer needs <code>rg</code></strong>: content matching uses Helix&#x27;s in-process <code>grep</code> crate family over the existing selected files and live buffer snapshots. Remote SSH search still uses remote <code>rg</code> where the files live.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Picker cancellation cannot deadlock the editor</strong>: terminal <code>Finished</code> events are admitted even when the semantic event lane is full, while item batches retain their backpressure policy. Closing Files during heavy streaming no longer freezes input and repaint.</li>
+<li><strong>Filesystem stalls settle honestly</strong>: Files and preview watchdogs stop stalled requests with visible failures and refuse replacement work only until the blocked physical owner returns. Scan heartbeats keep healthy matchless searches alive, event-lane backpressure no longer looks like consumer closure, and preview selection cancels superseded reads.</li>
+<li><strong>Preview consistency</strong>: jumplist destinations render correctly, selection changes cancel old reads, and preview cache eviction no longer arbitrarily discards the visible entry.</li>
+</ul>
 <h2 id="release-0-46-3-2026-10-28">0.46.3 — 2026-10-28</h2>
 <h3>Added</h3>
 <ul>
