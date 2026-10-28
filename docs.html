@@ -281,12 +281,10 @@ redirected. The VT engine is the pinned static Ghostty core: mode-aware, bounded
 and identical in every build.</p>
 <p>Input ownership: while the terminal is focused, <code>Esc</code>, <code>Ctrl-C</code>,
 <code>Ctrl-R</code>, Alt- and function-keys mean what the child expects.
-<code>Ctrl-\ Ctrl-N</code> (legacy terminals may spell it <code>Ctrl-4 Ctrl-N</code>)
-enters editor Normal mode over a pinned read-only snapshot of the grid; <code>i</code>, <code>I</code>,
-<code>a</code> or <code>A</code> follows the live cursor again. The modeline advertises both mode and pane escapes and expands a pending chord. From terminal input, <code>Ctrl-W</code> is the editor's
-window prefix (Vim's terminal grammar): <code>h/j/k/l/w</code> or arrows move and cycle
-panes, <code>N</code> enters the pinned inspection, <code>.</code> delivers the literal byte to
-the child, and any other follow-up passes through unchanged. An exited session stays readable and never restarts implicitly.</p>
+<code>F2</code> enters editor Normal mode directly over a pinned read-only snapshot of the grid,
+without an OS-sensitive chord; <code>Ctrl-\ Ctrl-N</code> remains an alternative
+(legacy terminals may spell it <code>Ctrl-4 Ctrl-N</code>). <code>i</code>, <code>I</code>,
+<code>a</code> or <code>A</code> follows the live cursor again. The modeline advertises both inspection paths and expands a pending chord. <code>Ctrl-W</code> is ordinary child input. An exited session stays readable and never restarts implicitly.</p>
 <p>Terminal buffers are read-only text buffers with the usual motions, search, selection
 and yank — and they are real switchable buffers: the buffer picker lists each session
 with Vim's <code>!</code> job badge and its live phase (<code>terminal #N · dir · running</code>),
@@ -354,6 +352,11 @@ state store as the terminal UI. It never gives project configuration implicit
 permission to execute commands or automatically restores editor sessions.</p>
 
 <h2 id="keybindings">Keybindings</h2>
+<p><code>Space w</code> owns pane commands: <code>-</code> splits horizontally,
+<code>v</code> vertically, <code>1</code>–<code>9</code> focuses the numbered pane,
+and <code>q</code> closes it. Multi-pane titles display the jump numbers. This
+replaces the old Normal <code>Ctrl-W</code> bindings. <code>_</code> moves to the
+first nonblank, with a count moving down <code>count - 1</code> lines first.</p>
 <p>In the editor: <code>:help</code> (or <code>Space ?</code>) opens the full table as a real,
 searchable buffer — <code>/</code> searches it, <code>q</code> closes. Dispatch and the table are pinned
 together by tests (a key that dispatches without a row, or a live row that no-ops, fails the
