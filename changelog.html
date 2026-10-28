@@ -28,6 +28,16 @@
   <p>Release notes and development history. Browse <a href="https://github.com/stropdev/strop/releases">all published releases on GitHub</a>.</p>
 </div>
 <div class="prose">
+<h2 id="release-0-46-3-2026-10-28">0.46.3 — 2026-10-28</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>Numbered pane navigation</strong> (0076): <code>Space w -</code> splits horizontally, <code>Space w v</code> vertically, and <code>Space w 1</code> through <code>Space w 9</code> focus a pane directly. Multi-pane titles show the same numbers. Directional movement and <code>Space w q</code> remain in the new menu, replacing the old Normal <code>Ctrl-W</code> bindings.</li>
+<li><strong>Windows-safe terminal inspection</strong>: <code>F2</code> enters pinned Normal/Visual inspection directly. <code>Ctrl-\ Ctrl-N</code> remains an alternative; terminal <code>Ctrl-W</code> is ordinary child input rather than a second pane grammar.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Vim underscore motion</strong>: <code>_</code> moves to the current line&#x27;s first nonblank; a count moves down <code>count - 1</code> lines first, with empty-line and EOF boundaries handled. Operator forms are linewise (<code>d_</code> = <code>dd</code>, <code>d2_</code> = <code>2dd</code>).</li>
+</ul>
 <h2 id="release-0-46-2-2026-10-27">0.46.2 — 2026-10-27</h2>
 <h3>Added</h3>
 <ul>
