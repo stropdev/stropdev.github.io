@@ -28,6 +28,15 @@
   <p>Release notes and development history. Browse <a href="https://github.com/stropdev/strop/releases">all published releases on GitHub</a>.</p>
 </div>
 <div class="prose">
+<h2 id="release-0-47-1-2026-10-30">0.47.1 — 2026-10-30</h2>
+<h3>Changed</h3>
+<ul>
+<li><strong><code>--help</code> is a CLI reference, not documentation</strong>: usage, commands, options and a three-line pointer footer (remote URL grammar, <code>Space ?</code>, <code>:theme</code>, <code>strop config</code>, strop.dev) — 39 lines where 0.47.0 printed ~85. The theme catalogue, keybinding sampler, headless-script directive dump and config path left <code>--help</code> for their own surfaces: <code>:theme</code> and <code>strop licenses</code> for palettes, <code>Space ?</code> for every binding, <code>docs/terminal-and-scripting.md</code> for the full directive table (the unknown-directive error now points there). This is the helix/neovim convention — <code>--help</code> covers what the shell can do; the editor documents itself in the editor.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li><strong>CI off the retiring <code>macos-14</code> image</strong> (retires 2026-11-02; dispatches were already being cancelled): the release lane&#x27;s <code>aarch64-apple-darwin</code> build and ci&#x27;s <code>native-macos</code> job now run on <code>macos-26</code>. No product code changed.</li>
+</ul>
 <h2 id="release-0-47-0-2026-10-30">0.47.0 — 2026-10-30</h2>
 <h3>Added</h3>
 <ul>
