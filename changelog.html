@@ -28,6 +28,19 @@
   <p>Release notes and development history. Browse <a href="https://github.com/stropdev/strop/releases">all published releases on GitHub</a>.</p>
 </div>
 <div class="prose">
+<h2 id="release-0-47-0-2026-10-30">0.47.0 — 2026-10-30</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>The jump list speaks the query language</strong> (0063 consistency): <code>Space j</code> accepts the same qualifiers as file find and search — <code>language:cpp</code>, <code>path:tests</code>, <code>glob:</code>, <code>fpath:</code> and Boolean <code>AND</code>/<code>OR</code>/<code>NOT</code> — re-filtering the retained jumplist rows locally through the shared admission compiler. Content atoms match the destination line&#x27;s text; undecidable evidence (a path-less scratch buffer) admits. Diagnostics, qualifier highlighting and <code>Ctrl-Space</code> suggestions render exactly like the other query fields.</li>
+<li><strong>Label-colon auto-indent</strong> (0072 amendment): Enter after a trailing <code>:</code> deepens the next line where the language gives the colon that meaning — C++/C access specifiers (<code>private:</code>), <code>case</code>/<code>default:</code> arms and named labels across C, C++, Java, C#, Go, JavaScript/TypeScript and PHP. Python keeps its depth-zero statement colon; Rust, JSON and CSS stay flat. One registry-decided punctuation rule, no per-language editor code.</li>
+<li><strong>A real CLI</strong> (uv-style): proper subcommands — <code>strop edit</code>, <code>remote</code>, <code>headless</code>, <code>replay</code>, <code>export</code>, <code>ui-stdio</code>, <code>config</code>, <code>update</code>, <code>bench</code>, <code>licenses</code>, <code>compat</code>, <code>help</code> — with <code>strop remote ssh://user@host:port/path</code> (and the <code>--remote URL</code> shorthand) for remote editing. Restructured, styled <code>--help</code> with Commands/Options sections; every legacy flag still parses.</li>
+<li><strong>Document symbols narrow by qualifiers</strong>: <code>language:</code>/<code>path:</code> alone (not just Boolean queries) now filter the document-symbols picker like file find, through the same whole-query admission.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li><strong>Query qualifier highlighting on every surface</strong>: files, search, symbols, workspace symbols and the jump list all render qualifier spans; the visibility summary line stays on the streaming surfaces where it applies.</li>
+<li><strong>Docs restructured</strong>: README is the hub; the detail moved into <code>docs/cli.md</code>, <code>docs/search.md</code>, <code>docs/editor.md</code>, <code>docs/remote.md</code>, <code>docs/filesystem.md</code> and <code>docs/terminal-and-scripting.md</code>, rewritten and cross-linked.</li>
+</ul>
 <h2 id="release-0-46-4-2026-10-28">0.46.4 — 2026-10-28</h2>
 <h3>Added</h3>
 <ul>
