@@ -28,28 +28,11 @@
 
 // Install method tabs and copy feedback.
 (function () {
-  var BREW = "brew install stropdev/tap/strop";
-  var BREW_UP = "brew upgrade stropdev/tap/strop";
   var INSTALLS = {
     curl: {
       cmd: "curl -fsSL https://strop.dev/install.sh | sh",
-      note: 'Prebuilt static binary · Linux x86_64/aarch64 · macOS arm64 · SHA-256 verified · <a href="https://github.com/stropdev/strop/releases">download tarballs</a>',
+      note: 'Prebuilt static binary · Linux/WSL x86_64 · SHA-256 verified · <a href="https://github.com/stropdev/strop/releases">download tarballs</a>',
       update: "strop update"
-    },
-    brew: {
-      cmd: BREW,
-      note: "Homebrew formula — builds from source · macOS cask is prebuilt",
-      update: BREW_UP
-    },
-    cargo: {
-      cmd: "cargo install strop-editor --locked",
-      note: "From crates.io — builds from source · requires a Rust toolchain",
-      update: "cargo install strop-editor --locked"
-    },
-    mise: {
-      cmd: "mise use cargo:strop-editor",
-      note: "Pinned per-project via mise's cargo backend",
-      update: "mise up strop-editor"
     }
   };
 

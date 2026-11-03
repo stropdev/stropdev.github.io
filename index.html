@@ -110,27 +110,24 @@
     <div class="shell">
       <div class="section-heading">
         <p class="eyebrow">Get started</p>
-        <h2 id="install-heading">Install your way.</h2>
-        <p>Choose a prebuilt binary or build from source with your usual toolchain.</p>
+        <h2 id="install-heading">Install on Linux or WSL.</h2>
+        <p>Use the checksummed static binary on Linux or inside WSL on Windows.</p>
       </div>
       <div class="installbox">
         <div class="tab-bar" role="group" aria-label="Installation method">
           <button type="button" data-install="curl" class="active" aria-pressed="true">curl</button>
-          <button type="button" data-install="brew" aria-pressed="false">brew</button>
-          <button type="button" data-install="cargo" aria-pressed="false">cargo</button>
-          <button type="button" data-install="mise" aria-pressed="false">mise</button>
         </div>
         <div class="command-row">
           <code class="ib-cmd"><span class="p">$</span> <span data-install-cmd>curl -fsSL https://strop.dev/install.sh | sh</span></code>
           <button type="button" class="copy" data-install-copy data-copy="curl -fsSL https://strop.dev/install.sh | sh">Copy</button>
         </div>
         <div class="install-meta">
-          <span class="ib-os">Linux · macOS Apple Silicon</span>
+          <span class="ib-os">Linux · Windows via WSL</span>
           <span class="copy-status" data-copy-status role="status" aria-live="polite"></span>
         </div>
       </div>
       <div class="install-notes">
-        <p class="alt" data-install-note>Prebuilt static binary · Linux x86_64/aarch64 · macOS arm64 · SHA-256 verified · <a href="https://github.com/stropdev/strop/releases">download tarballs</a></p>
+        <p class="alt" data-install-note>Prebuilt static binary · Linux/WSL x86_64 · SHA-256 verified · <a href="https://github.com/stropdev/strop/releases">download tarballs</a></p>
         <p class="alt update-line">Already installed? <code data-install-update>strop update</code> — downloads, verifies and extracts entirely in Rust, then swaps itself.</p>
       </div>
     </div>
