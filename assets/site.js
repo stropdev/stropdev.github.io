@@ -1,12 +1,13 @@
-// Palette picker: swap CSS variables and remember a supported palette.
+// Paper is the website default; editor configuration and recordings are untouched.
+document.documentElement.classList.add("js");
 (function () {
   var KEY = "strop-palette";
-  var PALETTES = ["strop", "catppuccin-mocha", "tokyo-night", "gruvbox-dark", "nord", "dracula", "one-dark", "solarized-dark", "catppuccin-latte", "github-light", "one-light", "solarized-light"];
+  var PALETTES = ["paper", "paper-dark", "strop", "catppuccin-mocha", "tokyo-night", "gruvbox-dark", "nord", "dracula", "one-dark", "solarized-dark", "catppuccin-latte", "github-light", "one-light", "solarized-light"];
   var buttons = Array.from(document.querySelectorAll("[data-set-palette]"));
 
   function setPalette(name) {
     if (PALETTES.indexOf(name) === -1) {
-      name = "strop";
+      name = "paper";
     }
     document.documentElement.dataset.palette = name;
     try { localStorage.setItem(KEY, name); } catch (_) {}
@@ -23,54 +24,19 @@
 
   var saved = null;
   try { saved = localStorage.getItem(KEY); } catch (_) {}
-  setPalette(saved || "strop");
+  setPalette(saved || "paper");
 })();
 
-// Install method tabs and copy feedback.
+// End-of-body scripts run after the source examples have been parsed.
+if (window.Prism) {
+  window.Prism.highlightAll();
+  // Keep the surrounding prompt, copy control and command hook intact.
+  var installCommand = document.querySelector("[data-install-cmd]");
+  if (installCommand) window.Prism.highlightElement(installCommand);
+}
+
+// Copy the exact displayed installation command.
 (function () {
-  var BREW = "brew install stropdev/tap/strop";
-  var BREW_UP = "brew upgrade stropdev/tap/strop";
-  var INSTALLS = {
-    curl: {
-      cmd: "curl -fsSL https://strop.dev/install.sh | sh",
-      note: 'Prebuilt static binary · Linux x86_64/aarch64 · macOS arm64 · SHA-256 verified · <a href="https://github.com/stropdev/strop/releases">download tarballs</a>',
-      update: "strop update"
-    },
-    brew: {
-      cmd: BREW,
-      note: "Homebrew formula — builds from source · macOS cask is prebuilt",
-      update: BREW_UP
-    },
-    cargo: {
-      cmd: "cargo install strop-editor --locked",
-      note: "From crates.io — builds from source · requires a Rust toolchain",
-      update: "cargo install strop-editor --locked"
-    },
-    mise: {
-      cmd: "mise use cargo:strop-editor",
-      note: "Pinned per-project via mise's cargo backend",
-      update: "mise up strop-editor"
-    }
-  };
-
-  function setInstall(name) {
-    var data = INSTALLS[name];
-    if (!data) return;
-    document.querySelectorAll("[data-install]").forEach(function (button) {
-      var active = button.dataset.install === name;
-      button.classList.toggle("active", active);
-      button.setAttribute("aria-pressed", active ? "true" : "false");
-    });
-    var command = document.querySelector("[data-install-cmd]");
-    if (command) command.textContent = data.cmd;
-    var copy = document.querySelector("[data-install-copy]");
-    if (copy) copy.dataset.copy = data.cmd;
-    var note = document.querySelector("[data-install-note]");
-    if (note) note.innerHTML = data.note;
-    var update = document.querySelector("[data-install-update]");
-    if (update) update.textContent = data.update;
-  }
-
   function fallbackCopy(text) {
     var field = document.createElement("textarea");
     field.value = text;
@@ -85,9 +51,6 @@
   }
 
   document.addEventListener("click", function (event) {
-    var method = event.target.closest ? event.target.closest("[data-install]") : null;
-    if (method) setInstall(method.dataset.install);
-
     var button = event.target.closest ? event.target.closest("[data-install-copy]") : null;
     if (!button) return;
     var text = button.dataset.copy || "";
