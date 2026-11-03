@@ -12,7 +12,7 @@ The strop.dev site: static HTML, shared CSS/JavaScript and images, deployed as-i
   pages; unavailable storage or an unsupported selection falls back to Paper.
 - The hero is a labelled, palette-aware brand illustration, not an editor
   screenshot. Website choices do not configure the editor; Paper and Paper Dark
-  are website-only options, not implemented editor themes. The real demo GIF keeps its recorded colors and is
+  are also compiled-in editor themes as of 0.47.3. The real demo GIF keeps its recorded colors and is
   revealed with a native disclosure, so animation requires an explicit action.
 - Current releases are GitHub-only, for Linux/WSL x86_64. The homepage offers the
   official curl installer and direct release downloads with checksum verification.
@@ -33,7 +33,7 @@ The strop.dev site: static HTML, shared CSS/JavaScript and images, deployed as-i
   arbitrary shell executable names, and cover Strop command/headless syntax.
   Keep those additions and the upstream notice when refreshing pinned components.
 - `CHANGELOG.md` and `install.sh` are vendored from `stropdev/strop`; synchronize
-  them from the latest public release tag (currently `v0.47.2`), not unreleased main.
+  them from the latest public release tag (currently `v0.47.3`), not unreleased main.
   The changelog is generated from that source: run `python3 build_changelog.py`
   after synchronization and commit both changelog files.
 - Latest-release links use GitHub's `releases/latest` URL and add the current tag
