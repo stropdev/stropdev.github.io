@@ -37,6 +37,7 @@ if (window.Prism) {
 
 // Copy the exact displayed installation command.
 (function () {
+
   function fallbackCopy(text) {
     var field = document.createElement("textarea");
     field.value = text;
