@@ -33,7 +33,7 @@ The strop.dev site: static HTML, shared CSS/JavaScript and images, deployed as-i
   arbitrary shell executable names, and cover Strop command/headless syntax.
   Keep those additions and the upstream notice when refreshing pinned components.
 - `CHANGELOG.md` and `install.sh` are vendored from `stropdev/strop`; synchronize
-  them from the latest public release tag (currently `v0.47.3`), not unreleased main.
+  them from the latest public release tag (currently `v0.47.4`), not unreleased main.
   The changelog is generated from that source: run `python3 build_changelog.py`
   after synchronization and commit both changelog files.
 - Latest-release links use GitHub's `releases/latest` URL and add the current tag
