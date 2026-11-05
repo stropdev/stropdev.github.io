@@ -28,6 +28,11 @@
   <p>Release notes and development history. Browse <a href="https://github.com/stropdev/strop/releases">all published releases on GitHub</a>.</p>
 </div>
 <div class="prose">
+<h2 id="release-0-51-0-2026-11-05">0.51.0 — 2026-11-05</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>Electric C++ access specifiers</strong>: typing the <code>:</code> that completes a bare <code>public</code>, <code>protected</code> or <code>private</code> line snaps it to one unit inside its enclosing class — vim&#x27;s electric-label behavior (<code>cino-g</code> defaults) — whatever indentation the line inherited. The section body opened by Enter keeps its one-unit-deeper rule, every cursor anchors to its own class, dot repeat and macros replay the intent at the destination, and large files resolve on the existing deferred worker. Other languages, strings/comments, non-keyword lines and lines without a brace anchor insert the colon unchanged.</li>
+</ul>
 <h2 id="release-0-50-0-2026-11-05">0.50.0 — 2026-11-05</h2>
 <h3>Changed</h3>
 <ul>
