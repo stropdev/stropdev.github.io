@@ -28,6 +28,20 @@
   <p>Release notes and development history. Browse <a href="https://github.com/stropdev/strop/releases">all published releases on GitHub</a>.</p>
 </div>
 <div class="prose">
+<h2 id="release-0-49-0-2026-11-05">0.49.0 — 2026-11-05</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>Persistent per-window jump history</strong>: each pane owns a 100-entry jumplist, copied on split and then independent. Project sessions restore the active window&#x27;s cross-file jump records, selections, viewports and traversal position alongside buffers and undo history. Quit-all captures one complete snapshot before closing any buffer, so the last close cannot discard earlier files from the session.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li><strong>Vim-native jump traversal</strong>: jump commands retain their origins rather than behaving like undo/redo. File windows start with Neovim&#x27;s initial line-1 origin. New jumps made while browsing older history preserve newer entries by default; only initial back traversal snapshots the current position, so small motions cannot invent extra history. Same-line entries deduplicate, edits remap every pane, and <code>Space j</code> continues to expose the same records with a synthetic current-position row.</li>
+<li><strong>Quiet feedback at every width</strong>: active warning/failure feedback retains a textual severity marker through the narrowest modeline layouts, alongside existing LSP and terminal cues. Confirmations remain inline and actionable outcomes remain in <code>Space a</code> / <code>:explain</code>; no floating notification cards or animation were added.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Complete jump population and motion boundaries</strong>: <code>{</code> / <code>}</code>, <code>H</code> / <code>M</code> / <code>L</code>, successful substitutions, buffer switches, terminal launch and existing file/search/LSP dives now record successful origins consistently. Paragraphs no longer enter the trailing phantom EOF line, visible-line motions reveal the caret and choose Neovim&#x27;s upper middle line, and substitutions land on the last affected line. Failed mark jumps leave history untouched, and dead documents cannot corrupt back/forward traversal.</li>
+</ul>
 <h2 id="release-0-48-0-2026-11-05">0.48.0 — 2026-11-05</h2>
 <h3>Added</h3>
 <ul>
