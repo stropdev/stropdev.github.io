@@ -28,6 +28,11 @@
   <p>Release notes and development history. Browse <a href="https://github.com/stropdev/strop/releases">all published releases on GitHub</a>.</p>
 </div>
 <div class="prose">
+<h2 id="release-0-51-1-2026-11-06">0.51.1 — 2026-11-06</h2>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Electric access specifiers in C-mapped headers</strong>: <code>.h</code> files — the dominant C++ header extension — detect as C, and 0.51.0&#x27;s electric <code>private:</code>/<code>protected:</code>/<code>public:</code> re-indent only fired for the C++ mapping. C-mapped buffers now snap specifier lines to their class-body anchor exactly like <code>.cpp</code> (vim does not disable scope-declaration indenting in C either); Rust, Java and the other label languages still insert the colon unchanged.</li>
+</ul>
 <h2 id="release-0-51-0-2026-11-05">0.51.0 — 2026-11-05</h2>
 <h3>Added</h3>
 <ul>
