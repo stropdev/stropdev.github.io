@@ -28,6 +28,11 @@
   <p>Release notes and development history. Browse <a href="https://github.com/stropdev/strop/releases">all published releases on GitHub</a>.</p>
 </div>
 <div class="prose">
+<h2 id="release-0-51-2-2026-11-06">0.51.2 — 2026-11-06</h2>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Complete C-family electric-label indentation</strong>: typing <code>:</code> now re-indents <code>case</code>/<code>default:</code> arms to one unit inside their enclosing brace and named labels to column zero, matching vim instead of letting successive C++ switch arms drift deeper. Access specifiers with whitespace before <code>:</code> are recognized without deleting that whitespace, and the second colon in <code>std::</code> restores statement indentation after the first colon&#x27;s possible-label interpretation. C and C++ mappings share the existing per-cursor inline/deferred planner; other languages and non-label punctuation remain plain insertion.</li>
+</ul>
 <h2 id="release-0-51-1-2026-11-06">0.51.1 — 2026-11-06</h2>
 <h3>Fixed</h3>
 <ul>
