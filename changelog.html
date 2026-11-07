@@ -28,6 +28,12 @@
   <p>Release notes and development history. Browse <a href="https://github.com/stropdev/strop/releases">all published releases on GitHub</a>.</p>
 </div>
 <div class="prose">
+<h2 id="release-0-52-0-2026-11-07">0.52.0 — 2026-11-07</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>Weft — syntax highlighting (presentation grammar)</strong> (0083): <code>.weft</code> reviews open with full revision-3 coloring — header verbs, evidence/set bindings, <code>and</code>/<code>or</code>/<code>not</code>, quantifiers, the dual-role <code>in</code>, set algebra (<code>| &amp; -</code>), comparisons, spreads and <code>//</code> comments — through a first-party tree-sitter grammar statically linked exactly like Sovel&#x27;s. <code>weft</code> fences in Markdown highlight through the normal injection route and <code>lang:weft</code> filters agree with <code>.weft</code> detection; Ctrl-C toggles <code>//</code> comments. No server, formatter, symbols or validity claim: the tree is presentation only.</li>
+<li><strong>Splicery — experimental syntax highlighting</strong> (0083): <code>.spl</code> recipes open with /1 coloring — document verbs (<code>edit</code>/<code>create</code>/<code>rename</code>/<code>remove</code>), <code>@handle :=</code> bindings with parameter/variable/attribute roles by position, <code>rx&quot;…&quot;</code>/<code>hex&quot;…&quot;</code>/strings, <code>#</code> comments, contextual spellings (<code>text</code>/<code>line</code>/<code>like</code>/<code>within</code>/<code>expect</code> stay names outside their productions) and heredocs via the grammar&#x27;s one external scanner, whose dynamic terminator a regex token cannot express. Incremental edits inside heredoc and <code>rx</code> bodies match fresh parses; <code>lang:splicery</code> agrees with <code>.spl</code> detection and Ctrl-C toggles <code>#</code> comments. Highlighting only — never a validity claim, match count or permission.</li>
+</ul>
 <h2 id="release-0-51-2-2026-11-06">0.51.2 — 2026-11-06</h2>
 <h3>Fixed</h3>
 <ul>
