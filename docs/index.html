@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docs — strop</title>
+<meta name="description" content="strop reference documentation, generated from the repository&#x27;s docs directory.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+<script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
+</head>
+<body class="docs-page">
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="shell top-inner">
+    <a class="brand" href="../">strop</a>
+    <nav aria-label="Site">
+      <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../changelog.html">Changelog</a>
+      <a href="../#status">Status</a>
+      <a href="https://github.com/stropdev/strop">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="shell page">
+  <p class="eyebrow">Docs</p>
+  <h1>The reference</h1>
+  <p class="lede">Every page here is generated from the editor repository's <a href="https://github.com/stropdev/strop/tree/main/docs"><code>docs/</code></a> directory at <code>v0.53.0-1-g66a0f97</code>, so the site cannot say something the repository does not. For the input grammar, see <kbd>Space</kbd> <kbd>?</kbd> inside the editor or the <a href="https://github.com/stropdev/strop#the-grammar-in-one-card">README card</a>.</p>
+  <h2>Using strop</h2>
+  <ul class="doc-cards">
+    <li><a href="cli.html"><strong>The strop CLI</strong><span>One binary, subcommands for the occasional jobs, flags for everything else. <code>strop --help</code> prints the same reference live (styled when stdout is a terminal, plain when piped).</span></a></li><li><a href="editor.html"><strong>Editor surfaces</strong><span>Themes, completion, indentation and the visual system — the parts of strop you configure rather than drive. For the input grammar see the README's card; for pickers see <a href="search.html">search.md</a>.</span></a></li><li><a href="search.html"><strong>Search and the query language</strong><span>One bounded qualifier grammar is shared by every picker surface: file find (<code>Space f</code>), content search (<code>Space /</code>), replace (<code>Space R</code>), document symbols, workspace symbols (<code>Space S</code>) and the jump list menu (<code>ctrl-o</code> history, <code>Space j</code>). Qualifiers, highlighting, suggestions and errors behave identically everywhere — what you learn in one field works in all of them.</span></a></li><li><a href="filesystem.html"><strong>The filesystem workspace</strong><span>Open a directory with <code>strop DIRECTORY</code>, <code>:browse</code>, or <code>:e DIRECTORY</code>. <code>Space e</code> reveals the current source in its parent. Browsing keeps the process cwd unchanged; Enter opens a structured entry and <code>-</code>/Backspace goes to its parent. Directory-local <code>Space a</code> opens filesystem actions.</span></a></li><li><a href="remote.html"><strong>SSH, remote editing and containers</strong><span>Remote files are first-class: real buffers, real identity, never a local lookalike. The short version:</span></a></li><li><a href="terminal-and-scripting.html"><strong>Local terminals</strong><span><code>:terminal</code> opens the shell selected by <code>SHELL</code> (or <code>/bin/sh</code>) in a real PTY. <code>:terminal COMMAND</code> runs an explicit command. In a local directory it uses the host; in an SSH directory with an admitted worker it runs on that remote host and retains the endpoint in the modeline, pane title and buffer list. Directory <strong>Terminal here</strong> (<code>Space a</code> / <code>:fs terminal</code>) uses the same admission decision without changing the editor's cwd. SSH without an admitted worker refuses. An attached container runs through its incarnation-pinned admitted worker; <strong><code>:container-worker</code></strong> enables tools/Search/terminal and the separate <strong><code>:container-edit</code></strong> verifies file authority. The separately labelled <strong>Open local terminal</strong> / <code>:terminal-local</code> is a deliberate local choice, never a fallback against a remote-looking path. The displayed launch directory is not an unverified live shell cwd and does not follow <code>cd</code>.</span></a></li><li><a href="vim-compat.html"><strong>Vim compatibility</strong><span>Generated from the command table (<code>strop --dump-compat</code>). <code>✓</code> ships exactly; <code>(soon)</code> is a planned slot.</span></a></li>
+  </ul>
+  <h2>Design records</h2>
+  <ul class="doc-cards">
+    <li><a href="worker-protocol.html"><strong>Worker protocol and migration contract (0058 WK01/WK02)</strong><span>Status: WK01 contract record + WK02 wire/codec. Normative for every later WK slice; the codec crate <code>strop-worker-protocol</code> is the sign-off by construction — it implements exactly the families documented here, no more. Plan of record: <a href="https://github.com/stropdev/strop/blob/main/plans/0058-unified-native-worker.md">0058 unified native worker</a>.</span></a></li><li><a href="nucleo-decision.html"><strong>Nucleo decision record (0022 §2)</strong><span>Date: 2026-09-06. Decision: <strong>adopt nucleo-matcher</strong> for the picker's row scoring.</span></a></li>
+  </ul>
+  <p class="aside">Design contracts — the numbered plans every behaviour answers to — live in <a href="https://github.com/stropdev/strop/tree/main/plans"><code>plans/</code></a>; the <a href="../#status">Status</a> section lists the ones in force.</p>
+</div>
+</main>
+<footer class="foot">
+  <div class="shell foot-inner">
+    <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.53.0</a> · <a href="../#palette">Palette</a></p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

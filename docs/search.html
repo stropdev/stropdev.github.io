@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search and the query language — strop docs</title>
+<meta name="description" content="One bounded qualifier grammar is shared by every picker surface: file find (Space f), content search (Space /), replace (Space R), document symbols, workspace symbols (Space S) and the jump list menu ">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+<script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
+</head>
+<body class="docs-page">
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="shell top-inner">
+    <a class="brand" href="../">strop</a>
+    <nav aria-label="Site">
+      <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../changelog.html">Changelog</a>
+      <a href="../#status">Status</a>
+      <a href="https://github.com/stropdev/strop">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="shell doc-layout">
+  <aside class="doc-side">
+    <p class="side-title"><a href="./">Docs</a></p>
+    <ol class="side-docs">
+      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html" aria-current=&quot;page&quot;>Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH, remote editing and containers</a></li><li><a href="terminal-and-scripting.html">Local terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02)</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
+    </ol>
+    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#the-grammar">The grammar</a></li><li><a href="#what-each-qualifier-narrows">What each qualifier narrows</a></li><li><a href="#buffer-search">Buffer search</a></li><li><a href="#ex-substitution">Ex substitution</a></li><li><a href="#the-search-workspace">The Search workspace</a></li><li><a href="#ssh-and-container-scopes">SSH and container scopes</a></li></ol>
+  </aside>
+  <article class="doc">
+    <p class="eyebrow">Docs</p>
+    <h1>Search and the query language</h1>
+    <div class="prose">
+<p>One bounded qualifier grammar is shared by every picker surface: file find (<code>Space f</code>), content search (<code>Space /</code>), replace (<code>Space R</code>), document symbols, workspace symbols (<code>Space S</code>) and the jump list menu (<code>ctrl-o</code> history, <code>Space j</code>). Qualifiers, highlighting, suggestions and errors behave identically everywhere — what you learn in one field works in all of them.</p>
+<h2 id="the-grammar">The grammar</h2>
+<p>Bare file queries are fuzzy and case-insensitive; content queries are literal and case-insensitive unless you choose <code>regex:</code>. Use <code>case:sensitive</code> on any query surface for exact-case matching, or <code>case:smart</code> for the former uppercase-sensitive behavior:</p>
+<pre><code class="language-text">language:rust
+language:cpp path:src/ request_id
+glob:&quot;src/my files/**/*.rs&quot; -path:generated/ text:&quot;request-id&quot;
+language:rust regex:&quot;\brequest_(id|name)\b&quot;
+hidden:exclude ignored:include text:&quot;-test.rs&quot;
+kind:function parse AND NOT wrap</code></pre>
+<ul>
+<li><code>language:NAME</code> — file language (<code>strop --licenses</code>-style names, e.g. <code>rust</code>, <code>cpp</code>, <code>python</code>).</li>
+<li><code>path:SUBSTRING</code> — substring of the workspace-relative path (no leading <code>/</code>); case follows the query's case mode.</li>
+<li><code>fpath:SUBSEQUENCE</code> — fuzzy scope over the full workspace-relative path; use <code>fpath:modules/jweb/ parser</code> to scope the directory while ranking <code>parser</code>. <code>-fpath:</code> excludes matches.</li>
+<li><code>glob:PATTERN</code> — glob over the workspace-relative path.</li>
+<li><code>hidden:</code> / <code>ignored:</code> — visibility overrides for this query.</li>
+<li><code>case:sensitive|ignore|insensitive|smart</code> — case mode for file, path, symbol and content matching. The default is insensitive; <code>insensitive</code> aliases <code>ignore</code>, and <code>smart</code> classifies each content atom as sensitive only when that atom contains uppercase.</li>
+<li><code>kind:</code> — on symbol surfaces, the declaration's classification (<code>kind:function</code>, <code>kind:struct</code>, …).</li>
+<li><code>AND</code> / <code>OR</code> / <code>NOT</code> and parentheses — Boolean expressions; juxtaposition is an implicit AND.</li>
+</ul>
+<p><code>Ctrl-Space</code> in any query field offers parser-driven suggestions from the caret's position; <code>:help query</code> explains quoting, supported languages, errors and examples. Old <code>-t</code>/<code>-g</code> UI flags are ordinary text now.</p>
+<h2 id="what-each-qualifier-narrows">What each qualifier narrows</h2>
+<ul>
+<li><strong>File find</strong> narrows the walk; <strong>search/replace</strong> narrows admission per line.</li>
+<li><strong>Document symbols and the jump list</strong> are retained lists: the same qualifiers re-filter their rows locally as you type. The jump list contains origins left by jump commands, with a synthetic row for the current position; it is navigation history, not an undo list. On the jump list, <code>language:cpp path:tests</code> keeps only jumps inside C++ files under <code>tests/</code>; content atoms match the destination line's text. Evidence a row cannot decide (a scratch buffer with no path) admits — overfetch, never a silent drop.</li>
+<li>Operator-free content never enters admission; the local fuzzy ranker narrows it.</li>
+</ul>
+<h2 id="buffer-search">Buffer search</h2>
+<p>Buffer <code>/</code> and <code>?</code> search is case-insensitive by default. Start the query with <code>case:sensitive</code> for exact case; <code>case:ignore</code>/<code>case:insensitive</code> select insensitive matching explicitly. Vim's <code>\C</code> and <code>\c</code> remain supported, including in <code>n</code>/<code>N</code> and highlights. The dialect is bounded Vim-magic (and <code>\v</code> very magic): collections, groups, alternation, repetition and backreferences; unsupported constructs report an error instead of becoming literals. Search previews and Enter use the same counted resolver.</p>
+<h2 id="ex-substitution">Ex substitution</h2>
+<p><code>:[range]s/pattern/replacement/g</code> uses the same bounded Vim-magic pattern grammar as buffer search. While composing, Strop shows the actual removed and inserted lines, substitution count, scope and offscreen extent; Enter applies that displayed plan as one undo unit. Invalid or incomplete input replaces the previous preview rather than executing it, large plans resolve off the input path, and Esc cancellation leaves bytes, registers and undo history untouched.</p>
+<p>Replacement text is literal: <code>&amp;</code>, <code>$1</code> and <code>\1</code> have no capture meaning. An escaped delimiter inserts that delimiter and <code>\\</code> inserts one backslash; other backslashes are preserved. This is separate from Search's literal With field.</p>
+<h2 id="the-search-workspace">The Search workspace</h2>
+<p><code>Space /</code> opens or resumes one large Search workspace; <code>Space R</code> resumes the same investigation with the replacement field visible. Local enumeration and content matching run entirely in Rust using the <code>ignore</code>/<code>grep</code> crate family — <code>rg</code> is not required on your machine.</p>
+<ul>
+<li><strong>Ctrl-R</strong> toggles the With field without restarting the search or losing either field's text, caret, mode, selection or workset. Enter in <strong>Find</strong> opens the selected source; Enter in <strong>With</strong> prepares Review. Tab switches fields when With is visible.</li>
+<li><strong>Ctrl-X</strong> toggles one match; <strong>Ctrl-D</strong> masks/restores its file. Excluded hits stay visible. <strong>Ctrl-O</strong> collects exactly the included matches into a read-only source-backed collection.</li>
+<li><strong>Ctrl-O</strong> from source results opens that collection with surrounding context, source syntax, match evidence and line numbers. <code>+</code>/<code>-</code> adjusts context; <code>g&lt;Space&gt;</code> opens the real source for editing. Collections retain navigation, search and yank, but never write through to source buffers or save them. Use <strong>With → Review</strong> for deliberate multi-file changes.</li>
+<li>Filter-only file finding lists eligible files; content search needs an expression. Unignored dotfiles are included by default; <code>.git</code> metadata is excluded. <code>:search-options</code> shows the separate visibility controls.</li>
+<li>Replacement text is literal, including <code>$1</code> and backslashes.</li>
+</ul>
+<p>Opening a source hides Search; <code>Space /</code> returns to the retained investigation. Re-entry refreshes through owned work in its captured namespace/root even if focus or cwd changed. In a Directory buffer, <code>:fs search</code> or <strong>Space a → Search here</strong> captures that directory without changing cwd.</p>
+<p>Review preparation is cancellable background work. <strong>Space a</strong> on a review or receipt exposes <strong>Apply to buffers</strong>, <strong>Save files</strong>, <strong>Cancel</strong> and <strong>Inspect result</strong> as applicable; <code>:apply-change</code>, <code>:save-change</code> and <code>:cancel-change</code> are the Ex shortcuts. Apply edits buffers; Save files is a separate action with a per-file receipt. Dirty open source text wins over disk, stale witnesses refuse, and Cancel restores the query and draft. Failed saves retain their exact unsaved targets and verification/recovery action. An all-excluded, incomplete or failed dataset cannot silently become a whole-project operation. Ordinary <code>u</code> and <code>:undo-change</code> are not interchangeable guarantees: the latter reverts the newest applied multi-file change only while its recorded target revisions still own that change.</p>
+<h2 id="ssh-and-container-scopes">SSH and container scopes</h2>
+<p>Search here uses the same query fields, inclusion decisions and source previews as local Search, on explicitly scoped SSH directories. Starting a remote search explicitly admits a verified worker on that endpoint; restricted/SFTP-only hosts refuse search without a fallback. <strong>With/Review are unavailable in SSH scopes</strong>; individual remote write permits do not authorize project replacement.</p>
+<p>Source enumeration is limited to 100,000 selected paths or 16 MiB of names; rg records to 1 MiB and 4,096 submatches; decoded batches to 4 MiB; a request publishes at most 100,000 rows or 64 MiB of owned row data. Limits and malformed output produce a visible failure, never a silently complete partial result. Container Search uses the same bounded protocol through the attached incarnation's admitted worker and selected root; without that worker it refuses, never falls back to the host. <strong>With/Review remain unavailable in both SSH and container scopes</strong>; individual write permits do not authorize project replacement.</p>
+    </div>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="editor.html">← Editor surfaces</a><a class="pager-next" href="filesystem.html">The filesystem workspace →</a></nav>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> at <code>v0.53.0-1-g66a0f97</code>. The repository file is the source of truth; edit it there.</p>
+  </article>
+</div>
+</main>
+<footer class="foot">
+  <div class="shell foot-inner">
+    <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.53.0</a> · <a href="../#palette">Palette</a></p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

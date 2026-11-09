@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Editor surfaces — strop docs</title>
+<meta name="description" content="Themes, completion, indentation and the visual system — the parts of strop you configure rather than drive. For the input grammar see the README&#x27;s card; for pickers see search.md.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+<script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
+</head>
+<body class="docs-page">
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="shell top-inner">
+    <a class="brand" href="../">strop</a>
+    <nav aria-label="Site">
+      <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../changelog.html">Changelog</a>
+      <a href="../#status">Status</a>
+      <a href="https://github.com/stropdev/strop">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="shell doc-layout">
+  <aside class="doc-side">
+    <p class="side-title"><a href="./">Docs</a></p>
+    <ol class="side-docs">
+      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html" aria-current=&quot;page&quot;>Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH, remote editing and containers</a></li><li><a href="terminal-and-scripting.html">Local terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02)</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
+    </ol>
+    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#indentation">Indentation</a></li><li><a href="#themes">Themes</a></li><li><a href="#panes-previews-and-language-services">Panes, previews and language services</a></li><li><a href="#code-completion">Code completion</a></li><li><a href="#syntax-and-display">Syntax and display</a></li><li><a href="#sessions">Sessions</a></li></ol>
+  </aside>
+  <article class="doc">
+    <p class="eyebrow">Docs</p>
+    <h1>Editor surfaces</h1>
+    <div class="prose">
+<p>Themes, completion, indentation and the visual system — the parts of strop you configure rather than drive. For the input grammar see the README's card; for pickers see <a href="search.html">search.md</a>.</p>
+<h2 id="indentation">Indentation</h2>
+<p>Enter between <code>{}</code>, <code>[]</code> or <code>()</code> opens an indented inner line and leaves the closing delimiter aligned. Typing a closer on an indentation-only line aligns it with its matching opener, even when the current indentation is wrong. Each cursor uses its own source context, indentation unit and line endings. Undo, counted insertion and dot repeat preserve the operation rather than copying generated indentation from a different location.</p>
+<p>In C and C++, typing <code>:</code> uses vim's electric-label indentation. Bare access specifiers (<code>private:</code>, <code>protected:</code>, <code>public:</code>) and <code>case</code>/<code>default:</code> labels snap to one unit inside their enclosing brace; named labels snap to column zero. C-mapped buffers (<code>.h</code>, <code>.c</code>) behave like C++, since headers detect as C. The second colon in a C++ scope operator (<code>std::</code>) restores statement indentation after the first colon's possible-label interpretation. Other languages and non-label punctuation insert the colon unchanged.</p>
+<p>A trailing colon opens a one-unit deeper body where the language gives it that meaning — one punctuation rule decided by the language registry, not per-language editor code:</p>
+<ul>
+<li><strong>Python</strong>: a block colon (<code>if ready:</code>) deepens the next line; a colon inside brackets (a slice or annotation) does not.</li>
+<li><strong>C, C++, Java, C#, Go, JavaScript/TypeScript, PHP</strong>: the label colon deepens its body — access specifiers (<code>private:</code>, <code>public:</code>), <code>case</code> and <code>default:</code> arms, and named labels. In a C++ class, Enter after <code>private:</code> puts the members one level inside the section.</li>
+<li><strong>Rust, JSON, CSS and prose</strong>: a trailing colon never deepens.</li>
+</ul>
+<p>Structural delimiter support covers Rust, Python, JavaScript, TypeScript, Go, C, C++, JSON, Java, C# and CSS. Strings and comments are excluded. Named prose/unsupported files inherit whitespace; unnamed scratch buffers retain generic brace behavior. This is not a formatter, HTML tag indentation, or keyword-based <code>end</code>/<code>else</code> alignment. Large-file analysis runs on the existing revision-checked worker, never the render path.</p>
+<h2 id="themes">Themes</h2>
+<p><code>:theme</code> opens the searchable palette selector; Enter applies a choice and Escape leaves the current theme unchanged (once enters the picker's Normal mode; twice closes it). <code>:theme catppuccin-mocha</code> switches directly. Rows show human labels, palette swatches and a check on the applied theme; the selected row's canonical name and full description appear in a bounded detail area. Small terminals omit decoration before hiding identity or input.</p>
+<table>
+<thead><tr><th>Name</th><th>Character</th></tr></thead>
+<tbody>
+<tr><td><code>dark</code></td><td>Strop's original dark palette and amber accent; the default</td></tr>
+<tr><td><code>light</code></td><td>Strop's warm paper-and-ink counterpart</td></tr>
+<tr><td><code>catppuccin-mocha</code></td><td>Warm pastel dark, with violet and blue syntax</td></tr>
+<tr><td><code>catppuccin-latte</code></td><td>Light Catppuccin, adapted for readable editor contrasts</td></tr>
+<tr><td><code>nord</code></td><td>Restrained cool blue-grey, with brighter comments for legibility</td></tr>
+<tr><td><code>strop-ink</code></td><td>Original low-chroma graphite, ivory and restrained brass</td></tr>
+<tr><td><code>paper</code></td><td>Warm off-white paper, deep green ink and forest-green accents</td></tr>
+<tr><td><code>paper-dark</code></td><td>Warm green-black paper, soft ivory ink and muted sage accents</td></tr>
+</tbody>
+</table>
+<p>Choose at launch with <code>strop --theme paper file.rs</code> or <code>strop --theme paper-dark file.rs</code>, or persist either choice in <code>$XDG_CONFIG_HOME/strop/config.toml</code> (normally <code>~/.config/strop/config.toml</code>):</p>
+<pre><code class="language-toml">theme = &quot;paper&quot;
+# Or: theme = &quot;paper-dark&quot;</code></pre>
+<p>The same canonical names work for a session-only switch: <code>:theme paper</code> or <code>:theme paper-dark</code>.</p>
+<p>Precedence is the built-in default, then the user config, then <code>--theme</code>. <code>:theme</code> changes the running session only; it does not rewrite the config. Syntax, pickers/previews, diffs, diagnostics, help and statusline share the palette. Existing terminal sessions update their default colors without overwriting child-selected truecolor or OSC palette customizations.</p>
+<p>Adaptations follow the <a href="https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md">Catppuccin style guide</a> and <a href="https://www.nordtheme.com/docs/colors-and-palettes">Nord color roles</a>; they are not promises of exact upstream editor-port fidelity. <code>strop licenses</code> prints the bundled theme licenses. All palettes are compiled into the binary: no downloads, plugins or setup.</p>
+<h2 id="panes-previews-and-language-services">Panes, previews and language services</h2>
+<p>Local pane titles use workspace-relative paths; duplicate directories, outside-workspace paths and remote/container authority remain identifiable. Pane numbers, focus, dirty and read-only markers survive narrow layouts. File, search and symbol previews automatically reclaim unused result-list width from short admitted labels, within bounded stable layout limits. Long paths keep their list budget; narrow terminals retain stacked or omitted preview fallbacks.</p>
+<p>The modeline presents owned LSP starting, ready, refused and failed states as compact badges. Long server prose does not displace mode and position. Use <code>:explain</code> to inspect the complete server, workspace/endpoint and failure reason in a real read-only buffer; recovered servers clear their old failure without erasing another workspace's problem or an independent warning. If a server exits during source navigation, the next language request names that failure and starts one scoped reattach instead of claiming the installed server is missing; repeat the request after it is ready.</p>
+<p>Failed or unconfirmed saves, connection/admission failures, terminal decisions and Dev Container outcomes use the same owner-scoped retained feedback. They survive motions, search and unrelated success messages. <strong>Space a</strong> exposes only currently valid recovery actions; <strong><code>:explain</code></strong> retains the complete owner, detail and evidence. A compact textual severity marker remains in the modeline even at ultra-narrow widths; there are no floating notification cards to dismiss or fade. Dismissing a notice changes only presentation—it never cancels work, clears a save barrier or marks an unconfirmed outcome as successful.</p>
+<h2 id="code-completion">Code completion</h2>
+<p>Insert mode offers language-server candidates and incremental words from the current editable source. Word suggestions remain usable without a language server. Read-only source collections do not open completion or gain edit server. The menu shows kind, source and detail. Kind chips use the symbol picker's quiet family colors, and the ASCII <code>lsp</code> / <code>buf</code> provenance tags stay color-coded without requiring an icon font; selected language items can show documentation without changing the buffer.</p>
+<ul>
+<li><code>Ctrl-Space</code>: request both providers; <code>Ctrl-X Ctrl-O</code>: language completion.</li>
+<li><code>Ctrl-N</code> / <code>Ctrl-P</code>: choose a candidate; <code>Ctrl-Y</code>: accept it.</li>
+<li>Enter and Tab accept only after deliberate selection; otherwise they keep their ordinary Insert behavior.</li>
+<li><code>Ctrl-E</code>: dismiss without editing. Escape dismisses and leaves Insert mode.</li>
+</ul>
+<p>Primary edits and represented imports are validated together and share the Insert undo group. Stale, overlapping or invalid edits are refused as a whole; unsupported snippets and commands are not approximated by a label insertion. Read-only and partial sources do not gain write authority through completion.</p>
+<pre><code class="language-toml">[completion]
+enabled = true
+auto_popup = true</code></pre>
+<p>Set <code>auto_popup = false</code> for manual-only completion; an opened manual session still follows typing. <code>enabled = false</code> also disables manual invocation and retires completion-only work.</p>
+<h2 id="syntax-and-display">Syntax and display</h2>
+<p>Tree-sitter highlighting for 23 languages (including CMake, Markdown, TOML, YAML, HTML and CSS); grammars and licensed queries ship in the binary. Markdown fences select any bundled language — not just Rust — and the same injection pipeline highlights fenced examples inside Rust documentation comments, JS/TS/TSX, C/C++ and Java documentation blocks, declaration-attached Go block comments, and Python's initial module/class/function docstrings. Comment delimiters remain comments; independent documentation groups cannot leak unclosed fences into each other. Only rustdoc defaults unlabelled fences to Rust. HTML embeds JavaScript and CSS.</p>
+<p>Syntax, structural indentation guides and search counts are revision-owned worker results. Long-line byte/cell checkpoints keep horizontal navigation and typing from repeatedly walking the line prefix. Horizontal views, block selection and carets share display-cell geometry; new edits preserve the buffer's line endings. The modeline keeps filenames, live status and position legible at narrow widths.</p>
+<h2 id="sessions">Sessions</h2>
+<p>File/native work runs on owned jobs rather than blocking keystrokes. Sessions use private atomic files and lossless native paths, including undo history and the active window's jump history. Per-project sessions restore cursor, viewport and jump positions across restarts; retained jump records also restore their selections. Each pane keeps an independent 100-entry jumplist, copied on split. Quit-all writes one complete project snapshot before closing any buffer. <code>Ctrl-O</code> / <code>Ctrl-I</code> traverse jump origins without discarding newer entries when a new jump branches from history. Undo history is available in the <code>Space u</code> tree browser. Remote contents and write permits are never restored from persisted sessions.</p>
+    </div>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="cli.html">← The strop CLI</a><a class="pager-next" href="search.html">Search and the query language →</a></nav>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> at <code>v0.53.0-1-g66a0f97</code>. The repository file is the source of truth; edit it there.</p>
+  </article>
+</div>
+</main>
+<footer class="foot">
+  <div class="shell foot-inner">
+    <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.53.0</a> · <a href="../#palette">Palette</a></p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

@@ -1,229 +1,228 @@
 <!doctype html>
-<html lang="en" data-palette="paper">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>strop — see the cut before you make it</title>
-<meta name="description" content="strop is a modal text editor in Rust: Neovim's hands, Helix's spine, rootle's eyes, GitLens' memory.">
-<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/site.css?v=8">
+<meta name="description" content="strop is a modal text editor in Rust with Vim's grammar. Composed searches, substitutions and selections show their exact range before Enter. One static binary for Linux/WSL x86_64.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/site.css">
+<script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
 </head>
 <body>
-<a class="skip-link" href="#main-content">Skip to content</a>
-<header class="topbar">
-  <div class="shell nav-inner">
-    <a class="brand-mini" href="/" aria-label="strop home">strop</a>
-    <nav aria-label="Primary navigation">
-      <a href="./docs.html">Docs</a>
-      <a href="./roadmap.html">Roadmap</a>
-      <a href="./changelog.html">Changelog</a>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="shell top-inner">
+    <a class="brand" href="./">strop</a>
+    <nav aria-label="Site">
+      <a href="docs/">Docs</a>
+      <a href="changelog.html">Changelog</a>
+      <a href="#status">Status</a>
       <a href="https://github.com/stropdev/strop">GitHub</a>
     </nav>
   </div>
 </header>
-<main id="main-content">
-  <section class="hero shell" aria-labelledby="hero-title">
-    <div class="hero-copy">
-      <p class="eyebrow">A modal text editor in Rust</p>
-      <h1 id="hero-title">See the cut.<br><span>Then make it.</span></h1>
-      <p class="hero-lede">A familiar way to edit. A clearer view of what comes next. Preview your next change, keep Git close, and move between local and remote workspaces.</p>
-      <p class="hero-lineage">Neovim's hands · Helix's spine · rootle's eyes · GitLens' memory</p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="#install">Install strop</a>
-        <a class="button button-secondary" href="./docs.html">Read the docs</a>
-      </div>
-      <div class="release-line">
-        <a class="release-pill" data-latest-release href="https://github.com/stropdev/strop/releases/latest">Latest release</a>
-        <span>23 languages · remote workspaces</span>
-      </div>
-    </div>
+<main id="main">
 
-  <!-- A palette-aware brand illustration, not an editor screenshot. -->
-  <figure class="product-scene">
-  <div class="scene-heading"><span>strop / the considered cut</span><span aria-hidden="true">01 — ci[</span></div>
-  <div class="logo" role="img" aria-label="Illustration of the strop razor and an editor card with a pending cut highlighted">
-    <svg viewBox="0 0 480 310" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">
-      <rect width="480" height="310" rx="18" fill="var(--logo-backdrop)"/>
-      <!-- editor card -->
-      <rect x="24" y="52" width="432" height="196" rx="14" fill="var(--mantle)" stroke="var(--border)" stroke-width="2"/>
-      <!-- window chrome (fixed traffic lights, like rootle's) -->
-      <circle cx="44" cy="70" r="4" fill="#f38ba8" opacity="0.9"/>
-      <circle cx="60" cy="70" r="4" fill="#f9e2af" opacity="0.9"/>
-      <circle cx="76" cy="70" r="4" fill="#a6e3a1" opacity="0.9"/>
-      <!-- line-number gutter -->
-      <rect x="46" y="97"  width="12" height="6" rx="2" fill="var(--muted)" opacity="0.45"/>
-      <rect x="46" y="117" width="12" height="6" rx="2" fill="var(--muted)" opacity="0.45"/>
-      <rect x="46" y="137" width="12" height="6" rx="2" fill="var(--accent)" opacity="0.9"/>
-      <rect x="46" y="157" width="12" height="6" rx="2" fill="var(--muted)" opacity="0.45"/>
-      <rect x="46" y="177" width="12" height="6" rx="2" fill="var(--muted)" opacity="0.45"/>
-      <rect x="46" y="197" width="12" height="6" rx="2" fill="var(--muted)" opacity="0.45"/>
-      <!-- code lines -->
-      <rect x="84"  y="96"  width="26" height="8" rx="3" fill="var(--syn-kw)"/>
-      <rect x="114" y="96"  width="40" height="8" rx="3" fill="var(--syn-fn)"/>
-      <rect x="158" y="96"  width="60" height="8" rx="3" fill="var(--syn-dim)"/>
-      <rect x="222" y="96"  width="34" height="8" rx="3" fill="var(--syn-str)"/>
-      <rect x="84"  y="116" width="18" height="8" rx="3" fill="var(--syn-dim)" opacity="0.6"/>
-      <rect x="106" y="116" width="52" height="8" rx="3" fill="var(--syn-fn)"/>
-      <rect x="162" y="116" width="80" height="8" rx="3" fill="var(--syn-dim)"/>
-      <!-- the cut line: fn token, then the pending range in accent -->
-      <rect x="84"  y="136" width="18" height="8" rx="3" fill="var(--syn-dim)" opacity="0.6"/>
-      <rect x="106" y="136" width="36" height="8" rx="3" fill="var(--syn-fn)"/>
-      <rect x="146" y="132" width="86" height="16" rx="4" fill="var(--accent)" opacity="0.16"/>
-      <rect x="146" y="146" width="86" height="2" rx="1" fill="var(--accent)"/>
-      <rect x="150" y="137" width="10" height="7" rx="2" fill="var(--accent)" opacity="0.85"/>
-      <rect x="222" y="137" width="8"  height="7" rx="2" fill="var(--accent)" opacity="0.85"/>
-      <rect x="164" y="137" width="52" height="7" rx="2" fill="var(--syn-dim)"/>
-      <rect x="238" y="136" width="44" height="8" rx="3" fill="var(--syn-dim)"/>
-      <!-- block caret at the cut start -->
-      <rect class="caret" x="140" y="131" width="5" height="18" fill="var(--accent)"/>
-      <rect x="106" y="156" width="66" height="8" rx="3" fill="var(--syn-dim)"/>
-      <rect x="176" y="156" width="30" height="8" rx="3" fill="var(--syn-str)"/>
-      <rect x="84"  y="176" width="30" height="8" rx="3" fill="var(--syn-kw)"/>
-      <rect x="118" y="176" width="58" height="8" rx="3" fill="var(--syn-dim)"/>
-      <rect x="84"  y="196" width="90" height="8" rx="3" fill="var(--syn-dim)" opacity="0.7"/>
-      <!-- scrollbar in the border column, accent thumb -->
-      <rect x="450" y="88"  width="3" height="126" rx="1.5" fill="var(--border)"/>
-      <rect x="450" y="118" width="3" height="34"  rx="1.5" fill="var(--accent)"/>
-      <!-- modeline: chip reads the pending keys -->
-      <rect x="26" y="228" width="428" height="18" rx="9" fill="var(--logo-modeline)"/>
-      <rect x="34" y="231" width="56" height="12" rx="4" fill="var(--accent)"/>
-      <rect x="150" y="234" width="180" height="6" rx="3" fill="var(--muted)" opacity="0.5"/>
-      <rect x="398" y="236" width="40" height="4" rx="2" fill="var(--muted)" opacity="0.35"/>
-      <!-- the razor: fixed steel (rootle's mole precedent — mascots don't
-           re-theme), but the edge glint is the accent: the final edge. -->
-      <g transform="translate(352,6) rotate(-14)">
-        <rect x="58" y="-6" width="52" height="17" rx="8.5" fill="#2b2e3a" stroke="#585e6e" stroke-width="1.2"/>
-        <circle cx="62" cy="2.5" r="4" fill="#585e6e"/>
-        <polygon points="0,0 58,-5 64,13 6,20" fill="#b9bec9"/>
-        <polygon points="0,0 58,-5 60,3 2,8" fill="#7d828f"/>
-        <line x1="8" y1="17.5" x2="62" y2="11" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
-      </g>
-      <!-- wordmark -->
-      <text x="228" y="293" text-anchor="middle" font-size="54" font-weight="bold" letter-spacing="-2" fill="var(--text)">strop</text>
-      <rect class="caret" x="330" y="266" width="14" height="32" rx="2" fill="var(--accent)"/>
-    </svg>
+<section class="hero shell" aria-labelledby="hero-title">
+  <p class="eyebrow">A modal text editor in Rust · Linux/WSL x86_64</p>
+  <h1 id="hero-title">See the cut <em>before</em> you make it.</h1>
+  <p class="lede">strop edits with Vim's grammar. Composed searches, substitutions and selections show their exact range before you press Enter — and the preview and the edit consume the same resolver, so the preview cannot lie. Project search, git and remote workspaces live in ordinary buffers. One static binary, no setup.</p>
+  <div class="install-row">
+    <pre class="cmd"><code><span class="prompt">$</span> curl -fsSL https://strop.dev/install.sh | sh</code></pre>
+    <button type="button" class="button js-only" data-copy="curl -fsSL https://strop.dev/install.sh | sh">Copy</button>
+    <a class="button button-accent" href="#install">Install</a>
   </div>
-  <figcaption><span class="scene-mark" aria-hidden="true">[ ]</span><span>See the range. Keep the intent.<small>Brand illustration · website colors, not an editor theme</small></span></figcaption>
+  <p class="copy-status" data-copy-status role="status" aria-live="polite"></p>
+  <p class="chip-row">
+    <a href="https://github.com/stropdev/strop/releases/latest">v<!-- build:version -->0.53.0<!-- /build:version --></a>
+    <span>released <!-- build:date -->2026-11-09<!-- /build:date --></span>
+    <span>x86_64-unknown-linux-musl</span>
+    <span><!-- build:languages -->26<!-- /build:languages --> languages</span>
+    <span>MIT</span>
+  </p>
+
+  <!-- PLACEHOLDER until the 0.54 binary exists: img/hero.svg is generated by
+       tools/ansi2svg.py from a 0.53.0 tmux capture (theme `dark`, 140x40,
+       `d/width` composing). The integrator regenerates it from 0.54 in the
+       Hone palette; the exact command is in README.md ("Regenerating the hero"). -->
+  <figure class="frame">
+    <div class="frame-scroll">
+      <img src="img/hero.svg" width="1200" height="724" alt="A 140 by 40 terminal frame of strop editing statusline.rs. A search card reads '/ width' with 11 matches. The statusline reads: INPUT, main, statusline.rs, delete, search /width, 579 bytes, exclusive.">
+    </div>
+    <figcaption>A real frame, cell for cell: <code>d/width</code> composing in a Rust file. The search card counts the matches and the statusline names the pending operation and its exact range — <em>delete, search /width, 579 bytes · exclusive</em> — before Enter. Captured from the terminal with <code>tmux capture-pane</code> and converted to SVG; nothing drawn by hand.</figcaption>
   </figure>
+</section>
 
-  </section>
-
-  <section class="capabilities shell" aria-label="At a glance">
-    <article><p class="eyebrow">Preview the change</p><h2>Less guesswork.<br>More intention.</h2><p>Operator-pending previews put the next cut in view before you commit to it.</p></article>
-    <article><p class="eyebrow">Keep your bearings</p><h2>The code.<br>And its context.</h2><p>Pickers, Git hunks and bundled syntax support for 23 languages, right in the terminal.</p></article>
-    <article><p class="eyebrow">Go beyond local</p><h2>Different hosts.<br>Real buffers.</h2><p>SSH and running-container workspaces, with explicit editing and checked remote saves.</p></article>
-  </section>
-
-  <section class="section" id="install" aria-labelledby="install-heading">
-    <div class="shell install-layout">
-      <div class="section-heading">
-        <p class="eyebrow"><span class="section-number">01 /</span> Get started</p>
-        <h2 id="install-heading">Ready for Linux.</h2>
-        <p>Current releases support Linux and WSL on x86_64, distributed only through GitHub.</p>
-      </div>
-      <div class="install-content">
-      <div class="installbox">
-        <div class="panel-heading"><span>One command. Verified binary.</span><span aria-hidden="true">~/</span></div>
-        <div class="command-row">
-          <code class="ib-cmd"><span class="p">$</span> <span class="language-bash" data-install-cmd>curl -fsSL https://strop.dev/install.sh | sh</span></code>
-          <button type="button" class="copy" data-install-copy data-copy="curl -fsSL https://strop.dev/install.sh | sh">Copy</button>
-        </div>
-        <div class="install-meta">
-          <span class="ib-os">Linux / WSL · x86_64 only</span>
-          <span class="copy-status" data-copy-status role="status" aria-live="polite"></span>
-        </div>
-      </div>
-      <div class="install-notes">
-        <p class="alt">Prebuilt static binary · SHA-256 verified · <a href="https://github.com/stropdev/strop/releases/latest">download directly from GitHub</a>. For manual installation, download the Linux x86_64 tarball and matching <code>.sha256</code> file, verify with <code class="language-bash">sha256sum -c strop-0.53.0-x86_64-unknown-linux-musl.tar.gz.sha256</code>, then extract and place <code>strop</code> on your <code>PATH</code>.</p>
-        <p class="alt update-line">Already installed? <code class="language-bash">strop update</code> — downloads, verifies and extracts entirely in Rust, then swaps itself.</p>
-        <p class="alt">macOS and Linux aarch64 releases, crates.io and Homebrew updates are retired. Historical packages remain available, but are not current installation channels.</p>
-      </div>
-      </div>
+<section class="section shell" id="install" aria-labelledby="install-title">
+  <div class="section-head">
+    <p class="eyebrow">Install</p>
+    <h2 id="install-title">One command, one static binary.</h2>
+    <p>The installer downloads the release tarball for Linux/WSL x86_64, verifies its SHA-256 checksum and places <code>strop</code> on your <code>PATH</code>. Nothing else is fetched at runtime: grammars, queries and palettes are compiled in.</p>
+  </div>
+  <div class="install-grid">
+    <div class="card">
+      <ol class="steps">
+        <li>Install or reinstall.
+          <pre><code>curl -fsSL https://strop.dev/install.sh | sh</code></pre>
+        </li>
+        <li>Or verify by hand: download the tarball and its <code>.sha256</code> from the <a href="https://github.com/stropdev/strop/releases/latest">latest release</a>, then
+          <pre><code>sha256sum -c strop-<!-- build:version -->0.53.0<!-- /build:version -->-x86_64-unknown-linux-musl.tar.gz.sha256</code></pre>
+          and extract <code>strop</code> onto your <code>PATH</code>.
+        </li>
+        <li>Later, update from inside the install. Download, verification and extraction run in Rust; <code>curl</code> and <code>tar</code> are not required.
+          <pre><code>strop update          # --check only checks</code></pre>
+        </li>
+      </ol>
     </div>
-  </section>
-
-  <section class="section" aria-labelledby="demo-heading">
-    <div class="shell">
-      <div class="section-heading">
-        <p class="eyebrow"><span class="section-number">02 /</span> In the terminal</p>
-        <h2 id="demo-heading">The real thing.</h2>
-        <p>Operator-pending preview, pickers and Git hunks. A recording of strop, exactly as captured.</p>
-      </div>
-      <details class="demo-frame">
-        <summary><span class="demo-play" aria-hidden="true">▶</span><span><strong>Watch strop in action</strong><span class="demo-caption">Open the recording · close to hide animation</span></span><span class="demo-format">Terminal / GIF</span></summary>
-        <img class="demo" src="img/demo.gif" alt="strop demo showing operator-pending preview, picker and Git hunks" loading="lazy">
-      </details>
-      <p class="note">Recorded editor colors stay fixed. The website palette does not change the demo.</p>
+    <div class="card">
+      <h3>Platforms</h3>
+      <p>The supported target is Linux and WSL on x86_64 (<code>x86_64-unknown-linux-musl</code>). Windows Terminal users run strop inside WSL.</p>
+      <p>macOS, Linux aarch64, crates.io and Homebrew are historical channels: their packages remain available but receive no new versions, and <code>strop update</code> on such an install says to reinstall with <code>install.sh</code>.</p>
+      <p class="links"><a href="docs/cli.html">The CLI</a> · <a href="https://github.com/stropdev/strop/blob/main/install.sh">read install.sh</a></p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section" aria-labelledby="features-heading">
-    <div class="shell">
-      <div class="section-heading">
-        <p class="eyebrow"><span class="section-number">03 /</span> Beyond the local buffer</p>
-        <h2 id="features-heading">Your workspace, within reach.</h2>
-      </div>
-      <div class="feature-grid">
-        <article class="feature-card">
-          <span class="feature-symbol" aria-hidden="true">↗</span>
-          <h3>Remote files and containers</h3>
-          <p>Press <code>Space o</code> for SSH destinations, a new host, or running containers. Everything opens in real buffers. Remote files start read-only; <code>:remote edit</code> verifies a full snapshot and enables editing, then <code>:w</code> saves through an owned atomic transaction.</p>
-          <p>Attach a container to browse immediately, then use <code>:container-worker</code> for verified Git, LSP and search services. Content and metadata conflicts preserve local edits; unconfirmed remote saves use explicit <code>:remote verify</code>.</p>
-          <p><a href="./docs.html#ssh">SSH usage</a> · <a href="./docs.html#containers">Container workspaces</a></p>
-        </article>
-        <article class="feature-card">
-          <span class="feature-symbol" aria-hidden="true">{ }</span>
-          <h3>Code, including the code in your docs</h3>
-          <p>Bundled Tree-sitter grammars highlight labelled Markdown fences and documentation examples across languages. Comment prefixes stay comments; a Python example need not live in a Python file.</p>
-          <p>Structural indentation aligns paired delimiters and closing braces with their source context. Worker-owned syntax analysis keeps large files out of the keystroke path.</p>
-          <p><a href="./docs.html#documentation-code">Documentation examples</a> · <a href="./docs.html#indentation">Indentation</a></p>
-        </article>
-      </div>
-    </div>
-  </section>
+<section class="section shell" id="features" aria-labelledby="features-title">
+  <div class="section-head">
+    <p class="eyebrow">What it does</p>
+    <h2 id="features-title">Vim's grammar, with the next step in view.</h2>
+    <p>Neovim's hands, Helix's spine, rootle's eyes, GitLens' memory. Each claim below is a tested behaviour of the shipped binary; the links go to the reference it was taken from.</p>
+  </div>
+  <div class="grid-2">
 
-  <section class="section palettes" aria-labelledby="palette-heading">
-    <div class="shell">
-      <div class="section-heading">
-        <p class="eyebrow"><span class="section-number">04 /</span> Website palette</p>
-        <h2 id="palette-heading">A little more your light.</h2>
-        <p>Paper by default. Twelve other ways to make this website feel like yours. Your choice follows you across these pages on this device.</p>
-      </div>
-      <div class="palette-panel">
-        <div class="palette-bar" role="group" aria-label="Website palette">
-          <button type="button" data-set-palette="paper" class="active" aria-pressed="true"><span class="sw" style="--sw:#1a6650"></span>Paper</button>
-          <button type="button" data-set-palette="paper-dark" aria-pressed="false"><span class="sw" style="--sw:#9bc7ac"></span>Paper Dark</button>
-          <button type="button" data-set-palette="strop" aria-pressed="false"><span class="sw" style="--sw:#f0a35e"></span>strop</button>
-          <button type="button" data-set-palette="catppuccin-mocha" aria-pressed="false"><span class="sw" style="--sw:#89b4fa"></span>catppuccin-mocha</button>
-          <button type="button" data-set-palette="tokyo-night" aria-pressed="false"><span class="sw" style="--sw:#7aa2f7"></span>tokyo-night</button>
-          <button type="button" data-set-palette="gruvbox-dark" aria-pressed="false"><span class="sw" style="--sw:#83a598"></span>gruvbox-dark</button>
-          <button type="button" data-set-palette="nord" aria-pressed="false"><span class="sw" style="--sw:#88c0d0"></span>nord</button>
-          <button type="button" data-set-palette="dracula" aria-pressed="false"><span class="sw" style="--sw:#bd93f9"></span>dracula</button>
-          <button type="button" data-set-palette="one-dark" aria-pressed="false"><span class="sw" style="--sw:#61afef"></span>one-dark</button>
-          <button type="button" data-set-palette="solarized-dark" aria-pressed="false"><span class="sw" style="--sw:#268bd2"></span>solarized-dark</button>
-          <button type="button" data-set-palette="catppuccin-latte" aria-pressed="false"><span class="sw" style="--sw:#1e66f5"></span>catppuccin-latte</button>
-          <button type="button" data-set-palette="github-light" aria-pressed="false"><span class="sw" style="--sw:#0969da"></span>github-light</button>
-          <button type="button" data-set-palette="one-light" aria-pressed="false"><span class="sw" style="--sw:#4078f2"></span>one-light</button>
-          <button type="button" data-set-palette="solarized-light" aria-pressed="false"><span class="sw" style="--sw:#268bd2"></span>solarized-light</button>
-        </div>
-        <p class="note">Website appearance only, including the brand illustration. These choices do not configure strop; Paper and Paper Dark are not currently editor themes. The demo keeps its recorded colors.</p>
-        <noscript><p class="note">JavaScript is off, so the website uses Paper. Enable JavaScript to choose and remember another website palette.</p></noscript>
-      </div>
-    </div>
-  </section>
+    <article class="card wide">
+      <h3>The preview</h3>
+      <p>While you compose <code>d/pattern</code>, the affected range and the motion's semantics are live on screen; while you compose <code>:s</code>, the before and after text, the replacement count and the scope are. Visual selections are inspected before the operator applies. Completed chords such as <code>ci[</code> and <code>dw</code> execute at the completing key, as in Vim — there is no inspection interval, and the site does not claim one.</p>
+      <table>
+        <thead><tr><th>Interaction</th><th>Inspection contract</th></tr></thead>
+        <tbody>
+          <tr><td><code>d/pattern</code> while composing</td><td>Live affected range and motion semantics before Enter; Esc once enters field Normal, Esc again cancels.</td></tr>
+          <tr><td><code>:s</code> while composing</td><td>Live before/after text, replacement count and scope before Enter.</td></tr>
+          <tr><td><code>vi[</code> then <code>c</code>, other Visual selections</td><td>Inspect the selection before applying the operator.</td></tr>
+          <tr><td>Project replace, filesystem and machine edits</td><td>Review exact targets before Apply; saving is a separate action.</td></tr>
+          <tr><td><code>dw</code>, <code>ci[</code>, <code>dfx</code>, <code>.</code></td><td>Execute at the completing key; there is no guaranteed inspection interval.</td></tr>
+          <tr><td>Macros and arbitrary child/shell execution</td><td>No general effect preview.</td></tr>
+        </tbody>
+      </table>
+      <p class="links"><a href="https://github.com/stropdev/strop#readme">The inspection table in the README</a> · <a href="docs/vim-compat.html">Vim compatibility</a></p>
+    </article>
+
+    <article class="card">
+      <h3>One query language</h3>
+      <p>File find (<kbd>Space</kbd> <kbd>f</kbd>), content search (<kbd>Space</kbd> <kbd>/</kbd>), replace (<kbd>Space</kbd> <kbd>R</kbd>), symbols (<kbd>Space</kbd> <kbd>S</kbd>) and the jump list share one qualifier grammar. What you learn in one field works in all of them.</p>
+      <pre><code>language:rust path:src/ request_id
+glob:"src/**/*.rs" -path:generated/ text:"request-id"
+kind:function parse AND NOT wrap</code></pre>
+      <p>Bare file queries are fuzzy; content queries are literal until you say <code>regex:</code>. <kbd>Ctrl-Space</kbd> offers parser-driven suggestions at the caret.</p>
+      <p class="links"><a href="docs/search.html">Search and the query language</a></p>
+    </article>
+
+    <article class="card">
+      <h3>Git in the buffer</h3>
+      <p>Hunks against the live buffer through libgit2, in process — no shell-outs on the keystroke path. <kbd>]c</kbd> <kbd>[c</kbd> step through hunks; <kbd>Space</kbd> <kbd>g</kbd> <kbd>s</kbd> stages one, <kbd>S</kbd> unstages, <kbd>u</kbd> restores from the index, <kbd>p</kbd> previews.</p>
+      <p><kbd>Space</kbd> <kbd>g</kbd> <kbd>b</kbd> toggles a blame gutter where Enter dives into the line's commit; <kbd>l</kbd> opens the log, <kbd>h</kbd> the file's history, <kbd>y</kbd> and <kbd>o</kbd> copy or open a permalink. Status, log and diffs are buffers you move through with the same keys.</p>
+      <p class="links"><a href="docs/vim-compat.html#git">The git bindings</a></p>
+    </article>
+
+    <article class="card">
+      <h3>Everything is a buffer</h3>
+      <p>Terminals (<code>:terminal</code>, a real PTY in a split), directory listings, search collections, the git log, <code>:explain</code> and help all open in buffers that still know how to be a text editor: the same motions, the same search, the same yank.</p>
+      <p>Filesystem changes go through Review → Apply → Receipt, locally and over SSH. <code>strop ssh://user@host/path</code> opens a remote file read-only; <code>:remote edit</code> verifies a full snapshot before granting write authority, and <code>:w</code> saves through a checked transaction. Running containers and Dev Container configurations attach the same way.</p>
+      <p class="links"><a href="docs/filesystem.html">Filesystem workspace</a> · <a href="docs/remote.html">SSH, remote editing and containers</a> · <a href="docs/terminal-and-scripting.html">Terminals and scripting</a></p>
+    </article>
+
+    <article class="card">
+      <h3>The grammar in one card</h3>
+      <pre><code>h j k l w b e 0 ^ _ $ gg G %  motions          i a A o O            insert
+d y c &gt; &lt; + motion/object     operators        dd yy cc D C Y s x   shortcuts
+iw i" i' i( i[ i{             text objects     f t / ? n N          find &amp; search
+v V                           visual           u ctrl-r .           undo, redo, repeat
+"a … "+                       registers        :w :q :e :help        ex line
+Q                             multicursor      Space c              cursor below
+
+Space  f files · o remote/containers · b buffers · / Search · R replace · ? help
+Space w  - horizontal · v vertical · 1-9 focus · h/j/k/l/w move · q close
+Space g  l log · h history · b blame gutter · y/o permalink · u/s/p hunk</code></pre>
+      <p class="links"><kbd>Space</kbd> <kbd>?</kbd> lists every binding inside the editor; <code>:help</code> explains each surface.</p>
+    </article>
+
+    <article class="card wide" id="checked">
+      <h3>How it is checked</h3>
+      <p>The editor follows a ring design. At the centre is <code>strop-kernel</code>: a dependency-free, <code>no_std</code> crate that Charon and Aeneas translate to Lean 4, where its theorems are proved about the shipped code rather than a hand-written copy — how cursors, marks and selections move through an edit, which edit batches are safe to apply, and the worker wire's frame bounds. Calibration mutants must each break their theorem, and an axiom audit admits only Lean's standard axioms. These are the required claims, read from <code>proofs/Audit.lean</code> at build time:</p>
+      <ul class="claims"><!-- build:claims --><li>map_position_spec</li><li>mapSpec_monotone</li><li>mapSpec_in_bounds</li><li>validate_batch_spec</li><li>batch_map_composition</li><li>consecutive_of_batchOk</li><li>header_admitted_spec</li><li>body_admitted_spec</li><li>frame_ready_spec</li><li>next_generation_spec</li><li>index_for_len_spec</li><!-- /build:claims --></ul>
+      <p>Each ring outward is checked a cheaper way: protocol machines by property tests and Loom; host adapters by fault injection and end-to-end runs over a real sshd and Docker; the vim grammar by a differential harness that feeds Neovim the same keys and compares the result. Every CI lane blocks a release, and the proofs gate runs in local qualification before a tag is cut.</p>
+      <p class="links"><a href="https://github.com/stropdev/strop/blob/main/plans/0086-verified-foundation.md">Plan 0086 — the verified foundation</a> · <a href="https://github.com/stropdev/strop/tree/main/proofs">proofs/</a> · <a href="https://github.com/stropdev/strop/blob/main/plans/0006-e2e-harness.md">Plan 0006 — the e2e tiers</a> · <a href="docs/vim-compat.html">What ships exactly</a></p>
+    </article>
+  </div>
+</section>
+
+<section class="section shell" id="tour" aria-labelledby="tour-title">
+  <div class="section-head">
+    <p class="eyebrow">The tour</p>
+    <h2 id="tour-title">Recorded from the real binary.</h2>
+    <p>The demo tape drives <code>strop</code> itself in a terminal; a demo-only code path would be a bug. The recording keeps its own colours whatever palette this page uses.</p>
+  </div>
+  <details class="tour">
+    <summary>
+      <img src="img/demo-poster.png" width="1400" height="760" alt="A still from the strop recording: the search picker open over a Rust file, two hits for 'deburr' listed beside a preview of the file." loading="lazy">
+      <span class="play">▶ Play the recording · GIF, 7.5 MB</span>
+    </summary>
+    <img class="recording" src="img/demo.gif" width="1400" height="760" alt="The strop demo: operator-pending preview, the files and search pickers, and git hunks, recorded in a terminal." loading="lazy">
+  </details>
+  <p class="tour-note">The recording is <code>demos/demo.tape</code> rendered against the real binary and refreshed by the editor repository's demo workflow.</p>
+</section>
+
+<section class="section shell" id="status" aria-labelledby="status-title">
+  <div class="section-head">
+    <p class="eyebrow">Status</p>
+    <h2 id="status-title">Plans in force.</h2>
+    <p>strop is designed in numbered plans; <code>plans/STATUS.md</code> is the ledger of which ones every change currently answers to. This table is generated from it at build time (<code><!-- build:describe -->v0.53.0-1-g66a0f97<!-- /build:describe --></code>). There is no separate roadmap page: the ledger is the roadmap.</p>
+  </div>
+  <div class="card">
+    <table class="status-table">
+      <thead><tr><th scope="col">Plan</th><th scope="col">Contract</th></tr></thead>
+      <tbody><!-- build:status -->
+<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0001-vision-and-design.md">0001</a></th><td>vision and design contract (doctrine)</td></tr>
+<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0003-modes-leader-and-house-style.md">0003</a></th><td>modes, leader, keymap house style; <code>?</code> help coverage (§5.7)</td></tr>
+<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0005-configuration.md">0005</a></th><td>configuration model</td></tr>
+<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0006-e2e-harness.md">0006</a></th><td>e2e tiers and the Neovim differential harness</td></tr>
+<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0008-input-layer-keymap.md">0008</a></th><td>the input walker and the one keymap table</td></tr>
+<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0079-local-linux-release.md">0079</a></th><td>local Linux release procedure (its completion freeze is retired by 0086)</td></tr>
+<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0086-verified-foundation.md">0086</a></th><td>verified foundation: rings, Lean-proved kernel, survival and release rules, gates</td></tr>
+<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0088-the-look.md">0088</a></th><td>design language, token set and the six original palettes; echo row; golden snapshots</td></tr>
+<!-- /build:status --></tbody>
+    </table>
+    <p class="links"><a href="https://github.com/stropdev/strop/blob/main/plans/STATUS.md">The full ledger: proposed, retired and implemented plans</a> · <a href="changelog.html">Changelog</a></p>
+  </div>
+</section>
+
+<section class="section shell" id="palette" aria-labelledby="palette-title">
+  <div class="section-head">
+    <p class="eyebrow">Palette</p>
+    <h2 id="palette-title">What you see is what you install.</h2>
+    <p>This site is drawn with the editor's own token set — the same hex values the binary compiles in. Hone is the default; Vellum answers a light-mode preference. Pick any of the six to preview it here; <code>:theme</code> picks it in the editor.</p>
+  </div>
+  <div class="palette-bar" role="group" aria-label="Palette">
+    <button type="button" data-set-palette="hone" aria-pressed="false"><span class="sw" style="--sw-base:#15171c;--sw-accent:#e8a848"></span><span><span class="name">Hone</span><span class="kind">dark · default</span></span></button>
+    <button type="button" data-set-palette="slate" aria-pressed="false"><span class="sw" style="--sw-base:#1a1c20;--sw-accent:#c9b27e"></span><span><span class="name">Slate</span><span class="kind">low-chroma dark</span></span></button>
+    <button type="button" data-set-palette="carbide" aria-pressed="false"><span class="sw" style="--sw-base:#0b0c0f;--sw-accent:#ffb74a"></span><span><span class="name">Carbide</span><span class="kind">high-contrast dark</span></span></button>
+    <button type="button" data-set-palette="vellum" aria-pressed="false"><span class="sw" style="--sw-base:#f6f2e9;--sw-accent:#9a5a12"></span><span><span class="name">Vellum</span><span class="kind">light</span></span></button>
+    <button type="button" data-set-palette="paper" aria-pressed="false"><span class="sw" style="--sw-base:#f8f8f3;--sw-accent:#1a6650"></span><span><span class="name">Paper</span><span class="kind">light</span></span></button>
+    <button type="button" data-set-palette="paper-dark" aria-pressed="false"><span class="sw" style="--sw-base:#151d19;--sw-accent:#9bc7ac"></span><span><span class="name">Paper Dark</span><span class="kind">dark</span></span></button>
+  </div>
+  <p class="palette-note">The choice is kept in this browser only. Press the applied palette again to return to automatic. Without JavaScript the site follows your system preference.</p>
+</section>
+
 </main>
 <footer class="foot">
-  <div class="shell footer-inner">
-    <p><span class="caret-dot"></span>© 2026 <a href="https://github.com/tknawara">Tarek Nawara</a> · MIT license</p>
-    <nav class="footer-links" aria-label="Footer navigation">
-      <a href="https://github.com/stropdev">stropdev</a>
-      <a href="https://github.com/stropdev/strop">Source</a>
-      <a href="#palette-heading">Website palette</a>
-    </nav>
-    <p class="footer-right"><a class="version" data-latest-release href="https://github.com/stropdev/strop/releases/latest">Latest release</a></p>
+  <div class="shell foot-inner">
+    <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v<!-- build:version -->0.53.0<!-- /build:version --></a> · <a href="#palette">Palette</a></p>
   </div>
 </footer>
-<script src="assets/syntax.js?v=1" data-manual></script>
-<script src="assets/site.js?v=6"></script>
+<script src="assets/site.js"></script>
 </body>
 </html>
