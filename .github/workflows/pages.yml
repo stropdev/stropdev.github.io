@@ -1,21 +1,16 @@
 name: pages
 
-# strop.dev — pure static at placeholder stage (plan 0004 §2): no build
-# step until docs exist, then adopt the rootle build.py pattern.
-# The app repo's demo/release workflows ping us to redeploy (fresh demo
-# GIF + version chip) — needs SITE_REPO_TOKEN on their side.
+# strop.dev is static: every file in the repository is served as-is, so every
+# push to main deploys. The generated pages (docs/, changelog.html, the
+# stamped index.html) are rebuilt by `python3 build.py /path/to/strop` and
+# committed; there is no build step here. The app repo's demo/release
+# workflows ping `rebuild` to redeploy after they push assets.
 on:
   workflow_dispatch:
   repository_dispatch:
     types: [rebuild]
   push:
     branches: [main]
-    paths:
-      - "index.html"
-      - "assets/**"
-      - "img/**"
-      - "CNAME"
-      - ".github/workflows/pages.yml"
 
 permissions:
   contents: read
