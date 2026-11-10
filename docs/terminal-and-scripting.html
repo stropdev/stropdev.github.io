@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Local terminals — strop docs</title>
-<meta name="description" content=":terminal opens the shell selected by SHELL (or /bin/sh) in a real PTY. :terminal COMMAND runs an explicit command. In a local directory it uses the host; in an SSH directory with an admitted worker i">
+<title>Terminals — strop docs</title>
+<meta name="description" content="Strop&#x27;s terminal is Neovim&#x27;s: a real PTY in a real buffer, one escape chord, and a NORMAL mode that is just NORMAL mode.">
 <meta name="color-scheme" content="dark light">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/site.css">
@@ -28,23 +28,35 @@
   <aside class="doc-side">
     <p class="side-title"><a href="./">Docs</a></p>
     <ol class="side-docs">
-      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH, remote editing and containers</a></li><li><a href="terminal-and-scripting.html" aria-current=&quot;page&quot;>Local terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02)</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
+      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html" aria-current=&quot;page&quot;>Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02)</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
     </ol>
     <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#headless-scripts-and-traces">Headless scripts and traces</a></li><li><a href="#reporting-a-bug">Reporting a bug</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
-    <h1>Local terminals</h1>
+    <h1>Terminals</h1>
     <div class="prose">
-<p><code>:terminal</code> opens the shell selected by <code>SHELL</code> (or <code>/bin/sh</code>) in a real PTY. <code>:terminal COMMAND</code> runs an explicit command. In a local directory it uses the host; in an SSH directory with an admitted worker it runs on that remote host and retains the endpoint in the modeline, pane title and buffer list. Directory <strong>Terminal here</strong> (<code>Space a</code> / <code>:fs terminal</code>) uses the same admission decision without changing the editor's cwd. SSH without an admitted worker refuses. An attached container runs through its incarnation-pinned admitted worker; <strong><code>:container-worker</code></strong> enables tools/Search/terminal and the separate <strong><code>:container-edit</code></strong> verifies file authority. The separately labelled <strong>Open local terminal</strong> / <code>:terminal-local</code> is a deliberate local choice, never a fallback against a remote-looking path. The displayed launch directory is not an unverified live shell cwd and does not follow <code>cd</code>.</p>
-<ul>
-<li><strong>Terminal input:</strong> Esc, Ctrl-C, Ctrl-R, Ctrl-W, Alt and function keys go to the child. <strong>F2</strong> enters editor Normal mode directly, without an OS-sensitive chord; <strong>Ctrl-\ Ctrl-N</strong> remains an alternative (legacy terminals may spell the prefix as Ctrl-4). The modeline names both paths and expands a pending chord. Legacy Esc/Alt ambiguity remains an outer-terminal limitation. After entering Normal, <strong>Space w</strong> owns pane commands.</li>
-<li><strong>Normal inspection:</strong> ordinary motions, search, selection and yank use a pinned, read-only logical text snapshot. Output continues without moving that snapshot and leaves a durable attention cue; <strong>Space a → Refresh</strong> admits the new snapshot explicitly. <strong>i</strong>, <strong>I</strong>, <strong>a</strong> or <strong>A</strong> follows live input again. Other inspecting panes keep their snapshot. An exited session stays readable and never restarts implicitly; <strong>Space a → New terminal</strong> is the explicit next session.</li>
-<li><strong>Paste:</strong> bracketed paste follows the child's negotiated mode. Otherwise, multiline/control input is held for explicit consent: enter Normal mode, then <strong>Space a → Review held paste / Send / Discard</strong>. The decision is bound to the live session and ticket, shows only a bounded safe representation and appends no extra Enter. <code>:terminal-paste</code> and <code>:terminal-paste-cancel</code> remain Ex shortcuts.</li>
-<li><strong>Lifetime:</strong> <strong>Space a → Stop</strong> stops the owned session and retains output. Closing a split does not kill its process; hidden sessions remain in <code>Space b</code>. <code>:qa</code> opens a Focus/Stop/Return review for live sessions; <code>:qa!</code> stops and drains them. Deliberately detached processes outside the owned terminal session can outlive it.</li>
-<li><strong>Isolation:</strong> child screen/clipboard/window commands cannot control the outer terminal. Clipboard reads/writes are denied; explicit user selection/yank is separate authority. <code>:w!</code> and <code>:set noro</code> cannot turn a terminal into a writable file binding — yank into an ordinary buffer to export text.</li>
-</ul>
-<p>Terminal buffers use bounded history, input and immutable snapshots. One focused input view controls PTY geometry; mirrors never independently resize it. Linux supervision requires pidfds. Source builds require <strong>Zig 0.16.0</strong> explicitly installed for the pinned static emulator; prebuilt users need neither Zig nor a Ghostty installation. See the <a href="https://github.com/stropdev/strop/blob/main/plans/0055-embedded-terminal-tui-and-gui.md">terminal contract</a>.</p>
+<p>Strop's terminal is Neovim's: a real PTY in a real buffer, one escape chord, and a NORMAL mode that is just NORMAL mode.</p>
+<table>
+<thead><tr><th>Keys</th><th>Effect</th></tr></thead>
+<tbody>
+<tr><td><code>Space t</code></td><td>new shell in a horizontal split below, in TERMINAL mode</td></tr>
+<tr><td><code>Space T</code></td><td>new shell in the current pane (= <code>:terminal</code>)</td></tr>
+<tr><td><code>:terminal [CMD]</code>, <code>:term</code></td><td>new shell, or run <code>CMD</code> and keep its output</td></tr>
+<tr><td><code>Ctrl-\ Ctrl-N</code></td><td>TERMINAL → NORMAL (the only escape chord)</td></tr>
+<tr><td><code>i</code> <code>I</code> <code>a</code> <code>A</code></td><td>NORMAL → TERMINAL at the child's cursor</td></tr>
+<tr><td><code>:q</code></td><td>hide a running terminal; <code>Space b</code> returns to it</td></tr>
+<tr><td><code>:bd!</code></td><td>stop the child and delete the buffer</td></tr>
+<tr><td><code>:qa</code></td><td>refuses while terminals run (one notice); <code>:qa!</code> stops them and quits</td></tr>
+<tr><td><code>:r !CMD</code></td><td>insert a command's output below the cursor (vim)</td></tr>
+</tbody>
+</table>
+<p><strong>TERMINAL mode</strong> sends every key to the child — Esc, Ctrl-C, Ctrl-W, Alt and function keys included. The mode chip reads <code>TERMINAL</code>; the modeline shows the one way out. Legacy terminals deliver <code>Ctrl-\</code> as the byte <code>0x1c</code> (what vim calls <code>Ctrl-4</code>); it is the same chord. Pastes go through as every terminal sends them: bracketed when the child enabled bracketed paste, raw bytes otherwise.</p>
+<p><strong>NORMAL mode</strong> is a live, read-only buffer of the screen and its scrollback: ordinary motions, search, selection and yank work on it, and output keeps landing while you read. The view follows output while the cursor is on the last line — <code>k</code>, <code>Ctrl-U</code> or a search stop following, <code>G</code> resumes it, exactly as in Neovim. Positions map by stream byte, so a cursor or mark stays on the same text when scrollback drops rows.</p>
+<p>Buffers are named <code>term://{directory}//{N}:{program}</code> (<code>N</code> numbers sessions from 1 per editor) in <code>Space b</code>, pane titles and the modeline. Switching away and back (<code>Ctrl-^</code>, <code>Space b</code>, pane focus) restores the cursor and viewport and lands in NORMAL mode. An exited session stays readable with its exit status; <code>:terminal</code> starts a new one.</p>
+<p>The shell is <code>$SHELL</code> (or <code>/bin/sh</code>) in the current directory, running in the editor process. In an SSH directory with an admitted worker the session runs on that host as the remote user's login shell (<code>$SHELL -l</code>) and keeps the endpoint in its name; SSH without an admitted worker refuses. <strong>Open local terminal</strong> / <code>:terminal-local</code> is a deliberate local choice, never a fallback against a remote-looking path. For a container, run <code>docker exec -it &lt;container&gt; sh</code> in a terminal. The displayed launch directory is the one selected at launch and does not follow <code>cd</code>.</p>
+<p>Isolation: child screen/clipboard/window commands cannot control the outer terminal; clipboard reads and writes are denied (your own yank is separate authority). <code>:w!</code> and <code>:set noro</code> cannot turn a terminal into a writable file — yank into an ordinary buffer to export text. Closing a split does not kill its process. Deliberately detached processes outside the owned session can outlive it.</p>
+<p>Terminal buffers use bounded history, input and immutable snapshots. One TERMINAL-mode view controls PTY geometry; mirrors never independently resize it. Linux supervision requires pidfds. Source builds require <strong>Zig 0.16.0</strong> explicitly installed for the pinned static emulator; prebuilt users need neither Zig nor a Ghostty installation. See <a href="https://github.com/stropdev/strop/blob/main/plans/0090-one-editor.md">plan 0090 §4</a>.</p>
 <h1 id="headless-scripts-and-traces">Headless scripts and traces</h1>
 <p><code>strop headless SCRIPT [+LINE] [FILE[:LINE]]</code> uses the same editor and service handlers (<code>--script SCRIPT</code> and <code>--headless SCRIPT</code> are equivalents; see <a href="cli.html">cli.md</a>). A script is one directive per line; empty lines and <code>#</code> comments are ignored:</p>
 <table>
@@ -82,20 +94,20 @@ strop replay issue-full.jsonl
 strop export issue-full.jsonl &gt; issue-metadata.jsonl
 # Optional input-only extraction; inspect before executing:
 strop replay --script issue-full.jsonl &gt; replay.keys</code></pre>
-<p>Attach the JSONL file with the observed and expected behavior. Logs contain keys, commands, paths and diagnostic messages; full-content logs also contain documents, pastes, service results and rendered cells. <strong>Inspect before sharing.</strong> Existing files are never overwritten. Use the recording version of strop for full replay: it requires a complete capture and does not repeat native side effects. The input-only script is different: it can run commands again and does not reproduce external service results.</p>
+<p>Attach the JSONL file with the observed and expected behavior. Logs contain keys, commands, paths and diagnostic messages; full-content logs also contain documents, pastes, service results and rendered cells. <strong>Inspect before sharing.</strong> Existing files are never overwritten. Use the recording version of strop for full replay: it requires a complete capture and does not repeat native side effects. The input-only script is different: it can run commands again and does not reproduce external service results. From a metadata-only capture it carries the keys without the document text; run it against the original file (<code>strop headless replay.keys FILE</code>).</p>
 <p>Terminal content is excluded even by ordinary <code>--log-content</code>. Entering a private terminal boundary records an opaque marker and leaves the remaining capture metadata-only; replay refuses the omitted history. <code>--log-terminal-content</code> is the separate explicit consent, visibly marked <strong>REC</strong>. Terminal captures use full <code>strop replay</code>, not input-only extraction, which cannot reproduce PTY state.</p>
 <p>Captures are bounded to 64 MiB, 100,000 events and 256 KiB per record. Hitting a limit is explicit and an incomplete trace is refused for full replay. Metadata export retains only event categories and sequence numbers, not arbitrary payloads; the export is deliberately not replayable.</p>
 <p>See <a href="https://github.com/stropdev/strop/blob/main/plans/0029-session-tracing.md">tracing design</a>.</p>
     </div>
-    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="remote.html">← SSH, remote editing and containers</a><a class="pager-next" href="vim-compat.html">Vim compatibility →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/terminal-and-scripting.md"><code>docs/terminal-and-scripting.md</code></a> at <code>v0.54.0</code>. The repository file is the source of truth; edit it there.</p>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="remote.html">← SSH and remote editing</a><a class="pager-next" href="vim-compat.html">Vim compatibility →</a></nav>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/terminal-and-scripting.md"><code>docs/terminal-and-scripting.md</code></a> at <code>v0.55.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.54.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.55.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

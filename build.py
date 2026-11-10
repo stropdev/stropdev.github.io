@@ -597,6 +597,22 @@ def sync_palettes(repo: Path) -> str:
                 raise SystemExit(f"site.css block {selector} must set {prop} exactly once")
         css = css[:open_at] + block + css[close_at:]
     css_path.write_text(css, encoding="utf-8")
+    # The switcher's swatches on the front page carry the same two values.
+    index = Path("index.html")
+    page = index.read_text(encoding="utf-8")
+    for file, const, selector in PALETTES:
+        name = re.search(r'data-palette="([^"]+)"', selector)
+        if not name:
+            continue
+        values = read_palette(themes / file, const)
+        page, n = re.subn(
+            r'(data-set-palette="' + re.escape(name.group(1)) + r'"[^>]*><span class="sw" style=")[^"]*"',
+            lambda m: f'{m.group(1)}--sw-base:{values[("bg", "base")]};--sw-accent:{values[(None, "accent")]}"',
+            page,
+        )
+        if n != 1:
+            raise SystemExit(f"index.html must have one swatch for {name.group(1)}")
+    index.write_text(page, encoding="utf-8")
     return str(css_path)
 
 

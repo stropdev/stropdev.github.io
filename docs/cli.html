@@ -28,7 +28,7 @@
   <aside class="doc-side">
     <p class="side-title"><a href="./">Docs</a></p>
     <ol class="side-docs">
-      <li><a href="cli.html" aria-current=&quot;page&quot;>The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH, remote editing and containers</a></li><li><a href="terminal-and-scripting.html">Local terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02)</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
+      <li><a href="cli.html" aria-current=&quot;page&quot;>The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02)</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
     </ol>
     <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#commands">Commands</a></li><li><a href="#options">Options</a></li><li><a href="#remote-locations">Remote locations</a></li><li><a href="#exit-codes">Exit codes</a></li></ol>
   </aside>
@@ -55,7 +55,6 @@
 <tr><td><code>strop help</code></td><td>print help</td></tr>
 </tbody>
 </table>
-<p>Every command also has its original flag spelling (<code>--dump-compat</code>, <code>--replay-script</code>, …); scripts and muscle memory keep working.</p>
 <h2 id="options">Options</h2>
 <table>
 <thead><tr><th>Option</th><th>Meaning</th></tr></thead>
@@ -81,14 +80,14 @@
 <p><code>0</code> on success, nonzero with a one-line <code>strop: …</code> explanation on stderr otherwise. Worker mode (<code>--worker-stdio</code>) is internal: stdout is protocol frames from the first byte and it takes no other arguments.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-next" href="editor.html">Editor surfaces →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/cli.md"><code>docs/cli.md</code></a> at <code>v0.54.0</code>. The repository file is the source of truth; edit it there.</p>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/cli.md"><code>docs/cli.md</code></a> at <code>v0.55.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.54.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.55.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

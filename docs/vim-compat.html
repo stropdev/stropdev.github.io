@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vim compatibility — strop docs</title>
-<meta name="description" content="Generated from the command table (strop --dump-compat). ✓ ships exactly; (soon) is a planned slot.">
+<meta name="description" content="Generated from the command table (strop compat). ✓ ships exactly; (soon) is a planned slot.">
 <meta name="color-scheme" content="dark light">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/site.css">
@@ -28,7 +28,7 @@
   <aside class="doc-side">
     <p class="side-title"><a href="./">Docs</a></p>
     <ol class="side-docs">
-      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH, remote editing and containers</a></li><li><a href="terminal-and-scripting.html">Local terminals</a></li><li><a href="vim-compat.html" aria-current=&quot;page&quot;>Vim compatibility</a></li><li><a href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02)</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
+      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html" aria-current=&quot;page&quot;>Vim compatibility</a></li><li><a href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02)</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
     </ol>
     <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#moving">Moving</a></li><li><a href="#editing">Editing</a></li><li><a href="#insert">Insert</a></li><li><a href="#visual">Visual</a></li><li><a href="#search">Search</a></li><li><a href="#leader-space">Leader (space)</a></li><li><a href="#panes">Panes</a></li><li><a href="#git">Git</a></li><li><a href="#pickers">Pickers</a></li><li><a href="#terminal">Terminal</a></li><li><a href="#ex-commands">Ex commands</a></li></ol>
   </aside>
@@ -36,7 +36,7 @@
     <p class="eyebrow">Docs</p>
     <h1>Vim compatibility</h1>
     <div class="prose">
-<p>Generated from the command table (<code>strop --dump-compat</code>). <code>✓</code> ships exactly; <code>(soon)</code> is a planned slot.</p>
+<p>Generated from the command table (<code>strop compat</code>). <code>✓</code> ships exactly; <code>(soon)</code> is a planned slot.</p>
 <h2 id="moving">Moving</h2>
 <ul>
 <li><code>✓ h j k l</code> — move (never off the line)</li>
@@ -220,7 +220,6 @@
 <li><code>✓ :recover</code> — draft recovery: list, restore N, discard N, consent remote|off</li>
 <li><code>✓ :qa :qall</code> — quit all (fails on unsaved; bang discards)</li>
 <li><code>✓ :collection source|expand|contract</code> — source, expand or contract the excerpt at the caret</li>
-<li><code>✓ :container-worker</code> — authorize a verified worker for the attached container; may write its private cache</li>
 <li><code>✓ :select-next :select-all :select-skip :select-pop</code> — occurrence selection: next / all / skip / pop last-added</li>
 <li><code>✓ :view :set</code> — readonly browsing (:set ro/noro; CLI: -R)</li>
 <li><code>✓ :tab-size :indent-style :search-options</code> — source indentation and search visibility controls</li>
@@ -228,15 +227,15 @@
 <li><code>✓ :apply-change :cancel-change :save-change</code> — review: apply text or filesystem changes, cancel, or save changed text</li>
 </ul>
     </div>
-    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="terminal-and-scripting.html">← Local terminals</a><a class="pager-next" href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02) →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> at <code>v0.54.0</code>. The repository file is the source of truth; edit it there.</p>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="terminal-and-scripting.html">← Terminals</a><a class="pager-next" href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02) →</a></nav>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> at <code>v0.55.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.54.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.55.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>
