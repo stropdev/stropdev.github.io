@@ -28,16 +28,16 @@
   <aside class="doc-side">
     <p class="side-title"><a href="./">Docs</a></p>
     <ol class="side-docs">
-      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html" aria-current=&quot;page&quot;>The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02)</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
+      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html" aria-current=&quot;page&quot;>The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
     </ol>
-    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#the-filename-draft">The filename draft</a></li><li><a href="#relocation-and-barriers">Relocation and barriers</a></li><li><a href="#indentation-controls">Indentation controls</a></li></ol>
+    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#the-filename-draft">The filename draft</a></li><li><a href="#relocation-and-barriers">Relocation and barriers</a></li><li><a href="#indentation-controls">Indentation controls</a></li><li><a href="#ssh-hosts">SSH hosts</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
     <h1>The filesystem workspace</h1>
     <div class="prose">
 <p>Open a directory with <code>strop DIRECTORY</code>, <code>:browse</code>, or <code>:e DIRECTORY</code>. <code>Space e</code> reveals the current source in its parent. Browsing keeps the process cwd unchanged; Enter opens a structured entry and <code>-</code>/Backspace goes to its parent. <code>Space a</code> lists the actions valid here: in a directory the filesystem operations, in a file its operations plus any code actions the language server offers, all in one <strong>actions</strong> list.</p>
-<p>Filesystem mutations use <strong>Review → Apply → Receipt</strong>, locally and on SSH hosts where the native worker is admitted (restricted/SFTP-only hosts remain read-only):</p>
+<p>Filesystem mutations use <strong>Review → Apply → Receipt</strong>, locally and on SSH hosts (see <a href="#ssh-hosts">SSH hosts</a> for what differs there):</p>
 <pre><code class="language-vim">:fs create nested/new.txt
 :fs mkdir new-directory
 :fs rename new-name.txt
@@ -55,21 +55,30 @@
 <h2 id="the-filename-draft">The filename draft</h2>
 <p><code>:fs edit</code> enters a name-only <strong>filename draft</strong>. Ordinary motions, edits, whole-line yank/paste, undo/redo and macros change the draft, not disk. <code>:w</code> prepares review; <code>:apply-change</code> performs filesystem changes; <code>:cancel-change</code> returns to the intact draft. Browsing or refreshing the directory retains edited names and source provenance. Use <code>:fs discard</code> to discard explicitly. Copies need a distinct name; ambiguous joins and conflicting targets refuse instead of guessing which file a row represents.</p>
 <h2 id="relocation-and-barriers">Relocation and barriers</h2>
-<p>Confirmed relocation keeps source text, history and document identity. Remote relocation revokes old write authority; use <code>:remote edit</code> again before saving the renamed buffer. Pending saves and unconfirmed operations block conflicting work. Receipts survive leaving the view; verification never blindly retries a mutation.</p>
-<p>Local saves/save-as and local filesystem mutations use a conservative per-editor write barrier, including parent aliases. Let an admitted save finish before applying a local filesystem review, and resolve unconfirmed receipts before saving. Move verification and recovery require the recorded post-publication version: finding the same inode at a pathname is not sufficient ownership evidence. Receipts are in-memory, not crash recovery. Graceful global exit refuses unresolved outcomes; explicit <code>:qa!</code> reports them and exits unsuccessfully rather than claiming they were resolved or persisted.</p>
+<p>Confirmed relocation keeps source text, history and document identity. Pending saves and unconfirmed operations block conflicting work. Receipts survive leaving the view; verification never blindly retries a mutation.</p>
+<p>Local saves/save-as and local filesystem mutations use a conservative per-editor write barrier, including parent aliases. Let a pending save finish before applying a local filesystem review, and resolve unconfirmed receipts before saving. Move verification and recovery require the recorded post-publication version: finding the same inode at a pathname is not sufficient ownership evidence. Receipts are in-memory, not crash recovery. Graceful global exit refuses unresolved outcomes; explicit <code>:qa!</code> reports them and exits unsuccessfully rather than claiming they were resolved or persisted.</p>
 <p>Removing an otherwise empty directory may retire its validated, quiescent protocol locks. Active locks, unknown entries and other directory contents cause refusal; partial housekeeping is reported even when cancellation prevents removal.</p>
 <h2 id="indentation-controls">Indentation controls</h2>
 <p><code>:tab-size</code> opens source-specific width/style controls; <code>:tab-size 3</code>, <code>:tab-size auto</code>, and <code>:indent-style tabs|spaces|auto</code> are direct forms. Changing indentation settings never rewrites existing bytes. The modeline names the effective input owner and source setting. Matching delimiters use the same cancellable source resolver as <code>%</code>, without moving the view. The indentation engine itself is described in <a href="editor.html#indentation">editor.md</a>.</p>
+<h2 id="ssh-hosts">SSH hosts</h2>
+<p>In a directory or file on a connected SSH host the same commands run over the host's SFTP connection, with the same review, receipts and verification: create files and directories (missing parents become their own steps), rename/move, copy a regular file (stored bytes or the pinned buffer) and remove. The differences are honest limits of SFTP:</p>
+<ul>
+<li><strong>No Trash.</strong> <code>:fs trash</code> is refused on a host; <code>:fs remove</code> deletes permanently, and the review says so.</li>
+<li><strong>Nothing is replaced.</strong> An occupied destination is refused in the review, and checked again just before each step runs (files are created exclusively, renames refuse an existing name). A source that changed on the host since the review is refused.</li>
+<li><strong>Directories are not copied recursively</strong>; copy files one at a time or use the host's terminal. Only an empty directory can be removed.</li>
+<li><strong>No atomicity across steps</strong> and no lock against other programs on the host. A step whose reply was lost is reported unconfirmed; <code>:fs verify</code> observes the host and never retries it.</li>
+<li>Copies keep permission bits, not owner or times; new files and directories get 0644/0755 under the host's umask.</li>
+</ul>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="search.html">← Search and the query language</a><a class="pager-next" href="remote.html">SSH and remote editing →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/filesystem.md"><code>docs/filesystem.md</code></a> at <code>v0.55.0</code>. The repository file is the source of truth; edit it there.</p>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/filesystem.md"><code>docs/filesystem.md</code></a> at <code>v0.56.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.55.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.56.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

@@ -28,7 +28,7 @@
   <aside class="doc-side">
     <p class="side-title"><a href="./">Docs</a></p>
     <ol class="side-docs">
-      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html" aria-current=&quot;page&quot;>Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02)</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
+      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html" aria-current=&quot;page&quot;>Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
     </ol>
     <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#the-grammar">The grammar</a></li><li><a href="#what-each-qualifier-narrows">What each qualifier narrows</a></li><li><a href="#buffer-search">Buffer search</a></li><li><a href="#ex-substitution">Ex substitution</a></li><li><a href="#the-search-workspace">The Search workspace</a></li><li><a href="#ssh-scopes">SSH scopes</a></li></ol>
   </aside>
@@ -79,18 +79,18 @@ kind:function parse AND NOT wrap</code></pre>
 <p>Opening a source hides Search; <code>Space /</code> returns to the retained investigation. Re-entry refreshes through owned work in its captured namespace/root even if focus or cwd changed. In a Directory buffer, <code>:fs search</code> or <strong>Space a → Search here</strong> captures that directory without changing cwd.</p>
 <p>Review preparation is cancellable background work. <strong>Space a</strong> on a review or receipt exposes <strong>Apply to buffers</strong>, <strong>Save files</strong>, <strong>Cancel</strong> and <strong>Inspect result</strong> as applicable; <code>:apply-change</code>, <code>:save-change</code> and <code>:cancel-change</code> are the Ex shortcuts. Apply edits buffers; Save files is a separate action with a per-file receipt. Dirty open source text wins over disk, stale witnesses refuse, and Cancel restores the query and draft. Failed saves retain their exact unsaved targets and verification/recovery action. An all-excluded, incomplete or failed dataset cannot silently become a whole-project operation. Ordinary <code>u</code> and <code>:undo-change</code> are not interchangeable guarantees: the latter reverts the newest applied multi-file change only while its recorded target revisions still own that change.</p>
 <h2 id="ssh-scopes">SSH scopes</h2>
-<p>Search here uses the same query fields, inclusion decisions and source previews as local Search, on explicitly scoped SSH directories. Starting a remote search explicitly admits a verified worker on that endpoint; restricted/SFTP-only hosts refuse search without a fallback. <strong>With/Review are unavailable in SSH scopes</strong>; individual remote write permits do not authorize project replacement.</p>
+<p>Search here uses the same query fields, inclusion decisions and source previews as local Search, on explicitly scoped SSH directories: <code>rg</code> runs on the host over its connection, and a host without <code>rg</code> refuses search without a fallback. <strong>With/Review are unavailable in SSH scopes</strong>.</p>
 <p>Source enumeration is limited to 100,000 selected paths or 16 MiB of names; rg records to 1 MiB and 4,096 submatches; decoded batches to 4 MiB; a request publishes at most 100,000 rows or 64 MiB of owned row data. Limits and malformed output produce a visible failure, never a silently complete partial result.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="editor.html">← Editor surfaces</a><a class="pager-next" href="filesystem.html">The filesystem workspace →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> at <code>v0.55.0</code>. The repository file is the source of truth; edit it there.</p>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> at <code>v0.56.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.55.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.56.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

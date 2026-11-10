@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SSH and remote editing — strop docs</title>
-<meta name="description" content="Remote files are first-class: real buffers, real identity, never a local lookalike. The short version:">
+<meta name="description" content="Remote files are real buffers with their own identity, never a local lookalike. strop reaches a host with plain OpenSSH: nothing is installed there.">
 <meta name="color-scheme" content="dark light">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/site.css">
@@ -28,59 +28,61 @@
   <aside class="doc-side">
     <p class="side-title"><a href="./">Docs</a></p>
     <ol class="side-docs">
-      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html" aria-current=&quot;page&quot;>SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02)</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
+      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html" aria-current=&quot;page&quot;>SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
     </ol>
-    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#connecting">Connecting</a></li><li><a href="#explicit-remote-editing">Explicit remote editing</a></li><li><a href="#remote-services">Remote services</a></li><li><a href="#containers">Containers</a></li></ol>
+    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#connecting">Connecting</a></li><li><a href="#saving">Saving</a></li><li><a href="#file-management">File management</a></li><li><a href="#search-git-language-servers-terminal">Search, Git, language servers, terminal</a></li><li><a href="#containers">Containers</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
     <h1>SSH and remote editing</h1>
     <div class="prose">
-<p>Remote files are first-class: real buffers, real identity, never a local lookalike. The short version:</p>
-<pre><code class="language-sh">strop +120 ssh://user@devbox/var/log/app.log
-strop --tail 65536 ssh://devbox/var/log/app.log
-strop --range 1048576:65536 ssh://devbox/var/log/app.log
-strop --follow ssh://devbox/var/log/app.log
-strop remote &quot;ssh://user@devbox:2222/~/project/src/lib.rs&quot;
-strop ssh://devbox/etc/</code></pre>
-<p><code>strop remote URL</code> and <code>--remote URL</code> are the same command — see <a href="cli.html">cli.md</a>.</p>
-<p>Remote files open read-only by default: motions, <code>/</code>/<code>?</code>, visual selection, yank and splits work unchanged. Escape cancels an open or stops following; <code>:e!</code> refreshes the snapshot. Follow sticks to EOF only while you stay there. Shrink, replacement and changed overlap produce a visible reset; size/mtime alone are not file identity. The modeline identifies partial byte windows, whose line numbers are window-relative.</p>
+<p>Remote files are real buffers with their own identity, never a local lookalike. strop reaches a host with plain OpenSSH: nothing is installed there.</p>
+<pre><code class="language-sh">strop ssh://devbox/etc/
+strop +120 ssh://user@devbox/var/log/app.log
+strop remote &quot;ssh://user@devbox:2222/~/project/src/lib.rs&quot;</code></pre>
+<p><code>strop remote URL</code> and <code>--remote URL</code> are the same command — see <a href="cli.html">cli.md</a>. <code>-R</code> opens read-only, as for a local file.</p>
 <h2 id="connecting">Connecting</h2>
-<p>Press <strong>Space o</strong> or run <strong><code>:remote</code></strong> to choose a known/connected destination or select <strong>Add a host</strong>. Enter <code>host</code>, <code>user@host:port</code>, or a complete SSH path. Enter is the connection action; opening the chooser does not authenticate. New hosts start at <code>/</code>; successful directory choices are remembered privately. <code>:remote home</code> uses negotiated remote-home expansion; <code>:remote root</code> returns to <code>/</code>.</p>
-<pre><code class="language-vim">:tail 65536 ssh://devbox/var/log/app.log
-:range 1048576 65536 ssh://devbox/var/log/app.log
-:follow
-:unfollow
-:browse ssh://devbox/
+<p>Press <strong>Space o</strong> or run <strong><code>:remote</code></strong> to choose a known or connected destination, or select <strong>Add a host</strong> and enter <code>host</code>, <code>user@host:port</code> or a complete SSH path. Opening the chooser does not authenticate; Enter connects. New hosts start at <code>/</code>; directories you choose are remembered privately. <code>:remote home</code> browses the home directory the server reports; <code>:remote root</code> returns to <code>/</code>.</p>
+<pre><code class="language-vim">:browse ssh://devbox/
 :filter app
 :remote connect ssh://devbox
 :remote list
 :remote disconnect ssh://devbox
 :remote clear</code></pre>
-<p>Directory listings are searchable real buffers with kind, POSIX permissions, server-reported byte size and native filename columns. Missing attributes show <code>?</code>, distinct from mode <code>000</code> and size zero. Directory sizes are not recursive totals. Links and special entries have distinct type markers. Enter opens an entry; <code>-</code>, Backspace or <code>../</code> returns to the parent and restores the selected child. <code>:filter</code> narrows names; an empty filter restores the full listing.</p>
-<p>SSH listings include hidden entries and do not evaluate ignore files; the modeline names this fixed policy. Plain Ex open operands keep their local meaning outside Directory buffers; inside Directory they use that directory's captured namespace. Explicit <code>file://</code> and <code>ssh://</code> locations select the namespace regardless of the current view. Tab completes SSH hosts and paths without starting authentication: remote candidates need a live authorized connection or cached data. Connections are shared by endpoint and held by documents or explicit <code>:remote connect</code> pins; clear/disconnect retires them without touching external SSH masters.</p>
-<p>OpenSSH supplies aliases, keys, agent and ProxyJump configuration. Host keys must already be trusted; authentication is noninteractive. Percent-encode reserved path bytes (<code>%20</code>, <code>%23</code>, <code>%25</code>); native Unix filenames stay intact. Reads are bounded to 256 MiB of UTF-8 text; range/tail edges exclude incomplete UTF-8 characters. Home expansion requires the server's <code>expand-path@openssh.com</code> extension.</p>
-<h2 id="explicit-remote-editing">Explicit remote editing</h2>
-<p>On a complete, non-following file snapshot, run <strong><code>:remote edit</code></strong>. The editor verifies the displayed content against the server and grants this document write authority. Edit normally, then use <strong><code>:w</code></strong> or <strong><code>:wq</code></strong>. Saves run off the input thread; a receipt for an older revision never clears newer unsaved edits.</p>
-<p>The write path checks content and metadata, stages inside a private 0700 transaction directory, preserves mode/ownership/mtime/extended attributes, atomically replaces the file, and syncs the file and changed directories. Unsupported preservation refuses the save. It requires an owned regular single-link file and exact stored path spelling. Symlinked ancestor directories are resolved and revalidated; a symlink as the final component is refused. Edited snapshots remain bounded to 256 MiB. Protocol lock/staging paths are reserved; private lock files remain to keep a stable lock identity — do not delete active locks.</p>
-<p><strong>Concurrency is cooperative, not universal compare-and-swap.</strong> Strop's remote-save participants share a lock. Completed changes by other programs are detected before commit, but a nonparticipating writer can race the final check/rename window. <code>:w!</code> never bypasses that conflict check or grants authority to a read-only snapshot. Escape in normal mode requests cancellation. If a save may have crossed rename, local edits stay dirty and the outcome is explicitly unconfirmed. <strong><code>:remote verify</code></strong> uses the frozen prepared attempt and any available receipt to reobserve and sync matching saved content, including after a worker restart in the same Linux boot/mount namespace and principal. It never blindly overwrites or retries. Missing evidence or a changed namespace remains unconfirmed. Conflicts preserve local edits. Successful <code>:e!</code> refresh revokes the permit; pending/unconfirmed saves must settle or be verified first. A failed refresh does not discard edits or permissions. Forced close may leave an unconfirmed remote outcome and a private orphan stage.</p>
-<p>Remote contents and write permits are never restored from persisted sessions. See the <a href="https://github.com/stropdev/strop/blob/main/plans/0040-remote-editing-and-saving.md">remote-save contract and safety limits</a>.</p>
-<h2 id="remote-services">Remote services</h2>
-<p>Full-file snapshots support remote LSP diagnostics, hover, definition/references and source/header navigation, plus Git context, staged/unstaged diffs, log, blame and commit/file navigation once the endpoint has an admitted worker. Run <strong><code>:remote worker [URI]</code></strong> to authorize a verified worker without granting a file write permit, or <strong><code>:remote edit</code></strong> on a complete snapshot to admit the worker and separately verify edit authority. Services run <strong>on the remote host</strong>, never against a local lookalike path. Project-command trust is scoped to the endpoint and remote root (<code>:trust</code>). Partial windows and following refuse full-document language services; Git mutations, remote save-as and arbitrary shell/filter commands remain unsupported.</p>
-<p>SFTP browsing and ranged reads need no remote worker or Python. Protected editing, Git, LSP and search run through a verified native worker in the selected namespace; worker admission may write a private executable cache on that host. With that admission, <strong><code>:terminal</code></strong> and <strong>Space a → Terminal here</strong> also run an interactive PTY on the remote host, with the endpoint and launch directory retained in the modeline, pane title, buffer list and <code>:explain</code>. <strong><code>:terminal-local</code></strong> remains the explicit host-local alternative. Without a worker, terminal execution refuses rather than starting locally. A restricted/SFTP-only account remains read-only, with typed refusals instead of Python, shell, SFTP-write or local-path fallbacks. The worker artifact must match the target and protocol; a foreign-target artifact can be supplied with <code>STROP_WORKER_BINARY</code>. Git/LSP also need their respective programs in the remote workspace. Owned process groups are cleaned up when the worker observes lease loss; network partitions delay detection, descendants creating new sessions can escape the group, and a killed worker cannot guarantee cleanup.</p>
-<p><code>strop-remote</code> owns SFTP and the SSH worker transport; the editor owns views, write permits and replay. See the <a href="https://github.com/stropdev/strop/blob/main/plans/0036-remote-workspace-execution.md">workspace contract</a>, <a href="https://github.com/stropdev/strop/blob/main/plans/0034-ssh-log-buffers.md">protocol evidence</a> and the <a href="https://github.com/stropdev/strop/blob/main/plans/0035-remote-workflow-roadmap.md">prioritized remote roadmap</a>.</p>
+<p><strong>A connected host is editable.</strong> Logging in is the one consent: there is no separate step to edit files, run Git, search or open a terminal there.</p>
+<p>OpenSSH supplies aliases, keys, agent and <code>ProxyJump</code> from your <code>~/.ssh/config</code>. Authentication is noninteractive: host keys must already be trusted and a key or agent must answer without a prompt; otherwise the refusal carries ssh's own words and a hint. strop runs one OpenSSH master per host (<code>ControlMaster</code>, socket in a private directory under <code>$XDG_RUNTIME_DIR</code>), so every later read, save, search or terminal is a channel on it rather than a new login. Masters strop started stop when it exits; after a crash they expire on their own after ten idle minutes.</p>
+<p>Directory listings are searchable real buffers with kind, POSIX permissions, server-reported byte size and native filename columns. Missing attributes show <code>?</code>. Listings include hidden entries and do not evaluate ignore files. Enter opens an entry; <code>-</code>, Backspace or <code>../</code> returns to the parent and restores the selected child. Tab completes SSH hosts and paths without starting authentication: remote candidates need a live connection or a cached listing. Percent-encode reserved path bytes (<code>%20</code>, <code>%23</code>, <code>%25</code>); native Unix filenames stay intact. Files are read whole, up to 256 MiB of UTF-8 text.</p>
+<h2 id="saving">Saving</h2>
+<p><strong><code>:w</code></strong> uploads the buffer to a temporary name beside the file, gives it the file's permission bits and renames it over the original, so readers never see a half-written file. A symlink is saved through to its target.</p>
+<ul>
+<li>If the file on the host changed since it was read (its size or modification time moved), <code>:w</code> is refused and your edits stay: <strong><code>:e!</code></strong> reloads the host's version, <strong><code>:w!</code></strong> replaces it anyway.</li>
+<li><strong><code>:w PATH</code></strong> or <strong><code>:w ssh://…</code></strong> writes a copy (a relative path is beside the file) and never replaces an existing file; <code>:w! PATH</code> does.</li>
+<li>Saves run off the input thread; a reply for an older revision never clears newer unsaved edits.</li>
+</ul>
+<p>Limits, stated plainly: there is no cross-process lock (as in vim, a writer racing the final check wins); SFTP modification times are whole seconds, so a same-size rewrite within the second of the read goes unnoticed; ownership is not carried over when another user's file is replaced.</p>
+<h2 id="file-management">File management</h2>
+<p><code>:fs create</code>, <code>:fs mkdir</code>, <code>:fs rename</code>/<code>move</code>, <code>:fs copy</code> and <code>:fs remove</code> (and filename drafts in a remote directory) run on the host through the same Review → Apply → Receipt flow as locally — see <a href="filesystem.html#ssh-hosts">filesystem.md</a>. There is no Trash on a host (removal is permanent), nothing is ever replaced, directories are not copied recursively, and nothing is atomic across steps.</p>
+<h2 id="search-git-language-servers-terminal">Search, Git, language servers, terminal</h2>
+<p>They run <strong>on the host</strong>, as commands on the connection:</p>
+<ul>
+<li><strong><code>Space /</code></strong> searches the remote workspace with <code>rg</code> on the host.</li>
+<li><strong>Git</strong> signs, log (<code>Space g l</code>), blame and diffs run <code>git</code> there.</li>
+<li>A language server starts on the host when it is installed there; the configuration comes from your local <code>languages.toml</code> and the project's <code>.strop/languages.toml</code> on the host.</li>
+<li><strong><code>:terminal</code></strong> and <strong>Space t</strong> in a remote file or directory open your login shell on the host in that directory (<code>ssh -tt</code> on a local PTY, so Ctrl-C and window size work; keys typed before the shell answers are kept). <code>:terminal-local</code> is the explicit local alternative.</li>
+</ul>
+<p><code>rg</code>, <code>git</code> and the language server must be installed on the host. Each command runs through your login shell there (sshd's <code>$SHELL -c</code>), so a heavy shell startup file slows every search and Git query; csh-family login shells are not supported for commands with special characters.</p>
 <h2 id="containers">Containers</h2>
 <p>Strop does not attach to containers. Open <strong><code>:terminal</code></strong> and run <code>docker exec -it &lt;container&gt; sh</code> to work inside one.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="filesystem.html">← The filesystem workspace</a><a class="pager-next" href="terminal-and-scripting.html">Terminals →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/remote.md"><code>docs/remote.md</code></a> at <code>v0.55.0</code>. The repository file is the source of truth; edit it there.</p>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/remote.md"><code>docs/remote.md</code></a> at <code>v0.56.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.55.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.56.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

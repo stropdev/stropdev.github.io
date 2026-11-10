@@ -35,7 +35,7 @@ REPO_URL = "https://github.com/stropdev/strop"
 
 # Reading order of the docs index; anything else in docs/ follows alphabetically.
 USER_DOCS = ["cli", "editor", "search", "filesystem", "remote", "terminal-and-scripting", "vim-compat"]
-DESIGN_DOCS = ["worker-protocol", "nucleo-decision"]
+DESIGN_DOCS = ["nucleo-decision"]
 
 
 # --------------------------------------------------------------------------- markdown

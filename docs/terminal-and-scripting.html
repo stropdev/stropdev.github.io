@@ -28,7 +28,7 @@
   <aside class="doc-side">
     <p class="side-title"><a href="./">Docs</a></p>
     <ol class="side-docs">
-      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html" aria-current=&quot;page&quot;>Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02)</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
+      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html" aria-current=&quot;page&quot;>Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
     </ol>
     <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#headless-scripts-and-traces">Headless scripts and traces</a></li><li><a href="#reporting-a-bug">Reporting a bug</a></li></ol>
   </aside>
@@ -54,7 +54,7 @@
 <p><strong>TERMINAL mode</strong> sends every key to the child — Esc, Ctrl-C, Ctrl-W, Alt and function keys included. The mode chip reads <code>TERMINAL</code>; the modeline shows the one way out. Legacy terminals deliver <code>Ctrl-\</code> as the byte <code>0x1c</code> (what vim calls <code>Ctrl-4</code>); it is the same chord. Pastes go through as every terminal sends them: bracketed when the child enabled bracketed paste, raw bytes otherwise.</p>
 <p><strong>NORMAL mode</strong> is a live, read-only buffer of the screen and its scrollback: ordinary motions, search, selection and yank work on it, and output keeps landing while you read. The view follows output while the cursor is on the last line — <code>k</code>, <code>Ctrl-U</code> or a search stop following, <code>G</code> resumes it, exactly as in Neovim. Positions map by stream byte, so a cursor or mark stays on the same text when scrollback drops rows.</p>
 <p>Buffers are named <code>term://{directory}//{N}:{program}</code> (<code>N</code> numbers sessions from 1 per editor) in <code>Space b</code>, pane titles and the modeline. Switching away and back (<code>Ctrl-^</code>, <code>Space b</code>, pane focus) restores the cursor and viewport and lands in NORMAL mode. An exited session stays readable with its exit status; <code>:terminal</code> starts a new one.</p>
-<p>The shell is <code>$SHELL</code> (or <code>/bin/sh</code>) in the current directory, running in the editor process. In an SSH directory with an admitted worker the session runs on that host as the remote user's login shell (<code>$SHELL -l</code>) and keeps the endpoint in its name; SSH without an admitted worker refuses. <strong>Open local terminal</strong> / <code>:terminal-local</code> is a deliberate local choice, never a fallback against a remote-looking path. For a container, run <code>docker exec -it &lt;container&gt; sh</code> in a terminal. The displayed launch directory is the one selected at launch and does not follow <code>cd</code>.</p>
+<p>The shell is <code>$SHELL</code> (or <code>/bin/sh</code>) in the current directory, running in the editor process. In a file or directory on a connected SSH host the session is that host's login shell (<code>$SHELL -l</code>, through <code>ssh -tt</code> on a local PTY, so Ctrl-C and window size reach it) and keeps the endpoint in its name; a host that is not connected refuses. <strong>Open local terminal</strong> / <code>:terminal-local</code> is a deliberate local choice, never a fallback against a remote-looking path. For a container, run <code>docker exec -it &lt;container&gt; sh</code> in a terminal. The displayed launch directory is the one selected at launch and does not follow <code>cd</code>.</p>
 <p>Isolation: child screen/clipboard/window commands cannot control the outer terminal; clipboard reads and writes are denied (your own yank is separate authority). <code>:w!</code> and <code>:set noro</code> cannot turn a terminal into a writable file — yank into an ordinary buffer to export text. Closing a split does not kill its process. Deliberately detached processes outside the owned session can outlive it.</p>
 <p>Terminal buffers use bounded history, input and immutable snapshots. One TERMINAL-mode view controls PTY geometry; mirrors never independently resize it. Linux supervision requires pidfds. Source builds require <strong>Zig 0.16.0</strong> explicitly installed for the pinned static emulator; prebuilt users need neither Zig nor a Ghostty installation. See <a href="https://github.com/stropdev/strop/blob/main/plans/0090-one-editor.md">plan 0090 §4</a>.</p>
 <h1 id="headless-scripts-and-traces">Headless scripts and traces</h1>
@@ -82,7 +82,7 @@ keys /needle&lt;cr&gt;
 frame
 state</code></pre>
 <p><code>settle [MS]</code> returns when finite owned work drains (default 30,000 ms) and exits nonzero on timeout. <code>wait MS</code> remains a deliberate delay. Pure grammar work keeps key, paste, repeat and macro ordering; filesystem and service jobs require an explicit settle before a script relies on their result. An interactive shell is not an eternally pending job: terminal settle covers admission/transport/frame barriers, not arbitrary command execution. Script completion explicitly closes and drains its owned terminal sessions.</p>
-<p>Headless <code>:trust</code> uses the same explicit per-project/endpoint consent and <code>XDG_STATE_HOME</code> (or <code>$HOME/.local/state</code>) store as the TUI. It does not restore or automatically persist editor sessions. Project configuration never grants itself permission to execute commands.</p>
+<p>Headless <code>:trust</code> uses the same explicit per-project consent and <code>XDG_STATE_HOME</code> (or <code>$HOME/.local/state</code>) store as the TUI. It does not restore or automatically persist editor sessions. Project configuration never grants itself permission to execute commands.</p>
 <h2 id="reporting-a-bug">Reporting a bug</h2>
 <pre><code class="language-sh">strop --log-file issue.jsonl path/to/file.rs
 # Include sensitive documents, service results and rendered editor cells:
@@ -100,14 +100,14 @@ strop replay --script issue-full.jsonl &gt; replay.keys</code></pre>
 <p>See <a href="https://github.com/stropdev/strop/blob/main/plans/0029-session-tracing.md">tracing design</a>.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="remote.html">← SSH and remote editing</a><a class="pager-next" href="vim-compat.html">Vim compatibility →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/terminal-and-scripting.md"><code>docs/terminal-and-scripting.md</code></a> at <code>v0.55.0</code>. The repository file is the source of truth; edit it there.</p>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/terminal-and-scripting.md"><code>docs/terminal-and-scripting.md</code></a> at <code>v0.56.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.55.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.56.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

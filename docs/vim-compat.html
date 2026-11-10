@@ -28,7 +28,7 @@
   <aside class="doc-side">
     <p class="side-title"><a href="./">Docs</a></p>
     <ol class="side-docs">
-      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html" aria-current=&quot;page&quot;>Vim compatibility</a></li><li><a href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02)</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
+      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html" aria-current=&quot;page&quot;>Vim compatibility</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
     </ol>
     <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#moving">Moving</a></li><li><a href="#editing">Editing</a></li><li><a href="#insert">Insert</a></li><li><a href="#visual">Visual</a></li><li><a href="#search">Search</a></li><li><a href="#leader-space">Leader (space)</a></li><li><a href="#panes">Panes</a></li><li><a href="#git">Git</a></li><li><a href="#pickers">Pickers</a></li><li><a href="#terminal">Terminal</a></li><li><a href="#ex-commands">Ex commands</a></li></ol>
   </aside>
@@ -145,6 +145,8 @@
 <li><code>✓ space e</code> — reveal source in its Directory buffer</li>
 <li><code>✓ space f</code> — file finder</li>
 <li><code>✓ space o</code> — open remote destination</li>
+<li><code>✓ space t</code> — terminal in a split below (TERMINAL mode)</li>
+<li><code>✓ space T</code> — terminal in this pane (= :terminal)</li>
 <li><code>✓ space b</code> — buffers (MRU)</li>
 <li><code>✓ space /</code> — Search workspace (resume investigation)</li>
 <li><code>✓ space R</code> — Search with replacement</li>
@@ -154,7 +156,7 @@
 <li><code>✓ space P</code> — paste clipboard before</li>
 <li><code>✓ space d</code> — diagnostics picker</li>
 <li><code>✓ space k</code> — hover docs</li>
-<li><code>✓ space a</code> — context actions (code / filesystem)</li>
+<li><code>✓ space a</code> — actions here (fixes, code, files)</li>
 <li><code>✓ space s</code> — document symbols picker</li>
 <li><code>✓ space S</code> — workspace symbols picker</li>
 <li><code>✓ space j</code> — jumplist picker</li>
@@ -199,13 +201,13 @@
 </ul>
 <h2 id="terminal">Terminal</h2>
 <ul>
-<li><code>✓ :terminal :terminal-local :terminal-stop</code> — launch a local PTY, explicitly choose local context, or stop and retain output</li>
-<li><code>✓ ctrl-\ ctrl-n</code> — terminal input → editor Normal inspection; Esc stays with the child</li>
-<li><code>✓ f2</code> — terminal input → editor Normal inspection (single-key, Windows-safe)</li>
-<li><code>✓ i I a A</code> — terminal Normal inspection → live child input (never relaunches an exited session)</li>
-<li><code>✓ :terminal-paste :terminal-paste-cancel</code> — confirm or discard the scoped held multiline/control paste</li>
-<li><code>✓ :terminal-refresh</code> — reinstall the latest output into the pinned inspection snapshot (never auto-refreshes a selection)</li>
-<li><code>✓ ctrl-4 ctrl-n</code> — legacy Ctrl-\ Ctrl-N spelling from the outer terminal decoder</li>
+<li><code>✓ space t</code> — terminal in a split below (TERMINAL mode)</li>
+<li><code>✓ space T</code> — terminal in this pane (= :terminal)</li>
+<li><code>✓ :terminal [cmd] :term</code> — new shell (or cmd) in this pane; space t opens one in a split below</li>
+<li><code>✓ ctrl-\ ctrl-n</code> — TERMINAL → NORMAL: a live buffer that follows output while the cursor is on the last line; k stops, G resumes</li>
+<li><code>✓ i I a A</code> — NORMAL → TERMINAL at the child's cursor; every key goes to the child, Esc and ctrl-w included</li>
+<li><code>✓ :q :bd!</code> — :q hides a running terminal (space b returns), :bd! stops it; :qa refuses while terminals run, :qa! stops them</li>
+<li><code>✓ :r !cmd</code> — insert a command's output below the cursor</li>
 </ul>
 <h2 id="ex-commands">Ex commands</h2>
 <ul>
@@ -227,15 +229,15 @@
 <li><code>✓ :apply-change :cancel-change :save-change</code> — review: apply text or filesystem changes, cancel, or save changed text</li>
 </ul>
     </div>
-    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="terminal-and-scripting.html">← Terminals</a><a class="pager-next" href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02) →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> at <code>v0.55.0</code>. The repository file is the source of truth; edit it there.</p>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="terminal-and-scripting.html">← Terminals</a><a class="pager-next" href="nucleo-decision.html">Nucleo decision record (0022 §2) →</a></nav>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> at <code>v0.56.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.55.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.56.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

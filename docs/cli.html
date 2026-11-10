@@ -28,7 +28,7 @@
   <aside class="doc-side">
     <p class="side-title"><a href="./">Docs</a></p>
     <ol class="side-docs">
-      <li><a href="cli.html" aria-current=&quot;page&quot;>The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="worker-protocol.html">Worker protocol and migration contract (0058 WK01/WK02)</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
+      <li><a href="cli.html" aria-current=&quot;page&quot;>The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
     </ol>
     <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#commands">Commands</a></li><li><a href="#options">Options</a></li><li><a href="#remote-locations">Remote locations</a></li><li><a href="#exit-codes">Exit codes</a></li></ol>
   </aside>
@@ -63,9 +63,6 @@
 <tr><td><code>+LINE</code></td><td>initial line for FILE (or use <code>FILE:LINE</code>)</td></tr>
 <tr><td><code>--theme NAME</code></td><td>session-start palette (see <a href="editor.html#themes">Themes</a>)</td></tr>
 <tr><td><code>--remote URL</code></td><td>shorthand for <code>strop remote URL</code></td></tr>
-<tr><td><code>--follow</code></td><td>follow a growing remote file</td></tr>
-<tr><td><code>--tail BYTES</code></td><td>remote view: the last BYTES</td></tr>
-<tr><td><code>--range A:B</code></td><td>remote view: one byte range</td></tr>
 <tr><td><code>--script PATH</code></td><td>headless driver script (same as <code>headless</code>)</td></tr>
 <tr><td><code>--log[=PATH]</code></td><td>record a session trace (<code>STROP_LOG</code> works too)</td></tr>
 <tr><td><code>--log-content</code></td><td>include file text in the trace (sensitive)</td></tr>
@@ -75,19 +72,19 @@
 </table>
 <h2 id="remote-locations">Remote locations</h2>
 <pre><code class="language-text">ssh://[user@]host[:port]/absolute/path[:LINE]</code></pre>
-<p><code>strop --remote &quot;ssh://tnawara@123.space:4343/etc/app.conf:120&quot;</code> and <code>strop remote ssh://tnawara@123.space:4343/etc/app.conf:120</code> are the same command. Remote files open read-only by default; <code>:remote edit</code> inside the editor grants write authority. The full remote contract lives in <a href="remote.html">remote.md</a>.</p>
+<p><code>strop --remote &quot;ssh://tnawara@123.space:4343/etc/app.conf:120&quot;</code> and <code>strop remote ssh://tnawara@123.space:4343/etc/app.conf:120</code> are the same command. A connected host is editable; <code>-R</code> opens read-only. To read a growing log, pipe it in: <code>ssh devbox tail -f /var/log/app.log | strop -</code>. The full remote contract lives in <a href="remote.html">remote.md</a>.</p>
 <h2 id="exit-codes">Exit codes</h2>
-<p><code>0</code> on success, nonzero with a one-line <code>strop: …</code> explanation on stderr otherwise. Worker mode (<code>--worker-stdio</code>) is internal: stdout is protocol frames from the first byte and it takes no other arguments.</p>
+<p><code>0</code> on success, nonzero with a one-line <code>strop: …</code> explanation on stderr otherwise.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-next" href="editor.html">Editor surfaces →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/cli.md"><code>docs/cli.md</code></a> at <code>v0.55.0</code>. The repository file is the source of truth; edit it there.</p>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/cli.md"><code>docs/cli.md</code></a> at <code>v0.56.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.55.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.56.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>
