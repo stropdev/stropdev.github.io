@@ -27,7 +27,7 @@
 <div class="shell page changelog">
   <p class="eyebrow">Changelog</p>
   <h1>Every release</h1>
-  <p class="lede">89 releases, newest first. Generated from <a href="https://github.com/stropdev/strop/blob/main/CHANGELOG.md"><code>CHANGELOG.md</code></a> at <code>v0.53.0-22-g9552ad7</code>; tarballs and checksums are on <a href="https://github.com/stropdev/strop/releases">GitHub releases</a>.</p>
+  <p class="lede">89 releases, newest first. Generated from <a href="https://github.com/stropdev/strop/blob/main/CHANGELOG.md"><code>CHANGELOG.md</code></a> at <code>v0.54.0</code>; tarballs and checksums are on <a href="https://github.com/stropdev/strop/releases">GitHub releases</a>.</p>
   <div class="prose">
 <h2 id="release-0-54-0-2026-11-10">0.54.0 — 2026-11-10</h2>
 <h3 id="changed">Changed</h3>
@@ -50,6 +50,8 @@
 <li><strong><code>:e relative/path</code> from a directory buffer</strong> resolved against the directory instead of the working directory and silently created a stray file; opening a missing file now says <code>[new file]</code>.</li>
 <li><strong>Leader commands that decline now say why</strong> (symbols or hover without a language server, an empty undo tree).</li>
 <li><strong>No "Dev container discovery completed" notice</strong> when no dev container exists.</li>
+<li><strong><code>q</code> on the help screen of a fresh <code>strop</code> quit the editor</strong>; it now returns to the empty buffer.</li>
+<li><strong>The welcome card no longer paints over the command card</strong> and its completions.</li>
 <li><strong>Terminal sessions number from 1</strong> in each editor instead of from a process-wide counter.</li>
 <li><strong>The file finder and search list files in name order</strong>, the same on every filesystem, instead of the directory's raw order.</li>
 </ul>

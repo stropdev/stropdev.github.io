@@ -79,7 +79,7 @@ strop ssh://devbox/etc/</code></pre>
 <p>In a container without an init/reaper at PID 1, repeated Docker exec bootstrap processes can remain as zombies after they exit. Strop closes its worker lease, but cannot reap process-table entries adopted by an unrelated PID 1. For sustained worker sessions without that zombie accumulation, start the container with an init that reaps children.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="filesystem.html">← The filesystem workspace</a><a class="pager-next" href="terminal-and-scripting.html">Local terminals →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/remote.md"><code>docs/remote.md</code></a> at <code>v0.53.0-22-g9552ad7</code>. The repository file is the source of truth; edit it there.</p>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/remote.md"><code>docs/remote.md</code></a> at <code>v0.54.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
