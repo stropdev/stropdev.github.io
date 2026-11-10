@@ -534,6 +534,72 @@ def vendor(repo: Path) -> List[str]:
     return written
 
 
+# --------------------------------------------------------------- palettes
+# The site's six palettes are the editor's, read from the compiled-in theme
+# sources so the two can never disagree. Each CSS block is located by its
+# selector; only the token values inside it are rewritten.
+PALETTES = [  # (theme file, Rust const, CSS selector that opens the block)
+    ("hone.rs", "HONE", ':root, :root[data-palette="hone"] {'),
+    ("vellum.rs", "VELLUM", ":root:not([data-palette]) {"),
+    ("vellum.rs", "VELLUM", ':root[data-palette="vellum"] {'),
+    ("slate.rs", "SLATE", ':root[data-palette="slate"] {'),
+    ("carbide.rs", "CARBIDE", ':root[data-palette="carbide"] {'),
+    ("paper.rs", "PAPER", ':root[data-palette="paper"] {'),
+    ("paper.rs", "PAPER_DARK", ':root[data-palette="paper-dark"] {'),
+]
+TOKENS = {  # CSS custom property -> (Rust group, field); group None = top level
+    "--bg-base": ("bg", "base"), "--bg-surface": ("bg", "surface"),
+    "--bg-raised": ("bg", "raised"), "--bg-selection": ("bg", "selection"),
+    "--fg-text": ("fg", "text"), "--fg-secondary": ("fg", "secondary"),
+    "--fg-muted": ("fg", "muted"), "--fg-faint": ("fg", "faint"),
+    "--accent": (None, "accent"), "--on-accent": ("fg", "on_accent"),
+}
+
+
+def read_palette(path: Path, const: str) -> dict:
+    text = path.read_text(encoding="utf-8")
+    start = text.find(f"pub const {const}: Theme = Theme {{")
+    if start < 0:
+        raise SystemExit(f"{path}: no theme const {const}")
+    body = text[start:text.find("\n};", start)]
+    values, group, depth = {}, None, 0
+    for line in body.splitlines()[1:]:
+        stripped = line.strip()
+        opened = re.match(r"(\w+): \w+ \{$", stripped)
+        if opened:
+            group = opened.group(1)
+            continue
+        if stripped.startswith("}"):
+            group = None
+            continue
+        field = re.match(r"(?:r#)?(\w+): hex\(0x([0-9a-fA-F]{6})\),$", stripped)
+        if field:
+            values[(group, field.group(1))] = "#" + field.group(2).lower()
+    return values
+
+
+def sync_palettes(repo: Path) -> str:
+    css_path = Path("assets/site.css")
+    css = css_path.read_text(encoding="utf-8")
+    themes = repo / "crates/strop-core/src/theme"
+    for file, const, selector in PALETTES:
+        values = read_palette(themes / file, const)
+        open_at = css.find(selector)
+        if open_at < 0:
+            raise SystemExit(f"site.css has no block {selector}")
+        close_at = css.find("}", open_at + len(selector))
+        block = css[open_at:close_at]
+        for prop, key in TOKENS.items():
+            if key not in values:
+                raise SystemExit(f"{file}:{const} has no {key}")
+            block, n = re.subn(re.escape(prop) + r": #[0-9a-fA-F]{6};", f"{prop}: {values[key]};", block)
+            if n != 1:
+                raise SystemExit(f"site.css block {selector} must set {prop} exactly once")
+        css = css[:open_at] + block + css[close_at:]
+    css_path.write_text(css, encoding="utf-8")
+    return str(css_path)
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("repo", type=Path, help="path to a checkout of stropdev/strop at the released tag")
@@ -542,7 +608,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     if not (repo / "Cargo.toml").exists():
         raise SystemExit(f"{repo} is not the strop repository")
     facts = read_facts(repo)
-    written = vendor(repo) + build_docs(repo, facts) + [build_changelog(repo, facts), stamp_index(facts)]
+    written = vendor(repo) + build_docs(repo, facts) + [build_changelog(repo, facts), stamp_index(facts), sync_palettes(repo)]
     print(f"strop {facts.version} ({facts.describe}), released {facts.date}, {facts.languages} languages, "
           f"{len(facts.status_rows)} plans in force")
     for w in written:

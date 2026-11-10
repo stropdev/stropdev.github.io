@@ -13,23 +13,23 @@
 :root, :root[data-palette="hone"] {
   color-scheme: dark;
   --bg-base: #15171c; --bg-surface: #1c1f25; --bg-raised: #23272f; --bg-selection: #30405a;
-  --fg-text: #e6e1d6; --fg-secondary: #a8adb8; --fg-muted: #7b8290; --fg-faint: #4a5160;
+  --fg-text: #e6e1d6; --fg-secondary: #a8adb8; --fg-muted: #858c9a; --fg-faint: #4a5160;
   --accent: #e8a848; --on-accent: #15171c;
 }
 /* VELLUM — light: warm paper, graphite ink, umber accent. */
 @media (prefers-color-scheme: light) {
   :root:not([data-palette]) {
     color-scheme: light;
-    --bg-base: #f6f2e9; --bg-surface: #fbf8f1; --bg-raised: #ece7dc; --bg-selection: #d3cbb6;
+    --bg-base: #f6f2e9; --bg-surface: #fdfbf6; --bg-raised: #e5dfd0; --bg-selection: #d1c9b3;
     --fg-text: #262a30; --fg-secondary: #4b525c; --fg-muted: #656d7b; --fg-faint: #aeb3ba;
-    --accent: #9a5a12; --on-accent: #f6f2e9;
+    --accent: #8a510f; --on-accent: #f6f2e9;
   }
 }
 :root[data-palette="vellum"] {
   color-scheme: light;
-  --bg-base: #f6f2e9; --bg-surface: #fbf8f1; --bg-raised: #ece7dc; --bg-selection: #d3cbb6;
+  --bg-base: #f6f2e9; --bg-surface: #fdfbf6; --bg-raised: #e5dfd0; --bg-selection: #d1c9b3;
   --fg-text: #262a30; --fg-secondary: #4b525c; --fg-muted: #656d7b; --fg-faint: #aeb3ba;
-  --accent: #9a5a12; --on-accent: #f6f2e9;
+  --accent: #8a510f; --on-accent: #f6f2e9;
 }
 /* SLATE — low-chroma dark, one brass accent. */
 :root[data-palette="slate"] {
@@ -48,9 +48,9 @@
 /* PAPER — warm off-white, forest-green accent (theme/paper.rs; raised and selection per 0087 §4.3). */
 :root[data-palette="paper"] {
   color-scheme: light;
-  --bg-base: #f8f8f3; --bg-surface: #fdfdf9; --bg-raised: #e4e9df; --bg-selection: #cfdcc8;
+  --bg-base: #f8f8f3; --bg-surface: #eef1e8; --bg-raised: #dbe2d6; --bg-selection: #c2d2ba;
   --fg-text: #20362d; --fg-secondary: #3a4d43; --fg-muted: #475951; --fg-faint: #a9b8a8;
-  --accent: #1a6650; --on-accent: #fdfdf9;
+  --accent: #1a6650; --on-accent: #f8f8f3;
 }
 /* PAPER DARK — warm green-black, sage accent. */
 :root[data-palette="paper-dark"] {

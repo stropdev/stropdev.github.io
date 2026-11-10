@@ -46,7 +46,7 @@ language:rust regex:&quot;\brequest_(id|name)\b&quot;
 hidden:exclude ignored:include text:&quot;-test.rs&quot;
 kind:function parse AND NOT wrap</code></pre>
 <ul>
-<li><code>language:NAME</code> — file language (<code>strop --licenses</code>-style names, e.g. <code>rust</code>, <code>cpp</code>, <code>python</code>).</li>
+<li><code>language:NAME</code> — file language (the names <code>Space ?</code> lists under Languages, e.g. <code>rust</code>, <code>cpp</code>, <code>python</code>).</li>
 <li><code>path:SUBSTRING</code> — substring of the workspace-relative path (no leading <code>/</code>); case follows the query's case mode.</li>
 <li><code>fpath:SUBSEQUENCE</code> — fuzzy scope over the full workspace-relative path; use <code>fpath:modules/jweb/ parser</code> to scope the directory while ranking <code>parser</code>. <code>-fpath:</code> excludes matches.</li>
 <li><code>glob:PATTERN</code> — glob over the workspace-relative path.</li>
@@ -83,14 +83,14 @@ kind:function parse AND NOT wrap</code></pre>
 <p>Source enumeration is limited to 100,000 selected paths or 16 MiB of names; rg records to 1 MiB and 4,096 submatches; decoded batches to 4 MiB; a request publishes at most 100,000 rows or 64 MiB of owned row data. Limits and malformed output produce a visible failure, never a silently complete partial result. Container Search uses the same bounded protocol through the attached incarnation's admitted worker and selected root; without that worker it refuses, never falls back to the host. <strong>With/Review remain unavailable in both SSH and container scopes</strong>; individual write permits do not authorize project replacement.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="editor.html">← Editor surfaces</a><a class="pager-next" href="filesystem.html">The filesystem workspace →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> at <code>v0.53.0-1-g66a0f97</code>. The repository file is the source of truth; edit it there.</p>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> at <code>v0.53.0-22-g9552ad7</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.53.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.54.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>
