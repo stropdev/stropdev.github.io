@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Git — strop docs</title>
+<meta name="description" content="Everything git is under Space g. Each git view is an ordinary read-only buffer: motions, /, yank and counts work, q closes it.">
+<meta name="color-scheme" content="dark light">
+<meta name="strop-version" content="0.62.0">
+<meta name="strop-describes" content="0.62">
+<meta name="strop-source" content="docs/git.md">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+<script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
+</head>
+<body class="docs-page">
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="shell top-inner">
+    <a class="brand" href="../">strop</a>
+    <nav aria-label="Site">
+      <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../neovim.html">From Neovim</a>
+      <a href="../changelog.html">Changelog</a>
+      <a href="https://github.com/stropdev/strop">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="shell doc-layout">
+  <aside class="doc-side">
+    <p class="side-title"><a href="./">All docs</a></p>
+    <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Git</p><ol class="side-docs"><li><a href="git.html" aria-current="page">Git</a></li></ol><p class="side-title">Editing and code</p><ol class="side-docs"><li><a href="editor.html">Indentation, themes, completion and language servers</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal.html">Terminals</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html">Every key</a></li><li><a href="scripting.html">Scripts and bug reports</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#status-space-g-g">Status — <code>Space g g</code></a></li><li><a href="#commit-space-g-c-or-cc-in-the-status-buffer">Commit — <code>Space g c</code>, or <code>cc</code> in the status buffer</a></li><li><a href="#branches-space-g-b">Branches — <code>Space g b</code></a></li><li><a href="#hunks-in-a-file">Hunks in a file</a></li><li><a href="#log-history-blame">Log, history, blame</a></li><li><a href="#ssh-projects">SSH projects</a></li></ol>
+  </aside>
+  <article class="doc">
+    <p class="eyebrow">Docs</p>
+    <h1>Git</h1>
+    <div class="prose">
+<p>Everything git is under <code>Space g</code>. Each git view is an ordinary read-only buffer: motions, <code>/</code>, yank and counts work, <code>q</code> closes it.</p>
+<table>
+<thead><tr><th>key</th><th>does</th></tr></thead>
+<tbody>
+<tr><td><code>Space g g</code></td><td>status: the changed files</td></tr>
+<tr><td><code>Space g c</code></td><td>commit</td></tr>
+<tr><td><code>Space g b</code></td><td>branches: switch or create</td></tr>
+<tr><td><code>Space g l</code></td><td>log</td></tr>
+<tr><td><code>Space g h</code></td><td>history of this file (in visual mode: of the selected lines)</td></tr>
+<tr><td><code>Space g B</code></td><td>blame: who last changed each line, in the gutter; again to hide it</td></tr>
+<tr><td><code>Space g s</code> <code>Space g u</code> <code>Space g X</code></td><td>stage, unstage, discard the hunk under the cursor</td></tr>
+<tr><td><code>Space g p</code></td><td>preview the hunk under the cursor</td></tr>
+<tr><td><code>Space g y</code> <code>Space g o</code></td><td>copy / open a permalink to the line or selection</td></tr>
+<tr><td><code>]c</code> <code>[c</code></td><td>next / previous hunk</td></tr>
+</tbody>
+</table>
+<p>The same letters mean the same thing everywhere: <code>s</code> stages, <code>u</code> unstages, <code>X</code> discards.</p>
+<h2 id="status-space-g-g">Status — <code>Space g g</code></h2>
+<pre><code class="language-text">Head: main
+Upstream: origin/main, ahead 1
+
+Staged (1)
+A docs/notes.md
+
+Unstaged (2)
+M src/lib.rs
+@@ -1,3 +1,4 @@
+ fn a() {}
++fn b() {}
+ fn c() {}
+M src/main.rs
+
+Untracked (1)
+? scratch.txt</code></pre>
+<p>The keys act on the row under the cursor. On a file row that is the file; on a diff row it is that hunk; on a section heading it is every file in the section.</p>
+<table>
+<thead><tr><th>key</th><th>does</th></tr></thead>
+<tbody>
+<tr><td><code>enter</code></td><td>open the file — at the line, from a diff row</td></tr>
+<tr><td><code>s</code></td><td>stage</td></tr>
+<tr><td><code>u</code></td><td>unstage</td></tr>
+<tr><td><code>-</code></td><td>toggle: stage what is unstaged, unstage what is staged</td></tr>
+<tr><td><code>=</code></td><td>show or hide the file's diff under its row</td></tr>
+<tr><td><code>]c</code> <code>[c</code></td><td>next / previous hunk (next / previous file while no diff is shown)</td></tr>
+<tr><td><code>X</code></td><td>discard, after <code>y</code> confirms; any other key cancels</td></tr>
+<tr><td><code>cc</code></td><td>commit</td></tr>
+<tr><td><code>ca</code></td><td>amend the last commit</td></tr>
+<tr><td><code>q</code></td><td>close</td></tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Discard</strong> restores an unstaged file from the index, deletes an untracked file or directory, or reverts one unstaged hunk in the working file. It refuses on a staged or conflicted row — unstage first — so one key never throws away two layers of work. A buffer open on a discarded file reloads.</li>
+<li><strong>Conflicts</strong> get their own section at the top. Resolve the file, then <code>s</code> on its row marks it resolved.</li>
+<li>The list keeps itself up to date: it refreshes after every stage, unstage, discard and commit, when files change on disk, when the terminal window regains focus, and when you press <code>Space g g</code> again. The cursor stays on the same file or hunk.</li>
+<li>Renames show as a deleted file and an added file.</li>
+<li>The <a href="filesystem.html#lock-files">lock files</a> strop leaves beside files it saved are never listed.</li>
+</ul>
+<h2 id="commit-space-g-c-or-cc-in-the-status-buffer">Commit — <code>Space g c</code>, or <code>cc</code> in the status buffer</h2>
+<p>The message is edited in <code>.git/COMMIT_EDITMSG</code>, an ordinary file buffer. It opens with an empty first line for the message and <code>#</code> lines that list what the commit will hold; <code>#</code> lines are left out of the message.</p>
+<ul>
+<li><code>:wq</code> commits. So does <code>:w</code> followed by <code>:q</code>.</li>
+<li><code>:q!</code> without writing aborts.</li>
+<li><code>ca</code> (or amending from the status buffer) starts from the last commit's message and needs nothing staged.</li>
+</ul>
+<p>The commit is made by <code>git commit</code> itself, so your hooks, signing and <code>user.*</code> configuration all apply. A hook that fails stops the commit and its output is shown; an empty message is refused by git. A signing setup that needs to ask for a passphrase in the terminal can not do so here — use an agent, or commit from a shell (<code>Space t</code>).</p>
+<p>With nothing staged, <code>Space g c</code> says so and opens nothing.</p>
+<h2 id="branches-space-g-b">Branches — <code>Space g b</code></h2>
+<p>A picker of local branches (the current one first) and then remote branches.</p>
+<ul>
+<li><code>enter</code> switches. A remote branch such as <code>origin/topic</code> switches to <code>topic</code>, creating it to track the remote if it does not exist.</li>
+<li>The last row, <strong>new branch from the typed name</strong>, creates a branch named by what you typed in the filter and switches to it.</li>
+</ul>
+<p>Git decides whether the switch is allowed. If your changes would be overwritten it refuses and its message is shown; nothing is changed. After a switch, unmodified buffers show the new branch's files; buffers with unsaved changes are kept and marked as changed on disk.</p>
+<h2 id="hunks-in-a-file">Hunks in a file</h2>
+<p>The gutter marks the lines that differ from what is staged. <code>]c</code> / <code>[c</code> move between hunks, <code>Space g p</code> previews one, <code>Space g s</code> stages it, <code>Space g u</code> unstages the staged hunk under the cursor, and <code>Space g X</code> discards it in the buffer (an ordinary edit: <code>u</code> undoes it). Staging reads the file on disk, so save first.</p>
+<h2 id="log-history-blame">Log, history, blame</h2>
+<ul>
+<li><code>Space g l</code> is the commit graph. <code>enter</code> on a commit lists its files; <code>enter</code> on a file shows its diff, with the commit's other files in a sidebar (<code>tab</code> moves focus, <code>]f</code> / <code>[f</code> step through files).</li>
+<li><code>Space g h</code> is the log of the current file; from a visual selection, the history of those lines.</li>
+<li><code>Space g B</code> shows who last changed each line, in the gutter; press it again to hide it. <code>enter</code> on a line opens the log at that commit. The gutter hides while the buffer has edits made after blame ran. In a read-only buffer (a file opened with <code>-R</code>, a git view) there is no gutter; a card shows the blame for the current line instead.</li>
+</ul>
+<h2 id="ssh-projects">SSH projects</h2>
+<p>On an SSH host (<a href="remote.html">remote.md</a>) the gutter marks, log, blame, history and diffs work. Status, commit and the branch picker do not work there yet; they say so and do nothing. Staging and discarding hunks do not work there either.</p>
+    </div>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="filesystem.html">← Create, rename, move and delete files</a><a class="pager-next" href="editor.html">Indentation, themes, completion and language servers →</a></nav>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/git.md"><code>docs/git.md</code></a> from the strop repository at <code>v0.62.0</code>.</p>
+  </article>
+</div>
+</main>
+<footer class="foot">
+  <div class="shell foot-inner">
+    <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.62.0</a> · <a href="../#palette">Palette</a></p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

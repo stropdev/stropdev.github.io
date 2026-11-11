@@ -3,207 +3,146 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>strop — see the cut before you make it</title>
-<meta name="description" content="strop is a modal text editor in Rust with Vim's grammar. Composed searches, substitutions and selections show their exact range before Enter. One static binary for Linux/WSL x86_64.">
+<title>strop — Vim&#x27;s keys. Nothing to configure.</title>
+<meta name="description" content="strop is a modal text editor for the terminal with Vim&#x27;s keys. File finder, project search and replace, git, language servers, a terminal and SSH editing are built in. One static binary for Linux and WSL on x86_64.">
 <meta name="color-scheme" content="dark light">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/site.css">
+<meta name="strop-version" content="0.62.0">
+<meta name="strop-describes" content="0.62">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./assets/site.css">
 <script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
 </head>
-<body>
+<body class="home">
 <a class="skip" href="#main">Skip to content</a>
 <header class="top">
   <div class="shell top-inner">
     <a class="brand" href="./">strop</a>
     <nav aria-label="Site">
-      <a href="docs/">Docs</a>
-      <a href="changelog.html">Changelog</a>
-      <a href="#status">Status</a>
+      <a href="./docs/">Docs</a>
+      <a href="./neovim.html">From Neovim</a>
+      <a href="./changelog.html">Changelog</a>
       <a href="https://github.com/stropdev/strop">GitHub</a>
     </nav>
   </div>
 </header>
 <main id="main">
-
 <section class="hero shell" aria-labelledby="hero-title">
-  <p class="eyebrow">A modal text editor in Rust · Linux/WSL x86_64</p>
-  <h1 id="hero-title">See the cut <em>before</em> you make it.</h1>
-  <p class="lede">strop edits with Vim's grammar. Composed searches, substitutions and selections show their exact range before you press Enter — and the preview and the edit consume the same resolver, so the preview cannot lie. Project search, git and remote workspaces live in ordinary buffers. One static binary, no setup.</p>
+  <h1 id="hero-title">Vim's keys. Nothing to configure.</h1>
+  <p class="lede">strop is a modal text editor for the terminal. It uses Vim's commands as they are, and it comes with what you would otherwise add yourself: a file finder, project search and replace, git, language servers, a terminal and editing over SSH. It is one static binary. There are no plugins and nothing to set up.</p>
   <div class="install-row">
     <pre class="cmd"><code><span class="prompt">$</span> curl -fsSL https://strop.dev/install.sh | sh</code></pre>
     <button type="button" class="button js-only" data-copy="curl -fsSL https://strop.dev/install.sh | sh">Copy</button>
-    <a class="button button-accent" href="#install">Install</a>
+    <p class="platform"><strong>Linux and WSL, x86_64</strong><span>the only build; <a href="#install">details</a></span></p>
   </div>
   <p class="copy-status" data-copy-status role="status" aria-live="polite"></p>
   <p class="chip-row">
-    <a href="https://github.com/stropdev/strop/releases/latest">v<!-- build:version -->0.61.0<!-- /build:version --></a>
-    <span>released <!-- build:date -->2026-11-11<!-- /build:date --></span>
-    <span>x86_64-unknown-linux-musl</span>
-    <span><!-- build:languages -->26<!-- /build:languages --> languages</span>
+    <a href="https://github.com/stropdev/strop/releases/latest">v0.62.0</a>
+    <span>released 2026-11-11</span>
+    <span>alpha</span>
     <span>MIT</span>
   </p>
+</section>
 
+<section class="shell frames" aria-label="Screens of the editor">
+  <input class="frame-pick" type="radio" name="frame" id="pick-find" checked>
+  <input class="frame-pick" type="radio" name="frame" id="pick-replace">
+  <input class="frame-pick" type="radio" name="frame" id="pick-git">
+  <div class="frame-tabs"><label for="pick-find">Find</label><label for="pick-replace">Search and replace</label><label for="pick-git">Git</label></div>
   <figure class="frame">
-    <div class="frame-scroll">
-      <img src="img/hero.svg" width="1200" height="724" alt="A 140 by 40 terminal frame of strop 0.54 in the Hone palette, editing statusline.rs. A search card reads '/ width' with 14 matches; lines 24 to 29 are highlighted as the pending range. The statusline reads: SEARCH, main, statusline.rs, delete, search /width, 114 bytes, exclusive, 2/14.">
-    </div>
-    <figcaption>A real frame, cell for cell: <code>d/width</code> composing in a Rust file. The search card counts the matches and the statusline names the pending operation and its exact range — <em>delete, search /width, 114 bytes · exclusive</em> — before Enter. Captured from the terminal with <code>tmux capture-pane</code> and converted to SVG; nothing drawn by hand.</figcaption>
+    <div class="frame-scroll"><img src="img/frame-find.svg" width="864" height="549" alt="The strop file finder over 97,362 files with sched.h typed: a list of matching file names with their directories on the left, a preview of the selected file on the right."></div>
+    <figcaption><kbd>Space</kbd> <kbd>f</kbd>, then <code>sched.h</code>, in a tree with the Linux kernel's 97,362 file paths. The fixture has the kernel's paths, not its sources: each file is a two-line stub, which is what the preview shows.</figcaption>
   </figure>
+  <figure class="frame">
+    <div class="frame-scroll"><img src="img/frame-replace.svg" width="864" height="549" alt="strop&#x27;s search with a Find field reading total_cents and a With field reading sum_cents; below, each hit grouped by file as a removed line and an added line, and a preview of the first file on the right." loading="lazy"></div>
+    <figcaption><kbd>Space</kbd> <kbd>R</kbd> in a small Rust project: <code>total_cents</code> to <code>sum_cents</code>. Every hit is listed under its file as a <code>-</code> row and a <code>+</code> row while you type; nothing has changed on disk yet.</figcaption>
+  </figure>
+  <figure class="frame">
+    <div class="frame-scroll"><img src="img/frame-git.svg" width="864" height="549" alt="strop&#x27;s git status buffer: sections for staged, unstaged and untracked files, with the diff of one file shown under its row." loading="lazy"></div>
+    <figcaption><kbd>Space</kbd> <kbd>g</kbd> <kbd>g</kbd>: the status buffer of the same project, with one file's diff opened by <kbd>=</kbd>. <kbd>s</kbd> stages and <kbd>u</kbd> unstages the file or hunk under the cursor.</figcaption>
+  </figure>
+  <p class="frames-note">Each frame is the screen of strop 0.62.0, 100 by 30 cells, captured from the binary and converted to SVG. Nothing is drawn by hand.</p>
+</section>
+
+<section class="section shell" id="does" aria-labelledby="does-title">
+  <h2 id="does-title">What it does</h2>
+  <ul class="does">
+    <li>
+      <span class="what"><a href="docs/search.html">Find a file</a></span>
+      <span class="keys"><kbd>Space</kbd> <kbd>f</kbd></span>
+      <span class="how">Type part of the name. The files you use most in the project come first.</span>
+    </li>
+    <li>
+      <span class="what"><a href="docs/search.html">Search the project</a></span>
+      <span class="keys"><kbd>Space</kbd> <kbd>/</kbd></span>
+      <span class="how">Results update as you type, grouped by file. Smart case, with one key each for regex and whole word.</span>
+    </li>
+    <li>
+      <span class="what"><a href="docs/search.html">Replace</a></span>
+      <span class="keys"><kbd>Space</kbd> <kbd>R</kbd></span>
+      <span class="how">Every hit is shown as a removed line and an added line while you type. <kbd>Enter</kbd> shows the review, <kbd>Enter</kbd> again applies it, and <kbd>u</kbd> undoes it in the files too.</span>
+    </li>
+    <li>
+      <span class="what"><a href="docs/search.html">Edit the hits</a></span>
+      <span class="keys"><kbd>Ctrl-O</kbd></span>
+      <span class="how">In search results, references or diagnostics, this collects the hits into one buffer. Edit them there with any command; <code>:w</code> writes every file you changed.</span>
+    </li>
+    <li>
+      <span class="what"><a href="docs/git.html">Git</a></span>
+      <span class="keys"><kbd>Space</kbd> <kbd>g</kbd> <kbd>g</kbd></span>
+      <span class="how">Stage, unstage and commit from one status buffer. Branches, blame, log and file history are under <kbd>Space</kbd> <kbd>g</kbd> as well.</span>
+    </li>
+    <li>
+      <span class="what"><a href="docs/editor.html">Language servers</a></span>
+      <span class="keys"><kbd>gd</kbd></span>
+      <span class="how">Definition, references, rename, diagnostics, completion and formatting, from the servers already on your <code>PATH</code>. Syntax highlighting for 26 languages is in the binary.</span>
+    </li>
+    <li>
+      <span class="what"><a href="docs/terminal.html">Terminal</a></span>
+      <span class="keys"><kbd>Space</kbd> <kbd>t</kbd></span>
+      <span class="how">A shell in a split. Its output is a buffer, so you move, search and yank in it like any other.</span>
+    </li>
+    <li>
+      <span class="what"><a href="docs/remote.html">SSH</a></span>
+      <span class="keys"><kbd>Space</kbd> <kbd>o</kbd></span>
+      <span class="how">Open and edit files on another machine over plain OpenSSH, or start with <code>strop ssh://host/path</code>. Nothing is installed on the host.</span>
+    </li>
+  </ul>
+  <p class="does-note">The finder, search, buffers and symbols are one kind of list with one set of keys, and whatever you open from them is an ordinary buffer. <kbd>Space</kbd> <kbd>?</kbd> lists every key.</p>
+</section>
+
+<section class="section shell" aria-label="Where to go next">
+  <ul class="next">
+    <li><a href="neovim.html"><strong>Coming from Neovim?</strong><span>What works the same, what differs, and what is missing.</span></a></li>
+    <li><a href="start.html"><strong>First ten minutes</strong><span>Install it, open a project and go through the loop once.</span></a></li>
+    <li><a href="engineering.html"><strong>How it's built</strong><span>The code that moves cursors and marks through an edit is proved in Lean, and the keys are tested against Neovim itself before every release.</span></a></li>
+  </ul>
 </section>
 
 <section class="section shell" id="install" aria-labelledby="install-title">
-  <div class="section-head">
-    <p class="eyebrow">Install</p>
-    <h2 id="install-title">One command, one static binary.</h2>
-    <p>The installer downloads the release tarball for Linux/WSL x86_64, verifies its SHA-256 checksum and places <code>strop</code> on your <code>PATH</code>. Nothing else is fetched at runtime: grammars, queries and palettes are compiled in.</p>
-  </div>
+  <h2 id="install-title">Install</h2>
   <div class="install-grid">
-    <div class="card">
-      <ol class="steps">
-        <li>Install or reinstall.
-          <pre><code>curl -fsSL https://strop.dev/install.sh | sh</code></pre>
-        </li>
-        <li>Or verify by hand: download the tarball and its <code>.sha256</code> from the <a href="https://github.com/stropdev/strop/releases/latest">latest release</a>, then
-          <pre><code>sha256sum -c strop-<!-- build:version -->0.61.0<!-- /build:version -->-x86_64-unknown-linux-musl.tar.gz.sha256</code></pre>
-          and extract <code>strop</code> onto your <code>PATH</code>.
-        </li>
-        <li>Later, update from inside the install. Download, verification and extraction run in Rust; <code>curl</code> and <code>tar</code> are not required.
-          <pre><code>strop update          # --check only checks</code></pre>
-        </li>
-      </ol>
+    <div>
+      <h3>Install or reinstall</h3>
+      <pre><code>curl -fsSL https://strop.dev/install.sh | sh</code></pre>
+      <p>The script downloads the release tarball, checks its SHA-256 and puts <code>strop</code> on your <code>PATH</code>. <a href="https://github.com/stropdev/strop/blob/main/install.sh">Read it first</a> if you like, or take the tarball and its <code>.sha256</code> from the <a href="https://github.com/stropdev/strop/releases/latest">release page</a>.</p>
     </div>
-    <div class="card">
+    <div>
+      <h3>Update</h3>
+      <pre><code>strop update</code></pre>
+      <p><code>strop update --check</code> only looks. Nothing else is downloaded, ever: grammars and palettes are in the binary.</p>
+    </div>
+    <div>
       <h3>Platforms</h3>
-      <p>The supported target is Linux and WSL on x86_64 (<code>x86_64-unknown-linux-musl</code>). Windows Terminal users run strop inside WSL.</p>
-      <p>macOS, Linux aarch64, crates.io and Homebrew are historical channels: their packages remain available but receive no new versions, and <code>strop update</code> on such an install says to reinstall with <code>install.sh</code>.</p>
-      <p class="links"><a href="docs/cli.html">The CLI</a> · <a href="https://github.com/stropdev/strop/blob/main/install.sh">read install.sh</a></p>
+      <p>Linux and WSL on x86_64 (<code>x86_64-unknown-linux-musl</code>). On Windows, run it inside WSL.</p>
+      <p>There is no macOS, ARM or native Windows build, and none is scheduled. The old macOS, aarch64, crates.io and Homebrew packages are not updated.</p>
     </div>
   </div>
-</section>
-
-<section class="section shell" id="features" aria-labelledby="features-title">
-  <div class="section-head">
-    <p class="eyebrow">What it does</p>
-    <h2 id="features-title">Vim's grammar, with the next step in view.</h2>
-    <p>Neovim's hands, Helix's spine, rootle's eyes, GitLens' memory. Each claim below is a tested behaviour of the shipped binary; the links go to the reference it was taken from.</p>
-  </div>
-  <div class="grid-2">
-
-    <article class="card wide">
-      <h3>The preview</h3>
-      <p>While you compose <code>d/pattern</code>, the affected range and the motion's semantics are live on screen; while you compose <code>:s</code>, the before and after text, the replacement count and the scope are. Visual selections are inspected before the operator applies. Completed chords such as <code>ci[</code> and <code>dw</code> execute at the completing key, as in Vim — there is no inspection interval, and the site does not claim one.</p>
-      <table>
-        <thead><tr><th>Interaction</th><th>Inspection contract</th></tr></thead>
-        <tbody>
-          <tr><td><code>d/pattern</code> while composing</td><td>Live affected range and motion semantics before Enter; Esc once enters field Normal, Esc again cancels.</td></tr>
-          <tr><td><code>:s</code> while composing</td><td>Live before/after text, replacement count and scope before Enter.</td></tr>
-          <tr><td><code>vi[</code> then <code>c</code>, other Visual selections</td><td>Inspect the selection before applying the operator.</td></tr>
-          <tr><td>Project replace, filesystem and machine edits</td><td>Review exact targets before Apply; saving is a separate action.</td></tr>
-          <tr><td><code>dw</code>, <code>ci[</code>, <code>dfx</code>, <code>.</code></td><td>Execute at the completing key; there is no guaranteed inspection interval.</td></tr>
-          <tr><td>Macros and arbitrary child/shell execution</td><td>No general effect preview.</td></tr>
-        </tbody>
-      </table>
-      <p class="links"><a href="https://github.com/stropdev/strop#readme">The inspection table in the README</a> · <a href="docs/vim-compat.html">Vim compatibility</a></p>
-    </article>
-
-    <article class="card">
-      <h3>One query language</h3>
-      <p>File find (<kbd>Space</kbd> <kbd>f</kbd>), content search (<kbd>Space</kbd> <kbd>/</kbd>), replace (<kbd>Space</kbd> <kbd>R</kbd>), symbols (<kbd>Space</kbd> <kbd>S</kbd>) and the jump list share one qualifier grammar. What you learn in one field works in all of them.</p>
-      <pre><code>language:rust path:src/ request_id
-glob:"src/**/*.rs" -path:generated/ text:"request-id"
-kind:function parse AND NOT wrap</code></pre>
-      <p>Bare file queries are fuzzy; content queries are literal until you say <code>regex:</code>. <kbd>Ctrl-Space</kbd> offers parser-driven suggestions at the caret.</p>
-      <p class="links"><a href="docs/search.html">Search and the query language</a></p>
-    </article>
-
-    <article class="card">
-      <h3>Git in the buffer</h3>
-      <p>Hunks against the live buffer through libgit2, in process — no shell-outs on the keystroke path. <kbd>]c</kbd> <kbd>[c</kbd> step through hunks; <kbd>Space</kbd> <kbd>g</kbd> <kbd>s</kbd> stages one, <kbd>S</kbd> unstages, <kbd>u</kbd> restores from the index, <kbd>p</kbd> previews.</p>
-      <p><kbd>Space</kbd> <kbd>g</kbd> <kbd>b</kbd> toggles a blame gutter where Enter dives into the line's commit; <kbd>l</kbd> opens the log, <kbd>h</kbd> the file's history, <kbd>y</kbd> and <kbd>o</kbd> copy or open a permalink. Status, log and diffs are buffers you move through with the same keys.</p>
-      <p class="links"><a href="docs/vim-compat.html#git">The git bindings</a></p>
-    </article>
-
-    <article class="card">
-      <h3>Everything is a buffer</h3>
-      <p>Terminals (<code>Space t</code> or <code>:terminal</code>, a real PTY that stays a live buffer), directory listings, search collections, the git log, <code>:explain</code> and help all open in buffers that still know how to be a text editor: the same motions, the same search, the same yank.</p>
-      <p>Filesystem changes go through Review → Apply → Receipt, locally and over SSH. <code>strop ssh://user@host/path</code> opens a remote file over plain SSH — nothing is installed on the host — and <code>:w</code> saves it, refusing if the file changed there since you opened it.</p>
-      <p class="links"><a href="docs/filesystem.html">Filesystem workspace</a> · <a href="docs/remote.html">SSH and remote editing</a> · <a href="docs/terminal-and-scripting.html">Terminals and scripting</a></p>
-    </article>
-
-    <article class="card">
-      <h3>The grammar in one card</h3>
-      <pre><code>h j k l w b e 0 ^ _ $ gg G %  motions          i a A o O            insert
-d y c &gt; &lt; + motion/object     operators        dd yy cc D C Y s x   shortcuts
-iw i" i' i( i[ i{             text objects     f t / ? n N          find &amp; search
-v V                           visual           u ctrl-r .           undo, redo, repeat
-"a … "+                       registers        :w :q :e :help        ex line
-Q                             multicursor      Space c              cursor below
-
-Space  f files · o remote/containers · b buffers · / Search · R replace · ? help
-Space w  - horizontal · v vertical · 1-9 focus · h/j/k/l/w move · q close
-Space g  l log · h history · b blame gutter · y/o permalink · u/s/p hunk</code></pre>
-      <p class="links"><kbd>Space</kbd> <kbd>?</kbd> lists every binding inside the editor; <code>:help</code> explains each surface.</p>
-    </article>
-
-    <article class="card wide" id="checked">
-      <h3>How it is checked</h3>
-      <p>The editor follows a ring design. At the centre is <code>strop-kernel</code>: a dependency-free, <code>no_std</code> crate that Charon and Aeneas translate to Lean 4, where its theorems are proved about the shipped code rather than a hand-written copy — how cursors, marks and selections move through an edit, which edit batches are safe to apply, and how arena generations advance. Calibration mutants must each break their theorem, and an axiom audit admits only Lean's standard axioms. These are the required claims, read from <code>proofs/Audit.lean</code> at build time:</p>
-      <ul class="claims"><!-- build:claims --><li>map_position_spec</li><li>mapSpec_monotone</li><li>mapSpec_in_bounds</li><li>validate_batch_spec</li><li>map_through_edits_spec</li><li>map_through_edits_monotone</li><li>map_through_edits_composition</li><li>consecutive_of_batchOk</li><li>admits_spec</li><li>source_edit_spec</li><li>toSource_in_span</li><li>source_edit_commutes</li><li>next_generation_spec</li><li>index_for_len_spec</li><!-- /build:claims --></ul>
-      <p>Each ring outward is checked a cheaper way: protocol machines by property tests and Loom; host adapters by fault injection and end-to-end runs over a real sshd and Docker; the vim grammar by a differential harness that feeds Neovim the same keys and compares the result. Every CI lane blocks a release, and the proofs gate runs in local qualification before a tag is cut.</p>
-      <p class="links"><a href="https://github.com/stropdev/strop/blob/main/plans/0086-verified-foundation.md">Plan 0086 — the verified foundation</a> · <a href="https://github.com/stropdev/strop/tree/main/proofs">proofs/</a> · <a href="https://github.com/stropdev/strop/blob/main/plans/0006-e2e-harness.md">Plan 0006 — the e2e tiers</a> · <a href="docs/vim-compat.html">What ships exactly</a></p>
-    </article>
-  </div>
-</section>
-
-<section class="section shell" id="tour" aria-labelledby="tour-title">
-  <div class="section-head">
-    <p class="eyebrow">The tour</p>
-    <h2 id="tour-title">Recorded from the real binary.</h2>
-    <p>The demo tape drives <code>strop</code> itself in a terminal; a demo-only code path would be a bug. The recording keeps its own colours whatever palette this page uses.</p>
-  </div>
-  <details class="tour">
-    <summary>
-      <img src="img/demo-poster.png" width="1400" height="760" alt="A still from the strop 0.54 recording in the Hone palette: a nine-line Rust function, the cursor on a comment on line 5, the statusline reading NORMAL, proj/demo.rs, 5:12." loading="lazy">
-      <span class="play">▶ Play the recording · GIF, 7.5 MB</span>
-    </summary>
-    <img class="recording" src="img/demo.gif" width="1400" height="760" alt="The strop demo: operator-pending preview, the files and search pickers, and git hunks, recorded in a terminal." loading="lazy">
-  </details>
-  <p class="tour-note">The recording is <code>demos/demo.tape</code> rendered against the real binary and refreshed by the editor repository's demo workflow.</p>
-</section>
-
-<section class="section shell" id="status" aria-labelledby="status-title">
-  <div class="section-head">
-    <p class="eyebrow">Status</p>
-    <h2 id="status-title">Plans in force.</h2>
-    <p>strop is designed in numbered plans; <code>plans/STATUS.md</code> is the ledger of which ones every change currently answers to. This table is generated from it at build time (<code><!-- build:describe -->v0.61.0<!-- /build:describe --></code>). There is no separate roadmap page: the ledger is the roadmap.</p>
-  </div>
-  <div class="card">
-    <table class="status-table">
-      <thead><tr><th scope="col">Plan</th><th scope="col">Contract</th></tr></thead>
-      <tbody><!-- build:status -->
-<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0001-vision-and-design.md">0001</a></th><td>vision and design contract (doctrine)</td></tr>
-<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0003-modes-leader-and-house-style.md">0003</a></th><td>modes, leader, keymap house style; <code>?</code> help coverage (§5.7)</td></tr>
-<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0005-configuration.md">0005</a></th><td>configuration model</td></tr>
-<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0006-e2e-harness.md">0006</a></th><td>e2e tiers and the Neovim differential harness</td></tr>
-<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0008-input-layer-keymap.md">0008</a></th><td>the input walker and the one keymap table</td></tr>
-<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0079-local-linux-release.md">0079</a></th><td>local Linux release procedure (its completion freeze is retired by 0086)</td></tr>
-<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0086-verified-foundation.md">0086</a></th><td>verified foundation: rings, Lean-proved kernel, survival and release rules, gates</td></tr>
-<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0088-the-look.md">0088</a></th><td>design language, token set and the six original palettes; echo row; golden snapshots</td></tr>
-<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0090-one-editor.md">0090</a></th><td>containers cut, nvim terminal model, remote over plain SSH behind an ergonomics gate (0.55–0.56)</td></tr>
-<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0092-registers-and-pinned-project.md">0092</a></th><td>one register file with Neovim's rules and one read path for every text input; project root pinned at launch; library files owned by the project's server; crashed servers restart within a budget. Amends 0074 (field registers), 0053 (Search toggle is <code>ctrl-t</code>), 0049 §4.6</td></tr>
-<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0095-the-keys.md">0095</a></th><td>Neovim's keys: the grammar's missing operators, motions and text objects, Vim's range rules, one operator engine for Normal and Visual, a Visual key table, the <code>:</code> line with ranges and abbreviations, a generated differential corpus (≥ 600 cases) and a Missing list in <code>strop compat</code>. Adopts 0091 §2 and 0092 §3; amends 0001 §5.10, 0016, 0003 §5.7</td></tr>
-<!-- /build:status --></tbody>
-    </table>
-    <p class="links"><a href="https://github.com/stropdev/strop/blob/main/plans/STATUS.md">The full ledger: proposed, retired and implemented plans</a> · <a href="changelog.html">Changelog</a></p>
-  </div>
+  <p class="alpha">strop is alpha. It changes with every release; the <a href="changelog.html">changelog</a> says how.</p>
 </section>
 
 <section class="section shell" id="palette" aria-labelledby="palette-title">
-  <div class="section-head">
-    <p class="eyebrow">Palette</p>
-    <h2 id="palette-title">What you see is what you install.</h2>
-    <p>This site is drawn with the editor's own token set — the same hex values the binary compiles in. Hone is the default; Vellum answers a light-mode preference. Pick any of the six to preview it here; <code>:theme</code> picks it in the editor.</p>
-  </div>
+  <h2 id="palette-title">Palettes</h2>
+  <p class="section-lede">This site uses the editor's six palettes, with the colour values the binary ships. Pick one to see it here; <code>:theme</code> picks it in the editor.</p>
   <div class="palette-bar" role="group" aria-label="Palette">
     <button type="button" data-set-palette="hone" aria-pressed="false"><span class="sw" style="--sw-base:#15171c;--sw-accent:#e8a848"></span><span><span class="name">Hone</span><span class="kind">dark · default</span></span></button>
     <button type="button" data-set-palette="slate" aria-pressed="false"><span class="sw" style="--sw-base:#1a1c20;--sw-accent:#c9b27e"></span><span><span class="name">Slate</span><span class="kind">low-chroma dark</span></span></button>
@@ -212,16 +151,15 @@ Space g  l log · h history · b blame gutter · y/o permalink · u/s/p hunk</co
     <button type="button" data-set-palette="paper" aria-pressed="false"><span class="sw" style="--sw-base:#f8f8f3;--sw-accent:#1a6650"></span><span><span class="name">Paper</span><span class="kind">light</span></span></button>
     <button type="button" data-set-palette="paper-dark" aria-pressed="false"><span class="sw" style="--sw-base:#151d19;--sw-accent:#9bc7ac"></span><span><span class="name">Paper Dark</span><span class="kind">dark</span></span></button>
   </div>
-  <p class="palette-note">The choice is kept in this browser only. Press the applied palette again to return to automatic. Without JavaScript the site follows your system preference.</p>
+  <p class="palette-note">The choice stays in this browser. Press the applied palette again to go back to your system's light or dark preference.</p>
 </section>
-
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v<!-- build:version -->0.61.0<!-- /build:version --></a> · <a href="#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.62.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
-<script src="assets/site.js"></script>
+<script src="./assets/site.js"></script>
 </body>
 </html>

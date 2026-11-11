@@ -1,0 +1,49 @@
+<!--
+title: Coming from Neovim — strop
+description: What works in strop the way it does in Neovim, what strop does differently on purpose, and what is missing.
+nav: neovim
+class: guide
+-->
+<div class="shell page guide">
+  <p class="eyebrow">Start</p>
+  <h1>Coming from Neovim</h1>
+  <p class="lede">Neovim with no configuration (<code>nvim -u NONE</code>) is strop's specification for keys: the same keys should leave the same text, cursor and registers. This page says where that holds, where strop does something else on purpose, and what is not there.</p>
+
+  <div class="prose">
+    <h2 id="works">What works</h2>
+    <p>The everyday editing language is there, and it is checked against Neovim rather than against memory:</p>
+    <ul>
+      <li>Operators with every motion and text object, with and without a count, in Normal and Visual, and repeated with <code>.</code>. That includes <code>gU</code> <code>gu</code> <code>g~</code> <code>g?</code> <code>!</code>, the <code>ip</code> <code>it</code> <code>gn</code> objects, and <code>v</code> / <code>V</code> between an operator and its motion.</li>
+      <li>Registers by Vim's rules: <code>"0</code>, <code>"1</code>–<code>"9</code>, <code>"-</code>, <code>"A</code> to append, <code>"_</code>, the read-only ones, and macros as register content. <code>Ctrl-R</code> pastes a register in every text field, not only in Insert mode.</li>
+      <li>Marks, the jump list and the change list; character, line and block Visual; <code>Ctrl-A</code> / <code>Ctrl-X</code>; Replace mode.</li>
+      <li>The <code>:</code> line with Vim's ranges and abbreviations: <code>:s</code> with <code>&amp;</code>, <code>\1</code> and the <code>c</code> flag, <code>:g</code>, <code>:v</code>, <code>:norm</code>, <code>:m</code>, <code>:t</code>, <code>:d</code>, <code>:y</code>, <code>:sort</code>, <code>:b</code>, <code>:ls</code>, <code>:wa</code>, <code>:cd</code>.</li>
+      <li>Window commands on <code>Ctrl-W</code>, quickfix commands (<code>:copen</code>, <code>:cnext</code>, <code>:cdo</code>, <code>:cfdo</code>), and a terminal that behaves like Neovim's, down to <code>Ctrl-\ Ctrl-N</code>.</li>
+    </ul>
+    <p>How it is checked: before a release, about 4,000 key sequences are typed into both editors and the resulting text, cursor, mode and registers are compared. The few cases where strop knowingly differs are listed with a reason; everything else has to match. <a href="engineering.html#keys">More on that</a>.</p>
+    <p>The full keymap is generated from the binary's command table, by section:</p>
+    <ul class="compat-sections">
+      {{compat_sections}}
+    </ul>
+
+    <h2 id="differs">What differs</h2>
+    <p>These are deliberate.</p>
+    <ul>
+      <li><strong>No configuration language and no plugins.</strong> There is no <code>init.lua</code>, no Vimscript and no plugin manager. What plugins usually add is in the binary. <code>strop config</code> prints the handful of settings there are.</li>
+      <li><strong><code>Space</code> is the leader, and its keys are fixed.</strong> <code>Space f</code> finds files, <code>Space /</code> searches, <code>Space g</code> is git. <code>Space ?</code> lists them all. You cannot remap keys yet.</li>
+      <li><strong>Search is smart-case.</strong> <code>/edge</code> finds <code>Edge</code>; a capital letter in the pattern makes case count, and <code>\c</code> / <code>\C</code> decide outright. <code>:s</code> is case-sensitive, as in Vim.</li>
+      <li><strong>A plain yank reaches the system clipboard.</strong> <code>y</code> with no register also copies; deletes, changes and named registers do not.</li>
+      <li><strong>The project is the directory you started in.</strong> It does not follow the current file. <code>:cd</code> changes it.</li>
+      <li><strong>Language-server keys follow Neovim 0.11:</strong> <code>grr</code> references, <code>grn</code> rename. <code>gd</code> asks the language server instead of searching the buffer.</li>
+      <li><strong>Two commands show their range while you type them:</strong> <code>d/pattern</code> highlights what it will delete until you press Enter, and <code>:s</code> shows the changed lines before and after.</li>
+    </ul>
+    <h3 id="reassigned">Keys that do something else</h3>
+    <p>Neovim binds these; strop uses the key for something different.</p>
+    {{compat_reassigned}}
+
+    <h2 id="missing">What is missing</h2>
+    <p>Beyond plugins and scripting, these Neovim keys do nothing in strop. An operator on the list (<code>=</code>, <code>gq</code>, <code>gw</code>, <code>zf</code>) still takes its motion and then says it is not supported, so the motion's keys never run as commands by accident.</p>
+    {{compat_missing}}
+    <p>Also not there: key remapping, autocommands, folds, tab pages, spell checking, digraphs, diff mode, and builds for anything but Linux and WSL on x86_64. If one of these is what you live in, strop is not ready for you yet.</p>
+    <p class="provenance">The section list and the lists of missing and reassigned keys on this page are generated from <a href="docs/vim-compat.html"><code>docs/vim-compat.md</code></a> at <code>{{describe}}</code>, which the binary prints with <code>strop compat</code>.</p>
+  </div>
+</div>

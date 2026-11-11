@@ -9,12 +9,13 @@ each run pinned to its exact cell span with `textLength`, so the grid holds
 in any monospace font the viewer has. Nothing is redrawn or retouched — the
 output is the frame the terminal showed.
 
-    python3 tools/ansi2svg.py frame.ansi img/hero.svg --cols 140 --rows 40 \
+    python3 tools/ansi2svg.py frame.ansi frame.svg --cols 100 --rows 30 \
         --default-bg '#15171c' --default-fg '#e6e1d6' --title '...'
 
 Cells the editor left at the terminal default (`\\e[39m` / `\\e[49m`) take
 `--default-fg` / `--default-bg`; pass the editor theme's `fg.text` and
-`bg.base`. Python 3.8+, standard library only.
+`bg.base`. `tools/frames.py` calls this module for the landing page's frames.
+Python 3.8+, standard library only.
 """
 
 from __future__ import annotations
@@ -217,7 +218,9 @@ def render(grid: List[List[Cell]], *, cols: int, font_size: float, default_fg: s
                 b -= 1
             if a == b:
                 continue
-            text = "".join(c.char for c in run[a:b])
+            # Browsers collapse runs of spaces in SVG text whatever xml:space says, and
+            # textLength would then stretch the glyphs; a no-break space keeps each cell.
+            text = "".join(c.char for c in run[a:b]).replace(" ", "\u00a0")
             span = sum(c.width for c in run[a:b])
             attrs = [f'x="{pad + (col + a) * cw:.2f}"', f'y="{y + baseline:.2f}"',
                      f'textLength="{span * cw:.2f}"', 'lengthAdjust="spacingAndGlyphs"']

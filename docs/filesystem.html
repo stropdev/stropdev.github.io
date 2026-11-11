@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The filesystem workspace — strop docs</title>
-<meta name="description" content="Open a directory with strop DIRECTORY, :browse, or :e DIRECTORY. Space e reveals the current source in its parent. Browsing keeps the process cwd unchanged; Enter opens a structured entry and -/Backsp">
+<title>Create, rename, move and delete files — strop docs</title>
+<meta name="description" content="Browse a directory, and create, rename, move, copy and delete files without leaving strop.">
 <meta name="color-scheme" content="dark light">
+<meta name="strop-version" content="0.62.0">
+<meta name="strop-describes" content="0.62">
+<meta name="strop-source" content="docs/filesystem.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/site.css">
 <script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
@@ -17,8 +20,8 @@
     <a class="brand" href="../">strop</a>
     <nav aria-label="Site">
       <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../neovim.html">From Neovim</a>
       <a href="../changelog.html">Changelog</a>
-      <a href="../#status">Status</a>
       <a href="https://github.com/stropdev/strop">GitHub</a>
     </nav>
   </div>
@@ -26,18 +29,19 @@
 <main id="main">
 <div class="shell doc-layout">
   <aside class="doc-side">
-    <p class="side-title"><a href="./">Docs</a></p>
-    <ol class="side-docs">
-      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html" aria-current=&quot;page&quot;>The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
-    </ol>
-    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#the-filename-draft">The filename draft</a></li><li><a href="#relocation-and-barriers">Relocation and barriers</a></li><li><a href="#indentation-controls">Indentation controls</a></li><li><a href="#ssh-hosts">SSH hosts</a></li></ol>
+    <p class="side-title"><a href="./">All docs</a></p>
+    <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html" aria-current="page">Create, rename, move and delete files</a></li></ol><p class="side-title">Git</p><ol class="side-docs"><li><a href="git.html">Git</a></li></ol><p class="side-title">Editing and code</p><ol class="side-docs"><li><a href="editor.html">Indentation, themes, completion and language servers</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal.html">Terminals</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html">Every key</a></li><li><a href="scripting.html">Scripts and bug reports</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#file-operations">File operations</a></li><li><a href="#renaming-by-editing-the-list">Renaming by editing the list</a></li><li><a href="#open-files-saves-in-progress-and-quitting">Open files, saves in progress, and quitting</a></li><li><a href="#ssh-hosts">SSH hosts</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
-    <h1>The filesystem workspace</h1>
+    <h1>Create, rename, move and delete files</h1>
     <div class="prose">
-<p>Open a directory with <code>strop DIRECTORY</code>, <code>:browse</code>, or <code>:e DIRECTORY</code>. <code>Space e</code> reveals the current source in its parent. Browsing keeps the process cwd unchanged; Enter opens a structured entry and <code>-</code>/Backspace goes to its parent. In a Directory buffer <code>Space a</code> lists the filesystem operations valid there; <code>:fs</code> with no verb lists them from anywhere. On a source file <code>Space a</code> is about the code: the language server's actions and any recovery a failed save or connection left behind.</p>
-<p>Filesystem mutations use <strong>Review → Apply → Receipt</strong>, locally and on SSH hosts (see <a href="#ssh-hosts">SSH hosts</a> for what differs there):</p>
+<p>Browse a directory, and create, rename, move, copy and delete files without leaving strop.</p>
+<p>Open a directory with <code>strop DIRECTORY</code>, <code>:browse</code> or <code>:e DIRECTORY</code>. <code>Space e</code> opens the directory of the current file with the cursor on it. Enter opens the entry under the cursor; <code>-</code> or Backspace goes up. Browsing does not change the project root. Each row shows the name, the size, and the kind and permissions; <code>:filter TEXT</code> narrows the listing and <code>:filter</code> alone shows everything again.</p>
+<p>In a directory listing <code>Space a</code> lists the file operations you can do there; <code>:fs</code> with no verb lists them from anywhere. In a file, <code>Space a</code> is about the code: the language server's actions, and anything a failed save or connection left for you to deal with.</p>
+<h2 id="file-operations">File operations</h2>
+<p>Nothing changes on disk until you confirm. Each <code>:fs</code> command opens a review that lists the exact steps. <code>Enter</code> (or <code>:fs apply</code>) does them; <code>q</code> (or <code>:fs cancel</code>) drops them. This works the same on your machine and on an SSH host (see <a href="#ssh-hosts">SSH hosts</a> for what differs there).</p>
 <pre><code class="language-vim">:fs create nested/new.txt
 :fs mkdir new-directory
 :fs rename new-name.txt
@@ -51,35 +55,53 @@
 :fs operations
 :fs verify OPERATION STEP
 :fs undo OPERATION STEP</code></pre>
-<p>Each verb opens a review of the exact steps. <code>Enter</code> in the review (or <code>:fs apply</code>) performs them; <code>q</code> (or <code>:fs cancel</code>) discards them.</p>
-<p>Relative filesystem destinations use the current Directory, or the current source's parent; source-less buffers use the workspace root. Explicit resource URIs select another namespace. Creation never truncates an occupied name; rename/move is no-clobber. Review lists missing-parent creation explicitly. Stored-copy and buffer-copy select different versions without saving the source. Trash uses native recovery facilities where supported; remote Trash is unavailable, not an alias for permanent removal. Recursive removal of non-empty directories and unsafe alias/root operations are refused.</p>
-<h2 id="the-filename-draft">The filename draft</h2>
-<p><code>:fs edit</code> enters a name-only <strong>filename draft</strong>. Ordinary motions, edits, whole-line yank/paste, undo/redo and macros change the draft, not disk. <code>:w</code> prepares review; <code>Enter</code> or <code>:fs apply</code> performs the filesystem changes; <code>q</code> or <code>:fs cancel</code> returns to the intact draft. Browsing or refreshing the directory retains edited names and source provenance. Use <code>:fs discard</code> to discard explicitly. Copies need a distinct name; ambiguous joins and conflicting targets refuse instead of guessing which file a row represents.</p>
-<h2 id="relocation-and-barriers">Relocation and barriers</h2>
-<p>Confirmed relocation keeps source text, history and document identity. Pending saves and unconfirmed operations block conflicting work. Receipts survive leaving the view; verification never blindly retries a mutation.</p>
-<p>Local saves/save-as and local filesystem mutations use a conservative per-editor write barrier, including parent aliases. Let a pending save finish before applying a local filesystem review, and resolve unconfirmed receipts before saving. Move verification and recovery require the recorded post-publication version: finding the same inode at a pathname is not sufficient ownership evidence. Receipts are in-memory, not crash recovery. Graceful global exit refuses unresolved outcomes; explicit <code>:qa!</code> reports them and exits unsuccessfully rather than claiming they were resolved or persisted.</p>
-<p>Removing an otherwise empty directory may retire its validated, quiescent protocol locks. Active locks, unknown entries and other directory contents cause refusal; partial housekeeping is reported even when cancellation prevents removal.</p>
-<h2 id="indentation-controls">Indentation controls</h2>
-<p><code>:tab-size</code> opens source-specific width/style controls; <code>:tab-size 3</code>, <code>:tab-size auto</code>, and <code>:indent-style tabs|spaces|auto</code> are direct forms. Changing indentation settings never rewrites existing bytes. The modeline names the effective input owner and source setting. Matching delimiters use the same cancellable source resolver as <code>%</code>, without moving the view. The indentation engine itself is described in <a href="editor.html#indentation">editor.md</a>.</p>
-<h2 id="ssh-hosts">SSH hosts</h2>
-<p>In a directory or file on a connected SSH host the same commands run over the host's SFTP connection, with the same review, receipts and verification: create files and directories (missing parents become their own steps), rename/move, copy a regular file (stored bytes or the pinned buffer) and remove. The differences are honest limits of SFTP:</p>
+<p>In a listing, the commands act on the entry under the cursor, on the lines of a range (<code>:&#x27;&lt;,&#x27;&gt;fs trash</code>), or on the entries you marked with <code>:fs mark</code>.</p>
+<p>A relative name is taken from the directory you are browsing, or from the directory of the current file. In a buffer with no file it is taken from the project root. A destination can also be an <code>ssh://</code> address, but one review works on one machine: strop does not copy or move between your machine and a host, or between two hosts.</p>
+<p>strop never overwrites: creating, renaming or moving onto a name that exists is refused. If parent directories have to be created, the review lists each one. <code>:fs copy stored</code> copies the file as it is on disk; <code>:fs copy buffer</code> copies the text in the buffer, unsaved edits included. Neither saves the file. Only single files are copied, not directories.</p>
+<p><code>:fs trash</code> moves the file to your system's trash. On an SSH host there is no trash, and <code>:fs trash</code> is refused; it never deletes instead. <code>:fs remove</code> deletes for good, and the review says so. It will not remove a directory that still has files in it. strop also refuses to rename or remove <code>/</code>, the project directory or a directory that contains it, and symbolic links, hard-linked files and special files.</p>
+<p>Afterwards strop keeps a record of each step and whether it succeeded:</p>
 <ul>
-<li><strong>No Trash.</strong> <code>:fs trash</code> is refused on a host; <code>:fs remove</code> deletes permanently, and the review says so.</li>
-<li><strong>Nothing is replaced.</strong> An occupied destination is refused in the review, and checked again just before each step runs (files are created exclusively, renames refuse an existing name). A source that changed on the host since the review is refused.</li>
-<li><strong>Directories are not copied recursively</strong>; copy files one at a time or use the host's terminal. Only an empty directory can be removed.</li>
-<li><strong>No atomicity across steps</strong> and no lock against other programs on the host. A step whose reply was lost is reported unconfirmed; <code>:fs verify</code> observes the host and never retries it.</li>
-<li>Copies keep permission bits, not owner or times; new files and directories get 0644/0755 under the host's umask.</li>
+<li><code>:fs operations</code> lists what was done in this run of strop. Operations and their steps are numbered; those are the OPERATION and STEP numbers the next two commands take. Each step is marked committed, refused, cancelled or unconfirmed, with the command to use next.</li>
+<li><code>:fs verify OPERATION STEP</code> checks the disk to see whether a step really happened. Use it when a step is <strong>unconfirmed</strong>: strop could not tell whether it went through, for example because the connection dropped before the answer came. It only looks; it never does the step again.</li>
+<li><code>:fs undo OPERATION STEP</code> opens a review of the reverse step: rename back, restore from the trash, or remove what was created or copied. A permanent removal cannot be undone.</li>
 </ul>
+<h2 id="renaming-by-editing-the-list">Renaming by editing the list</h2>
+<p><code>:fs edit</code> makes the directory listing editable: change the names as text. Motions, edits, yanking and pasting whole lines, undo and macros all work, and nothing on disk changes yet. <code>:w</code> opens the review; <code>Enter</code> (or <code>:fs apply</code>) does the changes; <code>:fs cancel</code> goes back to your edited list. Your edits survive a refresh or a visit to another directory. <code>:fs discard</code> throws them away.</p>
+<ul>
+<li>Change a name to rename the entry.</li>
+<li>Add a line to create a file; end the name with <code>/</code> for a directory.</li>
+<li>Delete a line to remove the entry. On your machine it goes to the trash. On an SSH host you first have to say <code>:fs deletes permanent</code>.</li>
+<li>Yank a line and paste it to copy the file. The copy needs a new name.</li>
+<li>Delete a line and paste it back to keep the entry: that is a move, not a removal.</li>
+</ul>
+<p>If two lines end up with the same name, or strop cannot tell which file a line stands for (two entries joined with <code>J</code>, one name split over two lines), it refuses and names the line; undo that edit or <code>:fs discard</code>. A listing of more than 512 entries has to be filtered before <code>:fs edit</code>.</p>
+<h2 id="open-files-saves-in-progress-and-quitting">Open files, saves in progress, and quitting</h2>
+<p>When you rename or move a file that is open, the buffer follows it and keeps its text, unsaved edits and undo history.</p>
+<p>On your own machine strop does one disk change at a time. While a save is still running, a file operation is refused with a message: wait for the save, then confirm again. While a file operation is running or one of its steps is unconfirmed, <code>:w</code> is refused the same way: settle the step with <code>:fs verify</code>, then save. Nothing is queued behind your back.</p>
+<p><code>:fs verify</code> and <code>:fs undo</code> on a moved file act only if the file is still exactly as strop left it. If another program changed or replaced it since, they refuse and say so.</p>
+<p>The record of steps stays after you leave the review, but it is lost when strop exits or crashes. <code>:qa</code> refuses to quit while a step is unconfirmed. <code>:qa!</code> quits, lists those steps on the terminal, and exits with an error status.</p>
+<h3 id="lock-files">Lock files</h3>
+<p>When strop saves a file or does a file operation on your machine, it leaves a small lock file beside it, named <code>.strop-lock-</code> followed by a long string of letters and digits. Files (<code>Space f</code>), Search and git status never list them; a directory listing does. A directory that holds only leftover lock files counts as empty: removing it deletes them too, and the record says how many. A lock that is in use, or anything else in the directory, stops the removal.</p>
+<h2 id="ssh-hosts">SSH hosts</h2>
+<p>On an SSH host the same commands work, with the same review first and the same record afterwards: create files and directories, rename, move, copy a file (as it is on the host, or the text in your buffer) and remove. What differs, because of how SFTP works:</p>
+<ul>
+<li><strong>No trash.</strong> <code>:fs trash</code> is refused on a host; <code>:fs remove</code> deletes for good, and the review says so.</li>
+<li><strong>Nothing is overwritten.</strong> A name that is taken is refused in the review, and checked again just before each step runs. If the name appears on the host between the review and the step, the step fails instead of overwriting. A file that changed on the host since the review is refused too.</li>
+<li><strong>Directories are not copied</strong>; copy files one at a time, or use a terminal on the host. Only an empty directory can be removed.</li>
+<li><strong>Steps are not all-or-nothing.</strong> If step 3 of 5 fails, steps 1 and 2 stay done. Nothing stops another program on the host from changing the same files. If the connection drops before the host answers, the step is shown as unconfirmed. <code>:fs verify</code> checks the host to see whether it happened. It never runs the step again.</li>
+<li>A copy keeps the file's permissions, not its owner or times. New files and directories get 0644 and 0755, less the host's umask.</li>
+</ul>
+<p>Indent width and tabs or spaces (<code>:tab-size</code>, <code>:indent-style</code>) are in <a href="editor.html#indent-width-and-tabs-or-spaces">editor.md</a>.</p>
     </div>
-    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="search.html">← Search and the query language</a><a class="pager-next" href="remote.html">SSH and remote editing →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/filesystem.md"><code>docs/filesystem.md</code></a> at <code>v0.61.0</code>. The repository file is the source of truth; edit it there.</p>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="search.html">← Find files, search and replace</a><a class="pager-next" href="git.html">Git →</a></nav>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/filesystem.md"><code>docs/filesystem.md</code></a> from the strop repository at <code>v0.62.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.61.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.62.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

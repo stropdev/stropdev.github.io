@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vim compatibility — strop docs</title>
-<meta name="description" content="Generated from the command table (strop compat). ✓ ships exactly; (soon) is a planned slot. What Neovim binds and strop does not is listed at the end, under Missing and Reassigned.">
+<title>Every key — strop docs</title>
+<meta name="description" content="Generated from the command table (strop compat). ✓ works today; (soon) is planned. What Neovim binds and strop does not is listed at the end, under Missing and Reassigned.">
 <meta name="color-scheme" content="dark light">
+<meta name="strop-version" content="0.62.0">
+<meta name="strop-describes" content="0.62">
+<meta name="strop-source" content="docs/vim-compat.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/site.css">
 <script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
@@ -17,8 +20,8 @@
     <a class="brand" href="../">strop</a>
     <nav aria-label="Site">
       <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../neovim.html">From Neovim</a>
       <a href="../changelog.html">Changelog</a>
-      <a href="../#status">Status</a>
       <a href="https://github.com/stropdev/strop">GitHub</a>
     </nav>
   </div>
@@ -26,17 +29,15 @@
 <main id="main">
 <div class="shell doc-layout">
   <aside class="doc-side">
-    <p class="side-title"><a href="./">Docs</a></p>
-    <ol class="side-docs">
-      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html" aria-current=&quot;page&quot;>Vim compatibility</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
-    </ol>
-    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#moving">Moving</a></li><li><a href="#editing">Editing</a></li><li><a href="#insert">Insert</a></li><li><a href="#visual">Visual</a></li><li><a href="#search">Search</a></li><li><a href="#leader-space">Leader (space)</a></li><li><a href="#panes">Panes</a></li><li><a href="#git">Git</a></li><li><a href="#pickers">Pickers</a></li><li><a href="#terminal">Terminal</a></li><li><a href="#ex-commands">Ex commands</a></li><li><a href="#missing">Missing</a></li><li><a href="#reassigned">Reassigned</a></li></ol>
+    <p class="side-title"><a href="./">All docs</a></p>
+    <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Git</p><ol class="side-docs"><li><a href="git.html">Git</a></li></ol><p class="side-title">Editing and code</p><ol class="side-docs"><li><a href="editor.html">Indentation, themes, completion and language servers</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal.html">Terminals</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html" aria-current="page">Every key</a></li><li><a href="scripting.html">Scripts and bug reports</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#moving">Moving</a></li><li><a href="#editing">Editing</a></li><li><a href="#insert">Insert</a></li><li><a href="#visual">Visual</a></li><li><a href="#search">Search</a></li><li><a href="#leader-space">Leader (space)</a></li><li><a href="#panes">Panes</a></li><li><a href="#git">Git</a></li><li><a href="#pickers">Pickers</a></li><li><a href="#terminal">Terminal</a></li><li><a href="#ex-commands">Ex commands</a></li><li><a href="#missing">Missing</a></li><li><a href="#reassigned">Reassigned</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
-    <h1>Vim compatibility</h1>
+    <h1>Every key</h1>
     <div class="prose">
-<p>Generated from the command table (<code>strop compat</code>). <code>✓</code> ships exactly; <code>(soon)</code> is a planned slot. What Neovim binds and strop does not is listed at the end, under Missing and Reassigned.</p>
+<p>Generated from the command table (<code>strop compat</code>). <code>✓</code> works today; <code>(soon)</code> is planned. What Neovim binds and strop does not is listed at the end, under Missing and Reassigned.</p>
 <h2 id="moving">Moving</h2>
 <ul>
 <li><code>✓ h j k l</code> — move (never off the line)</li>
@@ -52,9 +53,9 @@
 <li><code>✓ g_ g0 g^ g$ gj gk</code> — last non-blank; line start, first non-blank, end; line down / up</li>
 <li><code>✓ gn gN</code> — select the next / previous search match (cgn then . changes each)</li>
 <li><code>✓ 0 $ G %</code> — line/file/pair jumps</li>
-<li><code>✓ g&lt;space&gt;</code> — collection: open full source at caret</li>
+<li><code>✓ g&lt;space&gt;</code> — collection: open the file at this line</li>
 <li><code>✓ gg</code> — top of file</li>
-<li><code>✓ enter</code> — line down, first non-blank (blame gutter: dive)</li>
+<li><code>✓ enter</code> — line down, first non-blank (blame: open the line's commit)</li>
 <li><code>✓ tab</code> — jump list forward (ctrl-i)</li>
 <li><code>✓ ctrl-d ctrl-u ctrl-f ctrl-b</code> — half/full page scroll (count = lines)</li>
 <li><code>✓ ctrl-e ctrl-y</code> — scroll the window one line down / up</li>
@@ -192,13 +193,13 @@
 <h2 id="leader-space">Leader (space)</h2>
 <ul>
 <li><code>✓ space |</code> — pipe line/selection through shell (:! runs)</li>
-<li><code>✓ space e</code> — reveal source in its Directory buffer</li>
+<li><code>✓ space e</code> — show this file in its directory</li>
 <li><code>✓ space f</code> — file finder</li>
 <li><code>✓ space o</code> — open remote destination</li>
 <li><code>✓ space t</code> — terminal in a split below (TERMINAL mode)</li>
 <li><code>✓ space T</code> — terminal in this pane (= :terminal)</li>
 <li><code>✓ space b</code> — buffers (MRU)</li>
-<li><code>✓ space /</code> — Search workspace (resume investigation)</li>
+<li><code>✓ space /</code> — Search the project (or return to it)</li>
 <li><code>✓ space R</code> — Search with replacement</li>
 <li><code>✓ space ?</code> — help buffer</li>
 <li><code>✓ space y</code> — yank motion → system clipboard</li>
@@ -229,18 +230,27 @@
 <h2 id="git">Git</h2>
 <ul>
 <li><code>✓ space g</code> — git…</li>
-<li><code>✓ space g l</code> — commit browser</li>
+<li><code>✓ space g g</code> — status: changed files</li>
+<li><code>✓ space g c</code> — commit (:wq commits, :q! aborts)</li>
+<li><code>✓ space g b</code> — branches: switch / create</li>
+<li><code>✓ space g l</code> — log</li>
 <li><code>✓ space g h</code> — file history (visual: selected lines)</li>
-<li><code>✓ space g b</code> — toggle blame gutter / card</li>
+<li><code>✓ space g B</code> — blame gutter / card</li>
+<li><code>✓ space g s</code> — hunk: stage</li>
+<li><code>✓ space g u</code> — hunk: unstage</li>
+<li><code>✓ space g X</code> — hunk: discard</li>
+<li><code>✓ space g p</code> — hunk: preview</li>
 <li><code>✓ space g y</code> — permalink: copy</li>
 <li><code>✓ space g o</code> — permalink: open</li>
-<li><code>✓ space g u</code> — hunk: undo unstaged (restore from index)</li>
-<li><code>✓ space g s</code> — hunk: stage (live→index)</li>
-<li><code>✓ space g S</code> — hunk: unstage (index→HEAD)</li>
-<li><code>✓ space g p</code> — hunk: preview</li>
+<li><code>✓ s u -</code> — status: stage / unstage / toggle the file, hunk or section</li>
+<li><code>✓ =</code> — status: show / hide the file's diff</li>
+<li><code>✓ X</code> — status: discard (y confirms)</li>
+<li><code>✓ cc ca</code> — status: commit / amend</li>
+<li><code>✓ enter</code> — status: open the file at the cursor</li>
+<li><code>✓ ]c [c</code> — status: next / prev hunk</li>
 <li><code>✓ ]f [f</code> — next / prev file in commit diff</li>
-<li><code>✓ enter</code> — dive into the line's commit (blame gutter)</li>
-<li><code>✓ q</code> — close surface (readonly buffers)</li>
+<li><code>✓ enter</code> — open the commit that last changed this line (blame)</li>
+<li><code>✓ q</code> — close this view (read-only buffers)</li>
 </ul>
 <h2 id="pickers">Pickers</h2>
 <ul>
@@ -254,7 +264,7 @@
 <li><code>✓ ctrl-d</code> — Search: exclude/include file</li>
 <li><code>✓ ctrl-r</code> — input field: insert register {reg} (" is the last yank/delete)</li>
 <li><code>✓ ctrl-t</code> — Search: toggle replacement</li>
-<li><code>✓ enter</code> — Search Find: open source; With: prepare review</li>
+<li><code>✓ enter</code> — Search: open the result; in With: open the review</li>
 <li><code>✓ ctrl-o</code> — Search: collect included matches</li>
 </ul>
 <h2 id="terminal">Terminal</h2>
@@ -287,12 +297,12 @@
 <li><code>✓ :theme</code> — choose a built-in interface palette</li>
 <li><code>✓ :jumps :symbols</code> — jumplist / document symbols picker</li>
 <li><code>✓ :format :rename</code> — format buffer / rename symbol: :rename NEW</li>
-<li><code>✓ :recover</code> — draft recovery: list, restore N, discard N, consent remote|off</li>
+<li><code>✓ :recover</code> — recover unsaved text after a crash: list, restore N, discard N</li>
 <li><code>✓ :collection source|expand|contract</code> — source, expand or contract the excerpt at the caret</li>
 <li><code>✓ :select-next :select-all :select-skip :select-pop</code> — occurrence selection: next / all / skip / pop last-added</li>
 <li><code>✓ :view :set</code> — readonly browsing (:set ro/noro; CLI: -R)</li>
-<li><code>✓ :tab-size :indent-style</code> — source indentation controls</li>
-<li><code>✓ :fs :browse :filter :remote :terminal-local</code> — filesystem actions, namespace-aware browsing, folder filtering, remote destinations, a local shell</li>
+<li><code>✓ :tab-size :indent-style</code> — indent width and tabs or spaces for this file</li>
+<li><code>✓ :fs :browse :filter :remote :terminal-local</code> — file operations, browse a directory (local or ssh://), filter its listing, SSH hosts, a local shell</li>
 <li><code>✓ :copen :cwindow :cnext :cprevious :cNext :cc :cdo :cfdo</code> — quickfix: show the list, visit hits, run a command at each hit or file</li>
 </ul>
 <h2 id="missing">Missing</h2>
@@ -334,15 +344,15 @@
 <li>Insert: <code>ctrl-e ctrl-y</code> — Neovim: insert the character below or above. strop: dismiss or accept the completion menu.</li>
 </ul>
     </div>
-    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="terminal-and-scripting.html">← Terminals</a><a class="pager-next" href="nucleo-decision.html">Nucleo decision record (0022 §2) →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> at <code>v0.61.0</code>. The repository file is the source of truth; edit it there.</p>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="cli.html">← The command line</a><a class="pager-next" href="scripting.html">Scripts and bug reports →</a></nav>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> from the strop repository at <code>v0.62.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.61.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.62.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

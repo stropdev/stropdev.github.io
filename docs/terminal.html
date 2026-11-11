@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terminals — strop docs</title>
+<meta name="description" content="strop has a built-in terminal that works like Neovim&#x27;s :terminal. Run a shell in a pane, leave it with Ctrl-\ Ctrl-N, and move, search and yank in its output with the usual keys.">
+<meta name="color-scheme" content="dark light">
+<meta name="strop-version" content="0.62.0">
+<meta name="strop-describes" content="0.62">
+<meta name="strop-source" content="docs/terminal.md">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+<script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
+</head>
+<body class="docs-page">
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="shell top-inner">
+    <a class="brand" href="../">strop</a>
+    <nav aria-label="Site">
+      <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../neovim.html">From Neovim</a>
+      <a href="../changelog.html">Changelog</a>
+      <a href="https://github.com/stropdev/strop">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="shell doc-layout">
+  <aside class="doc-side">
+    <p class="side-title"><a href="./">All docs</a></p>
+    <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Git</p><ol class="side-docs"><li><a href="git.html">Git</a></li></ol><p class="side-title">Editing and code</p><ol class="side-docs"><li><a href="editor.html">Indentation, themes, completion and language servers</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal.html" aria-current="page">Terminals</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html">Every key</a></li><li><a href="scripting.html">Scripts and bug reports</a></li></ol>
+    
+  </aside>
+  <article class="doc">
+    <p class="eyebrow">Docs</p>
+    <h1>Terminals</h1>
+    <div class="prose">
+<p>strop has a built-in terminal that works like Neovim's <code>:terminal</code>. Run a shell in a pane, leave it with <code>Ctrl-\ Ctrl-N</code>, and move, search and yank in its output with the usual keys.</p>
+<table>
+<thead><tr><th>Keys</th><th>Effect</th></tr></thead>
+<tbody>
+<tr><td><code>Space t</code></td><td>new shell in a split below, in TERMINAL mode</td></tr>
+<tr><td><code>Space T</code></td><td>new shell in the current pane (= <code>:terminal</code>)</td></tr>
+<tr><td><code>:terminal [CMD]</code>, <code>:term</code></td><td>new shell, or run <code>CMD</code> and keep its output</td></tr>
+<tr><td><code>Ctrl-\ Ctrl-N</code></td><td>TERMINAL → NORMAL (the only way out)</td></tr>
+<tr><td><code>i</code> <code>I</code> <code>a</code> <code>A</code></td><td>NORMAL → TERMINAL, at the program's cursor</td></tr>
+<tr><td><code>:q</code></td><td>hide a running terminal; <code>Space b</code> returns to it</td></tr>
+<tr><td><code>:bd!</code></td><td>stop the program and delete the buffer</td></tr>
+<tr><td><code>:qa</code></td><td>refuses while terminals run; <code>:qa!</code> stops them and quits</td></tr>
+<tr><td><code>:r !CMD</code></td><td>insert a command's output below the cursor (as in Vim)</td></tr>
+</tbody>
+</table>
+<p><strong>TERMINAL mode</strong> sends every key to the program: Esc, Ctrl-C, Ctrl-W, Alt and function keys included. The mode chip reads <code>TERMINAL</code>, and the status line shows the one way out. Some terminals send <code>Ctrl-\</code> as the byte <code>0x1c</code> (what Vim calls <code>Ctrl-4</code>); it is the same key. A paste arrives the way any terminal would send it: bracketed when the program asked for bracketed paste, as plain typing otherwise.</p>
+<p><strong>NORMAL mode</strong> is a live, read-only buffer of the screen and its scrollback: the usual motions, search, selection and yank work on it, and output keeps arriving while you read. The view follows the output while the cursor is on the last line. <code>k</code>, <code>Ctrl-U</code> or a search stop it following and <code>G</code> starts it again, exactly as in Neovim.</p>
+<p>Scrollback holds 10,000 lines; older lines are dropped. When they are, your cursor and marks stay on the same text. Up to 16 terminals can be open at once.</p>
+<p>A terminal buffer is named <code>term://{directory}//{N}:{program}</code> (<code>N</code> counts terminals from 1) in <code>Space b</code>, pane titles and the status line. Switching away and back (<code>Ctrl-^</code>, <code>Space b</code>, pane focus) restores the cursor and the scroll position and lands in NORMAL mode. A terminal whose program has exited stays readable, with its exit status; <code>:terminal</code> starts a new one.</p>
+<p>The shell is <code>$SHELL</code> (or <code>/bin/sh</code>), started in the project directory (<code>:pwd</code>). In a directory listing, <code>Space a</code> → <strong>Terminal here</strong> starts it in that directory. In a file or directory on a connected SSH host, the terminal is your login shell on that host, and its name shows the host. Ctrl-C and the window size reach it. If the host is not connected, strop says so and does not open a shell on your own machine by mistake. <code>:terminal-local</code> opens a shell on your machine on purpose. The directory in the terminal's name is where it started; it does not change when you <code>cd</code>.</p>
+<p>A program running in the terminal cannot change your real terminal's title or window size, and cannot read or write your clipboard. Your own <code>y</code> still copies. <code>:w!</code> and <code>:set noro</code> do not turn a terminal into a file: yank the text into an ordinary buffer to keep it. Closing a split does not stop the program in it. A program that put itself in the background (<code>nohup</code>, <code>setsid</code>) can keep running after its terminal is closed.</p>
+<p>When one terminal is shown in two panes, the pane you type in sets its size. The prebuilt strop needs nothing else installed. To build strop from source you need Zig 0.16.0.</p>
+    </div>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="editor.html">← Indentation, themes, completion and language servers</a><a class="pager-next" href="remote.html">Edit over SSH →</a></nav>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/terminal.md"><code>docs/terminal.md</code></a> from the strop repository at <code>v0.62.0</code>.</p>
+  </article>
+</div>
+</main>
+<footer class="foot">
+  <div class="shell foot-inner">
+    <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.62.0</a> · <a href="../#palette">Palette</a></p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 864.0 549.0" width="864.0" height="549.0" role="img" aria-labelledby="t d">
+<title id="t">strop 0.62.0: search and replace</title>
+<desc id="d">strop's search with a Find field reading total_cents and a With field reading sum_cents; below, each hit grouped by file as a removed line and an added line, and a preview of the first file on the right.</desc>
+<rect width="864.0" height="549.0" rx="6" fill="#15171c"/>
+<g font-family="ui-monospace, &quot;DejaVu Sans Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace" font-size="14.0" fill="#e6e1d6" xml:space="preserve">
+<rect x="28.80" y="12.00" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="25.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">╭</text>
+<text x="45.60" y="25.30" textLength="50.40" lengthAdjust="spacingAndGlyphs" font-weight="bold">search</text>
+<text x="104.40" y="25.30" textLength="730.80" lengthAdjust="spacingAndGlyphs" fill="#858c9a">──────────────────────────────────────────────────────────────────── 7 hits · 5 files ╮</text>
+<rect x="28.80" y="29.50" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="42.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="45.60" y="42.80" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">❯ Find</text>
+<text x="104.40" y="42.80" textLength="92.40" lengthAdjust="spacingAndGlyphs">total_cents</text>
+<text x="826.80" y="42.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="47.00" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="60.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="45.60" y="60.30" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848">❯ With</text>
+<text x="104.40" y="60.30" textLength="75.60" lengthAdjust="spacingAndGlyphs">sum_cents</text>
+<text x="180.00" y="60.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848">▏</text>
+<text x="826.80" y="60.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="64.50" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="77.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="826.80" y="77.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="82.00" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="95.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="54.00" y="95.30" textLength="75.60" lengthAdjust="spacingAndGlyphs" font-weight="bold">README.md</text>
+<text x="138.00" y="95.30" textLength="336.00" lengthAdjust="spacingAndGlyphs" fill="#4a5160">────────────────────────────────────────</text>
+<text x="482.40" y="95.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">1</text>
+<text x="507.60" y="95.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="524.40" y="95.30" textLength="75.60" lengthAdjust="spacingAndGlyphs" font-weight="bold">README.md</text>
+<text x="600.00" y="95.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">:8</text>
+<text x="826.80" y="95.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="99.50" width="16.80" height="17.5" fill="#1c1f25"/>
+<rect x="45.60" y="99.50" width="453.60" height="17.5" fill="#23272f"/>
+<rect x="499.20" y="99.50" width="336.00" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="45.60" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848">▌</text>
+<text x="87.60" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">8</text>
+<text x="112.80" y="112.80" textLength="142.80" lengthAdjust="spacingAndGlyphs" fill="#e8707c">- …whole cents; `</text>
+<text x="255.60" y="112.80" textLength="92.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">total_cents</text>
+<text x="348.00" y="112.80" textLength="151.20" lengthAdjust="spacingAndGlyphs" fill="#e8707c">` never goes thro…</text>
+<text x="507.60" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="541.20" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">1</text>
+<text x="558.00" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="574.80" y="112.80" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold"># tally</text>
+<text x="826.80" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="117.00" width="16.80" height="17.5" fill="#1c1f25"/>
+<rect x="45.60" y="117.00" width="453.60" height="17.5" fill="#23272f"/>
+<rect x="499.20" y="117.00" width="336.00" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="130.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="112.80" y="130.30" textLength="142.80" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">+ …whole cents; `</text>
+<text x="255.60" y="130.30" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sum_cents</text>
+<text x="331.20" y="130.30" textLength="168.00" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">` never goes throug…</text>
+<text x="507.60" y="130.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="541.20" y="130.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">2</text>
+<text x="558.00" y="130.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="130.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="134.50" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="147.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="54.00" y="147.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">src/</text>
+<text x="87.60" y="147.80" textLength="75.60" lengthAdjust="spacingAndGlyphs" font-weight="bold">ledger.rs</text>
+<text x="171.60" y="147.80" textLength="302.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">────────────────────────────────────</text>
+<text x="482.40" y="147.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">1</text>
+<text x="507.60" y="147.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="541.20" y="147.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">3</text>
+<text x="558.00" y="147.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="574.80" y="147.80" textLength="243.60" lengthAdjust="spacingAndGlyphs">Reads a ledger, one entry per</text>
+<text x="826.80" y="147.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="152.00" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="165.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="79.20" y="165.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">30</text>
+<text x="112.80" y="165.30" textLength="100.80" lengthAdjust="spacingAndGlyphs" fill="#e8707c">-     pub fn</text>
+<text x="222.00" y="165.30" textLength="92.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">total_cents</text>
+<text x="314.40" y="165.30" textLength="134.40" lengthAdjust="spacingAndGlyphs" fill="#e8707c">(&amp;self) -&gt; i64 {</text>
+<text x="507.60" y="165.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="541.20" y="165.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">4</text>
+<text x="558.00" y="165.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="165.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="169.50" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="182.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="112.80" y="182.80" textLength="100.80" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">+     pub fn</text>
+<text x="222.00" y="182.80" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sum_cents</text>
+<text x="297.60" y="182.80" textLength="134.40" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">(&amp;self) -&gt; i64 {</text>
+<text x="507.60" y="182.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="541.20" y="182.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">5</text>
+<text x="558.00" y="182.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="608.40" y="182.80" textLength="210.00" lengthAdjust="spacingAndGlyphs" fill="#aec37f">2026-03-02  groceries   -</text>
+<text x="826.80" y="182.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="187.00" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="200.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="54.00" y="200.30" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">src/</text>
+<text x="87.60" y="200.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" font-weight="bold">main.rs</text>
+<text x="154.80" y="200.30" textLength="319.20" lengthAdjust="spacingAndGlyphs" fill="#4a5160">──────────────────────────────────────</text>
+<text x="482.40" y="200.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">1</text>
+<text x="507.60" y="200.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="541.20" y="200.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">6</text>
+<text x="558.00" y="200.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="608.40" y="200.30" textLength="210.00" lengthAdjust="spacingAndGlyphs" fill="#aec37f">2026-03-03  salary     31</text>
+<text x="826.80" y="200.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="204.50" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="217.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="79.20" y="217.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">22</text>
+<text x="112.80" y="217.80" textLength="142.80" lengthAdjust="spacingAndGlyphs" fill="#e8707c">- …:money(ledger.</text>
+<text x="255.60" y="217.80" textLength="92.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">total_cents</text>
+<text x="348.00" y="217.80" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#e8707c">()));</text>
+<text x="507.60" y="217.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="541.20" y="217.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">7</text>
+<text x="558.00" y="217.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="217.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="222.00" width="487.20" height="17.5" fill="#1c1f25"/>
+<rect x="516.00" y="222.00" width="302.40" height="17.5" fill="#23272f"/>
+<rect x="818.40" y="222.00" width="16.80" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="235.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="112.80" y="235.30" textLength="142.80" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">+ …:money(ledger.</text>
+<text x="255.60" y="235.30" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sum_cents</text>
+<text x="331.20" y="235.30" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">()));</text>
+<text x="507.60" y="235.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="516.00" y="235.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848">▌</text>
+<text x="541.20" y="235.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" font-weight="bold">8</text>
+<text x="558.00" y="235.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="574.80" y="235.30" textLength="243.60" lengthAdjust="spacingAndGlyphs">Amounts are kept as whole cen</text>
+<text x="826.80" y="235.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="239.50" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="252.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="54.00" y="252.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">src/</text>
+<text x="87.60" y="252.80" textLength="75.60" lengthAdjust="spacingAndGlyphs" font-weight="bold">report.rs</text>
+<text x="171.60" y="252.80" textLength="302.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">────────────────────────────────────</text>
+<text x="482.40" y="252.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">2</text>
+<text x="507.60" y="252.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="541.20" y="252.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">9</text>
+<text x="558.00" y="252.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="252.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="257.00" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="270.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="79.20" y="270.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">24</text>
+<text x="112.80" y="270.30" textLength="134.40" lengthAdjust="spacingAndGlyphs" fill="#e8707c">- … the ledger's</text>
+<text x="255.60" y="270.30" textLength="92.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">total_cents</text>
+<text x="348.00" y="270.30" textLength="151.20" lengthAdjust="spacingAndGlyphs" fill="#e8707c">, in whole percen…</text>
+<text x="507.60" y="270.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="532.80" y="270.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#858c9a">10</text>
+<text x="558.00" y="270.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="574.80" y="270.30" textLength="184.80" lengthAdjust="spacingAndGlyphs">An empty ledger prints</text>
+<text x="768.00" y="270.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#9da3af">`</text>
+<text x="776.40" y="270.30" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#aec37f">no en</text>
+<text x="826.80" y="270.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="274.50" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="287.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="112.80" y="287.80" textLength="134.40" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">+ … the ledger's</text>
+<text x="255.60" y="287.80" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sum_cents</text>
+<text x="331.20" y="287.80" textLength="159.60" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">, in whole percent.</text>
+<text x="507.60" y="287.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="287.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="292.00" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="305.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="79.20" y="305.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">26</text>
+<text x="112.80" y="305.30" textLength="159.60" lengthAdjust="spacingAndGlyphs" fill="#e8707c">-     match ledger.</text>
+<text x="272.40" y="305.30" textLength="92.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">total_cents</text>
+<text x="364.80" y="305.30" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#e8707c">() {</text>
+<text x="507.60" y="305.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="305.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="309.50" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="322.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="112.80" y="322.80" textLength="159.60" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">+     match ledger.</text>
+<text x="272.40" y="322.80" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sum_cents</text>
+<text x="348.00" y="322.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">() {</text>
+<text x="507.60" y="322.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="322.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="327.00" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="340.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="54.00" y="340.30" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">tests/</text>
+<text x="104.40" y="340.30" textLength="75.60" lengthAdjust="spacingAndGlyphs" font-weight="bold">report.rs</text>
+<text x="188.40" y="340.30" textLength="285.60" lengthAdjust="spacingAndGlyphs" fill="#4a5160">──────────────────────────────────</text>
+<text x="482.40" y="340.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">2</text>
+<text x="507.60" y="340.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="340.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="344.50" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="357.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="79.20" y="357.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">12</text>
+<text x="112.80" y="357.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#e8707c">- fn</text>
+<text x="154.80" y="357.80" textLength="92.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">total_cents</text>
+<text x="247.20" y="357.80" textLength="176.40" lengthAdjust="spacingAndGlyphs" fill="#e8707c">_sums_every_entry() {</text>
+<text x="507.60" y="357.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="357.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="362.00" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="375.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="112.80" y="375.30" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">+ fn</text>
+<text x="154.80" y="375.30" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sum_cents</text>
+<text x="230.40" y="375.30" textLength="176.40" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">_sums_every_entry() {</text>
+<text x="507.60" y="375.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="375.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="379.50" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="392.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="79.20" y="392.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">13</text>
+<text x="112.80" y="392.80" textLength="142.80" lengthAdjust="spacingAndGlyphs" fill="#e8707c">- …_eq!(sample().</text>
+<text x="255.60" y="392.80" textLength="92.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">total_cents</text>
+<text x="348.00" y="392.80" textLength="100.80" lengthAdjust="spacingAndGlyphs" fill="#e8707c">(), 303900);</text>
+<text x="507.60" y="392.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="392.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="397.00" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="410.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="112.80" y="410.30" textLength="142.80" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">+ …_eq!(sample().</text>
+<text x="255.60" y="410.30" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sum_cents</text>
+<text x="331.20" y="410.30" textLength="100.80" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">(), 303900);</text>
+<text x="507.60" y="410.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="410.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="414.50" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="427.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="507.60" y="427.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="427.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="432.00" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="445.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="507.60" y="445.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="445.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="449.50" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="462.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="507.60" y="462.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="462.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="467.00" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="480.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="507.60" y="480.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="480.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="484.50" width="806.40" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="497.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<text x="507.60" y="497.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
+<text x="826.80" y="497.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
+<rect x="28.80" y="502.00" width="16.80" height="17.5" fill="#1c1f25"/>
+<rect x="45.60" y="502.00" width="58.80" height="17.5" fill="#23272f"/>
+<rect x="104.40" y="502.00" width="75.60" height="17.5" fill="#1c1f25"/>
+<rect x="180.00" y="502.00" width="42.00" height="17.5" fill="#23272f"/>
+<rect x="222.00" y="502.00" width="67.20" height="17.5" fill="#1c1f25"/>
+<rect x="289.20" y="502.00" width="67.20" height="17.5" fill="#23272f"/>
+<rect x="356.40" y="502.00" width="84.00" height="17.5" fill="#1c1f25"/>
+<rect x="440.40" y="502.00" width="67.20" height="17.5" fill="#23272f"/>
+<rect x="507.60" y="502.00" width="92.40" height="17.5" fill="#1c1f25"/>
+<rect x="600.00" y="502.00" width="67.20" height="17.5" fill="#23272f"/>
+<rect x="667.20" y="502.00" width="168.00" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="515.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">╰</text>
+<text x="54.00" y="515.30" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">enter</text>
+<text x="112.80" y="515.30" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">review</text>
+<text x="188.40" y="515.30" textLength="25.20" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">tab</text>
+<text x="230.40" y="515.30" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#858c9a">field</text>
+<text x="297.60" y="515.30" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">ctrl-t</text>
+<text x="364.80" y="515.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#858c9a">replace</text>
+<text x="448.80" y="515.30" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">ctrl-x</text>
+<text x="516.00" y="515.30" textLength="67.20" lengthAdjust="spacingAndGlyphs" fill="#858c9a">drop hit</text>
+<text x="608.40" y="515.30" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">ctrl-d</text>
+<text x="675.60" y="515.30" textLength="159.60" lengthAdjust="spacingAndGlyphs" fill="#858c9a">drop file ────────╯</text>
+<rect x="12.00" y="519.50" width="67.20" height="17.5" fill="#4b644d"/>
+<rect x="79.20" y="519.50" width="772.80" height="17.5" fill="#17191f"/>
+<text x="20.40" y="532.80" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#14161b" font-weight="bold">SEARCH</text>
+<text x="96.00" y="532.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#464b54">main</text>
+<text x="129.60" y="532.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#6c5737">*</text>
+<text x="154.80" y="532.80" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#72716f">README.md</text>
+<text x="784.80" y="532.80" textLength="67.20" lengthAdjust="spacingAndGlyphs" fill="#464b54">1:1  10%</text>
+</g></svg>

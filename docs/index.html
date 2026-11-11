@@ -4,8 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Docs — strop</title>
-<meta name="description" content="strop reference documentation, generated from the repository&#x27;s docs directory.">
+<meta name="description" content="strop documentation, by what you want to do.">
 <meta name="color-scheme" content="dark light">
+<meta name="strop-version" content="0.62.0">
+<meta name="strop-describes" content="0.62">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/site.css">
 <script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
@@ -17,8 +19,8 @@
     <a class="brand" href="../">strop</a>
     <nav aria-label="Site">
       <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../neovim.html">From Neovim</a>
       <a href="../changelog.html">Changelog</a>
-      <a href="../#status">Status</a>
       <a href="https://github.com/stropdev/strop">GitHub</a>
     </nav>
   </div>
@@ -26,23 +28,44 @@
 <main id="main">
 <div class="shell page">
   <p class="eyebrow">Docs</p>
-  <h1>The reference</h1>
-  <p class="lede">Every page here is generated from the editor repository's <a href="https://github.com/stropdev/strop/tree/main/docs"><code>docs/</code></a> directory at <code>v0.61.0</code>, so the site cannot say something the repository does not. For the input grammar, see <kbd>Space</kbd> <kbd>?</kbd> inside the editor or the <a href="https://github.com/stropdev/strop#the-grammar-in-one-card">README card</a>.</p>
-  <h2>Using strop</h2>
+  <h1>Docs</h1>
+  <p class="lede">Pick what you want to do. Inside the editor, <kbd>Space</kbd> <kbd>?</kbd> lists every key and <code>:help</code> opens the same reference.</p>
+  <h2>Start</h2>
   <ul class="doc-cards">
-    <li><a href="cli.html"><strong>The strop CLI</strong><span>One binary, subcommands for the occasional jobs, flags for everything else. <code>strop --help</code> prints the same reference live (styled when stdout is a terminal, plain when piped).</span></a></li><li><a href="editor.html"><strong>Editor surfaces</strong><span>Themes, completion, indentation and the visual system — the parts of strop you configure rather than drive. For the input grammar see the README's card; for pickers see <a href="search.html">search.md</a>.</span></a></li><li><a href="search.html"><strong>Search and the query language</strong><span>One bounded qualifier grammar is shared by every picker surface: file find (<code>Space f</code>), content search (<code>Space /</code>), replace (<code>Space R</code>), document symbols, workspace symbols (<code>Space S</code>) and the jump list menu (<code>ctrl-o</code> history, <code>Space j</code>). Qualifiers, highlighting, suggestions and errors behave identically everywhere — what you learn in one field works in all of them.</span></a></li><li><a href="filesystem.html"><strong>The filesystem workspace</strong><span>Open a directory with <code>strop DIRECTORY</code>, <code>:browse</code>, or <code>:e DIRECTORY</code>. <code>Space e</code> reveals the current source in its parent. Browsing keeps the process cwd unchanged; Enter opens a structured entry and <code>-</code>/Backspace goes to its parent. In a Directory buffer <code>Space a</code> lists the filesystem operations valid there; <code>:fs</code> with no verb lists them from anywhere. On a source file <code>Space a</code> is about the code: the language server's actions and any recovery a failed save or connection left behind.</span></a></li><li><a href="remote.html"><strong>SSH and remote editing</strong><span>Remote files are real buffers with their own identity, never a local lookalike. strop reaches a host with plain OpenSSH: nothing is installed there.</span></a></li><li><a href="terminal-and-scripting.html"><strong>Terminals</strong><span>Strop's terminal is Neovim's: a real PTY in a real buffer, one escape chord, and a NORMAL mode that is just NORMAL mode.</span></a></li><li><a href="vim-compat.html"><strong>Vim compatibility</strong><span>Generated from the command table (<code>strop compat</code>). <code>✓</code> ships exactly; <code>(soon)</code> is a planned slot. What Neovim binds and strop does not is listed at the end, under Missing and Reassigned.</span></a></li>
+    <li><a href="../start.html"><strong>First ten minutes</strong><span>Install, open a project, find a file, search, replace, commit.</span></a></li>
+    <li><a href="../neovim.html"><strong>Coming from Neovim</strong><span>What works the same, what differs, and what is missing.</span></a></li>
   </ul>
-  <h2>Design records</h2>
+  <h2>Find and change</h2>
   <ul class="doc-cards">
-    <li><a href="nucleo-decision.html"><strong>Nucleo decision record (0022 §2)</strong><span>Date: 2026-09-06. Decision: <strong>adopt nucleo-matcher</strong> for the picker's row scoring.</span></a></li>
+    <li><a href="search.html"><strong>Find files, search and replace</strong><span>The file finder, project search and replace, editing every hit in one buffer, and the filters that narrow them: <code>path:</code>, <code>language:</code>, <code>regex:</code>.</span></a></li>
+    <li><a href="filesystem.html"><strong>Create, rename, move and delete files</strong><span>The directory buffer and its file operations. Each one is shown for review before it happens.</span></a></li>
   </ul>
-  <p class="aside">Design contracts — the numbered plans every behaviour answers to — live in <a href="https://github.com/stropdev/strop/tree/main/plans"><code>plans/</code></a>; the <a href="../#status">Status</a> section lists the ones in force.</p>
+  <h2>Git</h2>
+  <ul class="doc-cards">
+    <li><a href="git.html"><strong>Git</strong><span>Status, commit, branches, blame, log, history and hunks.</span></a></li>
+  </ul>
+  <h2>Editing and code</h2>
+  <ul class="doc-cards">
+    <li><a href="editor.html"><strong>Indentation, themes, completion and language servers</strong><span>What the editor does as you type, the six palettes, registers, windows, sessions, and how language servers start.</span></a></li>
+  </ul>
+  <h2>Terminals and other machines</h2>
+  <ul class="doc-cards">
+    <li><a href="terminal.html"><strong>Terminals</strong><span>A shell in a split whose output you can search and yank from.</span></a></li>
+    <li><a href="remote.html"><strong>Edit over SSH</strong><span>Open files and directories on another machine with plain OpenSSH.</span></a></li>
+  </ul>
+  <h2>Reference</h2>
+  <ul class="doc-cards">
+    <li><a href="cli.html"><strong>The command line</strong><span>Every subcommand and flag of <code>strop</code>.</span></a></li>
+    <li><a href="vim-compat.html"><strong>Every key</strong><span>The whole keymap, generated from the binary's command table.</span></a></li>
+    <li><a href="scripting.html"><strong>Scripts and bug reports</strong><span>Drive the editor from a script of keys, and record a session to attach to a bug.</span></a></li>
+  </ul>
+  <p class="aside">The reference pages are the files in the repository's <a href="https://github.com/stropdev/strop/tree/main/docs"><code>docs/</code></a> directory at <code>v0.62.0</code>, shown as they are.</p>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.61.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.62.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

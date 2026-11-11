@@ -1,0 +1,111 @@
+<!--
+title: strop — Vim's keys. Nothing to configure.
+description: strop is a modal text editor for the terminal with Vim's keys. File finder, project search and replace, git, language servers, a terminal and SSH editing are built in. One static binary for Linux and WSL on x86_64.
+class: home
+-->
+<section class="hero shell" aria-labelledby="hero-title">
+  <h1 id="hero-title">Vim's keys. Nothing to configure.</h1>
+  <p class="lede">strop is a modal text editor for the terminal. It uses Vim's commands as they are, and it comes with what you would otherwise add yourself: a file finder, project search and replace, git, language servers, a terminal and editing over SSH. It is one static binary. There are no plugins and nothing to set up.</p>
+  <div class="install-row">
+    <pre class="cmd"><code><span class="prompt">$</span> curl -fsSL https://strop.dev/install.sh | sh</code></pre>
+    <button type="button" class="button js-only" data-copy="curl -fsSL https://strop.dev/install.sh | sh">Copy</button>
+    <p class="platform"><strong>Linux and WSL, x86_64</strong><span>the only build; <a href="#install">details</a></span></p>
+  </div>
+  <p class="copy-status" data-copy-status role="status" aria-live="polite"></p>
+  <p class="chip-row">
+    <a href="https://github.com/stropdev/strop/releases/latest">v{{version}}</a>
+    <span>released {{date}}</span>
+    <span>alpha</span>
+    <span>MIT</span>
+  </p>
+</section>
+
+<section class="shell frames" aria-label="Screens of the editor">
+  {{frames}}
+</section>
+
+<section class="section shell" id="does" aria-labelledby="does-title">
+  <h2 id="does-title">What it does</h2>
+  <ul class="does">
+    <li>
+      <span class="what"><a href="docs/search.html">Find a file</a></span>
+      <span class="keys"><kbd>Space</kbd> <kbd>f</kbd></span>
+      <span class="how">Type part of the name. The files you use most in the project come first.</span>
+    </li>
+    <li>
+      <span class="what"><a href="docs/search.html">Search the project</a></span>
+      <span class="keys"><kbd>Space</kbd> <kbd>/</kbd></span>
+      <span class="how">Results update as you type, grouped by file. Smart case, with one key each for regex and whole word.</span>
+    </li>
+    <li>
+      <span class="what"><a href="docs/search.html">Replace</a></span>
+      <span class="keys"><kbd>Space</kbd> <kbd>R</kbd></span>
+      <span class="how">Every hit is shown as a removed line and an added line while you type. <kbd>Enter</kbd> shows the review, <kbd>Enter</kbd> again applies it, and <kbd>u</kbd> undoes it in the files too.</span>
+    </li>
+    <li>
+      <span class="what"><a href="docs/search.html">Edit the hits</a></span>
+      <span class="keys"><kbd>Ctrl-O</kbd></span>
+      <span class="how">In search results, references or diagnostics, this collects the hits into one buffer. Edit them there with any command; <code>:w</code> writes every file you changed.</span>
+    </li>
+    <li>
+      <span class="what"><a href="docs/git.html">Git</a></span>
+      <span class="keys"><kbd>Space</kbd> <kbd>g</kbd> <kbd>g</kbd></span>
+      <span class="how">Stage, unstage and commit from one status buffer. Branches, blame, log and file history are under <kbd>Space</kbd> <kbd>g</kbd> as well.</span>
+    </li>
+    <li>
+      <span class="what"><a href="docs/editor.html">Language servers</a></span>
+      <span class="keys"><kbd>gd</kbd></span>
+      <span class="how">Definition, references, rename, diagnostics, completion and formatting, from the servers already on your <code>PATH</code>. Syntax highlighting for {{languages}} languages is in the binary.</span>
+    </li>
+    <li>
+      <span class="what"><a href="docs/terminal.html">Terminal</a></span>
+      <span class="keys"><kbd>Space</kbd> <kbd>t</kbd></span>
+      <span class="how">A shell in a split. Its output is a buffer, so you move, search and yank in it like any other.</span>
+    </li>
+    <li>
+      <span class="what"><a href="docs/remote.html">SSH</a></span>
+      <span class="keys"><kbd>Space</kbd> <kbd>o</kbd></span>
+      <span class="how">Open and edit files on another machine over plain OpenSSH, or start with <code>strop ssh://host/path</code>. Nothing is installed on the host.</span>
+    </li>
+  </ul>
+  <p class="does-note">The finder, search, buffers and symbols are one kind of list with one set of keys, and whatever you open from them is an ordinary buffer. <kbd>Space</kbd> <kbd>?</kbd> lists every key.</p>
+</section>
+
+<section class="section shell" aria-label="Where to go next">
+  <ul class="next">
+    <li><a href="neovim.html"><strong>Coming from Neovim?</strong><span>What works the same, what differs, and what is missing.</span></a></li>
+    <li><a href="start.html"><strong>First ten minutes</strong><span>Install it, open a project and go through the loop once.</span></a></li>
+    <li><a href="engineering.html"><strong>How it's built</strong><span>The code that moves cursors and marks through an edit is proved in Lean, and the keys are tested against Neovim itself before every release.</span></a></li>
+  </ul>
+</section>
+
+<section class="section shell" id="install" aria-labelledby="install-title">
+  <h2 id="install-title">Install</h2>
+  <div class="install-grid">
+    <div>
+      <h3>Install or reinstall</h3>
+      <pre><code>curl -fsSL https://strop.dev/install.sh | sh</code></pre>
+      <p>The script downloads the release tarball, checks its SHA-256 and puts <code>strop</code> on your <code>PATH</code>. <a href="https://github.com/stropdev/strop/blob/main/install.sh">Read it first</a> if you like, or take the tarball and its <code>.sha256</code> from the <a href="https://github.com/stropdev/strop/releases/latest">release page</a>.</p>
+    </div>
+    <div>
+      <h3>Update</h3>
+      <pre><code>strop update</code></pre>
+      <p><code>strop update --check</code> only looks. Nothing else is downloaded, ever: grammars and palettes are in the binary.</p>
+    </div>
+    <div>
+      <h3>Platforms</h3>
+      <p>Linux and WSL on x86_64 (<code>x86_64-unknown-linux-musl</code>). On Windows, run it inside WSL.</p>
+      <p>There is no macOS, ARM or native Windows build, and none is scheduled. The old macOS, aarch64, crates.io and Homebrew packages are not updated.</p>
+    </div>
+  </div>
+  <p class="alpha">strop is alpha. It changes with every release; the <a href="changelog.html">changelog</a> says how.</p>
+</section>
+
+<section class="section shell" id="palette" aria-labelledby="palette-title">
+  <h2 id="palette-title">Palettes</h2>
+  <p class="section-lede">This site uses the editor's six palettes, with the colour values the binary ships. Pick one to see it here; <code>:theme</code> picks it in the editor.</p>
+  <div class="palette-bar" role="group" aria-label="Palette">
+    {{palettes}}
+  </div>
+  <p class="palette-note">The choice stays in this browser. Press the applied palette again to go back to your system's light or dark preference.</p>
+</section>
