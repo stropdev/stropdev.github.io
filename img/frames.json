@@ -1,0 +1,35 @@
+{
+  "version": "0.58.0",
+  "cols": 100,
+  "rows": 30,
+  "palette": "hone",
+  "frames": {
+    "find": {
+      "file": "img/frame-find.svg",
+      "tab": "Find",
+      "surface": "files",
+      "width": 864,
+      "height": 549,
+      "caption": "<kbd>Space</kbd> <kbd>f</kbd>, then <code>sched.h</code>, in a tree with the Linux kernel's 97,362 file paths. The fixture has the kernel's paths, not its sources: each file is a two-line stub, which is what the preview shows.",
+      "alt": "The strop file finder over 97,362 files with sched.h typed: a list of matching file names with their directories on the left, a preview of the selected file on the right."
+    },
+    "replace": {
+      "file": "img/frame-replace.svg",
+      "tab": "Search and replace",
+      "surface": "replace",
+      "width": 864,
+      "height": 549,
+      "caption": "<kbd>Space</kbd> <kbd>R</kbd> in a small Rust project: <code>total_cents</code> to <code>sum_cents</code>. Every hit is listed under its file as a <code>-</code> row and a <code>+</code> row while you type; nothing has changed on disk yet.",
+      "alt": "strop's search with a Find field reading total_cents and a With field reading sum_cents; below, each hit grouped by file as a removed line and an added line, and a preview of the first file on the right."
+    },
+    "git": {
+      "file": "img/frame-git.svg",
+      "tab": "Git",
+      "surface": "hunk",
+      "width": 864,
+      "height": 549,
+      "caption": "<kbd>]c</kbd> to the next changed hunk, then <kbd>Space</kbd> <kbd>g</kbd> <kbd>p</kbd>: the hunk under the cursor as a diff, in an ordinary read-only buffer.",
+      "alt": "strop showing one git hunk as a diff: old and new line numbers in two columns, the removed and added lines marked in the gutter."
+    }
+  }
+}

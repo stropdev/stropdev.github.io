@@ -1,0 +1,7 @@
+[package]
+name = "tally"
+version = "0.3.1"
+edition = "2021"
+description = "Sum a ledger of dated entries and print a report."
+
+[dependencies]

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 864.0 549.0" width="864.0" height="549.0" role="img" aria-labelledby="t d">
+<title id="t">strop 0.58.0: git</title>
+<desc id="d">strop showing one git hunk as a diff: old and new line numbers in two columns, the removed and added lines marked in the gutter.</desc>
+<rect width="864.0" height="549.0" rx="6" fill="#15171c"/>
+<g font-family="ui-monospace, &quot;DejaVu Sans Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace" font-size="14.0" fill="#e6e1d6" xml:space="preserve">
+<rect x="12.00" y="12.00" width="831.60" height="17.5" fill="#1c1f25"/>
+<text x="87.60" y="25.30" textLength="33.60" lengthAdjust="spacingAndGlyphs" font-weight="bold">hunk</text>
+<text x="129.60" y="25.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#8fc48a" font-weight="bold">+2</text>
+<text x="154.80" y="25.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#e8707c" font-weight="bold">-0</text>
+<rect x="87.60" y="29.50" width="756.00" height="17.5" fill="#1c1f25"/>
+<text x="87.60" y="42.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#858c9a">@@</text>
+<text x="112.80" y="42.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#e8707c">-6,3</text>
+<text x="154.80" y="42.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">+6,5</text>
+<text x="196.80" y="42.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#858c9a">@@</text>
+<text x="37.20" y="60.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">6</text>
+<text x="70.80" y="60.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">6</text>
+<text x="121.20" y="60.30" textLength="252.00" lengthAdjust="spacingAndGlyphs">2026-03-03  salary     3100.00</text>
+<text x="37.20" y="77.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">7</text>
+<text x="70.80" y="77.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">7</text>
+<text x="37.20" y="95.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">8</text>
+<text x="70.80" y="95.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">8</text>
+<text x="87.60" y="95.30" textLength="621.60" lengthAdjust="spacingAndGlyphs">Amounts are kept as whole cents; `total_cents` never goes through a float.</text>
+<rect x="87.60" y="99.50" width="756.00" height="17.5" fill="#1e2d22"/>
+<text x="12.00" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#8fc48a" font-weight="bold">▎</text>
+<text x="70.80" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">9</text>
+<rect x="87.60" y="117.00" width="756.00" height="17.5" fill="#1e2d22"/>
+<text x="12.00" y="130.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#8fc48a" font-weight="bold">▎</text>
+<text x="62.40" y="130.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#858c9a">10</text>
+<text x="87.60" y="130.30" textLength="302.40" lengthAdjust="spacingAndGlyphs" fill="#8fc48a">An empty ledger prints `no entries`.</text>
+<text x="12.00" y="147.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="165.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="182.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="200.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="217.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="235.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="252.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="270.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="287.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="305.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="322.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="340.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="357.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="375.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="392.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="410.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="427.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="445.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="462.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="480.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="497.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<text x="12.00" y="515.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
+<rect x="12.00" y="519.50" width="67.20" height="17.5" fill="#e8a848"/>
+<rect x="79.20" y="519.50" width="772.80" height="17.5" fill="#1c1f25"/>
+<text x="20.40" y="532.80" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#15171c" font-weight="bold">NORMAL</text>
+<text x="96.00" y="532.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#858c9a">main</text>
+<text x="146.40" y="532.80" textLength="33.60" lengthAdjust="spacingAndGlyphs">hunk</text>
+<text x="188.40" y="532.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#d9a85a">[RO]</text>
+<text x="784.80" y="532.80" textLength="67.20" lengthAdjust="spacingAndGlyphs" fill="#858c9a">1:1  14%</text>
+</g></svg>
