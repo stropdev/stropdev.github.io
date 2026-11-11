@@ -1,10 +1,10 @@
 name: pages
 
 # strop.dev is static: every file in the repository is served as-is, so every
-# push to main deploys. The generated pages (docs/, changelog.html, the
-# stamped index.html) are rebuilt by `python3 build.py /path/to/strop` and
-# committed; there is no build step here. The app repo's demo/release
-# workflows ping `rebuild` to redeploy after they push assets.
+# push to main deploys. The generated pages are rebuilt by
+# `python3 build.py /path/to/strop` and committed (see README.md); there is
+# no build step here. The app repo's release workflow pings `rebuild` to
+# redeploy after it pushes.
 on:
   workflow_dispatch:
   repository_dispatch:

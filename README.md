@@ -1,119 +1,140 @@
 # stropdev.github.io
 
-The strop.dev site. Static HTML, one stylesheet, one small script, deployed
-as-is by `.github/workflows/pages.yml` on every push to `main`. Everything the
-site says about the editor is read from the editor repository
-(`stropdev/strop`) by `build.py`; the generated pages are committed.
+The strop.dev site. Static HTML, one stylesheet, one small script, no
+trackers and nothing loaded from another origin. `.github/workflows/pages.yml`
+deploys every file on every push to `main`. What the site says about the
+editor is read from the editor repository (`stropdev/strop`) by `build.py`,
+and the frames on the front page are captured from the binary by
+`tools/frames.py`; the generated pages are committed.
 
 ## Layout
 
 | Path | What it is |
 |---|---|
-| `index.html` | Hand-written landing page with build-stamped regions (`<!-- build:NAME -->…<!-- /build:NAME -->`): version, release date, language count, the Lean claim list, the Status table |
-| `docs/*.html` | Generated from the editor repo's `docs/*.md`, one page each, plus `docs/index.html` |
-| `changelog.html` | Generated from the editor repo's `CHANGELOG.md` |
+| `src/*.html` | The hand-written pages as page bodies: `index` (landing), `start` (First ten minutes), `neovim` (Coming from Neovim), `engineering`. Each starts with a `key: value` header comment (`title`, `description`, optional `nav`, `class`) and takes `{{slots}}` that `build.py` fills |
+| `index.html`, `start.html`, `neovim.html`, `engineering.html` | Generated from `src/` |
+| `docs/*.html` | Generated from the editor repo's `docs/*.md`, one page each, plus `docs/index.html`, which groups them by task (`DOC_GROUPS` in `build.py` holds the site's titles and one-liners) |
+| `changelog.html`, `changelog-all.html` | The last three releases, and all of them, from the editor repo's `CHANGELOG.md` |
 | `CHANGELOG.md`, `install.sh` | Vendored copies from the editor repo at the released tag (`install.sh` is what `curl -fsSL https://strop.dev/install.sh` serves) |
-| `img/hero.svg` | The hero: a real terminal frame of the editor, converted from a tmux capture by `tools/ansi2svg.py` |
-| `img/demo.gif`, `img/demo-poster.png` | The recording the editor repo's demo workflow pushes here, and a still frame shown until it is opened |
+| `img/frame-*.svg`, `img/frames.json` | The landing page's frames and their manifest (version, captions), written by `tools/frames.py` |
 | `assets/site.css`, `assets/site.js`, `assets/favicon.svg` | The editor's six palettes as CSS custom properties, the palette switcher and copy button, the icon |
-| `roadmap.html`, `docs.html` | Meta-refresh stubs for old links (`/#status` and `/docs/`) |
-| `build.py`, `tools/` | The build, the frame converter and the site checker; Python 3.8+, standard library only |
+| `docs.html` | Meta-refresh stub for an old link |
+| `build.py`, `tools/` | The build (`tools/md.py` is its Markdown converter), the frame capture (`frames.py`, `ansi2svg.py`, `fixture/`) and the site checker; Python 3.8+, standard library only |
+| `notes/` | Working notes, not part of the site's content |
 
-## Rebuilding for a release
+## Publishing a release
 
 From a checkout of `stropdev/strop` at the released tag (the build refuses a
-tree whose `Cargo.toml` version has no `CHANGELOG.md` entry):
+tree whose `Cargo.toml` version has no `CHANGELOG.md` entry), with the
+released binary:
 
 ```sh
+python3 tools/frames.py /path/to/strop-binary \
+    --paths /path/to/strop/crates/strop-picker/fixtures/linux-7.4-rc2-paths.txt.gz
 python3 build.py /path/to/strop
 python3 tools/check_site.py .
 git add -A && git commit -m "Publish strop X.Y.Z"
 ```
 
-This vendors `CHANGELOG.md` and `install.sh`, regenerates `docs/` and
-`changelog.html`, and stamps `index.html`. The output is deterministic for a
-given source tree; the pages record the `git describe` of the source they
-were built from. Then refresh the hero (below), check locally with
-`python3 -m http.server` and push `main`; Pages deploys every file.
+Frames first: `build.py` writes the captions from `img/frames.json`, and
+`check_site.py` fails when the frames are of a different version than the
+site. Check locally with `python3 -m http.server`, then push `main`.
 
-The Markdown converter in `build.py` handles exactly the subset the repo's
-documents use — ATX headings, paragraphs, `-`/`1.` lists with wrapped lines,
-fenced code, pipe tables, inline code, links, reference links, bold, italic —
-and fails the build on anything else rather than guessing. Relative `*.md`
-links become `*.html`; `../plans/…` links point at GitHub.
+`build.py` vendors `CHANGELOG.md` and `install.sh`, regenerates every page
+and syncs the palette values in `assets/site.css` from
+`crates/strop-core/src/theme/*.rs`. The output is deterministic for a given
+source tree and set of frames.
 
-`tools/check_site.py` parses every page with the stdlib HTML parser (balanced
-tags, unique ids), resolves every internal link and anchor, and prints the
-contrast ratios of each palette's text tokens.
+### The site describes one release
 
-## Regenerating the hero
+The copy in `src/` describes strop as of `SITE_DESCRIBES` in `build.py`
+(0.62). Built from an older tree, every page carries a "Preview" line, and
+`check_site.py` reports keys that tree does not have yet as pending instead
+of failing. From 0.62 on the line is gone and a missing key fails. When the
+copy is next rewritten ahead of a release, raise `SITE_DESCRIBES`.
 
-`img/hero.svg` must be a frame of the released binary — never a drawing. The
-frame shows an operator-pending preview: `d/width` composing in a Rust file,
-so the search card counts matches and the statusline names the pending delete
-and its exact range before Enter. Capture it at 140×40 in the Hone palette
-with tmux, then convert:
+### What the checker checks
 
-```sh
-cd /path/to/strop
-tmux -L hero -f /dev/null new-session -d -s hero -x 140 -y 40 \
-  'strop --theme hone crates/strop/src/render/statusline.rs'
-sleep 2                                      # let the editor start and paint
-tmux -L hero send-keys -t hero -l '24G'      # a line below where the search card sits
-sleep 0.3
-tmux -L hero send-keys -t hero -l 'd/width'  # compose; do not press Enter
-sleep 0.5
-tmux -L hero capture-pane -e -p -t hero > /tmp/hero.ansi
-tmux -L hero kill-server
+`tools/check_site.py` fails when:
 
-cd /path/to/stropdev.github.io
-python3 tools/ansi2svg.py /tmp/hero.ansi img/hero.svg --cols 140 --rows 40 \
-  --default-bg '#15171c' --default-fg '#e6e1d6' \
-  --title 'strop: d/width composing in statusline.rs' \
-  --desc 'A 140 by 40 terminal frame of the strop editor with a search card and the pending delete named in the statusline.'
-```
+- a page does not parse (balanced tags, unique ids), or an internal link or
+  anchor does not resolve;
+- a page loads anything from another origin;
+- a page written here contains a retired phrase (`STALE` in the script:
+  features that were cut, the old demo, the plan ledger, the coined
+  phrases). Pages generated from the editor repo's own documents are exempt
+  and say so with a `strop-source` meta;
+- a key named in `<kbd>` on the landing page or in the walkthrough is not in
+  the keymap the binary generates (`docs/vim-compat.html`). Adjacent `<kbd>`
+  elements are one chord (`Space` `g` `g`); put a word between keys that are
+  separate;
+- the frames are of another version than the site.
 
-`--default-bg`/`--default-fg` are the theme's `bg.base` and `fg.text`, used
-for cells the editor left at the terminal default. After regenerating,
-update the `alt` text and `<figcaption>` of the hero in `index.html` so they
-describe the new frame exactly (match count, the range in the statusline),
-and delete the PLACEHOLDER comment above the figure.
+It also prints the contrast ratios of each palette's text tokens.
 
-The converter reads 24-bit, 256- and 16-colour SGR, bold, italic and
-underline; it emits one rect per background run and one text run per style
-run, each pinned to its cell span with `textLength`, so the grid holds in
-whatever monospace font the viewer has. A capture of a different size takes
-`--cols`/`--rows`.
+## The frames
 
-## The recording
-
-`img/demo.gif` arrives from the editor repo's demo workflow, which then sends
-a `rebuild` dispatch. It is 7.5 MB, so the page shows `img/demo-poster.png`
-(one frame of the GIF) inside a `<details>` and loads the GIF only when
-opened. When the tape changes, refresh the poster from the new GIF with
-Pillow, picking a frame that shows the editor rather than the shell, and
-update the poster's `alt` text in `index.html`:
+The three frames on the landing page (find, search and replace, git) are the
+released binary's own screens, never drawings. One command makes them:
 
 ```sh
-python3 -c "from PIL import Image; im=Image.open('img/demo.gif'); im.seek(662); \
-im.convert('RGB').quantize(128).save('img/demo-poster.png', optimize=True)"
+python3 tools/frames.py /path/to/strop-binary --paths PATHS.txt.gz
 ```
 
-If `ffmpeg` is available, a WebM of the same tape would be far smaller than
-the GIF; the markup is ready to take a `<video>` in place of the inner
-`<img class="recording">`.
+It needs `tmux` and `git`, takes about fifteen seconds, and is
+byte-reproducible for a given binary.
+
+How it works, and why it is honest:
+
+- `strop headless SCRIPT FILE` is the editor's scripted driver. Its `frame`
+  directive prints the cell grid as plain text, with no colour. So each
+  scenario's script is run twice over the same fixture: once headless, for
+  the settled text, and once in the interactive binary inside a detached
+  tmux pane, with the same keys. The pane is captured with colour
+  (`tmux capture-pane -e`) only once its text equals the headless frame cell
+  for cell; if the two never agree the run fails.
+- `tools/ansi2svg.py` turns the capture into an SVG: one rect per background
+  run, one text run per style run, each pinned to its cells.
+- The editor runs with an empty `HOME` and a `PATH` of `/usr/bin:/bin`, in
+  the Hone palette, at 100×30 cells.
+
+Fixtures, built fresh in a temporary directory on every run:
+
+- the large tree: one two-line stub file per line of `--paths`. Use the
+  Linux kernel file list the editor's ranking tests use
+  (`crates/strop-picker/fixtures/linux-*-paths.txt.gz`, in the strop repo
+  from 0.60). The stubs say they are stubs, and so does the caption;
+- `tools/fixture/project`, a small Rust crate, committed to a git repository
+  at a fixed date, then `tools/fixture/changes` copied over it: one file
+  staged, two modified, one untracked.
+
+Each scenario in `frames.py` lists candidates, newest surface first, and
+uses the first whose frame contains its `expect` strings. On 0.62 the git
+frame is the status buffer (`Space g g`); on an older binary it falls back
+to the hunk preview. `img/frames.json` records which candidate each frame
+is, with its caption and alt text. To change what a frame shows, edit its
+`script` (headless directives: `keys`, `settle`, `wait`), `expect` and
+`caption` together.
 
 ## Palettes
 
 `assets/site.css` defines the editor's six palettes — Hone (default), Slate,
-Carbide, Vellum, Paper, Paper Dark — as CSS custom properties with the hex
-values from `plans/0087 §4.3`, `plans/0088 §3` and
-`crates/strop-core/src/theme/paper.rs`. Hone applies by default, Vellum under
-`prefers-color-scheme: light`; the switcher on `/` stores an explicit choice
-in `localStorage` (`strop-palette`) and a one-line script in each `<head>`
+Carbide, Vellum, Paper, Paper Dark — as CSS custom properties. `build.py`
+rewrites their values, and the swatches of the switcher on `/`, from the
+theme sources on every build, so the site never shows a colour the binary
+does not ship. Hone applies by default, Vellum under
+`prefers-color-scheme: light`; the switcher stores an explicit choice in
+`localStorage` (`strop-palette`) and a one-line script in each `<head>`
 applies it before first paint. Pressing the applied palette again returns to
-automatic. When the editor's palettes change, change the tokens here — the
-site must never show a colour the binary does not ship.
+automatic.
+
+## The Markdown converter
+
+`tools/md.py` handles exactly the subset the editor repo's documents use —
+ATX headings, paragraphs, `-`/`1.` lists with wrapped lines, fenced code,
+pipe tables, inline code, links, reference links, bold, italic — and fails
+the build on anything else rather than guessing. Relative `*.md` links
+become `*.html`; `../plans/…` links point at GitHub.
 
 ## DNS (manual, Porkbun)
 
