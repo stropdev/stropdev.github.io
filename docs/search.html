@@ -30,7 +30,7 @@
     <ol class="side-docs">
       <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html" aria-current=&quot;page&quot;>Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
     </ol>
-    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#finding-files-space-f">Finding files (<code>Space f</code>)</a></li><li><a href="#keys-in-the-search-field">Keys in the search field</a></li><li><a href="#the-grammar">The grammar</a></li><li><a href="#what-each-qualifier-narrows">What each qualifier narrows</a></li><li><a href="#buffer-search">Buffer search</a></li><li><a href="#ex-substitution">Ex substitution</a></li><li><a href="#the-search-workspace">The Search workspace</a></li><li><a href="#ssh-scopes">SSH scopes</a></li></ol>
+    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#finding-files-space-f">Finding files (<code>Space f</code>)</a></li><li><a href="#keys-in-the-search-field">Keys in the search field</a></li><li><a href="#the-grammar">The grammar</a></li><li><a href="#what-each-qualifier-narrows">What each qualifier narrows</a></li><li><a href="#buffer-search">Buffer search</a></li><li><a href="#ex-substitution">Ex substitution</a></li><li><a href="#the-search-workspace">The Search workspace</a></li><li><a href="#collections-edit-every-hit-in-one-buffer">Collections: edit every hit in one buffer</a></li><li><a href="#replace-across-files">Replace across files</a></li><li><a href="#rename">Rename</a></li><li><a href="#ssh-scopes">SSH scopes</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
@@ -86,34 +86,77 @@ kind:function parse AND NOT wrap</code></pre>
 <h2 id="buffer-search">Buffer search</h2>
 <p>Buffer <code>/</code> and <code>?</code> search is smart-case, like the pickers: <code>/edge</code> finds <code>Edge</code> and <code>edge</code>, <code>/Edge</code> finds only <code>Edge</code>. Start the query with <code>case:sensitive</code> or <code>case:ignore</code> (alias <code>case:insensitive</code>) to decide outright; Vim's <code>\C</code> and <code>\c</code> do the same, including in <code>n</code>/<code>N</code> and highlights. <code>*</code> and <code>#</code> match the word under the cursor in either case. The dialect is bounded Vim-magic (and <code>\v</code> very magic): collections, groups, alternation, repetition and backreferences; unsupported constructs report an error instead of becoming literals. Search previews and Enter use the same counted resolver.</p>
 <h2 id="ex-substitution">Ex substitution</h2>
-<p><code>:[range]s/pattern/replacement/[flags]</code> uses the same bounded Vim-magic pattern grammar and case rule as buffer search. While composing, Strop shows the actual removed and inserted lines, substitution count, scope and offscreen extent; Enter applies that displayed plan as one undo unit. Invalid or incomplete input replaces the previous preview rather than executing it, large plans resolve off the input path, and Esc cancellation leaves bytes, registers and undo history untouched.</p>
-<p>The replacement is Vim's: <code>&amp;</code> (or <code>\0</code>) is the match and <code>\1</code>–<code>\9</code> its groups, <code>~</code> the previous replacement, <code>\r</code> a line break, <code>\t</code> a tab, and <code>\u</code> <code>\l</code> <code>\U</code> <code>\L</code> … <code>\E</code> change the case of what follows; <code>\&amp;</code>, <code>\~</code>, <code>\\</code> and an escaped delimiter are themselves. The preview shows the expanded text. This is separate from Search's literal With field.</p>
+<p><code>:[range]s/pattern/replacement/[flags]</code> uses the same bounded Vim-magic pattern grammar and case rule as buffer search. While composing, Strop shows the actual removed and inserted lines, substitution count, scope and offscreen extent; a long line is cut to a window on its change, the same window for the removed and the added row. Enter applies that displayed plan as one undo unit. Invalid or incomplete input replaces the previous preview rather than executing it, large plans resolve off the input path, and Esc cancellation leaves bytes, registers and undo history untouched.</p>
+<p>The replacement is Vim's: <code>&amp;</code> (or <code>\0</code>) is the match and <code>\1</code>–<code>\9</code> its groups, <code>~</code> the previous replacement, <code>\r</code> a line break, <code>\t</code> a tab, and <code>\u</code> <code>\l</code> <code>\U</code> <code>\L</code> … <code>\E</code> change the case of what follows; <code>\&amp;</code>, <code>\~</code>, <code>\\</code> and an escaped delimiter are themselves. The preview shows the expanded text. Search's With field has its own capture syntax (<code>$1</code>; see With below).</p>
 <p>Flags: <code>g</code> every match on a line, <code>i</code> / <code>I</code> ignore / match case, <code>n</code> count the matches without changing anything, <code>e</code> no complaint when nothing matches, <code>&amp;</code> the previous substitute's flags, and <code>c</code> to be asked at each match — <code>y</code> replaces it, <code>n</code> skips it, <code>a</code> replaces all the rest, <code>l</code> this one and stop, <code>q</code> or Esc stop. A count after the flags (<code>:s/a/b/g 3</code>) covers that many lines. <code>:s</code> or <code>:&amp;</code> alone repeats the last substitute on the cursor line, <code>:&amp;&amp;</code> with its flags, <code>:~</code> with the last search pattern.</p>
 <h2 id="the-search-workspace">The Search workspace</h2>
 <p><code>Space /</code> opens or resumes one large Search workspace; <code>Space R</code> resumes the same investigation with the replacement field visible. Local enumeration and content matching run entirely in Rust using the <code>ignore</code>/<code>grep</code> crate family — <code>rg</code> is not required on your machine.</p>
 <ul>
-<li><strong>Ctrl-T</strong> toggles the With field without restarting the search or losing either field's text, caret, mode, selection or workset. Enter in <strong>Find</strong> opens the selected source; Enter in <strong>With</strong> prepares Review. Tab switches fields when With is visible.</li>
+<li><strong>Ctrl-T</strong> toggles the With field without restarting the search or losing either field's text, caret, mode, selection or workset. Enter in <strong>Find</strong> opens the selected source; Enter in <strong>With</strong> prepares the review. Tab switches fields when With is visible.</li>
 <li><strong>Ctrl-R {register}</strong> inserts a register into Find or With, exactly as in insert mode and on the <code>:</code> / <code>/</code> lines: <code>Ctrl-R &quot;</code> is the last yank or delete, <code>Ctrl-R 0</code> the last yank, <code>Ctrl-R a</code> a named register, <code>Ctrl-R +</code> the system clipboard.</li>
-<li><strong>Ctrl-X</strong> toggles one match; <strong>Ctrl-D</strong> masks/restores its file. Excluded hits stay visible. <strong>Ctrl-O</strong> collects exactly the included matches into a read-only source-backed collection.</li>
-<li><strong>Ctrl-O</strong> from source results opens that collection with surrounding context, source syntax, match evidence and line numbers. <code>+</code>/<code>-</code> adjusts context; <code>g&lt;Space&gt;</code> opens the real source for editing. Collections retain navigation, search and yank, but never write through to source buffers or save them. Use <strong>With → Review</strong> for deliberate multi-file changes.</li>
+<li><strong>Ctrl-X</strong> toggles one match; <strong>Ctrl-D</strong> masks/restores its file. Excluded hits stay visible.</li>
+<li><strong>Ctrl-O</strong> collects exactly the included matches into a collection (below).</li>
 <li>Filter-only file finding lists eligible files; content search needs an expression. Unignored dotfiles are included by default; <code>.git</code> metadata is excluded. <code>Alt-H</code> and <code>Alt-I</code> in the field turn hidden and ignored files on and off.</li>
-<li>Replacement text is literal, including <code>$1</code> and backslashes.</li>
 </ul>
 <p>Opening a source hides Search; <code>Space /</code> returns to the retained investigation. Re-entry refreshes through owned work in its captured namespace/root even if focus or cwd changed. In a Directory buffer, <code>:fs search</code> or <strong>Space a → Search here</strong> captures that directory without changing cwd.</p>
-<p>Review preparation is cancellable background work. <strong>Space a</strong> on a review or receipt exposes <strong>Apply to buffers</strong>, <strong>Save files</strong>, <strong>Cancel</strong> and <strong>Inspect result</strong> as applicable; <code>:apply-change</code>, <code>:save-change</code> and <code>:cancel-change</code> are the Ex shortcuts. Apply edits buffers; Save files is a separate action with a per-file receipt. Dirty open source text wins over disk, stale witnesses refuse, and Cancel restores the query and draft. Failed saves retain their exact unsaved targets and verification/recovery action. An all-excluded, incomplete or failed dataset cannot silently become a whole-project operation. Ordinary <code>u</code> and <code>:undo-change</code> are not interchangeable guarantees: the latter reverts the newest applied multi-file change only while its recorded target revisions still own that change.</p>
+<h2 id="collections-edit-every-hit-in-one-buffer">Collections: edit every hit in one buffer</h2>
+<p><strong>Ctrl-O</strong> in search results, references (<code>grr</code>) or diagnostics (<code>Space d</code>) opens a collection: one card per file, each hit with two lines of context, source syntax and source line numbers. It is an ordinary editing buffer whose text is the files' text:</p>
+<ul>
+<li>Edit inside an excerpt with any command — <code>cw</code>, <code>dd</code>, <code>o</code>, <code>.</code>, a macro, visual mode, <code>:s</code>. The edit is made in the source buffer in the same keystroke; open the file and it is already there. Edits made in the file appear in the collection the same way.</li>
+<li><code>:w</code> writes every changed file the collection shows. <code>:wq</code> does that and closes it.</li>
+<li><code>u</code> and <code>Ctrl-R</code> undo and redo what you changed through the collection, in the files too. Editing one of its files somewhere else starts the collection's history over; that file's own <code>u</code> still works.</li>
+<li>Card borders, the <code>⋮ N source lines omitted</code> rows and the title are not text. An edit that would touch one, or join the last line of an excerpt with the border under it, is refused and changes nothing.</li>
+<li><code>+</code> / <code>-</code> widen and narrow the excerpt under the caret; <code>]e</code> / <code>[e</code> step between excerpts and <code>]f</code> / <code>[f</code> between files; <code>g&lt;Space&gt;</code> (or Enter on a card's top border) opens the file at that line, and <code>Ctrl-O</code> comes back.</li>
+<li><code>:%s/old/new/g</code> in a collection substitutes inside the excerpts only, with the usual live preview.</li>
+</ul>
+<h3 id="the-quickfix-list">The quickfix list</h3>
+<p>The newest collection is the quickfix list, under the names Vim gave it:</p>
+<table>
+<thead><tr><th>Command</th><th>Does</th></tr></thead>
+<tbody>
+<tr><td><code>:copen</code></td><td>show the list (the collection)</td></tr>
+<tr><td><code>]q</code> <code>[q</code>, <code>:cnext</code> <code>:cprev</code> (<code>:cn</code> <code>:cp</code>)</td><td>go to the next or previous hit in its file</td></tr>
+<tr><td><code>:cc N</code></td><td>go to hit N</td></tr>
+<tr><td><code>:cdo {cmd}</code></td><td>run an ex command with the cursor on every hit line</td></tr>
+<tr><td><code>:cfdo {cmd}</code></td><td>run an ex command once in every file of the list</td></tr>
+</tbody>
+</table>
+<pre><code class="language-vim">:cdo s/open_picker/open_the_picker/
+:cdo norm A;
+:cfdo w</code></pre>
+<p><code>:cdo</code> and <code>:cfdo</code> run whatever the <code>:</code> line runs — <code>:s</code>, <code>:norm</code>, <code>:d</code>, <code>:g</code> — and return to where you were. Each command finishes before the next starts and is one undo step in its file; the files stay open. The <code>c</code> flag of <code>:s</code> cannot ask in the middle of a batch and is refused there.</p>
+<h2 id="replace-across-files">Replace across files</h2>
+<p>Replace is two steps.</p>
+<ol>
+<li><code>Space R</code>, type the term, <code>Tab</code>, type the replacement. Every hit shows a <code>-</code>/<code>+</code> pair that follows your typing; <code>Ctrl-X</code> and <code>Ctrl-D</code> exclude a hit or a file. <code>Enter</code> in <strong>With</strong> opens the review: the exact diff, nothing changed yet.</li>
+<li><code>Enter</code> in the review changes every file and writes it. The heading says how many files were changed and written.</li>
+</ol>
+<p>In the review:</p>
+<ul>
+<li><code>u</code> puts the buffers and the files back. A file you edited since the apply is left alone and named. After a full revert <code>Enter</code> applies again.</li>
+<li><code>q</code> closes the review. One that was never applied is cancelled, and Search comes back with both fields as you left them. <code>Esc</code> cancels a review that is still being prepared.</li>
+<li><code>Space a</code> lists the same three: apply, revert, cancel.</li>
+</ul>
+<p>Unsaved text in an open buffer wins over the file on disk. A file that changed between the search and the review, or between the review and <code>Enter</code>, is refused by name and left untouched; so is a read-only one. A file that could not be written stays changed in its buffer, unsaved, and is named in the heading. An all-excluded, incomplete or failed search cannot become a whole-project operation.</p>
+<p><strong>With</strong> is literal unless the term is a regular expression with groups (<code>regex:</code>, or a bare term with <code>Alt-R</code> on). Then <code>$1</code>, <code>${name}</code> and <code>\1</code> are that hit's own groups, <code>$0</code> the whole hit, <code>$$</code> a dollar sign:</p>
+<pre><code class="language-text">Find  regex:&quot;get_(\w+)\(\)&quot;
+With  fetch_$1()</code></pre>
+<p>A query with several positive terms is a fine search and an ambiguous replace; With asks for exactly one.</p>
+<h2 id="rename">Rename</h2>
+<p><code>grn</code> opens <code>:rename</code> with the name under the cursor, ready to edit (<code>grr</code>, <code>grn</code>, <code>gra</code> and <code>gri</code> are Neovim's language-server keys: references, rename, actions, implementation). A rename that touches one buffer is applied at once (and <code>u</code> there undoes it). One that touches several opens the same review as a project replace: <code>Enter</code> applies and writes, <code>u</code> reverts.</p>
 <h2 id="ssh-scopes">SSH scopes</h2>
-<p>Search here uses the same query fields, inclusion decisions and source previews as local Search, on explicitly scoped SSH directories: <code>rg</code> runs on the host over its connection, and a host without <code>rg</code> refuses search without a fallback. <strong>With/Review are unavailable in SSH scopes</strong>.</p>
+<p>Search here uses the same query fields, inclusion decisions and source previews as local Search, on explicitly scoped SSH directories: <code>rg</code> runs on the host over its connection, and a host without <code>rg</code> refuses search without a fallback. Collections work there too. <strong>Replace (With and its review) is unavailable in SSH scopes</strong>.</p>
 <p>Source enumeration is limited to 100,000 selected paths or 16 MiB of names; rg records to 1 MiB and 4,096 submatches; decoded batches to 4 MiB; a request publishes at most 100,000 rows or 64 MiB of owned row data. Limits and malformed output produce a visible failure, never a silently complete partial result.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="editor.html">← Editor surfaces</a><a class="pager-next" href="filesystem.html">The filesystem workspace →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> at <code>v0.60.0</code>. The repository file is the source of truth; edit it there.</p>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> at <code>v0.61.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.60.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.61.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

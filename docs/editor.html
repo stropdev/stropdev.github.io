@@ -101,7 +101,7 @@
 <h2 id="windows">Windows</h2>
 <p><code>Ctrl-W</code> is Vim's window prefix: <code>h j k l</code> move, <code>w</code> / <code>W</code> next and previous, <code>p</code> the last used window, <code>s</code> / <code>v</code> split below and right, <code>n</code> a new empty buffer, <code>c</code> close, <code>q</code> quit the window, <code>o</code> keep only this one, <code>=</code> equal sizes. Holding Ctrl for the second key works too (<code>Ctrl-W Ctrl-V</code>). A key <code>Ctrl-W</code> does not bind is reported — <code>ctrl-w x is not bound</code> — and does nothing else. <code>Space w</code> remains, with <code>1</code>–<code>9</code> to focus a pane by number.</p>
 <h2 id="code-completion">Code completion</h2>
-<p>Insert mode offers language-server candidates and incremental words from the current editable source. Word suggestions remain usable without a language server. Read-only source collections do not open completion or gain edit server. The menu shows kind, source and detail. Kind chips use the symbol picker's quiet family colors, and the ASCII <code>lsp</code> / <code>buf</code> provenance tags stay color-coded without requiring an icon font; selected language items can show documentation without changing the buffer.</p>
+<p>Insert mode offers language-server candidates and incremental words from the current editable source. Word suggestions remain usable without a language server. The menu shows kind, source and detail. Kind chips use the symbol picker's quiet family colors, and the ASCII <code>lsp</code> / <code>buf</code> provenance tags stay color-coded without requiring an icon font; selected language items can show documentation without changing the buffer.</p>
 <ul>
 <li><code>Ctrl-Space</code>: request both providers; <code>Ctrl-X Ctrl-O</code>: language completion.</li>
 <li><code>Ctrl-N</code> / <code>Ctrl-P</code>: choose a candidate; <code>Ctrl-Y</code>: accept it.</li>
@@ -122,14 +122,14 @@ auto_popup = true</code></pre>
 <p>File/native work runs on owned jobs rather than blocking keystrokes. Sessions use private atomic files and lossless native paths, including undo history and the active window's jump history. Per-project sessions restore cursor, viewport and jump positions across restarts; retained jump records also restore their selections. Each pane keeps an independent 100-entry jumplist, copied on split. Quit-all writes one complete project snapshot before closing any buffer. <code>Ctrl-O</code> / <code>Ctrl-I</code> traverse jump origins without discarding newer entries when a new jump branches from history. Undo history is available in the <code>Space u</code> tree browser. Remote contents and write permits are never restored from persisted sessions.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="cli.html">← The strop CLI</a><a class="pager-next" href="search.html">Search and the query language →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> at <code>v0.60.0</code>. The repository file is the source of truth; edit it there.</p>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> at <code>v0.61.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.60.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.61.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

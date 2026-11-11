@@ -59,8 +59,10 @@
 <li><code>✓ ctrl-d ctrl-u ctrl-f ctrl-b</code> — half/full page scroll (count = lines)</li>
 <li><code>✓ ctrl-e ctrl-y</code> — scroll the window one line down / up</li>
 <li><code>✓ ctrl-^</code> — alternate buffer</li>
-<li><code>✓ gr</code> — references (LSP)</li>
-<li><code>✓ gI</code> — implementation (LSP)</li>
+<li><code>✓ grr</code> — references (LSP)</li>
+<li><code>✓ grn</code> — rename the symbol under the cursor (prompts with its name)</li>
+<li><code>✓ gra</code> — actions here, as space a (code actions; Neovim's key)</li>
+<li><code>✓ gri gI</code> — implementation (LSP)</li>
 <li><code>✓ gy</code> — type definition (LSP)</li>
 <li><code>✓ gD</code> — declaration (LSP)</li>
 <li><code>✓ ]d</code> — next diagnostic</li>
@@ -68,6 +70,8 @@
 <li><code>✓ gd</code> — goto definition (LSP)</li>
 <li><code>✓ gs</code> — switch source/header (clangd)</li>
 <li><code>✓ f&lt;c&gt; F&lt;c&gt; t&lt;c&gt; T&lt;c&gt;</code> — find/till char (candidates light up)</li>
+<li><code>✓ ]q</code> — next quickfix hit</li>
+<li><code>✓ [q</code> — previous quickfix hit</li>
 <li><code>✓ ]f</code> — next file card (collections)</li>
 <li><code>✓ [f</code> — previous file card (collections)</li>
 <li><code>✓ ]e</code> — next excerpt (collections; +/- context)</li>
@@ -202,7 +206,7 @@
 <li><code>✓ space P</code> — paste clipboard before</li>
 <li><code>✓ space d</code> — diagnostics picker</li>
 <li><code>✓ space k</code> — hover docs</li>
-<li><code>✓ space a</code> — actions here (fixes, code, files)</li>
+<li><code>✓ space a</code> — actions here (fixes and code; files in a directory)</li>
 <li><code>✓ space s</code> — document symbols picker</li>
 <li><code>✓ space S</code> — workspace symbols picker</li>
 <li><code>✓ space j</code> — jumplist picker</li>
@@ -289,7 +293,7 @@
 <li><code>✓ :view :set</code> — readonly browsing (:set ro/noro; CLI: -R)</li>
 <li><code>✓ :tab-size :indent-style</code> — source indentation controls</li>
 <li><code>✓ :fs :browse :filter :remote :terminal-local</code> — filesystem actions, namespace-aware browsing, folder filtering, remote destinations, a local shell</li>
-<li><code>✓ :apply-change :cancel-change :save-change :undo-change</code> — review: apply text or filesystem changes, cancel, save changed text, or undo the last applied plan</li>
+<li><code>✓ :copen :cwindow :cnext :cprevious :cNext :cc :cdo :cfdo</code> — quickfix: show the list, visit hits, run a command at each hit or file</li>
 </ul>
 <h2 id="missing">Missing</h2>
 <p>Neovim binds these; in strop the key does nothing. An operator on this list (<code>=</code>, <code>gq</code>, <code>gw</code>, <code>zf</code>) still takes its motion, so the motion's keys never run as commands.</p>
@@ -322,7 +326,7 @@
 <li>Normal: <code>Q</code> — Neovim: replay the last recorded register. strop: toggle a cursor here (<code>@@</code> replays).</li>
 <li>Normal: <code>gd gD</code> — Neovim: go to the local or global declaration by search. strop: language-server definition and declaration.</li>
 <li>Normal: <code>gI</code> — Neovim: insert in column 1. strop: language-server implementation.</li>
-<li>Normal: <code>gr</code> — Neovim: replace with a virtual character. strop: language-server references.</li>
+<li>Normal: <code>gr</code> — Neovim: replace with a virtual character (<code>gr{char}</code>). strop: only the prefix of the language-server keys <code>grr</code> <code>grn</code> <code>gra</code> <code>gri</code>.</li>
 <li>Normal: <code>gs</code> — Neovim: sleep. strop: switch between source and header.</li>
 <li>Normal: <code>ds cs ys</code> — Neovim: nothing (<code>s</code> is not a motion). strop: delete, change, add a surrounding pair.</li>
 <li>Visual: <code>S</code> — Neovim: change the selected lines. strop: wrap the selection in a pair (<code>C</code> and <code>R</code> change lines).</li>
@@ -331,14 +335,14 @@
 </ul>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="terminal-and-scripting.html">← Terminals</a><a class="pager-next" href="nucleo-decision.html">Nucleo decision record (0022 §2) →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> at <code>v0.60.0</code>. The repository file is the source of truth; edit it there.</p>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> at <code>v0.61.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.60.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.61.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>
