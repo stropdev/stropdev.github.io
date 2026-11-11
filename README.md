@@ -13,7 +13,7 @@ and the frames on the front page are captured from the binary by
 |---|---|
 | `src/*.html` | The hand-written pages as page bodies: `index` (landing), `start` (First ten minutes), `neovim` (Coming from Neovim), `engineering`. Each starts with a `key: value` header comment (`title`, `description`, optional `nav`, `class`) and takes `{{slots}}` that `build.py` fills |
 | `index.html`, `start.html`, `neovim.html`, `engineering.html` | Generated from `src/` |
-| `docs/*.html` | Generated from the editor repo's `docs/*.md`, one page each, plus `docs/index.html`, which groups them by task (`DOC_GROUPS` in `build.py` holds the site's titles and one-liners) |
+| `docs/*.html` | Generated from the editor repo's `docs/*.md`, one page each, plus `docs/index.html`, which groups them by task (`DOC_GROUPS` in `build.py` holds the site's titles and one-liners; a new doc it does not list appears under "More"; `NOT_ON_SITE` names engineering records that stay on GitHub) |
 | `changelog.html`, `changelog-all.html` | The last three releases, and all of them, from the editor repo's `CHANGELOG.md` |
 | `CHANGELOG.md`, `install.sh` | Vendored copies from the editor repo at the released tag (`install.sh` is what `curl -fsSL https://strop.dev/install.sh` serves) |
 | `img/frame-*.svg`, `img/frames.json` | The landing page's frames and their manifest (version, captions), written by `tools/frames.py` |
@@ -49,8 +49,9 @@ source tree and set of frames.
 
 The copy in `src/` describes strop as of `SITE_DESCRIBES` in `build.py`
 (0.62). Built from an older tree, every page carries a "Preview" line, and
-`check_site.py` reports keys that tree does not have yet as pending instead
-of failing. From 0.62 on the line is gone and a missing key fails. When the
+`check_site.py` reports keys that tree does not have yet, and frames of an
+older version, as pending instead of failing. From 0.62 on the line is gone
+and either one fails. When the
 copy is next rewritten ahead of a release, raise `SITE_DESCRIBES`.
 
 ### What the checker checks
@@ -110,8 +111,8 @@ Fixtures, built fresh in a temporary directory on every run:
 
 Each scenario in `frames.py` lists candidates, newest surface first, and
 uses the first whose frame contains its `expect` strings. On 0.62 the git
-frame is the status buffer (`Space g g`); on an older binary it falls back
-to the hunk preview. `img/frames.json` records which candidate each frame
+frame is the status buffer (`Space g g`) with one file's diff open; on an
+older binary it falls back to the hunk preview. `img/frames.json` records which candidate each frame
 is, with its caption and alt text. To change what a frame shows, edit its
 `script` (headless directives: `keys`, `settle`, `wait`), `expect` and
 `caption` together.

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scripts and bug reports — strop docs</title>
+<meta name="description" content="Run strop without a screen from a script of keys, and record a session to attach to a bug report.">
+<meta name="color-scheme" content="dark light">
+<meta name="strop-version" content="0.59.0">
+<meta name="strop-describes" content="0.62">
+<meta name="strop-source" content="docs/scripting.md">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+<script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
+</head>
+<body class="docs-page">
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="shell top-inner">
+    <a class="brand" href="../">strop</a>
+    <nav aria-label="Site">
+      <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../neovim.html">From Neovim</a>
+      <a href="../changelog.html">Changelog</a>
+      <a href="https://github.com/stropdev/strop">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.59.0, which does not have all of it yet.</p>
+<div class="shell doc-layout">
+  <aside class="doc-side">
+    <p class="side-title"><a href="./">All docs</a></p>
+    <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Git</p><ol class="side-docs"><li><a href="git.html">Git</a></li></ol><p class="side-title">Editing and code</p><ol class="side-docs"><li><a href="editor.html">Indentation, themes, completion and language servers</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal.html">Terminals</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html">Every key</a></li><li><a href="scripting.html" aria-current="page">Scripts and bug reports</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#running-a-script">Running a script</a></li><li><a href="#reporting-a-bug">Reporting a bug</a></li></ol>
+  </aside>
+  <article class="doc">
+    <p class="eyebrow">Docs</p>
+    <h1>Scripts and bug reports</h1>
+    <div class="prose">
+<p>Run strop without a screen from a script of keys, and record a session to attach to a bug report.</p>
+<h2 id="running-a-script">Running a script</h2>
+<p><code>strop headless SCRIPT [+LINE] [FILE[:LINE]]</code> runs the real editor with no screen, on a 100×30 grid, and feeds it the script. <code>strop --script SCRIPT</code> is the same command (see <a href="cli.html">cli.md</a>). A script is one directive per line; empty lines and lines starting with <code>#</code> are ignored:</p>
+<table>
+<thead><tr><th>Directive</th><th>Arguments</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><code>buffer</code></td><td><code>JSON_STRING</code></td><td>the text to start with; must be the first directive</td></tr>
+<tr><td><code>keys</code></td><td><code>KEYS</code></td><td>keys as you would type them: <code>&lt;esc&gt;</code> <code>&lt;cr&gt;</code> <code>&lt;c-r&gt;</code> <code>&lt;a-x&gt;</code> <code>&lt;f5&gt;</code></td></tr>
+<tr><td><code>key</code></td><td><code>JSON_KEY</code></td><td>one editor key, e.g. <code>&quot;Esc&quot;</code> or <code>{&quot;Char&quot;:&quot;x&quot;}</code></td></tr>
+<tr><td><code>input</code></td><td><code>JSON_INPUT</code></td><td>one exact key, text or paste event, with its modifiers</td></tr>
+<tr><td><code>paste</code></td><td><code>JSON_STRING</code></td><td>one paste, e.g. <code>&quot;first\nsecond&quot;</code></td></tr>
+<tr><td><code>resize</code></td><td><code>COLS ROWS</code></td><td>change the screen size</td></tr>
+<tr><td><code>frame</code></td><td></td><td>print the screen as text</td></tr>
+<tr><td><code>state</code></td><td></td><td>print the editor's state as JSON</td></tr>
+<tr><td><code>settle</code></td><td><code>[MS]</code></td><td>wait until background work is finished; fails after MS (default 120000)</td></tr>
+<tr><td><code>wait</code></td><td><code>MS</code></td><td>wait this long</td></tr>
+<tr><td><code>quit-intent</code></td><td></td><td>quit at once, as when the terminal window is closed</td></tr>
+</tbody>
+</table>
+<p>JSON strings use double quotes and JSON escapes; the text after <code>keys</code> is not quoted. <code>keys</code> is what you would type. <code>key</code> and <code>input</code> are for tests that need one exact key event; most scripts never need them. Keys for a program inside a terminal must be sent with <code>keys</code> or <code>input</code>.</p>
+<pre><code class="language-text">keys :e source.rs&lt;cr&gt;
+settle 5000
+keys /needle&lt;cr&gt;
+frame
+state</code></pre>
+<p><code>settle [MS]</code> waits until background work has finished: file loads, saves, searches, git, language-server replies. It fails the script, with a nonzero exit status, if that takes longer than MS milliseconds (120,000 by default). Keys, pastes, repeats and macros always run in order and need no <code>settle</code>. Anything that reads a file or asks a language server does: put a <code>settle</code> before the script depends on the result. A terminal counts as settled once the shell has started and its output so far is drawn. <code>settle</code> does not wait for a command you ran in it; use <code>wait MS</code> for that. When the script ends, its terminals are closed.</p>
+<p><code>quit-intent</code> does not ask about unsaved buffers or running terminals. After the editor has quit, any further directive except <code>settle</code> fails the script.</p>
+<p>A project can name its own language-server command, and strop runs it only after you allow that project with <a href="editor.html#trust"><code>:trust</code></a>. Scripts follow the same rule and use the same saved answers. A headless run does not load or save a session.</p>
+<h2 id="reporting-a-bug">Reporting a bug</h2>
+<pre><code class="language-sh">strop --log=issue.jsonl path/to/file.rs
+# Also record file text, language-server replies and what was on screen:
+strop --log=issue-full.jsonl --log-content path/to/file.rs
+# Also record what you type and see inside terminals:
+strop --log=terminal-full.jsonl --log-terminal-content
+strop headless steps.keys path/to/file.rs --log=headless.jsonl
+strop replay issue-full.jsonl
+strop export issue-full.jsonl &gt; issue-safe.jsonl
+# Optional: the keys as a script. Read it before you run it:
+strop replay --script issue-full.jsonl &gt; replay.keys</code></pre>
+<p>Attach the JSONL file and say what happened and what you expected. A log holds your keys, commands, paths and messages. A log made with <code>--log-content</code> also holds file text, pastes, language-server replies and what was on screen. <strong>Read it before you share it.</strong> strop never overwrites an existing log file: pick a new name. <code>--log</code> alone writes <code>strop-log.jsonl</code> in the current directory, and <code>STROP_LOG=PATH</code> in the environment does the same as <code>--log=PATH</code>.</p>
+<p><code>strop replay</code> shows the session again without touching your files or running any command, and prints the state it ends in. It needs a complete log made with <code>--log-content</code>, and the strop version that made it; a version that records differently refuses the log and asks you to record again. <code>strop replay --script</code> is different. It gives you the keys as a script. Running that script really does run the commands again, and a language server may answer differently, so read it first. From a log made without <code>--log-content</code> the script has the keys but not the file text; run it against the original file (<code>strop headless replay.keys FILE</code>).</p>
+<p>What you type and see in a terminal is never recorded by <code>--log-content</code>. From the moment you open a terminal, the log keeps only event types, with no text, and can no longer be replayed. To record terminal content as well, use <code>--log-terminal-content</code>; the status line shows <strong>REC</strong> in a terminal while it is on. A log with terminal content can be replayed with <code>strop replay</code> but not turned into a script.</p>
+<p>A recording stops at 512 MiB or 100,000 events, and a single event is limited to 256 KiB. The editor keeps running; the log is marked incomplete and <code>strop replay</code> refuses it. <code>strop export</code> keeps only what kind of event happened and in what order. It has no text, paths or keys, so it is safe to share, and it cannot be replayed.</p>
+    </div>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="vim-compat.html">← Every key</a></nav>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/scripting.md"><code>docs/scripting.md</code></a> from the strop repository at <code>v0.58.0-31-g8fdf419</code>.</p>
+  </article>
+</div>
+</main>
+<footer class="foot">
+  <div class="shell foot-inner">
+    <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.59.0</a> · <a href="../#palette">Palette</a></p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

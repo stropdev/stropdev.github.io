@@ -54,32 +54,33 @@ RECENT_RELEASES = 3
 DOC_GROUPS: List[Tuple[str, List[Tuple[str, str, str]]]] = [
     ("Find and change", [
         ("search", "Find files, search and replace",
-         "The file finder, project search and replace, and the words that narrow them: "
-         "<code>path:</code>, <code>language:</code>, <code>regex:</code>."),
+         "The file finder, project search and replace, editing every hit in one buffer, and the filters "
+         "that narrow them: <code>path:</code>, <code>language:</code>, <code>regex:</code>."),
         ("filesystem", "Create, rename, move and delete files",
          "The directory buffer and its file operations. Each one is shown for review before it happens."),
     ]),
     ("Git", [
         ("git", "Git", "Status, commit, branches, blame, log, history and hunks."),
     ]),
-    ("Code", [
-        ("editor", "Completion, indentation, language servers and themes",
-         "What the editor does as you type, how language servers start and report, the six palettes."),
+    ("Editing and code", [
+        ("editor", "Indentation, themes, completion and language servers",
+         "What the editor does as you type, the six palettes, registers, windows, sessions, "
+         "and how language servers start."),
     ]),
     ("Terminals and other machines", [
-        ("terminal-and-scripting", "Terminals and scripting",
-         "A shell in a split, driving the editor from a script, and recording a bug report."),
+        ("terminal", "Terminals", "A shell in a split whose output you can search and yank from."),
         ("remote", "Edit over SSH", "Open files and directories on another machine with plain OpenSSH."),
     ]),
     ("Reference", [
         ("cli", "The command line", "Every subcommand and flag of <code>strop</code>."),
         ("vim-compat", "Every key", "The whole keymap, generated from the binary's command table."),
-    ]),
-    ("Background", [
-        ("nucleo-decision", "Why the fuzzy matcher is nucleo", "A design record."),
+        ("scripting", "Scripts and bug reports",
+         "Drive the editor from a script of keys, and record a session to attach to a bug."),
     ]),
 ]
-OPTIONAL_DOCS = {"git"}  # arrives in 0.62; an older tree is built without it
+# Engineering records kept in the repository's docs/ that are not user documentation;
+# the Engineering page links to them on GitHub.
+NOT_ON_SITE = {"nucleo-decision"}
 
 PALETTE_NAMES = [  # (data-palette, name, kind), in the switcher's order
     ("hone", "Hone", "dark · default"), ("slate", "Slate", "low-chroma dark"),
@@ -300,17 +301,16 @@ def docs_link(url: str) -> str:
 
 
 def build_docs(repo: Path, facts: Facts) -> List[str]:
-    present = sorted(p.stem for p in (repo / "docs").glob("*.md"))
+    present = sorted(p.stem for p in (repo / "docs").glob("*.md") if p.stem not in NOT_ON_SITE)
     groups: List[Tuple[str, List[Tuple[str, str, str]]]] = []
     listed = set()
     for group, entries in DOC_GROUPS:
         kept = []
         for name, title, blurb in entries:
             listed.add(name)
-            if name in present:
-                kept.append((name, title, blurb))
-            elif name not in OPTIONAL_DOCS:
+            if name not in present:
                 raise SystemExit(f"docs/{name}.md is missing from the repo")
+            kept.append((name, title, blurb))
         if kept:
             groups.append((group, kept))
     docs: Dict[str, Document] = {}
@@ -574,7 +574,6 @@ def main(argv: Optional[List[str]] = None) -> int:
         "claims": "".join(f"<li>{html.escape(c)}</li>" for c in facts.claims),
         "frames": frames_html(),
         "palettes": palettes_html(repo),
-        "git_doc": "docs/git.html" if (repo / "docs" / "git.md").exists() else "docs/vim-compat.html#git",
         **compat_slots(repo),
     }
     written = vendor(repo) + build_docs(repo, facts) + build_changelog(repo, facts)
@@ -586,7 +585,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     frames_version = json.loads((SITE / "img" / "frames.json").read_text(encoding="utf-8"))["version"]
     if frames_version != facts.version:
         print(f"  note: the frames are of strop {frames_version}; rerun tools/frames.py with the "
-              f"{facts.version} binary (tools/check_site.py fails until then)")
+              f"{facts.version} binary (tools/check_site.py fails on this once the site is not a preview)")
     if facts.preview:
         print(f"  note: preview build; the copy describes {'.'.join(map(str, SITE_DESCRIBES))}")
     return 0

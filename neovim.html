@@ -6,7 +6,7 @@
 <title>Coming from Neovim — strop</title>
 <meta name="description" content="What works in strop the way it does in Neovim, what strop does differently on purpose, and what is missing.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.58.0">
+<meta name="strop-version" content="0.59.0">
 <meta name="strop-describes" content="0.62">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="./assets/site.css">
@@ -26,7 +26,7 @@
   </div>
 </header>
 <main id="main">
-<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.58.0, which does not have all of it yet.</p>
+<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.59.0, which does not have all of it yet.</p>
 <div class="shell page guide">
   <p class="eyebrow">Start</p>
   <h1>Coming from Neovim</h1>
@@ -45,17 +45,17 @@
     <p>How it is checked: before a release, about 4,000 key sequences are typed into both editors and the resulting text, cursor, mode and registers are compared. The few cases where strop knowingly differs are listed with a reason; everything else has to match. <a href="engineering.html#keys">More on that</a>.</p>
     <p>The full keymap is generated from the binary's command table, by section:</p>
     <ul class="compat-sections">
-      <li><a href="docs/vim-compat.html#moving">Moving</a><span>34 rows</span></li>
-      <li><a href="docs/vim-compat.html#editing">Editing</a><span>27 rows</span></li>
+      <li><a href="docs/vim-compat.html#moving">Moving</a><span>45 rows</span></li>
+      <li><a href="docs/vim-compat.html#editing">Editing</a><span>39 rows</span></li>
       <li><a href="docs/vim-compat.html#insert">Insert</a><span>11 rows</span></li>
-      <li><a href="docs/vim-compat.html#visual">Visual</a><span>10 rows</span></li>
-      <li><a href="docs/vim-compat.html#search">Search</a><span>5 rows</span></li>
+      <li><a href="docs/vim-compat.html#visual">Visual</a><span>35 rows</span></li>
+      <li><a href="docs/vim-compat.html#search">Search</a><span>7 rows</span></li>
       <li><a href="docs/vim-compat.html#leader-space">Leader (space)</a><span>21 rows</span></li>
       <li><a href="docs/vim-compat.html#panes">Panes</a><span>10 rows</span></li>
-      <li><a href="docs/vim-compat.html#git">Git</a><span>13 rows</span></li>
-      <li><a href="docs/vim-compat.html#pickers">Pickers</a><span>9 rows</span></li>
+      <li><a href="docs/vim-compat.html#git">Git</a><span>22 rows</span></li>
+      <li><a href="docs/vim-compat.html#pickers">Pickers</a><span>12 rows</span></li>
       <li><a href="docs/vim-compat.html#terminal">Terminal</a><span>7 rows</span></li>
-      <li><a href="docs/vim-compat.html#ex-commands">Ex commands</a><span>16 rows</span></li>
+      <li><a href="docs/vim-compat.html#ex-commands">Ex commands</a><span>25 rows</span></li>
     </ul>
 
     <h2 id="differs">What differs</h2>
@@ -71,20 +71,52 @@
     </ul>
     <h3 id="reassigned">Keys that do something else</h3>
     <p>Neovim binds these; strop uses the key for something different.</p>
-    <p class="pending">The keymap listing of this build has no Reassigned list; the binary prints one from strop 0.59 on.</p>
+    <ul>
+<li>Normal: <code>space</code> — Neovim: move right. strop: the leader.</li>
+<li>Normal: <code>Q</code> — Neovim: replay the last recorded register. strop: toggle a cursor here (<code>@@</code> replays).</li>
+<li>Normal: <code>gd gD</code> — Neovim: go to the local or global declaration by search. strop: language-server definition and declaration.</li>
+<li>Normal: <code>gI</code> — Neovim: insert in column 1. strop: language-server implementation.</li>
+<li>Normal: <code>gr</code> — Neovim: replace with a virtual character (<code>gr{char}</code>). strop: only the prefix of the language-server keys <code>grr</code> <code>grn</code> <code>gra</code> <code>gri</code>.</li>
+<li>Normal: <code>gs</code> — Neovim: sleep. strop: switch between source and header.</li>
+<li>Normal: <code>ds cs ys</code> — Neovim: nothing (<code>s</code> is not a motion). strop: delete, change, add a surrounding pair.</li>
+<li>Visual: <code>S</code> — Neovim: change the selected lines. strop: wrap the selection in a pair (<code>C</code> and <code>R</code> change lines).</li>
+<li>Visual: <code>ctrl-c</code> — Neovim: leave Visual. strop: toggle comments on the selected lines (<code>Esc</code> leaves).</li>
+<li>Insert: <code>ctrl-e ctrl-y</code> — Neovim: insert the character below or above. strop: dismiss or accept the completion menu.</li>
+</ul>
 
     <h2 id="missing">What is missing</h2>
     <p>Beyond plugins and scripting, these Neovim keys do nothing in strop. An operator on the list (<code>=</code>, <code>gq</code>, <code>gw</code>, <code>zf</code>) still takes its motion and then says it is not supported, so the motion's keys never run as commands by accident.</p>
-    <p class="pending">The keymap listing of this build has no Missing list; the binary prints one from strop 0.59 on.</p>
+    <ul>
+<li>Normal: <code>zfj</code> <code>zo</code> <code>zc</code> <code>za</code> <code>zR</code> <code>zM</code> <code>zj</code> <code>zk</code> <code>zd</code> — folds</li>
+<li>Normal: <code>gt</code> <code>gT</code> — tab pages</li>
+<li>Normal: <code>U</code> — undo every change on the line</li>
+<li>Normal: <code>==</code> <code>=j</code> <code>=ip</code> — the reindent operator</li>
+<li>Normal: <code>gqq</code> <code>gqip</code> <code>gwip</code> — reflow text to the text width</li>
+<li>Normal: <code>dis</code> <code>das</code> — the sentence text objects</li>
+<li>Normal: <code>q:</code> <code>q/</code> — the command-line window</li>
+<li>Normal: <code>ga</code> <code>g8</code> — show the character under the cursor as a code</li>
+<li>Normal: <code>gx</code> <code>gf</code> <code>gF</code> — open the URL or file name under the cursor</li>
+<li>Normal: <code>gR</code> — virtual replace mode</li>
+<li>Normal: <code>K</code> — look the word under the cursor up (hover is <code>space k</code>)</li>
+<li>Normal: <code>]]</code> <code>[[</code> <code>][</code> <code>[]</code> <code>]m</code> <code>[m</code> — section and method motions</li>
+<li>Normal: <code>z=</code> <code>zg</code> <code>]s</code> <code>[s</code> — spelling</li>
+<li>Normal: <code>gm</code> <code>gM</code> <code>go</code> — middle of the line, byte offset</li>
+<li>Normal: <code>zh</code> <code>zl</code> <code>zH</code> <code>zL</code> <code>ze</code> <code>zs</code> — horizontal scrolling</li>
+<li>Normal: <code>do</code> <code>dp</code> — diff mode</li>
+<li>Normal: <code>ctrl-w x</code> <code>ctrl-w r</code> <code>ctrl-w T</code> <code>ctrl-w H</code> <code>ctrl-w J</code> <code>ctrl-w K</code> <code>ctrl-w L</code> <code>ctrl-w +</code> <code>ctrl-w -</code> <code>ctrl-w _</code> <code>ctrl-w |</code> — move, rotate and resize windows (panes are always equal)</li>
+<li>Visual: <code>=</code> <code>gq</code> <code>gw</code> <code>zf</code> — reindent, reflow and fold the selection</li>
+<li>Insert: <code>ctrl-v</code> <code>ctrl-k</code> <code>ctrl-a</code> — insert a literal key, a digraph, the last inserted text</li>
+<li>Ex: <code>:tabnew</code> <code>:tabnext</code> <code>:tabclose</code> <code>:fold</code> <code>:mksession</code> <code>:digraphs</code> — tab pages, folds, session files, digraphs</li>
+</ul>
     <p>Also not there: key remapping, autocommands, folds, tab pages, spell checking, digraphs, diff mode, and builds for anything but Linux and WSL on x86_64. If one of these is what you live in, strop is not ready for you yet.</p>
-    <p class="provenance">The section list and the lists of missing and reassigned keys on this page are generated from <a href="docs/vim-compat.html"><code>docs/vim-compat.md</code></a> at <code>v0.58.0</code>, which the binary prints with <code>strop compat</code>.</p>
+    <p class="provenance">The section list and the lists of missing and reassigned keys on this page are generated from <a href="docs/vim-compat.html"><code>docs/vim-compat.md</code></a> at <code>v0.58.0-31-g8fdf419</code>, which the binary prints with <code>strop compat</code>.</p>
   </div>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.59.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>

@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Every key — strop docs</title>
-<meta name="description" content="Generated from the command table (strop compat). ✓ ships exactly; (soon) is a planned slot.">
+<meta name="description" content="Generated from the command table (strop compat). ✓ works today; (soon) is planned. What Neovim binds and strop does not is listed at the end, under Missing and Reassigned.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.58.0">
+<meta name="strop-version" content="0.59.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/vim-compat.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -27,18 +27,18 @@
   </div>
 </header>
 <main id="main">
-<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.58.0, which does not have all of it yet.</p>
+<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.59.0, which does not have all of it yet.</p>
 <div class="shell doc-layout">
   <aside class="doc-side">
     <p class="side-title"><a href="./">All docs</a></p>
-    <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Code</p><ol class="side-docs"><li><a href="editor.html">Completion, indentation, language servers and themes</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal-and-scripting.html">Terminals and scripting</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html" aria-current="page">Every key</a></li></ol><p class="side-title">Background</p><ol class="side-docs"><li><a href="nucleo-decision.html">Why the fuzzy matcher is nucleo</a></li></ol>
-    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#moving">Moving</a></li><li><a href="#editing">Editing</a></li><li><a href="#insert">Insert</a></li><li><a href="#visual">Visual</a></li><li><a href="#search">Search</a></li><li><a href="#leader-space">Leader (space)</a></li><li><a href="#panes">Panes</a></li><li><a href="#git">Git</a></li><li><a href="#pickers">Pickers</a></li><li><a href="#terminal">Terminal</a></li><li><a href="#ex-commands">Ex commands</a></li></ol>
+    <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Git</p><ol class="side-docs"><li><a href="git.html">Git</a></li></ol><p class="side-title">Editing and code</p><ol class="side-docs"><li><a href="editor.html">Indentation, themes, completion and language servers</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal.html">Terminals</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html" aria-current="page">Every key</a></li><li><a href="scripting.html">Scripts and bug reports</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#moving">Moving</a></li><li><a href="#editing">Editing</a></li><li><a href="#insert">Insert</a></li><li><a href="#visual">Visual</a></li><li><a href="#search">Search</a></li><li><a href="#leader-space">Leader (space)</a></li><li><a href="#panes">Panes</a></li><li><a href="#git">Git</a></li><li><a href="#pickers">Pickers</a></li><li><a href="#terminal">Terminal</a></li><li><a href="#ex-commands">Ex commands</a></li><li><a href="#missing">Missing</a></li><li><a href="#reassigned">Reassigned</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
     <h1>Every key</h1>
     <div class="prose">
-<p>Generated from the command table (<code>strop compat</code>). <code>✓</code> ships exactly; <code>(soon)</code> is a planned slot.</p>
+<p>Generated from the command table (<code>strop compat</code>). <code>✓</code> works today; <code>(soon)</code> is planned. What Neovim binds and strop does not is listed at the end, under Missing and Reassigned.</p>
 <h2 id="moving">Moving</h2>
 <ul>
 <li><code>✓ h j k l</code> — move (never off the line)</li>
@@ -48,15 +48,23 @@
 <li><code>✓ g;</code> — older change (changelist)</li>
 <li><code>✓ g,</code> — newer change (changelist)</li>
 <li><code>✓ ge gE { }</code> — word-end back / paragraph motions</li>
+<li><code>✓ - +</code> — line up / down, on the first non-blank</li>
+<li><code>✓ ( )</code> — sentence back / forward</li>
+<li><code>✓ [( [{ ]) ]}</code> — the unmatched bracket before / after</li>
+<li><code>✓ g_ g0 g^ g$ gj gk</code> — last non-blank; line start, first non-blank, end; line down / up</li>
+<li><code>✓ gn gN</code> — select the next / previous search match (cgn then . changes each)</li>
 <li><code>✓ 0 $ G %</code> — line/file/pair jumps</li>
-<li><code>✓ g&lt;space&gt;</code> — collection: open full source at caret</li>
+<li><code>✓ g&lt;space&gt;</code> — collection: open the file at this line</li>
 <li><code>✓ gg</code> — top of file</li>
-<li><code>✓ enter</code> — line down, first non-blank (blame gutter: dive)</li>
+<li><code>✓ enter</code> — line down, first non-blank (blame: open the line's commit)</li>
 <li><code>✓ tab</code> — jump list forward (ctrl-i)</li>
 <li><code>✓ ctrl-d ctrl-u ctrl-f ctrl-b</code> — half/full page scroll (count = lines)</li>
+<li><code>✓ ctrl-e ctrl-y</code> — scroll the window one line down / up</li>
 <li><code>✓ ctrl-^</code> — alternate buffer</li>
-<li><code>✓ gr</code> — references (LSP)</li>
-<li><code>✓ gI</code> — implementation (LSP)</li>
+<li><code>✓ grr</code> — references (LSP)</li>
+<li><code>✓ grn</code> — rename the symbol under the cursor (prompts with its name)</li>
+<li><code>✓ gra</code> — actions here, as space a (code actions; Neovim's key)</li>
+<li><code>✓ gri gI</code> — implementation (LSP)</li>
 <li><code>✓ gy</code> — type definition (LSP)</li>
 <li><code>✓ gD</code> — declaration (LSP)</li>
 <li><code>✓ ]d</code> — next diagnostic</li>
@@ -64,6 +72,8 @@
 <li><code>✓ gd</code> — goto definition (LSP)</li>
 <li><code>✓ gs</code> — switch source/header (clangd)</li>
 <li><code>✓ f&lt;c&gt; F&lt;c&gt; t&lt;c&gt; T&lt;c&gt;</code> — find/till char (candidates light up)</li>
+<li><code>✓ ]q</code> — next quickfix hit</li>
+<li><code>✓ [q</code> — previous quickfix hit</li>
 <li><code>✓ ]f</code> — next file card (collections)</li>
 <li><code>✓ [f</code> — previous file card (collections)</li>
 <li><code>✓ ]e</code> — next excerpt (collections; +/- context)</li>
@@ -71,7 +81,8 @@
 <li><code>✓ ]c</code> — next git hunk</li>
 <li><code>✓ [c</code> — previous git hunk</li>
 <li><code>✓ m&lt;a&gt;</code> — set mark at cursor</li>
-<li><code>✓ &#x27;&lt;a&gt; </code>&lt;a&gt;` — jump to mark</li>
+<li><code>✓ &#x27;&lt;a&gt;</code> — jump to mark: its line ('' is where the last jump left from)</li>
+<li><code>✓ </code>&lt;a&gt;` — jump to mark: its exact position</li>
 <li><code>✓ ; ,</code> — repeat find, same / reversed</li>
 <li><code>✓ |</code> — column motion (vim); pipe moved to space |</li>
 <li><code>✓ ^ _</code> — first non-blank</li>
@@ -79,27 +90,39 @@
 <h2 id="editing">Editing</h2>
 <ul>
 <li><code>✓ ZZ</code> — write + close window</li>
+<li><code>✓ ZQ</code> — close window without writing</li>
 <li><code>✓ gi</code> — insert at last insert</li>
 <li><code>✓ gb</code> — select next occurrence of word/selection</li>
 <li><code>✓ gB</code> — select all occurrences in buffer</li>
 <li><code>✓ ctrl-r</code> — redo</li>
 <li><code>✓ q&lt;a&gt;</code> — record macro into register</li>
-<li><code>✓ @&lt;a&gt;</code> — play macro (count repeats)</li>
+<li><code>✓ @&lt;a&gt;</code> — play macro (count repeats); @: repeats the last : command</li>
 <li><code>✓ Q</code> — toggle cursor at point (multicursor)</li>
-<li><code>✓ d y c &gt; &lt;</code> — operators + motion/object (live preview)</li>
-<li><code>✓ dd yy cc</code> — line delete/yank/change</li>
+<li><code>✓ d y c &gt; &lt; gU gu g~ g? ! gc</code> — operators + motion/object: delete, yank, change, indent, case, rot13, filter (opens :{range}!), comment</li>
+<li><code>✓ dd yy cc</code> — an operator doubled acts on whole lines (&gt;&gt; &lt;&lt; gUU guu g~~ g?? gcc)</li>
 <li><code>✓ D</code> — delete to line end</li>
 <li><code>✓ C</code> — change to line end</li>
-<li><code>✓ Y</code> — yank line</li>
+<li><code>✓ Y</code> — yank to line end</li>
 <li><code>✓ s</code> — substitute char</li>
-<li><code>✓ x X</code> — delete char / char back</li>
+<li><code>✓ x</code> — delete char</li>
+<li><code>✓ X</code> — delete char back</li>
 <li><code>✓ iw i&quot; i&#x27; i( i[ i{</code> — inner objects (quotes scan the line)</li>
 <li><code>✓ ds&quot; cs&quot;&#x27; ysiw&quot;</code> — surround: delete / change / add</li>
 <li><code>✓ i a A o O I</code> — insert (auto-indent)</li>
 <li><code>✓ p P</code> — paste after / before</li>
 <li><code>✓ r&lt;c&gt;</code> — replace char</li>
-<li><code>✓ J .</code> — join lines · repeat change</li>
-<li><code>✓ ~</code> — toggle case</li>
+<li><code>✓ J</code> — join lines</li>
+<li><code>✓ gJ</code> — join lines as they are, without a space</li>
+<li><code>✓ .</code> — repeat the last change (a count replaces its count)</li>
+<li><code>✓ ~</code> — toggle case and advance</li>
+<li><code>✓ R</code> — replace mode: type over the text</li>
+<li><code>✓ ctrl-a</code> — add to the number at or after the cursor</li>
+<li><code>✓ ctrl-x</code> — subtract from the number at or after the cursor</li>
+<li><code>✓ gp gP</code> — paste and leave the cursor after the text</li>
+<li><code>✓ ]p</code> — paste lines below at the current indent</li>
+<li><code>✓ [p</code> — paste lines above at the current indent</li>
+<li><code>✓ &amp;</code> — repeat the last :s on this line, with its flags</li>
+<li><code>✓ g&amp;</code> — repeat the last :s on every line, with its flags</li>
 <li><code>✓ S</code> — change line</li>
 <li><code>✓ u ctrl-r</code> — undo / redo (one unit per command)</li>
 <li><code>✓ &quot;+y &quot;+p &quot;+P</code> — system clipboard: yank / paste after / before</li>
@@ -126,8 +149,33 @@
 <li><code>✓ gB</code> — select all occurrences in buffer</li>
 <li><code>✓ gv</code> — reselect last visual</li>
 <li><code>✓ ctrl-v</code> — visual block</li>
-<li><code>✓ v V</code> — visual / visual-line</li>
-<li><code>✓ d y c x &gt; &lt;</code> — operate on selection</li>
+<li><code>✓ v V</code> — visual / visual-line (in Visual: switch, or leave)</li>
+<li><code>✓ d x</code> — delete the selection</li>
+<li><code>✓ y</code> — yank the selection</li>
+<li><code>✓ c s</code> — change the selection</li>
+<li><code>✓ &gt;</code> — indent the selected lines</li>
+<li><code>✓ &lt;</code> — dedent the selected lines</li>
+<li><code>✓ U gU</code> — uppercase the selection</li>
+<li><code>✓ u gu</code> — lowercase the selection</li>
+<li><code>✓ ~ g~</code> — toggle the selection's case</li>
+<li><code>✓ g?</code> — rot13 the selection</li>
+<li><code>✓ gc</code> — toggle comments on the selected lines</li>
+<li><code>✓ !</code> — filter the selected lines through a shell command</li>
+<li><code>✓ D X</code> — delete the selected lines</li>
+<li><code>✓ Y</code> — yank the selected lines</li>
+<li><code>✓ C R</code> — change the selected lines</li>
+<li><code>✓ p</code> — put over the selection; the replaced text becomes the unnamed register</li>
+<li><code>✓ P</code> — put over the selection; registers stay as they were</li>
+<li><code>✓ J</code> — join the selected lines</li>
+<li><code>✓ gJ</code> — join the selected lines as they are</li>
+<li><code>✓ r&lt;c&gt;</code> — replace every selected character</li>
+<li><code>✓ I</code> — insert at the selection's start (block: on every row)</li>
+<li><code>✓ A</code> — append after the selection (block: on every row)</li>
+<li><code>✓ o O</code> — go to the selection's other end</li>
+<li><code>✓ *</code> — search forward for the selection</li>
+<li><code>✓ #</code> — search backward for the selection</li>
+<li><code>✓ ctrl-a</code> — add to the first number on each selected line</li>
+<li><code>✓ ctrl-x</code> — subtract from the first number on each selected line</li>
 <li><code>✓ ctrl-c</code> — toggle comments on selected lines</li>
 <li><code>✓ S&lt;c&gt;</code> — wrap selection in pair</li>
 <li><code>✓ i&lt;a&gt; a&lt;a&gt;</code> — objects select (vi[ works)</li>
@@ -135,22 +183,24 @@
 </ul>
 <h2 id="search">Search</h2>
 <ul>
+<li><code>✓ gn gN</code> — select the next / previous search match (cgn then . changes each)</li>
 <li><code>✓ / ?</code> — literal search forward / backward (live as you type or delete)</li>
 <li><code>✓ n</code> — next match</li>
 <li><code>✓ N</code> — previous match</li>
 <li><code>✓ * #</code> — word under cursor, forward / backward</li>
+<li><code>✓ g* g#</code> — word under cursor, also inside longer words</li>
 <li><code>✓ :noh</code> — clear the persistent search highlight</li>
 </ul>
 <h2 id="leader-space">Leader (space)</h2>
 <ul>
 <li><code>✓ space |</code> — pipe line/selection through shell (:! runs)</li>
-<li><code>✓ space e</code> — reveal source in its Directory buffer</li>
+<li><code>✓ space e</code> — show this file in its directory</li>
 <li><code>✓ space f</code> — file finder</li>
 <li><code>✓ space o</code> — open remote destination</li>
 <li><code>✓ space t</code> — terminal in a split below (TERMINAL mode)</li>
 <li><code>✓ space T</code> — terminal in this pane (= :terminal)</li>
 <li><code>✓ space b</code> — buffers (MRU)</li>
-<li><code>✓ space /</code> — Search workspace (resume investigation)</li>
+<li><code>✓ space /</code> — Search the project (or return to it)</li>
 <li><code>✓ space R</code> — Search with replacement</li>
 <li><code>✓ space ?</code> — help buffer</li>
 <li><code>✓ space y</code> — yank motion → system clipboard</li>
@@ -158,7 +208,7 @@
 <li><code>✓ space P</code> — paste clipboard before</li>
 <li><code>✓ space d</code> — diagnostics picker</li>
 <li><code>✓ space k</code> — hover docs</li>
-<li><code>✓ space a</code> — actions here (fixes, code, files)</li>
+<li><code>✓ space a</code> — actions here (fixes and code; files in a directory)</li>
 <li><code>✓ space s</code> — document symbols picker</li>
 <li><code>✓ space S</code> — workspace symbols picker</li>
 <li><code>✓ space j</code> — jumplist picker</li>
@@ -181,18 +231,27 @@
 <h2 id="git">Git</h2>
 <ul>
 <li><code>✓ space g</code> — git…</li>
-<li><code>✓ space g l</code> — commit browser</li>
+<li><code>✓ space g g</code> — status: changed files</li>
+<li><code>✓ space g c</code> — commit (:wq commits, :q! aborts)</li>
+<li><code>✓ space g b</code> — branches: switch / create</li>
+<li><code>✓ space g l</code> — log</li>
 <li><code>✓ space g h</code> — file history (visual: selected lines)</li>
-<li><code>✓ space g b</code> — toggle blame gutter / card</li>
+<li><code>✓ space g B</code> — blame gutter / card</li>
+<li><code>✓ space g s</code> — hunk: stage</li>
+<li><code>✓ space g u</code> — hunk: unstage</li>
+<li><code>✓ space g X</code> — hunk: discard</li>
+<li><code>✓ space g p</code> — hunk: preview</li>
 <li><code>✓ space g y</code> — permalink: copy</li>
 <li><code>✓ space g o</code> — permalink: open</li>
-<li><code>✓ space g u</code> — hunk: undo unstaged (restore from index)</li>
-<li><code>✓ space g s</code> — hunk: stage (live→index)</li>
-<li><code>✓ space g S</code> — hunk: unstage (index→HEAD)</li>
-<li><code>✓ space g p</code> — hunk: preview</li>
+<li><code>✓ s u -</code> — status: stage / unstage / toggle the file, hunk or section</li>
+<li><code>✓ =</code> — status: show / hide the file's diff</li>
+<li><code>✓ X</code> — status: discard (y confirms)</li>
+<li><code>✓ cc ca</code> — status: commit / amend</li>
+<li><code>✓ enter</code> — status: open the file at the cursor</li>
+<li><code>✓ ]c [c</code> — status: next / prev hunk</li>
 <li><code>✓ ]f [f</code> — next / prev file in commit diff</li>
-<li><code>✓ enter</code> — dive into the line's commit (blame gutter)</li>
-<li><code>✓ q</code> — close surface (readonly buffers)</li>
+<li><code>✓ enter</code> — open the commit that last changed this line (blame)</li>
+<li><code>✓ q</code> — close this view (read-only buffers)</li>
 </ul>
 <h2 id="pickers">Pickers</h2>
 <ul>
@@ -200,10 +259,13 @@
 <li><code>✓ up down left right tab s-tab</code> — picker navigation / arrows = hjkl everywhere</li>
 <li><code>✓ ctrl-x</code> — Search: exclude/include match</li>
 <li><code>✓ ctrl-space</code> — query field: qualifier, language and value suggestions</li>
+<li><code>✓ ctrl-u</code> — query field: clear back to the start</li>
+<li><code>✓ alt-c alt-w alt-r</code> — Search: match case / whole word / regex</li>
+<li><code>✓ alt-h alt-i</code> — Files, Search: hidden files / ignored files</li>
 <li><code>✓ ctrl-d</code> — Search: exclude/include file</li>
 <li><code>✓ ctrl-r</code> — input field: insert register {reg} (" is the last yank/delete)</li>
 <li><code>✓ ctrl-t</code> — Search: toggle replacement</li>
-<li><code>✓ enter</code> — Search Find: open source; With: prepare review</li>
+<li><code>✓ enter</code> — Search: open the result; in With: open the review</li>
 <li><code>✓ ctrl-o</code> — Search: collect included matches</li>
 </ul>
 <h2 id="terminal">Terminal</h2>
@@ -218,33 +280,80 @@
 </ul>
 <h2 id="ex-commands">Ex commands</h2>
 <ul>
-<li><code>✓ :</code> — ex command line</li>
-<li><code>✓ :w :q :q! :wq :w {file} :trust</code> — write / quit (force) / write-quit / write-as</li>
-<li><code>✓ :[range]s/a/b/[g] :N :% :N,Md :N,My</code> — substitute (buffer-search grammar + live preview) / goto line / ranged delete+yank</li>
-<li><code>✓ :e</code> — edit file</li>
-<li><code>✓ :help</code> — help buffer (this text — / searches it)</li>
+<li><code>✓ :</code> — ex command line (from Visual it opens with '&lt;,'&gt;)</li>
+<li><code>✓ :N :N,M :. :$ :% :&#x27;a :&#x27;&lt;,&#x27;&gt; :/pat/ :?pat? :.+N :N;+M</code> — ranges: lines, marks, searches and offsets; :N alone goes to the line</li>
+<li><code>✓ :s/pat/new/[flags] :&amp; :&amp;&amp; :~</code> — substitute with live preview (&amp; \1 ~ \r \u \U in the replacement; flags g i I n c &amp;) / repeat it</li>
+<li><code>✓ :g/pat/cmd :g!/pat/cmd :v/pat/cmd :norm {keys}</code> — run a command on matching (or the other) lines / type Normal keys on each line</li>
+<li><code>✓ :d {x} :y {x} :m {addr} :t {addr} :co {addr} :j :pu {x}</code> — delete / yank / move / copy / join / put lines (x: a register; a count may follow)</li>
+<li><code>✓ :&gt; :&lt; :sort :!cmd</code> — indent / unindent / sort lines (! reversed; u n i) / run a command, or with a range filter the lines through it</li>
+<li><code>✓ :k {a} :mark {a} :delm {a} :marks :reg {x} :di {x}</code> — set / delete marks; list marks and registers</li>
+<li><code>✓ :u :red :@: :@{x}</code> — undo / redo / repeat the last command line / run register x as commands</li>
+<li><code>✓ :b {n|name} :bn :bp :bN :bd {n} :ls :buffers :files</code> — go to a buffer by number or name fragment / next / previous / delete / list</li>
+<li><code>✓ :w :w {file} :up :wa</code> — write / write-as / write if modified / write every modified buffer</li>
+<li><code>✓ :q :q! :wq :x :exi :clo :on :trust</code> — quit (force) / write-quit / close this window / only this window / trust the project</li>
+<li><code>✓ :qa :qall :quita :wqa :xa</code> — quit all (fails on unsaved; bang discards) / write all and quit</li>
+<li><code>✓ :e :e {file} :ene :new :vne</code> — edit file / new unnamed buffer (here, split, vertical split)</li>
+<li><code>✓ :cd {dir|-} :pwd</code> — change the project root (Files, Search, terminals) / go back / show it</li>
+<li><code>✓ :help :mes :explain</code> — help buffer (this text — / searches it) / message history / why: workspaces, LSP, config</li>
 <li><code>✓ :theme</code> — choose a built-in interface palette</li>
 <li><code>✓ :jumps :symbols</code> — jumplist / document symbols picker</li>
 <li><code>✓ :format :rename</code> — format buffer / rename symbol: :rename NEW</li>
-<li><code>✓ :recover</code> — draft recovery: list, restore N, discard N, consent remote|off</li>
-<li><code>✓ :qa :qall</code> — quit all (fails on unsaved; bang discards)</li>
+<li><code>✓ :recover</code> — recover unsaved text after a crash: list, restore N, discard N</li>
 <li><code>✓ :collection source|expand|contract</code> — source, expand or contract the excerpt at the caret</li>
 <li><code>✓ :select-next :select-all :select-skip :select-pop</code> — occurrence selection: next / all / skip / pop last-added</li>
 <li><code>✓ :view :set</code> — readonly browsing (:set ro/noro; CLI: -R)</li>
-<li><code>✓ :tab-size :indent-style :search-options</code> — source indentation and search visibility controls</li>
-<li><code>✓ :fs :browse :filter</code> — filesystem actions, namespace-aware browsing and folder filtering</li>
-<li><code>✓ :apply-change :cancel-change :save-change</code> — review: apply text or filesystem changes, cancel, or save changed text</li>
+<li><code>✓ :tab-size :indent-style</code> — indent width and tabs or spaces for this file</li>
+<li><code>✓ :fs :browse :filter :remote :terminal-local</code> — file operations, browse a directory (local or ssh://), filter its listing, SSH hosts, a local shell</li>
+<li><code>✓ :copen :cwindow :cnext :cprevious :cNext :cc :cdo :cfdo</code> — quickfix: show the list, visit hits, run a command at each hit or file</li>
+</ul>
+<h2 id="missing">Missing</h2>
+<p>Neovim binds these; in strop the key does nothing. An operator on this list (<code>=</code>, <code>gq</code>, <code>gw</code>, <code>zf</code>) still takes its motion, so the motion's keys never run as commands.</p>
+<ul>
+<li>Normal: <code>zfj</code> <code>zo</code> <code>zc</code> <code>za</code> <code>zR</code> <code>zM</code> <code>zj</code> <code>zk</code> <code>zd</code> — folds</li>
+<li>Normal: <code>gt</code> <code>gT</code> — tab pages</li>
+<li>Normal: <code>U</code> — undo every change on the line</li>
+<li>Normal: <code>==</code> <code>=j</code> <code>=ip</code> — the reindent operator</li>
+<li>Normal: <code>gqq</code> <code>gqip</code> <code>gwip</code> — reflow text to the text width</li>
+<li>Normal: <code>dis</code> <code>das</code> — the sentence text objects</li>
+<li>Normal: <code>q:</code> <code>q/</code> — the command-line window</li>
+<li>Normal: <code>ga</code> <code>g8</code> — show the character under the cursor as a code</li>
+<li>Normal: <code>gx</code> <code>gf</code> <code>gF</code> — open the URL or file name under the cursor</li>
+<li>Normal: <code>gR</code> — virtual replace mode</li>
+<li>Normal: <code>K</code> — look the word under the cursor up (hover is <code>space k</code>)</li>
+<li>Normal: <code>]]</code> <code>[[</code> <code>][</code> <code>[]</code> <code>]m</code> <code>[m</code> — section and method motions</li>
+<li>Normal: <code>z=</code> <code>zg</code> <code>]s</code> <code>[s</code> — spelling</li>
+<li>Normal: <code>gm</code> <code>gM</code> <code>go</code> — middle of the line, byte offset</li>
+<li>Normal: <code>zh</code> <code>zl</code> <code>zH</code> <code>zL</code> <code>ze</code> <code>zs</code> — horizontal scrolling</li>
+<li>Normal: <code>do</code> <code>dp</code> — diff mode</li>
+<li>Normal: <code>ctrl-w x</code> <code>ctrl-w r</code> <code>ctrl-w T</code> <code>ctrl-w H</code> <code>ctrl-w J</code> <code>ctrl-w K</code> <code>ctrl-w L</code> <code>ctrl-w +</code> <code>ctrl-w -</code> <code>ctrl-w _</code> <code>ctrl-w |</code> — move, rotate and resize windows (panes are always equal)</li>
+<li>Visual: <code>=</code> <code>gq</code> <code>gw</code> <code>zf</code> — reindent, reflow and fold the selection</li>
+<li>Insert: <code>ctrl-v</code> <code>ctrl-k</code> <code>ctrl-a</code> — insert a literal key, a digraph, the last inserted text</li>
+<li>Ex: <code>:tabnew</code> <code>:tabnext</code> <code>:tabclose</code> <code>:fold</code> <code>:mksession</code> <code>:digraphs</code> — tab pages, folds, session files, digraphs</li>
+</ul>
+<h2 id="reassigned">Reassigned</h2>
+<p>Neovim binds these; strop uses the key for something else.</p>
+<ul>
+<li>Normal: <code>space</code> — Neovim: move right. strop: the leader.</li>
+<li>Normal: <code>Q</code> — Neovim: replay the last recorded register. strop: toggle a cursor here (<code>@@</code> replays).</li>
+<li>Normal: <code>gd gD</code> — Neovim: go to the local or global declaration by search. strop: language-server definition and declaration.</li>
+<li>Normal: <code>gI</code> — Neovim: insert in column 1. strop: language-server implementation.</li>
+<li>Normal: <code>gr</code> — Neovim: replace with a virtual character (<code>gr{char}</code>). strop: only the prefix of the language-server keys <code>grr</code> <code>grn</code> <code>gra</code> <code>gri</code>.</li>
+<li>Normal: <code>gs</code> — Neovim: sleep. strop: switch between source and header.</li>
+<li>Normal: <code>ds cs ys</code> — Neovim: nothing (<code>s</code> is not a motion). strop: delete, change, add a surrounding pair.</li>
+<li>Visual: <code>S</code> — Neovim: change the selected lines. strop: wrap the selection in a pair (<code>C</code> and <code>R</code> change lines).</li>
+<li>Visual: <code>ctrl-c</code> — Neovim: leave Visual. strop: toggle comments on the selected lines (<code>Esc</code> leaves).</li>
+<li>Insert: <code>ctrl-e ctrl-y</code> — Neovim: insert the character below or above. strop: dismiss or accept the completion menu.</li>
 </ul>
     </div>
-    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="cli.html">← The command line</a><a class="pager-next" href="nucleo-decision.html">Why the fuzzy matcher is nucleo →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> from the strop repository at <code>v0.58.0</code>.</p>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="cli.html">← The command line</a><a class="pager-next" href="scripting.html">Scripts and bug reports →</a></nav>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> from the strop repository at <code>v0.58.0-31-g8fdf419</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.59.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

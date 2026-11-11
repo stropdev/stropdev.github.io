@@ -14,7 +14,7 @@ Fails (exit 1) when:
   site is built from a tree older than the release it describes, such keys
   are reported as pending instead; from that release on they fail;
 - the frames were captured from a different version than the site is built
-  from.
+  from (pending, likewise, while the site is a preview).
 
 It also prints the contrast ratio of each palette's text tokens.
 Python 3.8+, standard library only.
@@ -211,7 +211,7 @@ def main() -> int:
                     if in_keymap(chord, rows):
                         continue
                     if preview:
-                        pending.append(f"{name}: {chord}")
+                        pending.append(f"{name}: key {chord!r} is not in the keymap yet")
                     else:
                         problems.append(f"{name}: key {chord!r} is not in the keymap of strop {built}")
             frames = root / "img" / "frames.json"
@@ -219,11 +219,13 @@ def main() -> int:
                 problems.append("img/frames.json is missing; run tools/frames.py")
             else:
                 captured = json.loads(frames.read_text(encoding="utf-8"))["version"]
-                if captured != built:
+                if captured != built and preview:
+                    pending.append(f"img/frames.json: frames are of strop {captured}; capture them from {describes}")
+                elif captured != built:
                     problems.append(f"frames are of strop {captured}, the site is built from {built}; "
                                     f"rerun tools/frames.py")
             if pending:
-                print(f"pending until strop {describes} (built from {built}); these keys are not in its keymap yet:")
+                print(f"pending until strop {describes} (built from {built}):")
                 for line in pending:
                     print(f"  {line}")
 

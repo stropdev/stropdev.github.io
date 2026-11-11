@@ -1,5 +1,101 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **The file finder puts the file you meant first.** A match in the file name now beats a match in a directory name, typing a whole name lists the files with exactly that name (shortest path first), and space-separated words must all match — `core.c sched` finds `kernel/sched/core.c`.
+- **The finder remembers what you use.** With nothing typed, `Space f` starts with your other open files, then the files you open most in this project; `Space f` `Enter` goes back to the file you were just in. When you type, a file you use often wins among equally good matches. This is remembered per project between runs.
+- **`Space b` starts on the previous buffer**, so `Space b` `Enter` switches back instead of staying put.
+- **Project search is about five times faster** on large trees: it now uses several cores. On the Linux kernel sources a search finishes in about a quarter of a second instead of 1.2–1.3 seconds — the same as `rg` on the same number of threads. Results are still listed in the same order every time.
+- **Searching is smart-case everywhere** — the finder, project search and `/` in a buffer. An all-lowercase search matches either case; one capital letter makes case count. `case:ignore` and `case:sensitive` (or `\c` and `\C` in a buffer search) decide outright.
+- **References and other location lists are readable**: each row is `path:line` followed by the text on that line, with the path relative to your project, instead of a clipped absolute path.
+- **`:e` completes the path you typed**: `:e src/ma<Tab>` becomes `:e src/main.rs`, not a long `file:///…` address.
+- **Search hits are editable in place.** `Ctrl-O` in search results, references or diagnostics opens a collection; edit inside any excerpt with any command and the change is in the file's buffer in the same keystroke. `:w` writes every changed file it shows, `u` undoes what you changed through it (in the files too). Card borders and the "lines omitted" rows are not text and refuse edits. (plans/0094)
+- **Quickfix commands.** The newest collection is the quickfix list: `:copen` shows it, `]q` / `[q` (`:cnext` / `:cprev`, `:cc N`) visit its hits, `:cdo {cmd}` runs an ex command at every hit and `:cfdo {cmd}` once per file — `:cdo s/old/new/` or `:cdo norm A;`, then `:cfdo w`. `:%s/old/new/g` inside a collection substitutes in the excerpts only.
+- **Replace across files is two steps.** `Space R`, type, `Enter` shows the diff; `Enter` again changes every file and writes it. `u` in that review puts the buffers and the files back and names any file it could not revert; `q` cancels.
+- **Captures in replace.** When the term is a regular expression with groups (`regex:`, or `Alt-R`), `$1`, `${name}` and `\1` in With expand per hit, in the live `-`/`+` rows and in the result alike.
+- **Rename.** `grn` prompts with the current name. A rename in one buffer applies at once; one across several files opens the same review as replace. References move from `gr` to `grr`, and `gra` (actions) and `gri` (implementation) join them: the four language-server keys of Neovim 0.11.
+- **`Space a` on a file lists code actions only.** The filesystem verbs are in the Directory buffer's `Space a` and under `:fs`.
+- **Filesystem reviews are applied with `Enter` or `:fs apply`** and cancelled with `q` or `:fs cancel`.
+- **Git keys mean one thing everywhere**: `Space g u` now unstages the hunk under the cursor (as `u` does in the status buffer) and `Space g X` discards it. `Space g S` is gone. The blame gutter moved from `Space g b` to `Space g B`.
+- **Git buffers are titled alike**: `git status`, `git log`, `git files`, `git diff`, `git hunk`.
+
+### Added
+
+- **Search toggles**: `Alt-C` match case, `Alt-W` whole word, `Alt-R` regular expression, in project search and replace. `Alt-H` shows or hides hidden files and `Alt-I` files your ignore rules skip, in the finder and in search. Whenever a toggle is on, a line under the search field says so in plain words; it disappears when everything is back to default.
+- **`Ctrl-U` clears the search field** in every picker.
+- **`Space g g` shows what changed** (plans/0096): staged, unstaged and untracked files (and conflicts) in one buffer. `s` stages, `u` unstages and `-` toggles the file under the cursor — or the hunk, or the whole section from its heading. `=` shows a file's diff under its row, `]c` / `[c` move between hunks, `enter` opens the file at that line, and `X` discards after `y` confirms. The list keeps itself current: after each change, when files change on disk, and when you come back to the window.
+- **`Space g c` commits** — `cc` from the status buffer, `ca` to amend. The message is written in a buffer that lists what the commit will hold; `:wq` commits and `:q!` aborts. The commit is made by `git` itself, so hooks, signing and your git configuration apply, and a hook's refusal is shown as it wrote it.
+- **`Space g b` switches branch**: local and remote branches in the picker, the current one marked. `enter` switches; the last row creates a branch from the name you typed. If git refuses because your changes would be overwritten, you see its message and nothing changes. Open files follow the new branch.
+- **Not yet on SSH projects**: status, commit and the branch picker say they need a local repository there. Signs, log, blame and diffs work as before.
+
+### Removed
+
+- **`:search-options`**: `Alt-H` and `Alt-I` replace it.
+- **`:apply-change`, `:save-change`, `:undo-change` and `:cancel-change`**, the change receipt and the save receipt. The review buffer itself says what was changed and written.
+- **Read-only collections.** There is one kind, and it is editable.
+
+### Fixed
+
+- **A mistake in `config.toml` costs only that setting**: an unknown theme name, an unknown key or a value strop cannot use is skipped and named in the warning, and every other setting in the file applies. It used to throw away the whole file.
+- **Enter in the finder could open the wrong file** when you typed quickly in a large project: the selection drifted down the list as more files loaded. The selection now stays on the top result until you move it.
+- **The `:s` preview shows the change.** A long line is cut to a window on the changed text, the same window for the removed and the added row; the card no longer covers the statusline.
+- **`:` in a very short terminal no longer panics**; with no room for the card, the command line takes the top row.
+- **Undoing a replace restores the files**, not only the buffers.
+- **`cc` no longer leaves a second cursor** on the line, which later edited two places at once.
+- **The finder and project search no longer list the editor's own lock files** (`.strop-lock-…`) that sit beside open files while hidden files are shown.
+
+## 0.59.0 — 2026-11-11
+
+### Fixed
+
+- **Keys do what they do in Neovim** (plans/0095): the differential test suite grew from 95 key sequences to about 4,070 — every operator with every motion and text object, with and without a count, in Normal, in Visual and repeated with `.` — and strop now agrees with Neovim on all but 18 of them, each listed with its reason.
+- **`dw` on the last word of a line** no longer joins the next line, **`d}`** no longer takes the blank line it stops on, and `d}` in the last paragraph deletes forward instead of backward. A motion that stops in column 1 leaves the line break alone, as in Vim.
+- **Counts mean what they mean in Vim**: `3J` joins three lines (not four), `2D` deletes to the end of the next line, `3x` and `5~` are one command with one register write, `3.` repeats the last change with that count.
+- **A motion that cannot move cancels its operator**: `dk` on the first line, `dj` on the last and `2dd` on the last line do nothing instead of deleting the line.
+- **`w` `b` `e` `ge` stop on empty lines**, and `}` `{` treat only empty lines as paragraph breaks, as Vim does.
+- **`j` and `k` keep their column** through shorter lines, `$` then `j` stays at the line's end, and `dd`, `>>` and `G` leave the cursor in its column instead of column 1.
+- **`cw` on blanks** changes the blanks, not the next word. **`da"`** takes the blanks after the closing quote. **`di{`** on a block that spans lines takes its whole lines.
+- **Dot-repeat of a command that failed** no longer repeats the one before it, and a repeated change that finds no target no longer types its text anyway.
+- **A macro recorded with `q` in Insert mode** no longer stops at the first `q` typed as text.
+- **`Ctrl-E`, `Ctrl-Y` and other Ctrl chords no longer act as their letter** in Normal mode (`Ctrl-Y` started a yank, `Ctrl-K` typed `k`). `Ctrl-E` / `Ctrl-Y` scroll one line; a chord with no meaning is ignored.
+- **A range that runs past the last line** on the `:` line is refused instead of being silently clamped.
+- **`u` after undoing lines added at the end of the file** leaves the cursor on the last line, not below it.
+- **`:s` leaves the cursor on the last line it changed**, not the last line of the range.
+- **Marks**: `'a` goes to the line's first non-blank and `` `a `` to the exact place (both went to the exact place); a mark on a deleted line is gone instead of pointing at the line that took its place.
+
+### Changed
+
+- **`Y` yanks to the end of the line** (`y$`), as in Neovim. It yanked the whole line.
+- **The `:s` replacement is Vim's**: `&` and `\1`–`\9` insert the match and its groups, `~` the previous replacement, `\r` a line break, `\u` `\U` `\l` `\L` change case. It was literal text before. The live preview shows the expanded result.
+- **`:` from Visual mode opens with `'<,'>`**, applies to the selected lines and ends Visual mode, as in Vim. It opened empty and acted on the cursor line.
+- **After `:s`, its pattern is the search pattern** for `n` and the highlight.
+- **`v` in Visual leaves it**; `V` or `Ctrl-V` switches the kind of selection and keeps it. They used to restart the selection.
+- **Visual `I` and `A`** insert where Vim's do; on a block extended with `$`, `A` appends at the end of every line.
+- **Fields write registers**: `yw`, `dw` and `"ayiw` in the Normal mode of a picker or prompt field fill the registers as they do in a document.
+- **`=`, `gq`, `gw` and `zf` take their motion and say they are not supported**, so typing `gqip` no longer runs `ip` as commands.
+- **`strop compat` and docs/vim-compat.md end with what is missing**: the keys Neovim binds that strop does not, and the ones it uses for something else.
+- **The tagline is "Vim's keys. Nothing to configure."** on the welcome card, in `--help`, the installer and the package description.
+
+### Added
+
+- **Text objects**: `ip` `ap` (paragraph), `it` `at` (XML/HTML element), `ib` `iB`, `gn` (the next search match; `cgn` then `.`). A count takes more (`d2aw`, `2i(`), and in Visual an object extends the selection (`viwiw`, `vipip`, `vi(i(`).
+- **Operators**: `gU` `gu` `g~` (case), `g?` (rot13), `gc` (toggle line comments, as in Neovim 0.10+) and `!` (filter lines through a shell command), with their doubled forms (`gUU`, `g??`, `gcc`, `!!`), and `v` / `V` between an operator and its motion (`dvj`, `dVw`).
+- **Motions**: `-` `+`, `(` `)`, `[(` `[{` `])` `]}`, `g_`, `g0` `g^` `g$`, `gj` `gk`, `N%`; and under an operator `'a` `` `a `` (marks, including `'<` `'>` `''` `'.`), `H` `M` `L`, `;` `,` and `n` `N`.
+- **Normal**: `R` (type over text; Backspace gives the old text back), `Ctrl-A` / `Ctrl-X` (add to a number: decimal, hex, binary), `gJ`, `gp` `gP`, `]p` `[p`, `&` `g&` (repeat the last `:s`), `@:` (repeat the last `:` line), `g*` `g#`, `` ` ` `` and `''` (back to where the last jump left from), `ZQ`.
+- **Visual**: `p` and `P` (put over the selection — `p` leaves the replaced text in the unnamed register, `P` leaves the registers alone), `U` `u` `~`, `J` `gJ`, `r`, `I` `A` on any selection, `o`, `*` `#`, `D` `X` `Y` `C` `R`, `Ctrl-A` / `Ctrl-X`, `!`, and every operator on a block.
+- **Insert**: `Ctrl-W` (delete the word back), `Ctrl-U` (delete what was typed on the line), `Ctrl-O` (one Normal command), `Ctrl-T` / `Ctrl-D` (indent, dedent), `Ctrl-H`.
+- **Registers**: `"#` (the alternate file's name).
+- **The `:` line takes Vim's ranges**: line numbers, `.`, `$`, `%`, marks, `/pattern/` and `?pattern?`, with `+N` / `-N` offsets, joined by `,` or `;`.
+- **`:g/pattern/command`**, `:v` and `:g!` run a command on every matching (or non-matching) line, and **`:norm keys`** types Normal-mode keys on each line of a range; each is one undo step.
+- **`:m`, `:t` / `:co`, `:d` and `:y` with a register and a count, `:pu`, `:j`, `:>` / `:<`, `:sort`** (`!`, `u`, `n`, `i`), and `:{range}!cmd` to filter lines through a shell command.
+- **`:s` flags** `i`, `I`, `n`, `e`, `&` and `c`, which asks at each match (`y`, `n`, `a`, `l`, `q`); `:&`, `:&&` and `:~` repeat the last substitute.
+- **Buffers**: `:b` by number or name, `:bn`, `:bp`, `:bd N`, and `:ls`, `:reg` and `:marks` as read-only listings.
+- **`:wa`, `:wqa` / `:xa`, `:x`, `:up`**, `:enew`, `:new`, `:vnew`, `:close`, `:only`, `:k` / `:mark`, `:delm`, `:u`, `:red`.
+- **`:cd DIR`** changes the project root (`:cd -` goes back). Files, Search, new terminals, buffer names, the session and the draft-recovery file follow it.
+- **Vim's abbreviations work on the command line** (`:norm`, `:bn`, `:wqa`, `:noh`, …), and Tab completes from the same list.
+
 ## 0.58.0 — 2026-11-11
 
 ### Fixed

@@ -104,8 +104,9 @@ SCENARIOS = [
                 "id": "status-diff",
                 "project": "tally",
                 "file": "README.md",
-                "script": "settle\nkeys <space>gg\nsettle\nkeys ]c=\nsettle\n",
-                "expect": ["git status", "Staged", "Unstaged", "Untracked", "@@"],
+                # ]c twice lands on the second unstaged file, whose diff fills the frame.
+                "script": "settle\nkeys <space>gg\nsettle\nkeys ]c]c=\nsettle\n",
+                "expect": ["git status", "Staged", "Unstaged", "Untracked", "@@", "is_empty"],
                 "caption": "<kbd>Space</kbd> <kbd>g</kbd> <kbd>g</kbd>: the status buffer of the same "
                            "project, with one file's diff opened by <kbd>=</kbd>. <kbd>s</kbd> stages "
                            "and <kbd>u</kbd> unstages the file or hunk under the cursor.",

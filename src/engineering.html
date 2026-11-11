@@ -36,7 +36,7 @@ class: guide
       <li><strong>Screens.</strong> The cells of each surface are recorded and compared in tests, so a change to how something looks shows up as a diff.</li>
       <li><strong>Remote editing.</strong> The SSH tests run against a real <code>sshd</code>, not a stand-in.</li>
       <li><strong>Concurrent parts.</strong> Property tests, and Loom where ordering between threads matters.</li>
-      <li><strong>Speed.</strong> A keystroke never waits for the disk, git or a language server: those run in the background and report back. <code>strop bench</code> times the finder and project search on a 100,000-file tree, and a result over budget fails.</li>
+      <li><strong>Speed.</strong> A keystroke never waits for the disk, git or a language server: those run in the background and report back. <code>strop bench</code> times the finder and project search on a 100,000-file tree, and a result over budget fails. The fuzzy matcher was chosen by measurement; <a href="https://github.com/stropdev/strop/blob/main/docs/nucleo-decision.md">the record is in the repository</a>.</li>
     </ul>
     <p>A test stays in the repository only if it is a proof about shipped code, a test of something a user can see, or a checker that has caught a real bug.</p>
 

@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Edit over SSH — strop docs</title>
-<meta name="description" content="Remote files are real buffers with their own identity, never a local lookalike. strop reaches a host with plain OpenSSH: nothing is installed there.">
+<meta name="description" content="Edit files on another machine over SSH. strop uses the ssh already on your machine. Nothing is installed on the host.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.58.0">
+<meta name="strop-version" content="0.59.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/remote.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -27,64 +27,69 @@
   </div>
 </header>
 <main id="main">
-<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.58.0, which does not have all of it yet.</p>
+<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.59.0, which does not have all of it yet.</p>
 <div class="shell doc-layout">
   <aside class="doc-side">
     <p class="side-title"><a href="./">All docs</a></p>
-    <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Code</p><ol class="side-docs"><li><a href="editor.html">Completion, indentation, language servers and themes</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal-and-scripting.html">Terminals and scripting</a></li><li><a href="remote.html" aria-current="page">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html">Every key</a></li></ol><p class="side-title">Background</p><ol class="side-docs"><li><a href="nucleo-decision.html">Why the fuzzy matcher is nucleo</a></li></ol>
-    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#connecting">Connecting</a></li><li><a href="#saving">Saving</a></li><li><a href="#file-management">File management</a></li><li><a href="#search-git-language-servers-terminal">Search, Git, language servers, terminal</a></li><li><a href="#containers">Containers</a></li></ol>
+    <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Git</p><ol class="side-docs"><li><a href="git.html">Git</a></li></ol><p class="side-title">Editing and code</p><ol class="side-docs"><li><a href="editor.html">Indentation, themes, completion and language servers</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal.html">Terminals</a></li><li><a href="remote.html" aria-current="page">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html">Every key</a></li><li><a href="scripting.html">Scripts and bug reports</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#connecting">Connecting</a></li><li><a href="#saving">Saving</a></li><li><a href="#file-management">File management</a></li><li><a href="#search-git-language-servers-terminal">Search, Git, language servers, terminal</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
     <h1>Edit over SSH</h1>
     <div class="prose">
-<p>Remote files are real buffers with their own identity, never a local lookalike. strop reaches a host with plain OpenSSH: nothing is installed there.</p>
+<p>Edit files on another machine over SSH. strop uses the <code>ssh</code> already on your machine. Nothing is installed on the host.</p>
 <pre><code class="language-sh">strop ssh://devbox/etc/
 strop +120 ssh://user@devbox/var/log/app.log
 strop remote &quot;ssh://user@devbox:2222/~/project/src/lib.rs&quot;</code></pre>
-<p><code>strop remote URL</code> and <code>--remote URL</code> are the same command — see <a href="cli.html">cli.md</a>. <code>-R</code> opens read-only, as for a local file.</p>
+<p><code>strop remote URL</code> and <code>--remote URL</code> are the same command (see <a href="cli.html">cli.md</a>). <code>-R</code> opens read-only, as for a local file.</p>
 <h2 id="connecting">Connecting</h2>
-<p>Press <strong>Space o</strong> or run <strong><code>:remote</code></strong> to choose a known or connected destination, or select <strong>Add a host</strong> and enter <code>host</code>, <code>user@host:port</code> or a complete SSH path. Opening the chooser does not authenticate; Enter connects. New hosts start at <code>/</code>; directories you choose are remembered privately. <code>:remote home</code> browses the home directory the server reports; <code>:remote root</code> returns to <code>/</code>.</p>
+<p>Press <strong>Space o</strong> or run <strong><code>:remote</code></strong> to pick a host: the directories you opened before, the hosts you are connected to, and the hosts in your SSH config and <code>known_hosts</code>. Or select <strong>Add a host…</strong> and enter <code>host</code>, <code>user@host:port</code> or a complete <code>ssh://</code> address. Opening the list does not log in; Enter connects. A new host starts at <code>/</code>. strop remembers, on this machine only, the directory you last opened on each host (in <code>remote-destinations.json</code> under <code>$XDG_STATE_HOME/strop</code>, normally <code>~/.local/state/strop</code>).</p>
 <pre><code class="language-vim">:browse ssh://devbox/
 :filter app
 :remote connect ssh://devbox
 :remote list
 :remote disconnect ssh://devbox
 :remote clear</code></pre>
-<p><strong>A connected host is editable.</strong> Logging in is the one consent: there is no separate step to edit files, run Git, search or open a terminal there.</p>
-<p>OpenSSH supplies aliases, keys, agent and <code>ProxyJump</code> from your <code>~/.ssh/config</code>. Authentication is noninteractive: host keys must already be trusted and a key or agent must answer without a prompt; otherwise the refusal carries ssh's own words and a hint. strop runs one OpenSSH master per host (<code>ControlMaster</code>, socket in a private directory under <code>$XDG_RUNTIME_DIR</code>), so every later read, save, search or terminal is a channel on it rather than a new login. Masters strop started stop when it exits; after a crash they expire on their own after ten idle minutes.</p>
-<p>Directory listings are searchable real buffers with kind, POSIX permissions, server-reported byte size and native filename columns. Missing attributes show <code>?</code>. Listings include hidden entries and do not evaluate ignore files. Enter opens an entry; <code>-</code>, Backspace or <code>../</code> returns to the parent and restores the selected child. Tab completes SSH hosts and paths without starting authentication: remote candidates need a live connection or a cached listing. Percent-encode reserved path bytes (<code>%20</code>, <code>%23</code>, <code>%25</code>); native Unix filenames stay intact. Files are read whole, up to 256 MiB of UTF-8 text.</p>
+<ul>
+<li><code>:browse ssh://HOST/DIR</code> lists a directory; <code>:filter TEXT</code> narrows the listing.</li>
+<li><code>:remote home</code> lists your home directory on the current host; <code>:remote root</code> goes to <code>/</code>.</li>
+<li><code>:remote connect</code> logs in and keeps the connection; <code>:remote disconnect</code> closes it (the current host when no address is given); <code>:remote clear</code> closes every connection. The remembered directories stay.</li>
+<li><code>:remote list</code> shows the open connections.</li>
+</ul>
+<p><strong>Once connected, you can edit.</strong> There is no second confirmation before you save files, search, use Git or open a terminal on the host.</p>
+<p>Host aliases, keys, the agent and <code>ProxyJump</code> come from your <code>~/.ssh/config</code>. strop cannot ask you for a password or a passphrase, and cannot ask you to accept a new host key. Log in once with plain <code>ssh host</code> to accept the key, and use a key or an agent. If login fails, strop shows ssh's own error and a hint.</p>
+<p>strop logs in once per host and reuses that connection for every read, save, search and terminal, so you are not asked to log in again. The connection closes when strop exits. After a crash it closes by itself after ten idle minutes. (It is an OpenSSH <code>ControlMaster</code>; its socket is in a private directory under <code>$XDG_RUNTIME_DIR</code>.)</p>
+<p>A directory listing is an ordinary buffer: move and search in it as usual. Each row shows the name, the size, and the kind and permissions; <code>?</code> stands for something the host did not report. Hidden files are shown, and <code>.gitignore</code> is not applied. Enter opens an entry; <code>-</code>, Backspace or <code>../</code> goes up and puts the cursor back on the directory you came from. Tab completes host names and paths without logging in; paths on a host complete only once you are connected or have listed that directory before. In an <code>ssh://</code> address write a space as <code>%20</code>, <code>#</code> as <code>%23</code>, <code>?</code> as <code>%3F</code> and <code>%</code> as <code>%25</code>. A file is read whole and can be up to 256 MiB of UTF-8 text.</p>
 <h2 id="saving">Saving</h2>
-<p><strong><code>:w</code></strong> uploads the buffer to a temporary name beside the file, gives it the file's permission bits and renames it over the original, so readers never see a half-written file. A symlink is saved through to its target.</p>
+<p><strong><code>:w</code></strong> uploads the buffer to a temporary name beside the file, gives it the file's permissions and renames it over the original, so nobody ever reads a half-written file. A symlink is saved through to the file it points at.</p>
 <ul>
-<li>If the file on the host changed since it was read (its size or modification time moved), <code>:w</code> is refused and your edits stay: <strong><code>:e!</code></strong> reloads the host's version, <strong><code>:w!</code></strong> replaces it anyway.</li>
+<li>If the file on the host changed since it was read (its size or modification time is different), <code>:w</code> is refused and your edits stay: <strong><code>:e!</code></strong> reloads the host's version, <strong><code>:w!</code></strong> replaces it anyway.</li>
 <li><strong><code>:w PATH</code></strong> or <strong><code>:w ssh://…</code></strong> writes a copy (a relative path is beside the file) and never replaces an existing file; <code>:w! PATH</code> does.</li>
-<li>Saves run off the input thread; a reply for an older revision never clears newer unsaved edits.</li>
+<li>You can keep typing while a save is on its way. If you edit during the save, the buffer stays marked as modified.</li>
 </ul>
-<p>Limits, stated plainly: there is no cross-process lock (as in vim, a writer racing the final check wins); SFTP modification times are whole seconds, so a same-size rewrite within the second of the read goes unnoticed; ownership is not carried over when another user's file is replaced.</p>
+<p>What strop cannot protect against: if another program writes the file in the instant between strop's last check and its save, the later write wins, as in Vim. SFTP reports modification times in whole seconds, so a rewrite of the same size within the same second as your read goes unnoticed. When you replace a file that belongs to another user, the new file belongs to you.</p>
 <h2 id="file-management">File management</h2>
-<p><code>:fs create</code>, <code>:fs mkdir</code>, <code>:fs rename</code>/<code>move</code>, <code>:fs copy</code> and <code>:fs remove</code> (and filename drafts in a remote directory) run on the host through the same Review → Apply → Receipt flow as locally — see <a href="filesystem.html#ssh-hosts">filesystem.md</a>. There is no Trash on a host (removal is permanent), nothing is ever replaced, directories are not copied recursively, and nothing is atomic across steps.</p>
+<p><code>:fs create</code>, <code>:fs mkdir</code>, <code>:fs rename</code>/<code>move</code>, <code>:fs copy</code> and <code>:fs remove</code> (and renaming by editing the list) work on the host as they do on your machine: a review first, then <code>Enter</code> to do it. See <a href="filesystem.html#ssh-hosts">filesystem.md</a>. On a host there is no trash (removal is for good), an existing file is never overwritten, a directory is not copied, and if a later step fails the earlier ones stay done.</p>
 <h2 id="search-git-language-servers-terminal">Search, Git, language servers, terminal</h2>
-<p>They run <strong>on the host</strong>, as commands on the connection:</p>
+<p>They run <strong>on the host</strong>:</p>
 <ul>
-<li><strong><code>Space /</code></strong> searches the remote workspace with <code>rg</code> on the host.</li>
-<li><strong>Git</strong> signs, log (<code>Space g l</code>), blame and diffs run <code>git</code> there.</li>
-<li>A language server starts on the host when it is installed there; the configuration comes from your local <code>languages.toml</code> and the project's <code>.strop/languages.toml</code> on the host.</li>
-<li><strong><code>:terminal</code></strong> and <strong>Space t</strong> in a remote file or directory open your login shell on the host in that directory (<code>ssh -tt</code> on a local PTY, so Ctrl-C and window size work; keys typed before the shell answers are kept). <code>:terminal-local</code> is the explicit local alternative.</li>
+<li><strong><code>Space /</code></strong> searches the project on the host, using the host's <code>rg</code>. Replace across files does not work on a host yet.</li>
+<li><strong>Git</strong>: the change marks in the gutter, the log (<code>Space g l</code>), blame and diffs use the host's <code>git</code>. Status, commit and the branch picker work only on your own machine for now (<a href="git.html">git.md</a>).</li>
+<li>A language server starts on the host when it is installed there. Its settings come from your local <code>languages.toml</code> and from the project's <code>.strop/languages.toml</code> on the host.</li>
+<li><strong><code>:terminal</code></strong> and <strong>Space t</strong> in a remote file or directory open your login shell on the host. Ctrl-C and the window size work, and keys typed before the shell answers are kept. <code>:terminal-local</code> opens a shell on your own machine instead. To work inside a container, open a terminal and run <code>docker exec -it &lt;container&gt; sh</code>.</li>
 </ul>
-<p><code>rg</code>, <code>git</code> and the language server must be installed on the host. Each command runs through your login shell there (sshd's <code>$SHELL -c</code>), so a heavy shell startup file slows every search and Git query; csh-family login shells are not supported for commands with special characters.</p>
-<h2 id="containers">Containers</h2>
-<p>Strop does not attach to containers. Open <strong><code>:terminal</code></strong> and run <code>docker exec -it &lt;container&gt; sh</code> to work inside one.</p>
+<p><code>rg</code>, <code>git</code> and the language server must be installed on the host. Each command runs through your login shell there, so a slow shell startup file slows every search and Git query. csh-family login shells are not supported for commands with special characters.</p>
     </div>
-    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="terminal-and-scripting.html">← Terminals and scripting</a><a class="pager-next" href="cli.html">The command line →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/remote.md"><code>docs/remote.md</code></a> from the strop repository at <code>v0.58.0</code>.</p>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="terminal.html">← Terminals</a><a class="pager-next" href="cli.html">The command line →</a></nav>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/remote.md"><code>docs/remote.md</code></a> from the strop repository at <code>v0.58.0-31-g8fdf419</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.59.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>
