@@ -30,15 +30,36 @@
     <ol class="side-docs">
       <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html" aria-current=&quot;page&quot;>Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
     </ol>
-    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#the-grammar">The grammar</a></li><li><a href="#what-each-qualifier-narrows">What each qualifier narrows</a></li><li><a href="#buffer-search">Buffer search</a></li><li><a href="#ex-substitution">Ex substitution</a></li><li><a href="#the-search-workspace">The Search workspace</a></li><li><a href="#ssh-scopes">SSH scopes</a></li></ol>
+    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#finding-files-space-f">Finding files (<code>Space f</code>)</a></li><li><a href="#keys-in-the-search-field">Keys in the search field</a></li><li><a href="#the-grammar">The grammar</a></li><li><a href="#what-each-qualifier-narrows">What each qualifier narrows</a></li><li><a href="#buffer-search">Buffer search</a></li><li><a href="#ex-substitution">Ex substitution</a></li><li><a href="#the-search-workspace">The Search workspace</a></li><li><a href="#ssh-scopes">SSH scopes</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
     <h1>Search and the query language</h1>
     <div class="prose">
 <p>One bounded qualifier grammar is shared by every picker surface: file find (<code>Space f</code>), content search (<code>Space /</code>), replace (<code>Space R</code>), document symbols, workspace symbols (<code>Space S</code>) and the jump list menu (<code>ctrl-o</code> history, <code>Space j</code>). Qualifiers, highlighting, suggestions and errors behave identically everywhere — what you learn in one field works in all of them.</p>
+<h2 id="finding-files-space-f">Finding files (<code>Space f</code>)</h2>
+<ul>
+<li><strong>The top row is the best match, and Enter opens it.</strong> The bar stays on the top row while files are still streaming in; once you move it, it follows the file you moved to.</li>
+<li><strong>A file name beats a directory name.</strong> <code>sched</code> lists files named <code>sched…</code> before files that merely live under <code>sched/</code>; typing a whole name (<code>sched.h</code>) lists the files with exactly that name, shortest path first.</li>
+<li><strong>Spaces separate terms; every term must match.</strong> <code>core.c sched</code> finds <code>kernel/sched/core.c</code>. A term containing <code>/</code> is matched against the path.</li>
+<li><strong>It remembers what you use.</strong> With nothing typed, the list starts with your other open files (most recent first), then the current file, then the files you open most in this project. So <code>Space f</code> <code>Enter</code> goes back to the file you were just in. When you type, a file you use often wins among equally good matches.</li>
+<li><strong><code>Space b</code></strong> lists buffers most recent first with the bar on the previous buffer, so <code>Space b</code> <code>Enter</code> switches back.</li>
+</ul>
+<h2 id="keys-in-the-search-field">Keys in the search field</h2>
+<table>
+<thead><tr><th>Key</th><th>Where</th><th>Does</th></tr></thead>
+<tbody>
+<tr><td><code>Ctrl-U</code></td><td>every picker</td><td>clear the field back to its start</td></tr>
+<tr><td><code>Alt-C</code></td><td>Search, Replace</td><td>match case</td></tr>
+<tr><td><code>Alt-W</code></td><td>Search, Replace</td><td>whole word</td></tr>
+<tr><td><code>Alt-R</code></td><td>Search, Replace</td><td>regular expression</td></tr>
+<tr><td><code>Alt-H</code></td><td>Files, Search</td><td>hidden files (dotfiles) on/off</td></tr>
+<tr><td><code>Alt-I</code></td><td>Files, Search</td><td>files your ignore rules skip on/off</td></tr>
+</tbody>
+</table>
+<p>The toggles stay as you set them until you quit. Whenever one differs from the default, a row under the field says so in words — <code>match case · whole word · ignored files shown</code> — and the row disappears when everything is back to default. A qualifier typed in the query (<code>case:</code>, <code>hidden:</code>, <code>ignored:</code>, <code>regex:</code>) wins over a toggle.</p>
 <h2 id="the-grammar">The grammar</h2>
-<p>Bare file queries are fuzzy and case-insensitive; content queries are literal and case-insensitive unless you choose <code>regex:</code>. Use <code>case:sensitive</code> on any query surface for exact-case matching, or <code>case:smart</code> for the former uppercase-sensitive behavior:</p>
+<p><strong>Case is smart everywhere:</strong> an all-lowercase query matches either case; one capital letter makes case count. Bare file queries are fuzzy; content queries are literal unless you press <code>Alt-R</code> or write <code>regex:</code>. Use <code>case:sensitive</code> or <code>case:ignore</code> to decide outright:</p>
 <pre><code class="language-text">language:rust
 language:cpp path:src/ request_id
 glob:&quot;src/my files/**/*.rs&quot; -path:generated/ text:&quot;request-id&quot;
@@ -51,7 +72,7 @@ kind:function parse AND NOT wrap</code></pre>
 <li><code>fpath:SUBSEQUENCE</code> — fuzzy scope over the full workspace-relative path; use <code>fpath:modules/jweb/ parser</code> to scope the directory while ranking <code>parser</code>. <code>-fpath:</code> excludes matches.</li>
 <li><code>glob:PATTERN</code> — glob over the workspace-relative path.</li>
 <li><code>hidden:</code> / <code>ignored:</code> — visibility overrides for this query.</li>
-<li><code>case:sensitive|ignore|insensitive|smart</code> — case mode for file, path, symbol and content matching. The default is insensitive; <code>insensitive</code> aliases <code>ignore</code>, and <code>smart</code> classifies each content atom as sensitive only when that atom contains uppercase.</li>
+<li><code>case:sensitive|ignore|insensitive|smart</code> — case mode for file, path, symbol and content matching. The default is <code>smart</code>: each content atom is sensitive only when it contains a capital. <code>insensitive</code> aliases <code>ignore</code>.</li>
 <li><code>kind:</code> — on symbol surfaces, the declaration's classification (<code>kind:function</code>, <code>kind:struct</code>, …).</li>
 <li><code>AND</code> / <code>OR</code> / <code>NOT</code> and parentheses — Boolean expressions; juxtaposition is an implicit AND.</li>
 </ul>
@@ -63,7 +84,7 @@ kind:function parse AND NOT wrap</code></pre>
 <li>Operator-free content never enters admission; the local fuzzy ranker narrows it.</li>
 </ul>
 <h2 id="buffer-search">Buffer search</h2>
-<p>Buffer <code>/</code> and <code>?</code> search is case-insensitive by default. Start the query with <code>case:sensitive</code> for exact case; <code>case:ignore</code>/<code>case:insensitive</code> select insensitive matching explicitly. Vim's <code>\C</code> and <code>\c</code> remain supported, including in <code>n</code>/<code>N</code> and highlights. The dialect is bounded Vim-magic (and <code>\v</code> very magic): collections, groups, alternation, repetition and backreferences; unsupported constructs report an error instead of becoming literals. Search previews and Enter use the same counted resolver.</p>
+<p>Buffer <code>/</code> and <code>?</code> search is smart-case, like the pickers: <code>/edge</code> finds <code>Edge</code> and <code>edge</code>, <code>/Edge</code> finds only <code>Edge</code>. Start the query with <code>case:sensitive</code> or <code>case:ignore</code> (alias <code>case:insensitive</code>) to decide outright; Vim's <code>\C</code> and <code>\c</code> do the same, including in <code>n</code>/<code>N</code> and highlights. <code>*</code> and <code>#</code> match the word under the cursor in either case. The dialect is bounded Vim-magic (and <code>\v</code> very magic): collections, groups, alternation, repetition and backreferences; unsupported constructs report an error instead of becoming literals. Search previews and Enter use the same counted resolver.</p>
 <h2 id="ex-substitution">Ex substitution</h2>
 <p><code>:[range]s/pattern/replacement/[flags]</code> uses the same bounded Vim-magic pattern grammar and case rule as buffer search. While composing, Strop shows the actual removed and inserted lines, substitution count, scope and offscreen extent; Enter applies that displayed plan as one undo unit. Invalid or incomplete input replaces the previous preview rather than executing it, large plans resolve off the input path, and Esc cancellation leaves bytes, registers and undo history untouched.</p>
 <p>The replacement is Vim's: <code>&amp;</code> (or <code>\0</code>) is the match and <code>\1</code>–<code>\9</code> its groups, <code>~</code> the previous replacement, <code>\r</code> a line break, <code>\t</code> a tab, and <code>\u</code> <code>\l</code> <code>\U</code> <code>\L</code> … <code>\E</code> change the case of what follows; <code>\&amp;</code>, <code>\~</code>, <code>\\</code> and an escaped delimiter are themselves. The preview shows the expanded text. This is separate from Search's literal With field.</p>
@@ -75,7 +96,7 @@ kind:function parse AND NOT wrap</code></pre>
 <li><strong>Ctrl-R {register}</strong> inserts a register into Find or With, exactly as in insert mode and on the <code>:</code> / <code>/</code> lines: <code>Ctrl-R &quot;</code> is the last yank or delete, <code>Ctrl-R 0</code> the last yank, <code>Ctrl-R a</code> a named register, <code>Ctrl-R +</code> the system clipboard.</li>
 <li><strong>Ctrl-X</strong> toggles one match; <strong>Ctrl-D</strong> masks/restores its file. Excluded hits stay visible. <strong>Ctrl-O</strong> collects exactly the included matches into a read-only source-backed collection.</li>
 <li><strong>Ctrl-O</strong> from source results opens that collection with surrounding context, source syntax, match evidence and line numbers. <code>+</code>/<code>-</code> adjusts context; <code>g&lt;Space&gt;</code> opens the real source for editing. Collections retain navigation, search and yank, but never write through to source buffers or save them. Use <strong>With → Review</strong> for deliberate multi-file changes.</li>
-<li>Filter-only file finding lists eligible files; content search needs an expression. Unignored dotfiles are included by default; <code>.git</code> metadata is excluded. <code>:search-options</code> shows the separate visibility controls.</li>
+<li>Filter-only file finding lists eligible files; content search needs an expression. Unignored dotfiles are included by default; <code>.git</code> metadata is excluded. <code>Alt-H</code> and <code>Alt-I</code> in the field turn hidden and ignored files on and off.</li>
 <li>Replacement text is literal, including <code>$1</code> and backslashes.</li>
 </ul>
 <p>Opening a source hides Search; <code>Space /</code> returns to the retained investigation. Re-entry refreshes through owned work in its captured namespace/root even if focus or cwd changed. In a Directory buffer, <code>:fs search</code> or <strong>Space a → Search here</strong> captures that directory without changing cwd.</p>
@@ -85,14 +106,14 @@ kind:function parse AND NOT wrap</code></pre>
 <p>Source enumeration is limited to 100,000 selected paths or 16 MiB of names; rg records to 1 MiB and 4,096 submatches; decoded batches to 4 MiB; a request publishes at most 100,000 rows or 64 MiB of owned row data. Limits and malformed output produce a visible failure, never a silently complete partial result.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="editor.html">← Editor surfaces</a><a class="pager-next" href="filesystem.html">The filesystem workspace →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> at <code>v0.59.0</code>. The repository file is the source of truth; edit it there.</p>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> at <code>v0.60.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.59.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.60.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>
