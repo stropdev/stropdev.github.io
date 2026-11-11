@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The filesystem workspace — strop docs</title>
+<title>Create, rename, move and delete files — strop docs</title>
 <meta name="description" content="Open a directory with strop DIRECTORY, :browse, or :e DIRECTORY. Space e reveals the current source in its parent. Browsing keeps the process cwd unchanged; Enter opens a structured entry and -/Backsp">
 <meta name="color-scheme" content="dark light">
+<meta name="strop-version" content="0.58.0">
+<meta name="strop-describes" content="0.62">
+<meta name="strop-source" content="docs/filesystem.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/site.css">
 <script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
@@ -17,24 +20,23 @@
     <a class="brand" href="../">strop</a>
     <nav aria-label="Site">
       <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../neovim.html">From Neovim</a>
       <a href="../changelog.html">Changelog</a>
-      <a href="../#status">Status</a>
       <a href="https://github.com/stropdev/strop">GitHub</a>
     </nav>
   </div>
 </header>
 <main id="main">
+<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.58.0, which does not have all of it yet.</p>
 <div class="shell doc-layout">
   <aside class="doc-side">
-    <p class="side-title"><a href="./">Docs</a></p>
-    <ol class="side-docs">
-      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html" aria-current=&quot;page&quot;>The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
-    </ol>
-    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#the-filename-draft">The filename draft</a></li><li><a href="#relocation-and-barriers">Relocation and barriers</a></li><li><a href="#indentation-controls">Indentation controls</a></li><li><a href="#ssh-hosts">SSH hosts</a></li></ol>
+    <p class="side-title"><a href="./">All docs</a></p>
+    <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html" aria-current="page">Create, rename, move and delete files</a></li></ol><p class="side-title">Code</p><ol class="side-docs"><li><a href="editor.html">Completion, indentation, language servers and themes</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal-and-scripting.html">Terminals and scripting</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html">Every key</a></li></ol><p class="side-title">Background</p><ol class="side-docs"><li><a href="nucleo-decision.html">Why the fuzzy matcher is nucleo</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#the-filename-draft">The filename draft</a></li><li><a href="#relocation-and-barriers">Relocation and barriers</a></li><li><a href="#indentation-controls">Indentation controls</a></li><li><a href="#ssh-hosts">SSH hosts</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
-    <h1>The filesystem workspace</h1>
+    <h1>Create, rename, move and delete files</h1>
     <div class="prose">
 <p>Open a directory with <code>strop DIRECTORY</code>, <code>:browse</code>, or <code>:e DIRECTORY</code>. <code>Space e</code> reveals the current source in its parent. Browsing keeps the process cwd unchanged; Enter opens a structured entry and <code>-</code>/Backspace goes to its parent. <code>Space a</code> lists the actions valid here: in a directory the filesystem operations, in a file its operations plus any code actions the language server offers, all in one <strong>actions</strong> list.</p>
 <p>Filesystem mutations use <strong>Review → Apply → Receipt</strong>, locally and on SSH hosts (see <a href="#ssh-hosts">SSH hosts</a> for what differs there):</p>
@@ -70,15 +72,15 @@
 <li>Copies keep permission bits, not owner or times; new files and directories get 0644/0755 under the host's umask.</li>
 </ul>
     </div>
-    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="search.html">← Search and the query language</a><a class="pager-next" href="remote.html">SSH and remote editing →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/filesystem.md"><code>docs/filesystem.md</code></a> at <code>v0.58.0</code>. The repository file is the source of truth; edit it there.</p>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="search.html">← Find files, search and replace</a><a class="pager-next" href="editor.html">Completion, indentation, language servers and themes →</a></nav>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/filesystem.md"><code>docs/filesystem.md</code></a> from the strop repository at <code>v0.58.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Search and the query language — strop docs</title>
+<title>Find files, search and replace — strop docs</title>
 <meta name="description" content="One bounded qualifier grammar is shared by every picker surface: file find (Space f), content search (Space /), replace (Space R), document symbols, workspace symbols (Space S) and the jump list menu ">
 <meta name="color-scheme" content="dark light">
+<meta name="strop-version" content="0.58.0">
+<meta name="strop-describes" content="0.62">
+<meta name="strop-source" content="docs/search.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/site.css">
 <script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
@@ -17,24 +20,23 @@
     <a class="brand" href="../">strop</a>
     <nav aria-label="Site">
       <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../neovim.html">From Neovim</a>
       <a href="../changelog.html">Changelog</a>
-      <a href="../#status">Status</a>
       <a href="https://github.com/stropdev/strop">GitHub</a>
     </nav>
   </div>
 </header>
 <main id="main">
+<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.58.0, which does not have all of it yet.</p>
 <div class="shell doc-layout">
   <aside class="doc-side">
-    <p class="side-title"><a href="./">Docs</a></p>
-    <ol class="side-docs">
-      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html" aria-current=&quot;page&quot;>Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
-    </ol>
-    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#the-grammar">The grammar</a></li><li><a href="#what-each-qualifier-narrows">What each qualifier narrows</a></li><li><a href="#buffer-search">Buffer search</a></li><li><a href="#ex-substitution">Ex substitution</a></li><li><a href="#the-search-workspace">The Search workspace</a></li><li><a href="#ssh-scopes">SSH scopes</a></li></ol>
+    <p class="side-title"><a href="./">All docs</a></p>
+    <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html" aria-current="page">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Code</p><ol class="side-docs"><li><a href="editor.html">Completion, indentation, language servers and themes</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal-and-scripting.html">Terminals and scripting</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html">Every key</a></li></ol><p class="side-title">Background</p><ol class="side-docs"><li><a href="nucleo-decision.html">Why the fuzzy matcher is nucleo</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#the-grammar">The grammar</a></li><li><a href="#what-each-qualifier-narrows">What each qualifier narrows</a></li><li><a href="#buffer-search">Buffer search</a></li><li><a href="#ex-substitution">Ex substitution</a></li><li><a href="#the-search-workspace">The Search workspace</a></li><li><a href="#ssh-scopes">SSH scopes</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
-    <h1>Search and the query language</h1>
+    <h1>Find files, search and replace</h1>
     <div class="prose">
 <p>One bounded qualifier grammar is shared by every picker surface: file find (<code>Space f</code>), content search (<code>Space /</code>), replace (<code>Space R</code>), document symbols, workspace symbols (<code>Space S</code>) and the jump list menu (<code>ctrl-o</code> history, <code>Space j</code>). Qualifiers, highlighting, suggestions and errors behave identically everywhere — what you learn in one field works in all of them.</p>
 <h2 id="the-grammar">The grammar</h2>
@@ -83,15 +85,15 @@ kind:function parse AND NOT wrap</code></pre>
 <p>Search here uses the same query fields, inclusion decisions and source previews as local Search, on explicitly scoped SSH directories: <code>rg</code> runs on the host over its connection, and a host without <code>rg</code> refuses search without a fallback. <strong>With/Review are unavailable in SSH scopes</strong>.</p>
 <p>Source enumeration is limited to 100,000 selected paths or 16 MiB of names; rg records to 1 MiB and 4,096 submatches; decoded batches to 4 MiB; a request publishes at most 100,000 rows or 64 MiB of owned row data. Limits and malformed output produce a visible failure, never a silently complete partial result.</p>
     </div>
-    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="editor.html">← Editor surfaces</a><a class="pager-next" href="filesystem.html">The filesystem workspace →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> at <code>v0.58.0</code>. The repository file is the source of truth; edit it there.</p>
+    <nav class="pager" aria-label="Documents"><a class="pager-next" href="filesystem.html">Create, rename, move and delete files →</a></nav>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> from the strop repository at <code>v0.58.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

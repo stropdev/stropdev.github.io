@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Engineering — strop</title>
+<meta name="description" content="How strop is checked: an edit kernel proved in Lean, keys compared against Neovim, and release gates that all block.">
+<meta name="color-scheme" content="dark light">
+<meta name="strop-version" content="0.58.0">
+<meta name="strop-describes" content="0.62">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./assets/site.css">
+<script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
+</head>
+<body class="guide">
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="shell top-inner">
+    <a class="brand" href="./">strop</a>
+    <nav aria-label="Site">
+      <a href="./docs/">Docs</a>
+      <a href="./neovim.html">From Neovim</a>
+      <a href="./changelog.html">Changelog</a>
+      <a href="https://github.com/stropdev/strop">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.58.0, which does not have all of it yet.</p>
+<div class="shell page guide">
+  <p class="eyebrow">How it's built</p>
+  <h1>Engineering</h1>
+  <p class="lede">strop is written in Rust. The closer a piece of code is to the edit itself, the harder it is checked: the innermost part is proved, the keys are compared against Neovim, and the rest is tested as behaviour you can see. This page is the short, honest version of each.</p>
+
+  <div class="prose">
+    <h2 id="kernel">The edit kernel is proved in Lean</h2>
+    <p>One small crate, <code>strop-kernel</code>, decides how positions move when text changes: where a cursor, a mark or a selection ends up after an edit, and which batches of edits are safe to apply together. It has no dependencies and does no input or output.</p>
+    <p>That crate is translated to Lean 4 by <a href="https://github.com/AeneasVerif/charon">Charon</a> and <a href="https://github.com/AeneasVerif/aeneas">Aeneas</a>, and the theorems are proved about the translation of the code that ships, not about a model written by hand. In plain words they say:</p>
+    <ul>
+      <li>a position mapped through an edit stays inside the text and lands where the definition says it should;</li>
+      <li>two positions keep their order through an edit, so a selection never turns inside out;</li>
+      <li>mapping through a batch of edits is the same as mapping through each edit in turn;</li>
+      <li>a batch the validator accepts really is sorted and non-overlapping;</li>
+      <li>the counters that tell a stale handle from a live one advance as specified.</li>
+    </ul>
+    <p>The required theorems, read from <code>proofs/Audit.lean</code> at <code>v0.58.0</code>:</p>
+    <ul class="claims"><li>map_position_spec</li><li>mapSpec_monotone</li><li>mapSpec_in_bounds</li><li>validate_batch_spec</li><li>map_through_edits_spec</li><li>map_through_edits_monotone</li><li>map_through_edits_composition</li><li>consecutive_of_batchOk</li><li>next_generation_spec</li><li>index_for_len_spec</li></ul>
+    <p>Two things keep the proofs from being decoration. Each theorem has a mutant: a deliberately broken copy of the code that must make its proof fail, or the gate fails. And an audit lists the axioms every theorem depends on and accepts only Lean's standard three.</p>
+    <p><strong>What this does not cover.</strong> Everything outside that crate: the Vim grammar, rendering, files, git, language servers, SSH. A proved kernel means cursors and marks do not drift or go out of bounds when text changes. It does not mean the editor has no bugs.</p>
+    <p class="links"><a href="https://github.com/stropdev/strop/tree/main/proofs">The proofs</a> · <a href="https://github.com/stropdev/strop/tree/main/crates/strop-kernel">The kernel crate</a> · <a href="https://github.com/stropdev/strop/blob/main/plans/0086-verified-foundation.md">The design</a></p>
+
+    <h2 id="keys">The keys are compared against Neovim</h2>
+    <p>Whether <code>d2aw</code> does the right thing is not a matter of opinion: Neovim already answers it. A test harness types the same keys into strop and into Neovim started with no configuration, then compares the final text, cursor, mode and registers.</p>
+    <p>As of 0.59 the corpus is about 4,000 sequences. Most are generated: every operator with every motion and text object, with and without a count, in Normal, in Visual and repeated with <code>.</code>. The rest are written by hand, including every case somebody once got wrong and the <code>:</code> commands.</p>
+    <p>A difference is a bug until it has a written reason. There are 18 such cases today, in four groups: keys that are missing, keys strop uses for something else, smart-case search, and one inherited edge case. A listed case that starts agreeing again fails the run until it is taken off the list. The lists are on <a href="neovim.html">Coming from Neovim</a>.</p>
+    <p><strong>What this does not cover.</strong> Only what a headless Neovim can be asked: editing commands on a buffer. Screen drawing, the finder, search, git and language servers have no Neovim answer to compare with.</p>
+
+    <h2 id="rest">The rest is tested as behaviour</h2>
+    <ul>
+      <li><strong>Screens.</strong> The cells of each surface are recorded and compared in tests, so a change to how something looks shows up as a diff.</li>
+      <li><strong>Remote editing.</strong> The SSH tests run against a real <code>sshd</code>, not a stand-in.</li>
+      <li><strong>Concurrent parts.</strong> Property tests, and Loom where ordering between threads matters.</li>
+      <li><strong>Speed.</strong> A keystroke never waits for the disk, git or a language server: those run in the background and report back. <code>strop bench</code> times the finder and project search on a 100,000-file tree, and a result over budget fails.</li>
+    </ul>
+    <p>A test stays in the repository only if it is a proof about shipped code, a test of something a user can see, or a checker that has caught a real bug.</p>
+
+    <h2 id="release">Release gates</h2>
+    <p>A release is done when it is publicly installable, not when a tag is pushed. Every gate blocks; one that could fail without stopping a release is deleted instead.</p>
+    <ol>
+      <li><strong>Qualification.</strong> On a clean checkout of the exact commit: tests, the comparison against Neovim, the model checks and the Lean proofs all pass, and the static binary is built and smoke-tested.</li>
+      <li><strong>Publication.</strong> That same artifact, not a rebuild, goes to GitHub with its checksum.</li>
+      <li><strong>Installation.</strong> <code>install.sh</code> is run against the public download into an empty directory, and the installed <code>strop --version</code> must report the new version.</li>
+      <li><strong>This site.</strong> It is rebuilt from the released source, and the frames on the front page are captured again from the released binary.</li>
+    </ol>
+    <p class="links"><a href="https://github.com/stropdev/strop/blob/main/AGENTS.md">The working rules</a> · <a href="https://github.com/stropdev/strop/blob/main/plans/STATUS.md">Design documents</a> · <a href="changelog.html">Changelog</a></p>
+  </div>
+</div>
+</main>
+<footer class="foot">
+  <div class="shell foot-inner">
+    <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="./#palette">Palette</a></p>
+  </div>
+</footer>
+<script src="./assets/site.js"></script>
+</body>
+</html>

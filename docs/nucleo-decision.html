@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nucleo decision record (0022 §2) — strop docs</title>
+<title>Why the fuzzy matcher is nucleo — strop docs</title>
 <meta name="description" content="Date: 2026-09-06. Decision: adopt nucleo-matcher for the picker&#x27;s row scoring.">
 <meta name="color-scheme" content="dark light">
+<meta name="strop-version" content="0.58.0">
+<meta name="strop-describes" content="0.62">
+<meta name="strop-source" content="docs/nucleo-decision.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/site.css">
 <script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
@@ -17,24 +20,23 @@
     <a class="brand" href="../">strop</a>
     <nav aria-label="Site">
       <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../neovim.html">From Neovim</a>
       <a href="../changelog.html">Changelog</a>
-      <a href="../#status">Status</a>
       <a href="https://github.com/stropdev/strop">GitHub</a>
     </nav>
   </div>
 </header>
 <main id="main">
+<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.58.0, which does not have all of it yet.</p>
 <div class="shell doc-layout">
   <aside class="doc-side">
-    <p class="side-title"><a href="./">Docs</a></p>
-    <ol class="side-docs">
-      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="nucleo-decision.html" aria-current=&quot;page&quot;>Nucleo decision record (0022 §2)</a></li>
-    </ol>
-    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#the-measurement">The measurement</a></li><li><a href="#the-constraint-that-decided-it">The constraint that decided it</a></li><li><a href="#what-stayed-the-same">What stayed the same</a></li></ol>
+    <p class="side-title"><a href="./">All docs</a></p>
+    <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Code</p><ol class="side-docs"><li><a href="editor.html">Completion, indentation, language servers and themes</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal-and-scripting.html">Terminals and scripting</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html">Every key</a></li></ol><p class="side-title">Background</p><ol class="side-docs"><li><a href="nucleo-decision.html" aria-current="page">Why the fuzzy matcher is nucleo</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#the-measurement">The measurement</a></li><li><a href="#the-constraint-that-decided-it">The constraint that decided it</a></li><li><a href="#what-stayed-the-same">What stayed the same</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
-    <h1>Nucleo decision record (0022 §2)</h1>
+    <h1>Why the fuzzy matcher is nucleo</h1>
     <div class="prose">
 <p>Date: 2026-09-06. Decision: <strong>adopt nucleo-matcher</strong> for the picker's row scoring.</p>
 <h2 id="the-measurement">The measurement</h2>
@@ -53,15 +55,15 @@
 <h2 id="what-stayed-the-same">What stayed the same</h2>
 <p><code>fuzzy_score</code>'s signature and the picker's refilter logic. The scorer is a thread-local shared Matcher (UI is single-threaded); the custom 60-line implementation is deleted, not shimmed.</p>
     </div>
-    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="vim-compat.html">← Vim compatibility</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/nucleo-decision.md"><code>docs/nucleo-decision.md</code></a> at <code>v0.58.0</code>. The repository file is the source of truth; edit it there.</p>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="vim-compat.html">← Every key</a></nav>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/nucleo-decision.md"><code>docs/nucleo-decision.md</code></a> from the strop repository at <code>v0.58.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

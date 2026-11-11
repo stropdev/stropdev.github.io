@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The strop CLI — strop docs</title>
+<title>The command line — strop docs</title>
 <meta name="description" content="One binary, subcommands for the occasional jobs, flags for everything else. strop --help prints the same reference live (styled when stdout is a terminal, plain when piped).">
 <meta name="color-scheme" content="dark light">
+<meta name="strop-version" content="0.58.0">
+<meta name="strop-describes" content="0.62">
+<meta name="strop-source" content="docs/cli.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/site.css">
 <script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
@@ -17,24 +20,23 @@
     <a class="brand" href="../">strop</a>
     <nav aria-label="Site">
       <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../neovim.html">From Neovim</a>
       <a href="../changelog.html">Changelog</a>
-      <a href="../#status">Status</a>
       <a href="https://github.com/stropdev/strop">GitHub</a>
     </nav>
   </div>
 </header>
 <main id="main">
+<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.58.0, which does not have all of it yet.</p>
 <div class="shell doc-layout">
   <aside class="doc-side">
-    <p class="side-title"><a href="./">Docs</a></p>
-    <ol class="side-docs">
-      <li><a href="cli.html" aria-current=&quot;page&quot;>The strop CLI</a></li><li><a href="editor.html">Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
-    </ol>
-    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#commands">Commands</a></li><li><a href="#options">Options</a></li><li><a href="#remote-locations">Remote locations</a></li><li><a href="#exit-codes">Exit codes</a></li></ol>
+    <p class="side-title"><a href="./">All docs</a></p>
+    <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Code</p><ol class="side-docs"><li><a href="editor.html">Completion, indentation, language servers and themes</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal-and-scripting.html">Terminals and scripting</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html" aria-current="page">The command line</a></li><li><a href="vim-compat.html">Every key</a></li></ol><p class="side-title">Background</p><ol class="side-docs"><li><a href="nucleo-decision.html">Why the fuzzy matcher is nucleo</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#commands">Commands</a></li><li><a href="#options">Options</a></li><li><a href="#remote-locations">Remote locations</a></li><li><a href="#exit-codes">Exit codes</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
-    <h1>The strop CLI</h1>
+    <h1>The command line</h1>
     <div class="prose">
 <p>One binary, subcommands for the occasional jobs, flags for everything else. <code>strop --help</code> prints the same reference live (styled when stdout is a terminal, plain when piped).</p>
 <pre><code class="language-text">Usage: strop [OPTIONS] [FILE[:LINE] | DIR | ssh://URL]</code></pre>
@@ -76,15 +78,15 @@
 <h2 id="exit-codes">Exit codes</h2>
 <p><code>0</code> on success, nonzero with a one-line <code>strop: …</code> explanation on stderr otherwise.</p>
     </div>
-    <nav class="pager" aria-label="Documents"><a class="pager-next" href="editor.html">Editor surfaces →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/cli.md"><code>docs/cli.md</code></a> at <code>v0.58.0</code>. The repository file is the source of truth; edit it there.</p>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="remote.html">← Edit over SSH</a><a class="pager-next" href="vim-compat.html">Every key →</a></nav>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/cli.md"><code>docs/cli.md</code></a> from the strop repository at <code>v0.58.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

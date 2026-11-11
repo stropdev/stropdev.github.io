@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Editor surfaces — strop docs</title>
+<title>Completion, indentation, language servers and themes — strop docs</title>
 <meta name="description" content="Themes, completion, indentation and the visual system — the parts of strop you configure rather than drive. For the input grammar see the README&#x27;s card; for pickers see search.md.">
 <meta name="color-scheme" content="dark light">
+<meta name="strop-version" content="0.58.0">
+<meta name="strop-describes" content="0.62">
+<meta name="strop-source" content="docs/editor.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/site.css">
 <script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
@@ -17,24 +20,23 @@
     <a class="brand" href="../">strop</a>
     <nav aria-label="Site">
       <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../neovim.html">From Neovim</a>
       <a href="../changelog.html">Changelog</a>
-      <a href="../#status">Status</a>
       <a href="https://github.com/stropdev/strop">GitHub</a>
     </nav>
   </div>
 </header>
 <main id="main">
+<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.58.0, which does not have all of it yet.</p>
 <div class="shell doc-layout">
   <aside class="doc-side">
-    <p class="side-title"><a href="./">Docs</a></p>
-    <ol class="side-docs">
-      <li><a href="cli.html">The strop CLI</a></li><li><a href="editor.html" aria-current=&quot;page&quot;>Editor surfaces</a></li><li><a href="search.html">Search and the query language</a></li><li><a href="filesystem.html">The filesystem workspace</a></li><li><a href="remote.html">SSH and remote editing</a></li><li><a href="terminal-and-scripting.html">Terminals</a></li><li><a href="vim-compat.html">Vim compatibility</a></li><li><a href="nucleo-decision.html">Nucleo decision record (0022 §2)</a></li>
-    </ol>
-    <p class='side-title'>On this page</p><ol class='side-toc'><li><a href="#indentation">Indentation</a></li><li><a href="#the-look">The look</a></li><li><a href="#themes">Themes</a></li><li><a href="#panes-previews-and-language-services">Panes, previews and language services</a></li><li><a href="#the-project-root">The project root</a></li><li><a href="#registers">Registers</a></li><li><a href="#windows">Windows</a></li><li><a href="#code-completion">Code completion</a></li><li><a href="#syntax-and-display">Syntax and display</a></li><li><a href="#reading-stdin">Reading stdin</a></li><li><a href="#sessions">Sessions</a></li></ol>
+    <p class="side-title"><a href="./">All docs</a></p>
+    <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Code</p><ol class="side-docs"><li><a href="editor.html" aria-current="page">Completion, indentation, language servers and themes</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal-and-scripting.html">Terminals and scripting</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html">Every key</a></li></ol><p class="side-title">Background</p><ol class="side-docs"><li><a href="nucleo-decision.html">Why the fuzzy matcher is nucleo</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#indentation">Indentation</a></li><li><a href="#the-look">The look</a></li><li><a href="#themes">Themes</a></li><li><a href="#panes-previews-and-language-services">Panes, previews and language services</a></li><li><a href="#the-project-root">The project root</a></li><li><a href="#registers">Registers</a></li><li><a href="#windows">Windows</a></li><li><a href="#code-completion">Code completion</a></li><li><a href="#syntax-and-display">Syntax and display</a></li><li><a href="#reading-stdin">Reading stdin</a></li><li><a href="#sessions">Sessions</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
-    <h1>Editor surfaces</h1>
+    <h1>Completion, indentation, language servers and themes</h1>
     <div class="prose">
 <p>Themes, completion, indentation and the visual system — the parts of strop you configure rather than drive. For the input grammar see the README's card; for pickers see <a href="search.html">search.md</a>.</p>
 <h2 id="indentation">Indentation</h2>
@@ -98,15 +100,15 @@ auto_popup = true</code></pre>
 <h2 id="sessions">Sessions</h2>
 <p>File/native work runs on owned jobs rather than blocking keystrokes. Sessions use private atomic files and lossless native paths, including undo history and the active window's jump history. Per-project sessions restore cursor, viewport and jump positions across restarts; retained jump records also restore their selections. Each pane keeps an independent 100-entry jumplist, copied on split. Quit-all writes one complete project snapshot before closing any buffer. <code>Ctrl-O</code> / <code>Ctrl-I</code> traverse jump origins without discarding newer entries when a new jump branches from history. Undo history is available in the <code>Space u</code> tree browser. Remote contents and write permits are never restored from persisted sessions.</p>
     </div>
-    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="cli.html">← The strop CLI</a><a class="pager-next" href="search.html">Search and the query language →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> at <code>v0.58.0</code>. The repository file is the source of truth; edit it there.</p>
+    <nav class="pager" aria-label="Documents"><a class="pager-prev" href="filesystem.html">← Create, rename, move and delete files</a><a class="pager-next" href="terminal-and-scripting.html">Terminals and scripting →</a></nav>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> from the strop repository at <code>v0.58.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

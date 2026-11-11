@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>First ten minutes — strop</title>
+<meta name="description" content="Install strop, open a project, find a file, search, replace, commit. A plain walkthrough of the keys you will use every day.">
+<meta name="color-scheme" content="dark light">
+<meta name="strop-version" content="0.58.0">
+<meta name="strop-describes" content="0.62">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./assets/site.css">
+<script>try{var p=localStorage.getItem("strop-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
+</head>
+<body class="guide">
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="shell top-inner">
+    <a class="brand" href="./">strop</a>
+    <nav aria-label="Site">
+      <a href="./docs/">Docs</a>
+      <a href="./neovim.html">From Neovim</a>
+      <a href="./changelog.html">Changelog</a>
+      <a href="https://github.com/stropdev/strop">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.58.0, which does not have all of it yet.</p>
+<div class="shell page guide">
+  <p class="eyebrow">Start</p>
+  <h1>First ten minutes</h1>
+  <p class="lede">This goes once through what you do all day: open a project, find a file, change it, search and replace across files, and commit. If you know Vim, the editing is already in your hands and the rest is a handful of <kbd>Space</kbd> keys.</p>
+
+  <div class="prose">
+    <h2 id="install">1. Install</h2>
+    <pre><code>curl -fsSL https://strop.dev/install.sh | sh
+strop --version</code></pre>
+    <p>The build is for Linux and WSL on x86_64. It is one file; nothing else needs installing and there is no configuration to write.</p>
+
+    <h2 id="open">2. Open a project</h2>
+    <pre><code>cd ~/src/myproject
+strop</code></pre>
+    <p>The directory you start in is the project. The finder, search and new terminals all work from there, whichever file you are in. <code>strop src/main.rs</code> opens a file straight away, and <code>strop src/main.rs:120</code> opens it at a line.</p>
+    <p><kbd>Space</kbd> <kbd>?</kbd> lists every key, and <code>:q</code> quits, as you would expect.</p>
+
+    <h2 id="find">3. Find a file</h2>
+    <p>Press <kbd>Space</kbd> <kbd>f</kbd> and type part of the name. A match in the file name beats a match in a directory name, and several words must all match, so <code>core.c sched</code> finds <code>kernel/sched/core.c</code>. <kbd>Enter</kbd> opens the selected file.</p>
+    <p>With nothing typed the list starts with your other open files, then the files you open most in this project. <kbd>Space</kbd> <kbd>b</kbd> lists open buffers, and <kbd>Ctrl-^</kbd> flips to the previous one.</p>
+
+    <h2 id="edit">4. Edit</h2>
+    <p>Edit as you do in Vim: operators, motions, text objects, counts, registers, macros, Visual mode, <kbd>.</kbd> to repeat, <kbd>u</kbd> and <kbd>Ctrl-R</kbd> to undo and redo, <code>:w</code> to save. A plain yank also goes to the system clipboard.</p>
+    <p>If a key does something other than what Neovim does, that is a bug, unless it is on the short list in <a href="neovim.html">Coming from Neovim</a>.</p>
+
+    <h2 id="search">5. Search the project</h2>
+    <p><kbd>Space</kbd> <kbd>/</kbd> opens search. Results appear as you type, grouped by file, with a preview of the selected hit. Search is smart-case: lowercase matches either case, and one capital letter makes case count. <kbd>Alt-R</kbd> switches to a regular expression, <kbd>Alt-W</kbd> to whole words, <kbd>Alt-C</kbd> to exact case.</p>
+    <p><kbd>Enter</kbd> opens the hit. <kbd>Space</kbd> <kbd>/</kbd> again brings the same search back, so you can work through the list.</p>
+
+    <h2 id="replace">6. Replace across files</h2>
+    <p><kbd>Space</kbd> <kbd>R</kbd> opens the same search with a second field. Type what to find, press <kbd>Tab</kbd>, type what to put there. Every hit is shown as a <code>-</code> line and a <code>+</code> line while you type.</p>
+    <ul>
+      <li><kbd>Ctrl-X</kbd> leaves one hit out; <kbd>Ctrl-D</kbd> leaves a whole file out.</li>
+      <li><kbd>Enter</kbd> shows the full diff for review. <kbd>Enter</kbd> again changes the files and writes them.</li>
+      <li><kbd>u</kbd> in the review puts everything back, on disk as well.</li>
+    </ul>
+
+    <h2 id="hits">7. Edit the hits by hand</h2>
+    <p>When a replace is not enough, press <kbd>Ctrl-O</kbd> in the search results. The hits open as one buffer, each with a few lines around it. Edit them with any command you like; the change lands in the file's own buffer as you make it. <code>:w</code> writes every file you touched and <kbd>u</kbd> undoes your edits there.</p>
+    <p>The same works from a list of references or diagnostics.</p>
+
+    <h2 id="code">8. Move through code</h2>
+    <p>If a language server for the file is on your <code>PATH</code> (rust-analyzer, clangd, gopls, pyright and so on), strop starts it. There is nothing to configure.</p>
+    <ul>
+      <li><kbd>gd</kbd> goes to the definition; <kbd>Ctrl-O</kbd> comes back.</li>
+      <li><kbd>grr</kbd> lists references and <kbd>grn</kbd> renames.</li>
+      <li><kbd>Space</kbd> <kbd>k</kbd> shows documentation for the thing under the cursor.</li>
+      <li><kbd>Space</kbd> <kbd>d</kbd> lists diagnostics; <kbd>]d</kbd> and <kbd>[d</kbd> step through them.</li>
+      <li>Completion appears as you type in Insert mode.</li>
+    </ul>
+    <p>If a server did not start, <code>:explain</code> says why.</p>
+
+    <h2 id="git">9. Commit</h2>
+    <p>Changed lines are marked in the gutter; <kbd>]c</kbd> and <kbd>[c</kbd> move between them. <kbd>Space</kbd> <kbd>g</kbd> <kbd>g</kbd> opens the status buffer:</p>
+    <ul>
+      <li><kbd>s</kbd> stages and <kbd>u</kbd> unstages the file under the cursor, or the hunk, or a whole section from its heading.</li>
+      <li><kbd>=</kbd> shows a file's diff under its row.</li>
+      <li><kbd>cc</kbd> opens the commit message in a buffer. <code>:wq</code> commits and <code>:q!</code> aborts. The commit is made by <code>git</code> itself, so your hooks and signing apply.</li>
+    </ul>
+    <p><kbd>Space</kbd> <kbd>g</kbd> <kbd>b</kbd> switches branch, <kbd>Space</kbd> <kbd>g</kbd> <kbd>B</kbd> shows blame in the gutter, and <kbd>Space</kbd> <kbd>g</kbd> <kbd>l</kbd> opens the log.</p>
+
+    <h2 id="terminal">10. Run something</h2>
+    <p><kbd>Space</kbd> <kbd>t</kbd> opens a shell in a split below. It works like Neovim's terminal: <kbd>Ctrl-\</kbd> <kbd>Ctrl-N</kbd> leaves the shell for Normal mode, where the output is a buffer you can search and yank from, and <kbd>i</kbd> goes back to typing.</p>
+
+    <h2 id="next">After that</h2>
+    <ul>
+      <li><code>strop ssh://devbox/srv/app</code> opens a directory on another machine over SSH; <kbd>Space</kbd> <kbd>o</kbd> does the same from inside. See <a href="docs/remote.html">Edit over SSH</a>.</li>
+      <li><code>:theme</code> picks one of six palettes.</li>
+      <li><code>strop config</code> prints the few settings there are, with their defaults.</li>
+      <li><code>strop update</code> installs the newest release.</li>
+      <li>The rest is in the <a href="docs/">docs</a>.</li>
+    </ul>
+  </div>
+</div>
+</main>
+<footer class="foot">
+  <div class="shell foot-inner">
+    <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="./#palette">Palette</a></p>
+  </div>
+</footer>
+<script src="./assets/site.js"></script>
+</body>
+</html>
