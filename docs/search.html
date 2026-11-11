@@ -65,8 +65,9 @@ kind:function parse AND NOT wrap</code></pre>
 <h2 id="buffer-search">Buffer search</h2>
 <p>Buffer <code>/</code> and <code>?</code> search is case-insensitive by default. Start the query with <code>case:sensitive</code> for exact case; <code>case:ignore</code>/<code>case:insensitive</code> select insensitive matching explicitly. Vim's <code>\C</code> and <code>\c</code> remain supported, including in <code>n</code>/<code>N</code> and highlights. The dialect is bounded Vim-magic (and <code>\v</code> very magic): collections, groups, alternation, repetition and backreferences; unsupported constructs report an error instead of becoming literals. Search previews and Enter use the same counted resolver.</p>
 <h2 id="ex-substitution">Ex substitution</h2>
-<p><code>:[range]s/pattern/replacement/g</code> uses the same bounded Vim-magic pattern grammar as buffer search. While composing, Strop shows the actual removed and inserted lines, substitution count, scope and offscreen extent; Enter applies that displayed plan as one undo unit. Invalid or incomplete input replaces the previous preview rather than executing it, large plans resolve off the input path, and Esc cancellation leaves bytes, registers and undo history untouched.</p>
-<p>Replacement text is literal: <code>&amp;</code>, <code>$1</code> and <code>\1</code> have no capture meaning. An escaped delimiter inserts that delimiter and <code>\\</code> inserts one backslash; other backslashes are preserved. This is separate from Search's literal With field.</p>
+<p><code>:[range]s/pattern/replacement/[flags]</code> uses the same bounded Vim-magic pattern grammar and case rule as buffer search. While composing, Strop shows the actual removed and inserted lines, substitution count, scope and offscreen extent; Enter applies that displayed plan as one undo unit. Invalid or incomplete input replaces the previous preview rather than executing it, large plans resolve off the input path, and Esc cancellation leaves bytes, registers and undo history untouched.</p>
+<p>The replacement is Vim's: <code>&amp;</code> (or <code>\0</code>) is the match and <code>\1</code>–<code>\9</code> its groups, <code>~</code> the previous replacement, <code>\r</code> a line break, <code>\t</code> a tab, and <code>\u</code> <code>\l</code> <code>\U</code> <code>\L</code> … <code>\E</code> change the case of what follows; <code>\&amp;</code>, <code>\~</code>, <code>\\</code> and an escaped delimiter are themselves. The preview shows the expanded text. This is separate from Search's literal With field.</p>
+<p>Flags: <code>g</code> every match on a line, <code>i</code> / <code>I</code> ignore / match case, <code>n</code> count the matches without changing anything, <code>e</code> no complaint when nothing matches, <code>&amp;</code> the previous substitute's flags, and <code>c</code> to be asked at each match — <code>y</code> replaces it, <code>n</code> skips it, <code>a</code> replaces all the rest, <code>l</code> this one and stop, <code>q</code> or Esc stop. A count after the flags (<code>:s/a/b/g 3</code>) covers that many lines. <code>:s</code> or <code>:&amp;</code> alone repeats the last substitute on the cursor line, <code>:&amp;&amp;</code> with its flags, <code>:~</code> with the last search pattern.</p>
 <h2 id="the-search-workspace">The Search workspace</h2>
 <p><code>Space /</code> opens or resumes one large Search workspace; <code>Space R</code> resumes the same investigation with the replacement field visible. Local enumeration and content matching run entirely in Rust using the <code>ignore</code>/<code>grep</code> crate family — <code>rg</code> is not required on your machine.</p>
 <ul>
@@ -84,14 +85,14 @@ kind:function parse AND NOT wrap</code></pre>
 <p>Source enumeration is limited to 100,000 selected paths or 16 MiB of names; rg records to 1 MiB and 4,096 submatches; decoded batches to 4 MiB; a request publishes at most 100,000 rows or 64 MiB of owned row data. Limits and malformed output produce a visible failure, never a silently complete partial result.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="editor.html">← Editor surfaces</a><a class="pager-next" href="filesystem.html">The filesystem workspace →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> at <code>v0.58.0</code>. The repository file is the source of truth; edit it there.</p>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> at <code>v0.59.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.59.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>
