@@ -6,7 +6,7 @@
 <title>Indentation, themes, completion and language servers — strop docs</title>
 <meta name="description" content="How strop indents, what the screen shows, how to change the theme, and how completion, registers, windows and sessions behave. The keys are listed in vim-compat.md and under Space ?. Searching is in s">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.59.0">
+<meta name="strop-version" content="0.62.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/editor.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -27,7 +27,6 @@
   </div>
 </header>
 <main id="main">
-<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.59.0, which does not have all of it yet.</p>
 <div class="shell doc-layout">
   <aside class="doc-side">
     <p class="side-title"><a href="./">All docs</a></p>
@@ -85,10 +84,10 @@
 <p>A pane title is the pane's number and the file's path inside the project. Two files with the same name are told apart by their directories. A file outside the project shows its full path, and a file on an SSH host shows the host (<code>ssh:devbox /etc/app.conf</code>). <code>●</code> marks unsaved changes and <code>[RO]</code> a read-only buffer. In a narrow pane the directories are shortened first; the number, the file name and the markers stay.</p>
 <p>In Files, Search and the symbol pickers, the preview takes the spare width when the result rows are short. When paths are long, the list keeps its width. In a narrow terminal the preview moves below the list, or is hidden.</p>
 <h2 id="language-servers">Language servers</h2>
-<p>strop starts the language server for a file's language when that server is installed; <code>Space ?</code> lists which server each language uses. The status line shows <code>LSP!</code> when a server failed and <code>LSP?</code> when one was refused. A long error from the server never pushes the mode or the position off the line. <code>:explain</code> opens the full story in a read-only buffer: which server, which project, and why it failed. When a server recovers, its failure message goes away. Messages about other projects or other problems stay.</p>
+<p>strop starts the language server for a file's language when that server is installed; <code>Space ?</code> lists which server each language uses. The status line shows <code>LSP!</code> when a server failed and <code>LSP?</code> when one could not start: it is not installed (the message names it and says how to install it, e.g. <code>lsp: rust-analyzer not found on PATH — rustup component add rust-analyzer</code>), or the project has not been trusted yet. A long error from the server never pushes the mode or the position off the line. <code>:explain</code> opens the full story in a read-only buffer: which server, which project, and why it failed. When a server recovers, its failure message goes away. Messages about other projects or other problems stay.</p>
 <p>A server that crashes after it was ready restarts by itself, up to three times per project: a message says <code>restarting (1/3)</code>, the <code>LSP!</code> badge stays until the new server is ready, and every file the old server had open, library files included, is opened on the new one. After the third restart, or if the server never started, the next thing you ask of it (go to definition, hover, and so on) shows the reason and tries once more to start it. Repeat the command when the server is ready.</p>
 <h3 id="trust"><code>:trust</code></h3>
-<p>A project can name its own language-server command in <code>.strop/languages.toml</code>. strop does not run a command that comes from a project until you allow that project: the message reads <code>lsp: NAME refused — :trust to allow</code>, and <code>:explain</code> shows the command. <code>:trust</code> allows the current project, and the server starts. The answer is remembered on this machine (under <code>$XDG_STATE_HOME/strop</code>, normally <code>~/.local/state/strop</code>). Servers from strop's built-in list and from your own config need no <code>:trust</code>.</p>
+<p>A project can name its own language-server command in <code>.strop/languages.toml</code>. strop does not run a command that comes from a project until you allow that project: the message reads <code>lsp: NAME needs :trust for this project</code>, and <code>:explain</code> shows the command. <code>:trust</code> allows the current project, and the server starts. The answer is remembered on this machine (under <code>$XDG_STATE_HOME/strop</code>, normally <code>~/.local/state/strop</code>). Servers from strop's built-in list and from your own config need no <code>:trust</code>.</p>
 <h2 id="the-project-root">The project root</h2>
 <p>The project is the directory strop was launched in, and it stays there until you move it: <code>:pwd</code> shows it, <code>:cd DIR</code> changes it (<code>:cd -</code> goes back, <code>:cd</code> alone goes home). After <code>:cd</code>, the saved session and the recovery drafts are the new project's, open buffers keep pointing at the same files, and changes on disk are noticed under the new directory. Files (<code>Space f</code>), Search (<code>Space /</code>) and new terminals work in the project root whichever file has focus. Following go-to-definition into the Rust standard library, a cargo registry crate or a system header does not change the project: that file opens read-only, and the project's language server keeps serving it (no second server is started in the library's directory). Browsing a directory on purpose (<code>:browse DIR</code>) makes Files and Search work in that directory while it has focus.</p>
 <p>When a file changes on disk, a buffer with no unsaved edits reloads and says so. A buffer with unsaved edits keeps them and tells you the file changed; <code>:w!</code> overwrites the file, <code>:e!</code> takes the version on disk.</p>
@@ -159,14 +158,14 @@ auto_popup = true</code></pre>
 <p><code>:recover</code> lists every copy strop holds, numbered, including those of buffers that never had a file name. <code>:recover restore N</code> opens copy N in a new buffer without touching the file; <code>:recover discard N</code> deletes it. Unsaved text of files on SSH hosts is kept only after <code>:recover consent remote</code>, for the current run; <code>:recover consent off</code> stops it.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="git.html">← Git</a><a class="pager-next" href="terminal.html">Terminals →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> from the strop repository at <code>v0.58.0-31-g8fdf419</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> from the strop repository at <code>v0.62.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.59.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.62.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

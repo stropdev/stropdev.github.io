@@ -6,7 +6,7 @@
 <title>What changed — strop</title>
 <meta name="description" content="What changed in strop, release by release.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.59.0">
+<meta name="strop-version" content="0.62.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="CHANGELOG.md">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
@@ -27,102 +27,89 @@
   </div>
 </header>
 <main id="main">
-<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.59.0, which does not have all of it yet.</p>
 <div class="shell page changelog">
   <p class="eyebrow">Changelog</p>
   <h1>What changed</h1>
   <p class="lede">The last 3 releases, newest first. Tarballs and checksums are on <a href="https://github.com/stropdev/strop/releases">GitHub releases</a>.</p>
   <div class="prose">
-<h2 id="release-0-59-0-2026-11-11">0.59.0 — 2026-11-11</h2>
-<h3 id="fixed">Fixed</h3>
-<ul>
-<li><strong>Keys do what they do in Neovim</strong> (plans/0095): the differential test suite grew from 95 key sequences to about 4,070 — every operator with every motion and text object, with and without a count, in Normal, in Visual and repeated with <code>.</code> — and strop now agrees with Neovim on all but 18 of them, each listed with its reason.</li>
-<li><strong><code>dw</code> on the last word of a line</strong> no longer joins the next line, <strong><code>d}</code></strong> no longer takes the blank line it stops on, and <code>d}</code> in the last paragraph deletes forward instead of backward. A motion that stops in column 1 leaves the line break alone, as in Vim.</li>
-<li><strong>Counts mean what they mean in Vim</strong>: <code>3J</code> joins three lines (not four), <code>2D</code> deletes to the end of the next line, <code>3x</code> and <code>5~</code> are one command with one register write, <code>3.</code> repeats the last change with that count.</li>
-<li><strong>A motion that cannot move cancels its operator</strong>: <code>dk</code> on the first line, <code>dj</code> on the last and <code>2dd</code> on the last line do nothing instead of deleting the line.</li>
-<li><strong><code>w</code> <code>b</code> <code>e</code> <code>ge</code> stop on empty lines</strong>, and <code>}</code> <code>{</code> treat only empty lines as paragraph breaks, as Vim does.</li>
-<li><strong><code>j</code> and <code>k</code> keep their column</strong> through shorter lines, <code>$</code> then <code>j</code> stays at the line's end, and <code>dd</code>, <code>&gt;&gt;</code> and <code>G</code> leave the cursor in its column instead of column 1.</li>
-<li><strong><code>cw</code> on blanks</strong> changes the blanks, not the next word. <strong><code>da&quot;</code></strong> takes the blanks after the closing quote. <strong><code>di{</code></strong> on a block that spans lines takes its whole lines.</li>
-<li><strong>Dot-repeat of a command that failed</strong> no longer repeats the one before it, and a repeated change that finds no target no longer types its text anyway.</li>
-<li><strong>A macro recorded with <code>q</code> in Insert mode</strong> no longer stops at the first <code>q</code> typed as text.</li>
-<li><strong><code>Ctrl-E</code>, <code>Ctrl-Y</code> and other Ctrl chords no longer act as their letter</strong> in Normal mode (<code>Ctrl-Y</code> started a yank, <code>Ctrl-K</code> typed <code>k</code>). <code>Ctrl-E</code> / <code>Ctrl-Y</code> scroll one line; a chord with no meaning is ignored.</li>
-<li><strong>A range that runs past the last line</strong> on the <code>:</code> line is refused instead of being silently clamped.</li>
-<li><strong><code>u</code> after undoing lines added at the end of the file</strong> leaves the cursor on the last line, not below it.</li>
-<li><strong><code>:s</code> leaves the cursor on the last line it changed</strong>, not the last line of the range.</li>
-<li><strong>Marks</strong>: <code>&#x27;a</code> goes to the line's first non-blank and <code> `a </code> to the exact place (both went to the exact place); a mark on a deleted line is gone instead of pointing at the line that took its place.</li>
-</ul>
+<h2 id="release-0-62-0-2026-11-11">0.62.0 — 2026-11-11</h2>
 <h3 id="changed">Changed</h3>
 <ul>
-<li><strong><code>Y</code> yanks to the end of the line</strong> (<code>y$</code>), as in Neovim. It yanked the whole line.</li>
-<li><strong>The <code>:s</code> replacement is Vim's</strong>: <code>&amp;</code> and <code>\1</code>–<code>\9</code> insert the match and its groups, <code>~</code> the previous replacement, <code>\r</code> a line break, <code>\u</code> <code>\U</code> <code>\l</code> <code>\L</code> change case. It was literal text before. The live preview shows the expanded result.</li>
-<li><strong><code>:</code> from Visual mode opens with <code>&#x27;&lt;,&#x27;&gt;</code></strong>, applies to the selected lines and ends Visual mode, as in Vim. It opened empty and acted on the cursor line.</li>
-<li><strong>After <code>:s</code>, its pattern is the search pattern</strong> for <code>n</code> and the highlight.</li>
-<li><strong><code>v</code> in Visual leaves it</strong>; <code>V</code> or <code>Ctrl-V</code> switches the kind of selection and keeps it. They used to restart the selection.</li>
-<li><strong>Visual <code>I</code> and <code>A</code></strong> insert where Vim's do; on a block extended with <code>$</code>, <code>A</code> appends at the end of every line.</li>
-<li><strong>Fields write registers</strong>: <code>yw</code>, <code>dw</code> and <code>&quot;ayiw</code> in the Normal mode of a picker or prompt field fill the registers as they do in a document.</li>
-<li><strong><code>=</code>, <code>gq</code>, <code>gw</code> and <code>zf</code> take their motion and say they are not supported</strong>, so typing <code>gqip</code> no longer runs <code>ip</code> as commands.</li>
-<li><strong><code>strop compat</code> and docs/vim-compat.md end with what is missing</strong>: the keys Neovim binds that strop does not, and the ones it uses for something else.</li>
-<li><strong>The tagline is "Vim's keys. Nothing to configure."</strong> on the welcome card, in <code>--help</code>, the installer and the package description.</li>
+<li><strong>Git keys mean one thing everywhere</strong>: <code>Space g u</code> now unstages the hunk under the cursor (as <code>u</code> does in the status buffer) and <code>Space g X</code> discards it. <code>Space g S</code> is gone. The blame gutter moved from <code>Space g b</code> to <code>Space g B</code>.</li>
+<li><strong>Git buffers are titled alike</strong>: <code>git status</code>, <code>git log</code>, <code>git files</code>, <code>git diff</code>, <code>git hunk</code>.</li>
+</ul>
+<ul>
+<li><strong>A language server that is not installed says so</strong>: <code>lsp: rust-analyzer not found on PATH — rustup component add rust-analyzer</code> instead of "refused". A server that fails to start says it did not start; a project that needs <code>:trust</code> says that.</li>
+<li><strong>The docs and the in-editor help are rewritten in plain words</strong> and checked against the editor: about a hundred corrections, among them five <code>:help</code> rows that described old behaviour. <code>docs/terminal-and-scripting.md</code> is now <code>docs/terminal.md</code> and <code>docs/scripting.md</code>.</li>
+<li><strong>The README demo shows the everyday loop</strong> — find a file, edit, search the project, replace across files, stage and commit — in the default palette.</li>
 </ul>
 <h3 id="added">Added</h3>
 <ul>
-<li><strong>Text objects</strong>: <code>ip</code> <code>ap</code> (paragraph), <code>it</code> <code>at</code> (XML/HTML element), <code>ib</code> <code>iB</code>, <code>gn</code> (the next search match; <code>cgn</code> then <code>.</code>). A count takes more (<code>d2aw</code>, <code>2i(</code>), and in Visual an object extends the selection (<code>viwiw</code>, <code>vipip</code>, <code>vi(i(</code>).</li>
-<li><strong>Operators</strong>: <code>gU</code> <code>gu</code> <code>g~</code> (case), <code>g?</code> (rot13), <code>gc</code> (toggle line comments, as in Neovim 0.10+) and <code>!</code> (filter lines through a shell command), with their doubled forms (<code>gUU</code>, <code>g??</code>, <code>gcc</code>, <code>!!</code>), and <code>v</code> / <code>V</code> between an operator and its motion (<code>dvj</code>, <code>dVw</code>).</li>
-<li><strong>Motions</strong>: <code>-</code> <code>+</code>, <code>(</code> <code>)</code>, <code>[(</code> <code>[{</code> <code>])</code> <code>]}</code>, <code>g_</code>, <code>g0</code> <code>g^</code> <code>g$</code>, <code>gj</code> <code>gk</code>, <code>N%</code>; and under an operator <code>&#x27;a</code> <code> `a </code> (marks, including <code>&#x27;&lt;</code> <code>&#x27;&gt;</code> <code>&#x27;&#x27;</code> <code>&#x27;.</code>), <code>H</code> <code>M</code> <code>L</code>, <code>;</code> <code>,</code> and <code>n</code> <code>N</code>.</li>
-<li><strong>Normal</strong>: <code>R</code> (type over text; Backspace gives the old text back), <code>Ctrl-A</code> / <code>Ctrl-X</code> (add to a number: decimal, hex, binary), <code>gJ</code>, <code>gp</code> <code>gP</code>, <code>]p</code> <code>[p</code>, <code>&amp;</code> <code>g&amp;</code> (repeat the last <code>:s</code>), <code>@:</code> (repeat the last <code>:</code> line), <code>g*</code> <code>g#</code>, <code> ` ` </code> and <code>&#x27;&#x27;</code> (back to where the last jump left from), <code>ZQ</code>.</li>
-<li><strong>Visual</strong>: <code>p</code> and <code>P</code> (put over the selection — <code>p</code> leaves the replaced text in the unnamed register, <code>P</code> leaves the registers alone), <code>U</code> <code>u</code> <code>~</code>, <code>J</code> <code>gJ</code>, <code>r</code>, <code>I</code> <code>A</code> on any selection, <code>o</code>, <code>*</code> <code>#</code>, <code>D</code> <code>X</code> <code>Y</code> <code>C</code> <code>R</code>, <code>Ctrl-A</code> / <code>Ctrl-X</code>, <code>!</code>, and every operator on a block.</li>
-<li><strong>Insert</strong>: <code>Ctrl-W</code> (delete the word back), <code>Ctrl-U</code> (delete what was typed on the line), <code>Ctrl-O</code> (one Normal command), <code>Ctrl-T</code> / <code>Ctrl-D</code> (indent, dedent), <code>Ctrl-H</code>.</li>
-<li><strong>Registers</strong>: <code>&quot;#</code> (the alternate file's name).</li>
-<li><strong>The <code>:</code> line takes Vim's ranges</strong>: line numbers, <code>.</code>, <code>$</code>, <code>%</code>, marks, <code>/pattern/</code> and <code>?pattern?</code>, with <code>+N</code> / <code>-N</code> offsets, joined by <code>,</code> or <code>;</code>.</li>
-<li><strong><code>:g/pattern/command</code></strong>, <code>:v</code> and <code>:g!</code> run a command on every matching (or non-matching) line, and <strong><code>:norm keys</code></strong> types Normal-mode keys on each line of a range; each is one undo step.</li>
-<li><strong><code>:m</code>, <code>:t</code> / <code>:co</code>, <code>:d</code> and <code>:y</code> with a register and a count, <code>:pu</code>, <code>:j</code>, <code>:&gt;</code> / <code>:&lt;</code>, <code>:sort</code></strong> (<code>!</code>, <code>u</code>, <code>n</code>, <code>i</code>), and <code>:{range}!cmd</code> to filter lines through a shell command.</li>
-<li><strong><code>:s</code> flags</strong> <code>i</code>, <code>I</code>, <code>n</code>, <code>e</code>, <code>&amp;</code> and <code>c</code>, which asks at each match (<code>y</code>, <code>n</code>, <code>a</code>, <code>l</code>, <code>q</code>); <code>:&amp;</code>, <code>:&amp;&amp;</code> and <code>:~</code> repeat the last substitute.</li>
-<li><strong>Buffers</strong>: <code>:b</code> by number or name, <code>:bn</code>, <code>:bp</code>, <code>:bd N</code>, and <code>:ls</code>, <code>:reg</code> and <code>:marks</code> as read-only listings.</li>
-<li><strong><code>:wa</code>, <code>:wqa</code> / <code>:xa</code>, <code>:x</code>, <code>:up</code></strong>, <code>:enew</code>, <code>:new</code>, <code>:vnew</code>, <code>:close</code>, <code>:only</code>, <code>:k</code> / <code>:mark</code>, <code>:delm</code>, <code>:u</code>, <code>:red</code>.</li>
-<li><strong><code>:cd DIR</code></strong> changes the project root (<code>:cd -</code> goes back). Files, Search, new terminals, buffer names, the session and the draft-recovery file follow it.</li>
-<li><strong>Vim's abbreviations work on the command line</strong> (<code>:norm</code>, <code>:bn</code>, <code>:wqa</code>, <code>:noh</code>, …), and Tab completes from the same list.</li>
+<li><strong><code>Space g g</code> shows what changed</strong> (plans/0096): staged, unstaged and untracked files (and conflicts) in one buffer. <code>s</code> stages, <code>u</code> unstages and <code>-</code> toggles the file under the cursor — or the hunk, or the whole section from its heading. <code>=</code> shows a file's diff under its row, <code>]c</code> / <code>[c</code> move between hunks, <code>enter</code> opens the file at that line, and <code>X</code> discards after <code>y</code> confirms. The list keeps itself current: after each change, when files change on disk, and when you come back to the window.</li>
+<li><strong><code>Space g c</code> commits</strong> — <code>cc</code> from the status buffer, <code>ca</code> to amend. The message is written in a buffer that lists what the commit will hold; <code>:wq</code> commits and <code>:q!</code> aborts. The commit is made by <code>git</code> itself, so hooks, signing and your git configuration apply, and a hook's refusal is shown as it wrote it.</li>
+<li><strong><code>Space g b</code> switches branch</strong>: local and remote branches in the picker, the current one marked. <code>enter</code> switches; the last row creates a branch from the name you typed. If git refuses because your changes would be overwritten, you see its message and nothing changes. Open files follow the new branch.</li>
+<li><strong>Not yet on SSH projects</strong>: status, commit and the branch picker say they need a local repository there. Signs, log, blame and diffs work as before.</li>
 </ul>
-<h2 id="release-0-58-0-2026-11-11">0.58.0 — 2026-11-11</h2>
-<h3 id="fixed-2">Fixed</h3>
+<h3 id="fixed">Fixed</h3>
 <ul>
-<li><strong>A yank pastes in every text input</strong> (plans/0092 §1): <code>Ctrl-R {register}</code> now works in Search's Find and With fields as well as Files, the <code>:</code> and <code>/</code> lines and insert mode, and <code>p</code> / <code>P</code> / <code>&quot;ap</code> work in the normal mode of every field. <code>Ctrl-R &quot;</code> is the last yank or delete; Files and the other list pickers show it in their hint row.</li>
-<li><strong>Registers follow Vim's rules</strong>: <code>&quot;0</code> keeps the last yank through later deletes; deleting a line or more shifts <code>&quot;1</code>–<code>&quot;9</code> and a smaller delete fills <code>&quot;-</code>; <code>&quot;A</code> appends to <code>&quot;a</code>; <code>&quot;_</code> discards and reads empty (it used to be stored and pasted back); <code>&quot;.</code> <code>&quot;:</code> <code>&quot;/</code> <code>&quot;%</code> are the last insert, last <code>:</code> line, last search and file name, and refuse to be written before anything is deleted. The differential harness now diffs these registers against Neovim.</li>
-<li><strong>Visual mode takes a register</strong>: <code>&quot;ay</code>, <code>&quot;ad</code>, <code>&quot;_d</code> on a charwise, linewise, block or multi-occurrence selection. They used to do nothing.</li>
-<li><strong>A macro is register content</strong>: <code>qa</code> fills <code>&quot;a</code> (so <code>&quot;ap</code> shows it), and <code>@a</code> runs whatever <code>&quot;a</code> holds, including text you yanked there.</li>
-<li><strong>A yank reaches the system clipboard</strong> (plans/0092 §1.4): <code>y</code> with no register also copies, so the terminal's own paste and other applications get it. Deletes, changes and named-register yanks never touch the clipboard; a yank over 1 MB stays in strop and says so (<code>&quot;+y</code> sends it anyway).</li>
-<li><strong><code>Ctrl-R +</code> reads the real system clipboard</strong> in insert mode, prompts and pickers instead of whatever strop last copied, and a read that returns after its prompt or picker closed is dropped instead of landing in the document.</li>
-<li><strong>The project stays where you launched strop</strong> (plans/0092 §2): following go-to-definition into the Rust standard library, a cargo registry crate or a system header no longer turns that directory into the scope of Files, Search and new terminals.</li>
-<li><strong>Library files keep their language server</strong>: a file outside the project is served by the project's server for its language however it was opened — file finder, <code>:e</code>, jumplist, restored session — instead of only when reached by <code>gd</code>. No second server is started in the library's directory.</li>
-<li><strong>A crashed language server restarts</strong>: up to three times per workspace, without switching buffers or repeating a request. The status line says <code>restarting (1/3)</code>, <code>LSP!</code> stays lit until the replacement is ready, and every file the old server had open, library files included, reopens on it.</li>
-<li><strong><code>dd</code> on the last line</strong> leaves the cursor on the new last line instead of the empty row below it.</li>
+<li><strong>A mistake in <code>config.toml</code> costs only that setting</strong>: an unknown theme name, an unknown key or a value strop cannot use is skipped and named in the warning, and every other setting in the file applies. It used to throw away the whole file.</li>
+<li><strong>The finder and project search no longer list the editor's own lock files</strong> (<code>.strop-lock-…</code>) that sit beside open files while hidden files are shown.</li>
 </ul>
-<ul>
-<li><strong><code>Ctrl-W</code> no longer drops its second key into Normal mode</strong> (plans/0091 B7): <code>Ctrl-W v</code> used to start Visual, <code>Ctrl-W c</code> a change. An unbound key now reports <code>ctrl-w x is not bound</code> and does nothing.</li>
-<li><strong>The welcome card and README say only what the editor does</strong> (plans/0091 B10): the card's last line names two real keys instead of "ci[ previews the cut", and is no longer clipped at 80 columns.</li>
-</ul>
+<h2 id="release-0-61-0-2026-11-11">0.61.0 — 2026-11-11</h2>
 <h3 id="changed-2">Changed</h3>
 <ul>
-<li><strong>Search toggles its With field with <code>Ctrl-T</code></strong>; <code>Ctrl-R</code> there is now the register key it is everywhere else. <code>Space R</code> still opens Search with With visible.</li>
-<li><strong>A one-line linewise yank (<code>yy</code>) pastes its line into a prompt or picker</strong>; text with inner line breaks is still refused with a message.</li>
+<li><strong>Search hits are editable in place.</strong> <code>Ctrl-O</code> in search results, references or diagnostics opens a collection; edit inside any excerpt with any command and the change is in the file's buffer in the same keystroke. <code>:w</code> writes every changed file it shows, <code>u</code> undoes what you changed through it (in the files too). Card borders and the "lines omitted" rows are not text and refuse edits. (plans/0094)</li>
+<li><strong>Quickfix commands.</strong> The newest collection is the quickfix list: <code>:copen</code> shows it, <code>]q</code> / <code>[q</code> (<code>:cnext</code> / <code>:cprev</code>, <code>:cc N</code>) visit its hits, <code>:cdo {cmd}</code> runs an ex command at every hit and <code>:cfdo {cmd}</code> once per file — <code>:cdo s/old/new/</code> or <code>:cdo norm A;</code>, then <code>:cfdo w</code>. <code>:%s/old/new/g</code> inside a collection substitutes in the excerpts only.</li>
+<li><strong>Replace across files is two steps.</strong> <code>Space R</code>, type, <code>Enter</code> shows the diff; <code>Enter</code> again changes every file and writes it. <code>u</code> in that review puts the buffers and the files back and names any file it could not revert; <code>q</code> cancels.</li>
+<li><strong>Captures in replace.</strong> When the term is a regular expression with groups (<code>regex:</code>, or <code>Alt-R</code>), <code>$1</code>, <code>${name}</code> and <code>\1</code> in With expand per hit, in the live <code>-</code>/<code>+</code> rows and in the result alike.</li>
+<li><strong>Rename.</strong> <code>grn</code> prompts with the current name. A rename in one buffer applies at once; one across several files opens the same review as replace. References move from <code>gr</code> to <code>grr</code>, and <code>gra</code> (actions) and <code>gri</code> (implementation) join them: the four language-server keys of Neovim 0.11.</li>
+<li><strong><code>Space a</code> on a file lists code actions only.</strong> The filesystem verbs are in the Directory buffer's <code>Space a</code> and under <code>:fs</code>.</li>
+<li><strong>Filesystem reviews are applied with <code>Enter</code> or <code>:fs apply</code></strong> and cancelled with <code>q</code> or <code>:fs cancel</code>.</li>
+</ul>
+<h3 id="removed">Removed</h3>
+<ul>
+<li><strong><code>:apply-change</code>, <code>:save-change</code>, <code>:undo-change</code> and <code>:cancel-change</code></strong>, the change receipt and the save receipt. The review buffer itself says what was changed and written.</li>
+<li><strong>Read-only collections.</strong> There is one kind, and it is editable.</li>
+</ul>
+<h3 id="fixed-2">Fixed</h3>
+<ul>
+<li><strong>The <code>:s</code> preview shows the change.</strong> A long line is cut to a window on the changed text, the same window for the removed and the added row; the card no longer covers the statusline.</li>
+<li><strong><code>:</code> in a very short terminal no longer panics</strong>; with no room for the card, the command line takes the top row.</li>
+<li><strong>Undoing a replace restores the files</strong>, not only the buffers.</li>
+<li><strong><code>cc</code> no longer leaves a second cursor</strong> on the line, which later edited two places at once.</li>
+</ul>
+<h2 id="release-0-60-0-2026-11-11">0.60.0 — 2026-11-11</h2>
+<h3 id="changed-3">Changed</h3>
+<ul>
+<li><strong>The file finder puts the file you meant first.</strong> A match in the file name now beats a match in a directory name, typing a whole name lists the files with exactly that name (shortest path first), and space-separated words must all match — <code>core.c sched</code> finds <code>kernel/sched/core.c</code>.</li>
+<li><strong>The finder remembers what you use.</strong> With nothing typed, <code>Space f</code> starts with your other open files, then the files you open most in this project; <code>Space f</code> <code>Enter</code> goes back to the file you were just in. When you type, a file you use often wins among equally good matches. This is remembered per project between runs.</li>
+<li><strong><code>Space b</code> starts on the previous buffer</strong>, so <code>Space b</code> <code>Enter</code> switches back instead of staying put.</li>
+<li><strong>Project search is about five times faster</strong> on large trees: it now uses several cores. On the Linux kernel sources a search finishes in about a quarter of a second instead of 1.2–1.3 seconds — the same as <code>rg</code> on the same number of threads. Results are still listed in the same order every time.</li>
+<li><strong>Searching is smart-case everywhere</strong> — the finder, project search and <code>/</code> in a buffer. An all-lowercase search matches either case; one capital letter makes case count. <code>case:ignore</code> and <code>case:sensitive</code> (or <code>\c</code> and <code>\C</code> in a buffer search) decide outright.</li>
+<li><strong>References and other location lists are readable</strong>: each row is <code>path:line</code> followed by the text on that line, with the path relative to your project, instead of a clipped absolute path.</li>
+<li><strong><code>:e</code> completes the path you typed</strong>: <code>:e src/ma&lt;Tab&gt;</code> becomes <code>:e src/main.rs</code>, not a long <code>file:///…</code> address.</li>
 </ul>
 <h3 id="added-2">Added</h3>
 <ul>
-<li><strong>Vim's window commands</strong>: <code>Ctrl-W</code> + <code>h j k l</code> (move), <code>w</code> <code>W</code> <code>p</code> (next, previous, last used), <code>s</code> <code>v</code> <code>n</code> (split below, split right, new empty buffer), <code>c</code> <code>q</code> <code>o</code> (close, quit, keep only this one), <code>=</code>. <code>Ctrl-W Ctrl-{key}</code> is the same. <code>Space w</code> stays.</li>
-<li><strong><code>:pwd</code></strong> shows the pinned project root.</li>
+<li><strong>Search toggles</strong>: <code>Alt-C</code> match case, <code>Alt-W</code> whole word, <code>Alt-R</code> regular expression, in project search and replace. <code>Alt-H</code> shows or hides hidden files and <code>Alt-I</code> files your ignore rules skip, in the finder and in search. Whenever a toggle is on, a line under the search field says so in plain words; it disappears when everything is back to default.</li>
+<li><strong><code>Ctrl-U</code> clears the search field</strong> in every picker.</li>
 </ul>
-<h2 id="release-0-57-0-2026-11-10">0.57.0 — 2026-11-10</h2>
-<h3 id="changed-3">Changed</h3>
+<h3 id="removed-2">Removed</h3>
 <ul>
-<li><strong>File names have one look</strong> (plans/0088 §2, "File names"): the directory in the secondary ink ending in its <code>/</code>, the name in the text ink — bold where it heads something (grep group headers, pane titles, the preview header, the recovery card, a directory's own path) and regular in lists (files, buffers, diagnostics, Git file lists, the statusline). Grep group headers are ruled: name, a faint leader, the hit count. A remote file leads with its <code>ssh:host</code> as its own segment — the search preview header no longer splices the host into the middle of the path.</li>
+<li><strong><code>:search-options</code></strong>: <code>Alt-H</code> and <code>Alt-I</code> replace it.</li>
+</ul>
+<h3 id="fixed-3">Fixed</h3>
+<ul>
+<li><strong>Enter in the finder could open the wrong file</strong> when you typed quickly in a large project: the selection drifted down the list as more files loaded. The selection now stays on the top result until you move it.</li>
 </ul>
   </div>
-  <p class="more"><a href="changelog-all.html">All 94 releases →</a></p>
+  <p class="more"><a href="changelog-all.html">All 97 releases →</a></p>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.59.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.62.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>

@@ -1,5 +1,5 @@
 {
-  "version": "0.58.0",
+  "version": "0.62.0",
   "cols": 100,
   "rows": 30,
   "palette": "hone",
@@ -25,11 +25,11 @@
     "git": {
       "file": "img/frame-git.svg",
       "tab": "Git",
-      "surface": "hunk",
+      "surface": "status-diff",
       "width": 864,
       "height": 549,
-      "caption": "<kbd>]c</kbd> to the next changed hunk, then <kbd>Space</kbd> <kbd>g</kbd> <kbd>p</kbd>: the hunk under the cursor as a diff, in an ordinary read-only buffer.",
-      "alt": "strop showing one git hunk as a diff: old and new line numbers in two columns, the removed and added lines marked in the gutter."
+      "caption": "<kbd>Space</kbd> <kbd>g</kbd> <kbd>g</kbd>: the status buffer of the same project, with one file's diff opened by <kbd>=</kbd>. <kbd>s</kbd> stages and <kbd>u</kbd> unstages the file or hunk under the cursor.",
+      "alt": "strop's git status buffer: sections for staged, unstaged and untracked files, with the diff of one file shown under its row."
     }
   }
 }

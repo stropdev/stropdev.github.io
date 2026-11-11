@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 864.0 549.0" width="864.0" height="549.0" role="img" aria-labelledby="t d">
-<title id="t">strop 0.58.0: find</title>
+<title id="t">strop 0.62.0: find</title>
 <desc id="d">The strop file finder over 97,362 files with sched.h typed: a list of matching file names with their directories on the left, a preview of the selected file on the right.</desc>
 <rect width="864.0" height="549.0" rx="6" fill="#15171c"/>
 <g font-family="ui-monospace, &quot;DejaVu Sans Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace" font-size="14.0" fill="#e6e1d6" xml:space="preserve">
@@ -22,16 +22,16 @@
 <text x="28.80" y="77.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <text x="45.60" y="77.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848">▌</text>
 <text x="62.40" y="77.80" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="77.80" textLength="210.00" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">arch/x86/include/asm/fpu/</text>
+<text x="196.80" y="77.80" textLength="109.20" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">kernel/sched/</text>
 <text x="465.60" y="77.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">▮</text>
 <text x="474.00" y="77.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
-<text x="490.80" y="77.80" textLength="210.00" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">arch/x86/include/asm/fpu/</text>
-<text x="700.80" y="77.80" textLength="58.80" lengthAdjust="spacingAndGlyphs" font-weight="bold">sched.h</text>
+<text x="490.80" y="77.80" textLength="109.20" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">kernel/sched/</text>
+<text x="600.00" y="77.80" textLength="58.80" lengthAdjust="spacingAndGlyphs" font-weight="bold">sched.h</text>
 <text x="826.80" y="77.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="82.00" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="95.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <text x="62.40" y="95.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="95.30" textLength="243.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">…/net/ethernet/chelsio/cxgb4/</text>
+<text x="196.80" y="95.30" textLength="117.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/linux/</text>
 <text x="474.00" y="95.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="499.20" y="95.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">1</text>
 <text x="516.00" y="95.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
@@ -40,7 +40,7 @@
 <rect x="28.80" y="99.50" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <text x="62.40" y="112.80" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="112.80" textLength="226.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/asm-generic/bitops/</text>
+<text x="196.80" y="112.80" textLength="159.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/uapi/linux/</text>
 <text x="474.00" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="499.20" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">2</text>
 <text x="516.00" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
@@ -49,155 +49,153 @@
 <rect x="28.80" y="117.00" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="130.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <text x="62.40" y="130.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="130.30" textLength="117.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/linux/</text>
+<text x="196.80" y="130.30" textLength="176.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/linux/sunrpc/</text>
 <text x="474.00" y="130.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="130.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="134.50" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="147.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <text x="62.40" y="147.80" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="147.80" textLength="176.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/linux/sunrpc/</text>
+<text x="196.80" y="147.80" textLength="176.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/trace/events/</text>
 <text x="474.00" y="147.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="147.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="152.00" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="165.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <text x="62.40" y="165.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="165.30" textLength="176.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/trace/events/</text>
+<text x="196.80" y="165.30" textLength="176.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">tools/include/nolibc/</text>
 <text x="474.00" y="165.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="165.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="169.50" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="182.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <text x="62.40" y="182.80" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="182.80" textLength="159.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/uapi/linux/</text>
+<text x="196.80" y="182.80" textLength="184.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/xen/interface/</text>
 <text x="474.00" y="182.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="182.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="187.00" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="200.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <text x="62.40" y="200.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="200.30" textLength="184.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/xen/interface/</text>
+<text x="196.80" y="200.30" textLength="210.00" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">arch/x86/include/asm/fpu/</text>
 <text x="474.00" y="200.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="200.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="204.50" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="217.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <text x="62.40" y="217.80" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="217.80" textLength="109.20" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">kernel/sched/</text>
+<text x="196.80" y="217.80" textLength="226.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/asm-generic/bitops/</text>
 <text x="474.00" y="217.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="217.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="222.00" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="235.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <text x="62.40" y="235.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="235.30" textLength="243.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">…nel/trace/rv/monitors/sched/</text>
+<text x="196.80" y="235.30" textLength="260.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">kernel/trace/rv/monitors/sched/</text>
 <text x="474.00" y="235.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="235.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="239.50" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="252.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <text x="62.40" y="252.80" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="252.80" textLength="176.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">tools/include/nolibc/</text>
+<text x="196.80" y="252.80" textLength="268.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">…ers/net/ethernet/chelsio/cxgb4/</text>
 <text x="474.00" y="252.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="252.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="257.00" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="270.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <text x="62.40" y="270.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="270.30" textLength="243.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">…e/beauty/include/uapi/linux/</text>
+<text x="196.80" y="270.30" textLength="268.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">…race/beauty/include/uapi/linux/</text>
 <text x="474.00" y="270.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="270.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="274.50" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="287.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
-<text x="62.40" y="287.80" textLength="16.80" lengthAdjust="spacingAndGlyphs">mm</text>
-<text x="79.20" y="287.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">.h</text>
-<text x="222.00" y="287.80" textLength="117.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/linux/</text>
-<text x="339.60" y="287.80" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched</text>
-<text x="381.60" y="287.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">/</text>
+<text x="62.40" y="287.80" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.</text>
+<text x="112.80" y="287.80" textLength="8.40" lengthAdjust="spacingAndGlyphs">s</text>
+<text x="121.20" y="287.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">h</text>
+<text x="196.80" y="287.80" textLength="193.20" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">tools/perf/tests/shell/</text>
 <text x="474.00" y="287.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="287.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="292.00" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="305.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
-<text x="62.40" y="305.30" textLength="16.80" lengthAdjust="spacingAndGlyphs">rt</text>
-<text x="79.20" y="305.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">.h</text>
-<text x="222.00" y="305.30" textLength="117.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/linux/</text>
-<text x="339.60" y="305.30" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched</text>
-<text x="381.60" y="305.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">/</text>
+<text x="62.40" y="305.30" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched</text>
+<text x="104.40" y="305.30" textLength="33.60" lengthAdjust="spacingAndGlyphs">_ext</text>
+<text x="138.00" y="305.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">.h</text>
+<text x="196.80" y="305.30" textLength="176.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/trace/events/</text>
 <text x="474.00" y="305.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="305.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="309.50" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="322.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
-<text x="62.40" y="322.80" textLength="16.80" lengthAdjust="spacingAndGlyphs">mm</text>
-<text x="79.20" y="322.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">.h</text>
-<text x="222.00" y="322.80" textLength="168.00" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">tools/include/linux/</text>
-<text x="390.00" y="322.80" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched</text>
-<text x="432.00" y="322.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">/</text>
+<text x="62.40" y="322.80" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched</text>
+<text x="104.40" y="322.80" textLength="33.60" lengthAdjust="spacingAndGlyphs">uler</text>
+<text x="138.00" y="322.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">.h</text>
+<text x="196.80" y="322.80" textLength="210.00" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">drivers/gpu/drm/i915/gvt/</text>
 <text x="474.00" y="322.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="322.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="327.00" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="340.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
-<text x="62.40" y="340.30" textLength="58.80" lengthAdjust="spacingAndGlyphs">blk-mq-</text>
-<text x="121.20" y="340.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="340.30" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">block/</text>
+<text x="62.40" y="340.30" textLength="33.60" lengthAdjust="spacingAndGlyphs">pkt_</text>
+<text x="96.00" y="340.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
+<text x="196.80" y="340.30" textLength="100.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/net/</text>
 <text x="474.00" y="340.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="340.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="344.50" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="357.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
-<text x="62.40" y="357.80" textLength="58.80" lengthAdjust="spacingAndGlyphs">amdgpu_</text>
-<text x="121.20" y="357.80" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="357.80" textLength="226.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">drivers/gpu/drm/amd/amdgpu/</text>
+<text x="62.40" y="357.80" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched</text>
+<text x="104.40" y="357.80" textLength="42.00" lengthAdjust="spacingAndGlyphs">-pelt</text>
+<text x="146.40" y="357.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">.h</text>
+<text x="196.80" y="357.80" textLength="109.20" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">kernel/sched/</text>
 <text x="474.00" y="357.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="357.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="362.00" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="375.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
-<text x="62.40" y="375.30" textLength="67.20" lengthAdjust="spacingAndGlyphs">etnaviv_</text>
-<text x="129.60" y="375.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="375.30" textLength="201.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">drivers/gpu/drm/etnaviv/</text>
+<text x="62.40" y="375.30" textLength="33.60" lengthAdjust="spacingAndGlyphs">pkt_</text>
+<text x="96.00" y="375.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
+<text x="196.80" y="375.30" textLength="159.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/uapi/linux/</text>
 <text x="474.00" y="375.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="375.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="379.50" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="392.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
-<text x="62.40" y="392.80" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched</text>
-<text x="104.40" y="392.80" textLength="33.60" lengthAdjust="spacingAndGlyphs">uler</text>
-<text x="138.00" y="392.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">.h</text>
-<text x="222.00" y="392.80" textLength="210.00" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">drivers/gpu/drm/i915/gvt/</text>
+<text x="62.40" y="392.80" textLength="33.60" lengthAdjust="spacingAndGlyphs">pkt_</text>
+<text x="96.00" y="392.80" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
+<text x="196.80" y="392.80" textLength="210.00" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">tools/include/uapi/linux/</text>
 <text x="474.00" y="392.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="392.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="397.00" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="410.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
-<text x="62.40" y="410.30" textLength="42.00" lengthAdjust="spacingAndGlyphs">lima_</text>
-<text x="104.40" y="410.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="410.30" textLength="176.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">drivers/gpu/drm/lima/</text>
+<text x="62.40" y="410.30" textLength="33.60" lengthAdjust="spacingAndGlyphs">ice_</text>
+<text x="96.00" y="410.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
+<text x="196.80" y="410.30" textLength="260.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">drivers/net/ethernet/intel/ice/</text>
 <text x="474.00" y="410.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="410.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="414.50" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="427.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
-<text x="62.40" y="427.80" textLength="67.20" lengthAdjust="spacingAndGlyphs">nouveau_</text>
-<text x="129.60" y="427.80" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="427.80" textLength="201.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">drivers/gpu/drm/nouveau/</text>
+<text x="62.40" y="427.80" textLength="42.00" lengthAdjust="spacingAndGlyphs">tick-</text>
+<text x="104.40" y="427.80" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
+<text x="196.80" y="427.80" textLength="100.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">kernel/time/</text>
 <text x="474.00" y="427.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="427.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="432.00" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="445.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
-<text x="62.40" y="445.30" textLength="67.20" lengthAdjust="spacingAndGlyphs">panthor_</text>
-<text x="129.60" y="445.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="445.30" textLength="201.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">drivers/gpu/drm/panthor/</text>
+<text x="62.40" y="445.30" textLength="42.00" lengthAdjust="spacingAndGlyphs">lima_</text>
+<text x="104.40" y="445.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
+<text x="196.80" y="445.30" textLength="176.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">drivers/gpu/drm/lima/</text>
 <text x="474.00" y="445.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="445.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="449.50" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="462.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
-<text x="62.40" y="462.80" textLength="33.60" lengthAdjust="spacingAndGlyphs">ice_</text>
-<text x="96.00" y="462.80" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="462.80" textLength="243.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">…vers/net/ethernet/intel/ice/</text>
+<text x="62.40" y="462.80" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched</text>
+<text x="104.40" y="462.80" textLength="50.40" lengthAdjust="spacingAndGlyphs">_clock</text>
+<text x="154.80" y="462.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">.h</text>
+<text x="196.80" y="462.80" textLength="117.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/linux/</text>
 <text x="474.00" y="462.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="462.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="467.00" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="480.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
-<text x="62.40" y="480.30" textLength="84.00" lengthAdjust="spacingAndGlyphs">livepatch_</text>
-<text x="146.40" y="480.30" textLength="58.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched.h</text>
-<text x="222.00" y="480.30" textLength="117.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/linux/</text>
+<text x="62.40" y="480.30" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched</text>
+<text x="104.40" y="480.30" textLength="50.40" lengthAdjust="spacingAndGlyphs">_tests</text>
+<text x="154.80" y="480.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">.h</text>
+<text x="196.80" y="480.30" textLength="268.80" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">drivers/gpu/drm/scheduler/tests/</text>
 <text x="474.00" y="480.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="480.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="484.50" width="806.40" height="17.5" fill="#1c1f25"/>
 <text x="28.80" y="497.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
-<text x="62.40" y="497.80" textLength="25.20" lengthAdjust="spacingAndGlyphs">ext</text>
-<text x="87.60" y="497.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">.h</text>
-<text x="222.00" y="497.80" textLength="117.60" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">include/linux/</text>
-<text x="339.60" y="497.80" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched</text>
-<text x="381.60" y="497.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">/</text>
+<text x="62.40" y="497.80" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">sched</text>
+<text x="104.40" y="497.80" textLength="58.80" lengthAdjust="spacingAndGlyphs">_policy</text>
+<text x="163.20" y="497.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">.h</text>
+<text x="196.80" y="497.80" textLength="210.00" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">drivers/gpu/drm/i915/gvt/</text>
 <text x="474.00" y="497.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">│</text>
 <text x="826.80" y="497.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">│</text>
 <rect x="28.80" y="502.00" width="16.80" height="17.5" fill="#1c1f25"/>

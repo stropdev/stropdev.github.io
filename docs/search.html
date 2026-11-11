@@ -6,7 +6,7 @@
 <title>Find files, search and replace — strop docs</title>
 <meta name="description" content="The same filters work in every search field: Files (Space f), Search (Space /), Replace (Space R), document symbols (Space s), workspace symbols (Space S) and the jump list (Space j). Learn them once.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.59.0">
+<meta name="strop-version" content="0.62.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/search.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -27,7 +27,6 @@
   </div>
 </header>
 <main id="main">
-<p class="preview-note">Preview: this site describes strop 0.62. It was built from 0.59.0, which does not have all of it yet.</p>
 <div class="shell doc-layout">
   <aside class="doc-side">
     <p class="side-title"><a href="./">All docs</a></p>
@@ -135,7 +134,7 @@ kind:function parse AND NOT wrap</code></pre>
 <h2 id="replace-across-files">Replace across files</h2>
 <p>Replace is two steps.</p>
 <ol>
-<li><code>Space R</code>, type the term, <code>Tab</code>, type the replacement. Every hit shows a <code>-</code>/<code>+</code> pair that follows your typing; <code>Ctrl-X</code> and <code>Ctrl-D</code> exclude a hit or a file. <code>Enter</code> in <strong>With</strong> opens the review: the exact diff, nothing changed yet.</li>
+<li><code>Space R</code>, type the term, <code>Tab</code>, type the replacement. (If Search already holds a term, <code>Space R</code> keeps it and starts in <strong>With</strong>.) Every hit shows a <code>-</code>/<code>+</code> pair that follows your typing; <code>Ctrl-X</code> and <code>Ctrl-D</code> exclude a hit or a file. <code>Enter</code> in <strong>With</strong> opens the review: the exact diff, nothing changed yet.</li>
 <li><code>Enter</code> in the review changes every file and writes it. The heading says how many files were changed and written.</li>
 </ol>
 <p>In the review:</p>
@@ -155,14 +154,14 @@ With  fetch_$1()</code></pre>
 <p>Search works the same in a directory on an SSH host: the same fields, the same include and exclude keys, the same previews, the same limits. It runs <code>rg</code> on the host. If the host has no <code>rg</code>, Search says so and does not run. A search on a host that takes longer than two minutes is stopped. Collections work there. Replace does not, yet: <code>Space R</code>, <code>Ctrl-T</code> and the With field say so.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-next" href="filesystem.html">Create, rename, move and delete files →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> from the strop repository at <code>v0.58.0-31-g8fdf419</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> from the strop repository at <code>v0.62.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.59.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.62.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>
