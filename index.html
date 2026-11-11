@@ -36,8 +36,8 @@
   </div>
   <p class="copy-status" data-copy-status role="status" aria-live="polite"></p>
   <p class="chip-row">
-    <a href="https://github.com/stropdev/strop/releases/latest">v<!-- build:version -->0.57.0<!-- /build:version --></a>
-    <span>released <!-- build:date -->2026-11-10<!-- /build:date --></span>
+    <a href="https://github.com/stropdev/strop/releases/latest">v<!-- build:version -->0.58.0<!-- /build:version --></a>
+    <span>released <!-- build:date -->2026-11-11<!-- /build:date --></span>
     <span>x86_64-unknown-linux-musl</span>
     <span><!-- build:languages -->26<!-- /build:languages --> languages</span>
     <span>MIT</span>
@@ -64,7 +64,7 @@
           <pre><code>curl -fsSL https://strop.dev/install.sh | sh</code></pre>
         </li>
         <li>Or verify by hand: download the tarball and its <code>.sha256</code> from the <a href="https://github.com/stropdev/strop/releases/latest">latest release</a>, then
-          <pre><code>sha256sum -c strop-<!-- build:version -->0.57.0<!-- /build:version -->-x86_64-unknown-linux-musl.tar.gz.sha256</code></pre>
+          <pre><code>sha256sum -c strop-<!-- build:version -->0.58.0<!-- /build:version -->-x86_64-unknown-linux-musl.tar.gz.sha256</code></pre>
           and extract <code>strop</code> onto your <code>PATH</code>.
         </li>
         <li>Later, update from inside the install. Download, verification and extraction run in Rust; <code>curl</code> and <code>tar</code> are not required.
@@ -175,7 +175,7 @@ Space g  l log · h history · b blame gutter · y/o permalink · u/s/p hunk</co
   <div class="section-head">
     <p class="eyebrow">Status</p>
     <h2 id="status-title">Plans in force.</h2>
-    <p>strop is designed in numbered plans; <code>plans/STATUS.md</code> is the ledger of which ones every change currently answers to. This table is generated from it at build time (<code><!-- build:describe -->v0.57.0<!-- /build:describe --></code>). There is no separate roadmap page: the ledger is the roadmap.</p>
+    <p>strop is designed in numbered plans; <code>plans/STATUS.md</code> is the ledger of which ones every change currently answers to. This table is generated from it at build time (<code><!-- build:describe -->v0.58.0<!-- /build:describe --></code>). There is no separate roadmap page: the ledger is the roadmap.</p>
   </div>
   <div class="card">
     <table class="status-table">
@@ -190,6 +190,7 @@ Space g  l log · h history · b blame gutter · y/o permalink · u/s/p hunk</co
 <tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0086-verified-foundation.md">0086</a></th><td>verified foundation: rings, Lean-proved kernel, survival and release rules, gates</td></tr>
 <tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0088-the-look.md">0088</a></th><td>design language, token set and the six original palettes; echo row; golden snapshots</td></tr>
 <tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0090-one-editor.md">0090</a></th><td>containers cut, nvim terminal model, remote over plain SSH behind an ergonomics gate (0.55–0.56)</td></tr>
+<tr><th scope="row"><a href="https://github.com/stropdev/strop/blob/main/plans/0092-registers-and-pinned-project.md">0092</a></th><td>one register file with Neovim's rules and one read path for every text input; project root pinned at launch; library files owned by the project's server; crashed servers restart within a budget. Amends 0074 (field registers), 0053 (Search toggle is <code>ctrl-t</code>), 0049 §4.6</td></tr>
 <!-- /build:status --></tbody>
     </table>
     <p class="links"><a href="https://github.com/stropdev/strop/blob/main/plans/STATUS.md">The full ledger: proposed, retired and implemented plans</a> · <a href="changelog.html">Changelog</a></p>
@@ -217,7 +218,7 @@ Space g  l log · h history · b blame gutter · y/o permalink · u/s/p hunk</co
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v<!-- build:version -->0.57.0<!-- /build:version --></a> · <a href="#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v<!-- build:version -->0.58.0<!-- /build:version --></a> · <a href="#palette">Palette</a></p>
   </div>
 </footer>
 <script src="assets/site.js"></script>

@@ -70,7 +70,8 @@ kind:function parse AND NOT wrap</code></pre>
 <h2 id="the-search-workspace">The Search workspace</h2>
 <p><code>Space /</code> opens or resumes one large Search workspace; <code>Space R</code> resumes the same investigation with the replacement field visible. Local enumeration and content matching run entirely in Rust using the <code>ignore</code>/<code>grep</code> crate family — <code>rg</code> is not required on your machine.</p>
 <ul>
-<li><strong>Ctrl-R</strong> toggles the With field without restarting the search or losing either field's text, caret, mode, selection or workset. Enter in <strong>Find</strong> opens the selected source; Enter in <strong>With</strong> prepares Review. Tab switches fields when With is visible.</li>
+<li><strong>Ctrl-T</strong> toggles the With field without restarting the search or losing either field's text, caret, mode, selection or workset. Enter in <strong>Find</strong> opens the selected source; Enter in <strong>With</strong> prepares Review. Tab switches fields when With is visible.</li>
+<li><strong>Ctrl-R {register}</strong> inserts a register into Find or With, exactly as in insert mode and on the <code>:</code> / <code>/</code> lines: <code>Ctrl-R &quot;</code> is the last yank or delete, <code>Ctrl-R 0</code> the last yank, <code>Ctrl-R a</code> a named register, <code>Ctrl-R +</code> the system clipboard.</li>
 <li><strong>Ctrl-X</strong> toggles one match; <strong>Ctrl-D</strong> masks/restores its file. Excluded hits stay visible. <strong>Ctrl-O</strong> collects exactly the included matches into a read-only source-backed collection.</li>
 <li><strong>Ctrl-O</strong> from source results opens that collection with surrounding context, source syntax, match evidence and line numbers. <code>+</code>/<code>-</code> adjusts context; <code>g&lt;Space&gt;</code> opens the real source for editing. Collections retain navigation, search and yank, but never write through to source buffers or save them. Use <strong>With → Review</strong> for deliberate multi-file changes.</li>
 <li>Filter-only file finding lists eligible files; content search needs an expression. Unignored dotfiles are included by default; <code>.git</code> metadata is excluded. <code>:search-options</code> shows the separate visibility controls.</li>
@@ -83,14 +84,14 @@ kind:function parse AND NOT wrap</code></pre>
 <p>Source enumeration is limited to 100,000 selected paths or 16 MiB of names; rg records to 1 MiB and 4,096 submatches; decoded batches to 4 MiB; a request publishes at most 100,000 rows or 64 MiB of owned row data. Limits and malformed output produce a visible failure, never a silently complete partial result.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="editor.html">← Editor surfaces</a><a class="pager-next" href="filesystem.html">The filesystem workspace →</a></nav>
-    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> at <code>v0.57.0</code>. The repository file is the source of truth; edit it there.</p>
+    <p class="provenance">Generated from <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> at <code>v0.58.0</code>. The repository file is the source of truth; edit it there.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.57.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="https://github.com/stropdev/strop">Source</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.58.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>
