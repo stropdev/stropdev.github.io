@@ -6,7 +6,7 @@
 <title>Find files, search and replace — strop docs</title>
 <meta name="description" content="The same filters work in every search field: Files (Space f), Search (Space /), Replace (Space R), document symbols (Space s), workspace symbols (Space S) and the jump list (Space j). Learn them once.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.62.0">
+<meta name="strop-version" content="0.63.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/search.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -106,25 +106,39 @@ kind:function parse AND NOT wrap</code></pre>
 <p>Opening a result hides Search. <code>Space /</code> brings it back with your query and results. It searches again in the directory (and on the host) it was first opened for, even if you are now in a file somewhere else. In a directory listing, <code>:fs search</code> or <strong>Space a → Search here</strong> searches only that directory. The project root stays where it is.</p>
 <p>A search stops with an error when it passes 100,000 files, or meets a line longer than 1 MiB or with more than 4,096 hits in it. Past 100,000 result rows it keeps what it has and says so. It never shows part of the results as if they were all of them.</p>
 <h2 id="collections-edit-every-hit-in-one-buffer">Collections: edit every hit in one buffer</h2>
-<p><strong>Ctrl-O</strong> in search results, references (<code>grr</code>) or diagnostics (<code>Space d</code>) opens a collection: one card per file, each hit with two lines of context, highlighted like the file and with the file's line numbers. It is an ordinary buffer. What you edit in it is edited in the files:</p>
+<p><strong>Ctrl-O</strong> in search results, references (<code>grr</code>) or diagnostics (<code>Space d</code>) opens a collection: one card per file, each hit with two lines of context, highlighted like the file and with the file's line numbers. The cursor is on the hit that was selected in the list. If the search is still running, Ctrl-O waits for it and then collects; any other key takes that back.</p>
+<p>The first row says what was collected, for example <code>search open_picker — 12 hits in 4 files</code>, and the buffer is named <code>collection: search open_picker</code>. Collecting the same search again brings that collection up to date; a different search gets its own.</p>
+<h3 id="moving">Moving</h3>
+<table>
+<thead><tr><th>Key</th><th>In the collection</th><th>In any other buffer</th></tr></thead>
+<tbody>
+<tr><td><code>]q</code> <code>[q</code></td><td>the next or previous hit, from the cursor</td><td>the next or previous hit, in its file</td></tr>
+<tr><td><code>Enter</code></td><td>open the file at the cursor</td><td></td></tr>
+<tr><td><code>Ctrl-O</code></td><td></td><td>go back; after <code>Enter</code>, back to the collection</td></tr>
+<tr><td><code>:copen</code></td><td></td><td>back to the collection, on the hit you were last at</td></tr>
+<tr><td><code>]f</code> <code>[f</code></td><td>the next or previous file</td><td></td></tr>
+<tr><td><code>+</code> <code>-</code></td><td>show more or less context around the hits under the cursor</td><td></td></tr>
+</tbody>
+</table>
+<p>A count works: <code>3]q</code> is three hits on.</p>
+<h3 id="editing">Editing</h3>
+<p>A collection is an ordinary buffer. What you edit in it is edited in the files:</p>
 <ul>
-<li>Edit inside an excerpt with any command — <code>cw</code>, <code>dd</code>, <code>o</code>, <code>.</code>, a macro, visual mode, <code>:s</code>. The edit is made in the file's buffer in the same keystroke; open the file and it is already there. Edits made in the file appear in the collection the same way.</li>
+<li>Edit inside a card with any command — <code>cw</code>, <code>dd</code>, <code>o</code>, <code>.</code>, a macro, visual mode, <code>:s</code>. The edit is made in the file's buffer in the same keystroke; open the file and it is already there. Edits made in the file appear in the collection the same way.</li>
 <li><code>:w</code> writes every changed file the collection shows. <code>:wq</code> does that and closes it.</li>
 <li><code>u</code> and <code>Ctrl-R</code> undo and redo what you changed through the collection, in the files too. Editing one of its files somewhere else starts the collection's history over; that file's own <code>u</code> still works.</li>
-<li>Card borders, the <code>⋮ N source lines omitted</code> rows and the title are not text. An edit that would touch one, or join the last line of an excerpt with the border under it, is refused and changes nothing.</li>
-<li><code>+</code> / <code>-</code> widen and narrow the excerpt under the cursor; <code>]e</code> / <code>[e</code> step between excerpts and <code>]f</code> / <code>[f</code> between files; <code>g&lt;Space&gt;</code> (or Enter on a card's top border) opens the file at that line, and <code>Ctrl-O</code> comes back.</li>
-<li><code>:%s/old/new/g</code> in a collection substitutes inside the excerpts only, with the usual live preview.</li>
+<li>Card borders, the <code>⋮ N lines not shown</code> rows and the title are not text. An edit that would touch one, or join the last line of a card with the border under it, is refused and changes nothing.</li>
+<li><code>:%s/old/new/g</code> in a collection substitutes inside the cards only, with the usual live preview.</li>
 </ul>
-<h3 id="the-quickfix-list">The quickfix list</h3>
-<p>The newest collection is the quickfix list, under the names Vim gave it:</p>
+<h3 id="one-command-at-every-hit">One command at every hit</h3>
+<p>Vim's quickfix commands work on the collection you are in, or the one you were in last:</p>
 <table>
 <thead><tr><th>Command</th><th>Does</th></tr></thead>
 <tbody>
-<tr><td><code>:copen</code></td><td>show the list (the collection)</td></tr>
-<tr><td><code>]q</code> <code>[q</code>, <code>:cnext</code> <code>:cprev</code> (<code>:cn</code> <code>:cp</code>)</td><td>go to the next or previous hit in its file</td></tr>
+<tr><td><code>:cnext</code> <code>:cprev</code> (<code>:cn</code> <code>:cp</code>)</td><td>the same as <code>]q</code> <code>[q</code></td></tr>
 <tr><td><code>:cc N</code></td><td>go to hit N</td></tr>
 <tr><td><code>:cdo {cmd}</code></td><td>run an ex command with the cursor on every hit line</td></tr>
-<tr><td><code>:cfdo {cmd}</code></td><td>run an ex command once in every file of the list</td></tr>
+<tr><td><code>:cfdo {cmd}</code></td><td>run an ex command once in every file of the collection</td></tr>
 </tbody>
 </table>
 <pre><code class="language-vim">:cdo s/open_picker/open_the_picker/
@@ -154,14 +168,14 @@ With  fetch_$1()</code></pre>
 <p>Search works the same in a directory on an SSH host: the same fields, the same include and exclude keys, the same previews, the same limits. It runs <code>rg</code> on the host. If the host has no <code>rg</code>, Search says so and does not run. A search on a host that takes longer than two minutes is stopped. Collections work there. Replace does not, yet: <code>Space R</code>, <code>Ctrl-T</code> and the With field say so.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-next" href="filesystem.html">Create, rename, move and delete files →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> from the strop repository at <code>v0.62.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> from the strop repository at <code>v0.63.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.62.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.63.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

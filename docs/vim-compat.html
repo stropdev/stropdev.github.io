@@ -6,7 +6,7 @@
 <title>Every key — strop docs</title>
 <meta name="description" content="Generated from the command table (strop compat). ✓ works today; (soon) is planned. What Neovim binds and strop does not is listed at the end, under Missing and Reassigned.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.62.0">
+<meta name="strop-version" content="0.63.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/vim-compat.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -53,9 +53,8 @@
 <li><code>✓ g_ g0 g^ g$ gj gk</code> — last non-blank; line start, first non-blank, end; line down / up</li>
 <li><code>✓ gn gN</code> — select the next / previous search match (cgn then . changes each)</li>
 <li><code>✓ 0 $ G %</code> — line/file/pair jumps</li>
-<li><code>✓ g&lt;space&gt;</code> — collection: open the file at this line</li>
 <li><code>✓ gg</code> — top of file</li>
-<li><code>✓ enter</code> — line down, first non-blank (blame: open the line's commit)</li>
+<li><code>✓ enter</code> — line down, first non-blank (collection: open the file here; blame: the line's commit)</li>
 <li><code>✓ tab</code> — jump list forward (ctrl-i)</li>
 <li><code>✓ ctrl-d ctrl-u ctrl-f ctrl-b</code> — half/full page scroll (count = lines)</li>
 <li><code>✓ ctrl-e ctrl-y</code> — scroll the window one line down / up</li>
@@ -71,12 +70,10 @@
 <li><code>✓ gd</code> — goto definition (LSP)</li>
 <li><code>✓ gs</code> — switch source/header (clangd)</li>
 <li><code>✓ f&lt;c&gt; F&lt;c&gt; t&lt;c&gt; T&lt;c&gt;</code> — find/till char (candidates light up)</li>
-<li><code>✓ ]q</code> — next quickfix hit</li>
-<li><code>✓ [q</code> — previous quickfix hit</li>
+<li><code>✓ ]q</code> — next hit of the collection (in it: from the cursor)</li>
+<li><code>✓ [q</code> — previous hit of the collection (in it: from the cursor)</li>
 <li><code>✓ ]f</code> — next file card (collections)</li>
 <li><code>✓ [f</code> — previous file card (collections)</li>
-<li><code>✓ ]e</code> — next excerpt (collections; +/- context)</li>
-<li><code>✓ [e</code> — previous excerpt (collections; +/- context)</li>
 <li><code>✓ ]c</code> — next git hunk</li>
 <li><code>✓ [c</code> — previous git hunk</li>
 <li><code>✓ m&lt;a&gt;</code> — set mark at cursor</li>
@@ -298,12 +295,11 @@
 <li><code>✓ :jumps :symbols</code> — jumplist / document symbols picker</li>
 <li><code>✓ :format :rename</code> — format buffer / rename symbol: :rename NEW</li>
 <li><code>✓ :recover</code> — recover unsaved text after a crash: list, restore N, discard N</li>
-<li><code>✓ :collection source|expand|contract</code> — source, expand or contract the excerpt at the caret</li>
 <li><code>✓ :select-next :select-all :select-skip :select-pop</code> — occurrence selection: next / all / skip / pop last-added</li>
 <li><code>✓ :view :set</code> — readonly browsing (:set ro/noro; CLI: -R)</li>
 <li><code>✓ :tab-size :indent-style</code> — indent width and tabs or spaces for this file</li>
 <li><code>✓ :fs :browse :filter :remote :terminal-local</code> — file operations, browse a directory (local or ssh://), filter its listing, SSH hosts, a local shell</li>
-<li><code>✓ :copen :cwindow :cnext :cprevious :cNext :cc :cdo :cfdo</code> — quickfix: show the list, visit hits, run a command at each hit or file</li>
+<li><code>✓ :copen :cwindow :cnext :cprevious :cNext :cc :cdo :cfdo</code> — the collection's hits (quickfix): show it, step hits, run a command at each hit line or file</li>
 </ul>
 <h2 id="missing">Missing</h2>
 <p>Neovim binds these; in strop the key does nothing. An operator on this list (<code>=</code>, <code>gq</code>, <code>gw</code>, <code>zf</code>) still takes its motion, so the motion's keys never run as commands.</p>
@@ -345,14 +341,14 @@
 </ul>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="cli.html">← The command line</a><a class="pager-next" href="scripting.html">Scripts and bug reports →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> from the strop repository at <code>v0.62.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> from the strop repository at <code>v0.63.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.62.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.63.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

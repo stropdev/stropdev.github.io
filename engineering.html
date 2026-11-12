@@ -6,7 +6,7 @@
 <title>Engineering — strop</title>
 <meta name="description" content="How strop is checked: an edit kernel proved in Lean, keys compared against Neovim, and release gates that all block.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.62.0">
+<meta name="strop-version" content="0.63.0">
 <meta name="strop-describes" content="0.62">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="./assets/site.css">
@@ -42,8 +42,8 @@
       <li>a batch the validator accepts really is sorted and non-overlapping;</li>
       <li>the counters that tell a stale handle from a live one advance as specified.</li>
     </ul>
-    <p>The required theorems, read from <code>proofs/Audit.lean</code> at <code>v0.62.0</code>:</p>
-    <ul class="claims"><li>map_position_spec</li><li>mapSpec_monotone</li><li>mapSpec_in_bounds</li><li>validate_batch_spec</li><li>map_through_edits_spec</li><li>map_through_edits_monotone</li><li>map_through_edits_composition</li><li>consecutive_of_batchOk</li><li>admits_spec</li><li>source_edit_spec</li><li>toSource_in_span</li><li>source_edit_commutes</li><li>next_generation_spec</li><li>index_for_len_spec</li></ul>
+    <p>The required theorems, read from <code>proofs/Audit.lean</code> at <code>v0.63.0</code>:</p>
+    <ul class="claims"><li>find_spec</li><li>retire_spec</li><li>find_after_retire</li><li>touch_spec</li><li>victim_spec</li><li>place_spec</li><li>total_cost_le</li><li>placed_bounded</li><li>placed_entries</li><li>find_after_place</li><li>place_evicts_oldest</li><li>map_position_spec</li><li>mapSpec_monotone</li><li>mapSpec_in_bounds</li><li>validate_batch_spec</li><li>map_through_edits_spec</li><li>map_through_edits_monotone</li><li>map_through_edits_composition</li><li>consecutive_of_batchOk</li><li>admits_spec</li><li>source_edit_spec</li><li>toSource_in_span</li><li>source_edit_commutes</li><li>next_generation_spec</li><li>index_for_len_spec</li></ul>
     <p>Two things keep the proofs from being decoration. Each theorem has a mutant: a deliberately broken copy of the code that must make its proof fail, or the gate fails. And an audit lists the axioms every theorem depends on and accepts only Lean's standard three.</p>
     <p><strong>What this does not cover.</strong> Everything outside that crate: the Vim grammar, rendering, files, git, language servers, SSH. A proved kernel means cursors and marks do not drift or go out of bounds when text changes. It does not mean the editor has no bugs.</p>
     <p class="links"><a href="https://github.com/stropdev/strop/tree/main/proofs">The proofs</a> · <a href="https://github.com/stropdev/strop/tree/main/crates/strop-kernel">The kernel crate</a> · <a href="https://github.com/stropdev/strop/blob/main/plans/0086-verified-foundation.md">The design</a></p>
@@ -78,7 +78,7 @@
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.62.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.63.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>

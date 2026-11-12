@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 864.0 549.0" width="864.0" height="549.0" role="img" aria-labelledby="t d">
-<title id="t">strop 0.62.0: git</title>
+<title id="t">strop 0.63.0: git</title>
 <desc id="d">strop's git status buffer: sections for staged, unstaged and untracked files, with the diff of one file shown under its row.</desc>
 <rect width="864.0" height="549.0" rx="6" fill="#15171c"/>
 <g font-family="ui-monospace, &quot;DejaVu Sans Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace" font-size="14.0" fill="#e6e1d6" xml:space="preserve">
@@ -69,11 +69,12 @@
 <text x="12.00" y="480.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
 <text x="12.00" y="497.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
 <text x="12.00" y="515.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#4a5160">~</text>
-<rect x="12.00" y="519.50" width="67.20" height="17.5" fill="#e8a848"/>
-<rect x="79.20" y="519.50" width="772.80" height="17.5" fill="#1c1f25"/>
-<text x="20.40" y="532.80" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#15171c" font-weight="bold">NORMAL</text>
-<text x="96.00" y="532.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#858c9a">main</text>
-<text x="146.40" y="532.80" textLength="84.00" lengthAdjust="spacingAndGlyphs">git status</text>
-<text x="238.80" y="532.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#d9a85a">[RO]</text>
-<text x="784.80" y="532.80" textLength="67.20" lengthAdjust="spacingAndGlyphs" fill="#858c9a">8:1  33%</text>
+<rect x="12.00" y="519.50" width="84.00" height="17.5" fill="#e8a848"/>
+<rect x="96.00" y="519.50" width="756.00" height="17.5" fill="#1c1f25"/>
+<text x="28.80" y="532.80" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#15171c" font-weight="bold">NORMAL</text>
+<text x="112.80" y="532.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#858c9a">main</text>
+<text x="163.20" y="532.80" textLength="84.00" lengthAdjust="spacingAndGlyphs">git status</text>
+<text x="255.60" y="532.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#d9a85a">[RO]</text>
+<text x="759.60" y="532.80" textLength="25.20" lengthAdjust="spacingAndGlyphs" fill="#858c9a">33%</text>
+<text x="810.00" y="532.80" textLength="25.20" lengthAdjust="spacingAndGlyphs" fill="#a8adb8">8:1</text>
 </g></svg>

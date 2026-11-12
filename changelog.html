@@ -6,7 +6,7 @@
 <title>What changed — strop</title>
 <meta name="description" content="What changed in strop, release by release.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.62.0">
+<meta name="strop-version" content="0.63.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="CHANGELOG.md">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
@@ -32,8 +32,39 @@
   <h1>What changed</h1>
   <p class="lede">The last 3 releases, newest first. Tarballs and checksums are on <a href="https://github.com/stropdev/strop/releases">GitHub releases</a>.</p>
   <div class="prose">
-<h2 id="release-0-62-0-2026-11-11">0.62.0 — 2026-11-11</h2>
+<h2 id="release-0-63-0-2026-11-12">0.63.0 — 2026-11-12</h2>
 <h3 id="changed">Changed</h3>
+<ul>
+<li><strong>Collecting search hits is one smooth step</strong> (plans/0097). <code>Ctrl-O</code> in search results, references or diagnostics now puts the cursor on the hit you had selected, not on the first row. Pressed while the search is still running, it waits and then collects instead of asking you to press it again.</li>
+<li><strong><code>]q</code> / <code>[q</code> step the hits inside the collection</strong>, from wherever the cursor is, so you can walk every hit and edit as you go. In any other buffer they still go to the next or previous hit in its file, counted from the hit you were last at. <code>:copen</code> returns to the collection on that hit.</li>
+<li><strong><code>Enter</code> in a collection opens the file at the cursor</strong>; <code>Ctrl-O</code> comes back.</li>
+<li><strong>A collection says what it holds</strong>: the first row and the buffer name carry the search (<code>search open_picker — 12 hits in 4 files</code>, <code>collection: search open_picker</code>), and each file's card shows its number of hits. Collecting the same search again brings its collection up to date instead of adding another buffer.</li>
+<li><strong>Plain words in the collection's messages</strong>: "hit" throughout, counts written out (<code>1 hit in 1 file</code>), and <code>hit 2 of 4: src/a.rs:11</code> when stepping.</li>
+<li><strong>The status line holds still</strong> (plans/0098). The keys you are typing (<code>d</code>, <code>d2</code>, <code>&quot;a3d</code>, <code>space g</code>) now sit in a slot of their own and grow to the right, instead of sliding left one cell per key. The line number, column and percentage are fixed-width, so moving from line 9 to 10 no longer shifts everything beside them; the percentage now comes before <code>line:col</code>.</li>
+<li><strong>A narrow status line shortens before it drops.</strong> A long branch name is cut to <code>feature/…</code> before it disappears, and pressing a key takes only the cells that key needs. Before, pressing <code>Space</code> on a full row could drop the whole branch and jump the file name across the screen.</li>
+<li><strong>Every mode label has room.</strong> The mode chip is two cells wider, so <code>PENDING</code>, <code>COMMAND</code> and <code>TERMINAL</code> no longer touch its edge. Groups on the row are always two cells apart, and the row no longer runs into the right edge of the screen.</li>
+<li><strong>The key card no longer sits on the status line</strong>: one empty row parts them. Its <code>+N more</code> line starts under the keys.</li>
+<li><strong>Inside the <code>:</code> card everything lines up</strong>: what you type, the completion names, the substitution summary and the changed lines start in one column, with <code>-</code> and <code>+</code> under the <code>:</code>. A summary too long for the card ends in <code>…</code>.</li>
+<li><strong>The status line no longer repeats the <code>:s</code> summary</strong> that the card already shows; the branch and diagnostics keep their place while you type a substitution.</li>
+<li><strong><code>Space s</code> opens at once</strong> (plans/0099): the current file's symbols are fetched when you open it and after each finished edit, and kept until the text changes. A second press asks nobody, and the list opens in the same moment as the key. Rows from before an edit are never shown: if the new list is not ready the picker waits for it rather than showing old line numbers.</li>
+<li><strong>Symbols without a language server</strong>: in Rust, Python, C, C++ and Lua files that no server serves — none installed, or still starting — <code>Space s</code> lists the declarations from the syntax tree, and says so. It used to answer only "no language server".</li>
+</ul>
+<h3 id="added">Added</h3>
+<ul>
+<li><strong><code>REC @a</code> in the status line while a macro records</strong>, from <code>qa</code> until <code>q</code>.</li>
+</ul>
+<h3 id="removed">Removed</h3>
+<ul>
+<li><strong><code>g&lt;Space&gt;</code>, <code>]e</code> / <code>[e</code> and <code>:collection</code></strong>. <code>Enter</code> opens the file, <code>]q</code> / <code>[q</code> step the hits, and <code>+</code> / <code>-</code> change the context.</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li><strong>The leader prefix reads <code>space g</code></strong>, not <code>spaceg</code>.</li>
+<li><strong>Staging always says so.</strong> A stage, unstage or discard in the status buffer sometimes finished without its <code>staged a.txt</code> line, when the status refreshed while git was still writing.</li>
+<li><strong><code>cc</code> always opens the commit message.</strong> When the status buffer refreshed while the message file was opening, the commit message sometimes never appeared.</li>
+</ul>
+<h2 id="release-0-62-0-2026-11-11">0.62.0 — 2026-11-11</h2>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li><strong>Git keys mean one thing everywhere</strong>: <code>Space g u</code> now unstages the hunk under the cursor (as <code>u</code> does in the status buffer) and <code>Space g X</code> discards it. <code>Space g S</code> is gone. The blame gutter moved from <code>Space g b</code> to <code>Space g B</code>.</li>
 <li><strong>Git buffers are titled alike</strong>: <code>git status</code>, <code>git log</code>, <code>git files</code>, <code>git diff</code>, <code>git hunk</code>.</li>
@@ -43,20 +74,20 @@
 <li><strong>The docs and the in-editor help are rewritten in plain words</strong> and checked against the editor: about a hundred corrections, among them five <code>:help</code> rows that described old behaviour. <code>docs/terminal-and-scripting.md</code> is now <code>docs/terminal.md</code> and <code>docs/scripting.md</code>.</li>
 <li><strong>The README demo shows the everyday loop</strong> — find a file, edit, search the project, replace across files, stage and commit — in the default palette.</li>
 </ul>
-<h3 id="added">Added</h3>
+<h3 id="added-2">Added</h3>
 <ul>
 <li><strong><code>Space g g</code> shows what changed</strong> (plans/0096): staged, unstaged and untracked files (and conflicts) in one buffer. <code>s</code> stages, <code>u</code> unstages and <code>-</code> toggles the file under the cursor — or the hunk, or the whole section from its heading. <code>=</code> shows a file's diff under its row, <code>]c</code> / <code>[c</code> move between hunks, <code>enter</code> opens the file at that line, and <code>X</code> discards after <code>y</code> confirms. The list keeps itself current: after each change, when files change on disk, and when you come back to the window.</li>
 <li><strong><code>Space g c</code> commits</strong> — <code>cc</code> from the status buffer, <code>ca</code> to amend. The message is written in a buffer that lists what the commit will hold; <code>:wq</code> commits and <code>:q!</code> aborts. The commit is made by <code>git</code> itself, so hooks, signing and your git configuration apply, and a hook's refusal is shown as it wrote it.</li>
 <li><strong><code>Space g b</code> switches branch</strong>: local and remote branches in the picker, the current one marked. <code>enter</code> switches; the last row creates a branch from the name you typed. If git refuses because your changes would be overwritten, you see its message and nothing changes. Open files follow the new branch.</li>
 <li><strong>Not yet on SSH projects</strong>: status, commit and the branch picker say they need a local repository there. Signs, log, blame and diffs work as before.</li>
 </ul>
-<h3 id="fixed">Fixed</h3>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li><strong>A mistake in <code>config.toml</code> costs only that setting</strong>: an unknown theme name, an unknown key or a value strop cannot use is skipped and named in the warning, and every other setting in the file applies. It used to throw away the whole file.</li>
 <li><strong>The finder and project search no longer list the editor's own lock files</strong> (<code>.strop-lock-…</code>) that sit beside open files while hidden files are shown.</li>
 </ul>
 <h2 id="release-0-61-0-2026-11-11">0.61.0 — 2026-11-11</h2>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li><strong>Search hits are editable in place.</strong> <code>Ctrl-O</code> in search results, references or diagnostics opens a collection; edit inside any excerpt with any command and the change is in the file's buffer in the same keystroke. <code>:w</code> writes every changed file it shows, <code>u</code> undoes what you changed through it (in the files too). Card borders and the "lines omitted" rows are not text and refuse edits. (plans/0094)</li>
 <li><strong>Quickfix commands.</strong> The newest collection is the quickfix list: <code>:copen</code> shows it, <code>]q</code> / <code>[q</code> (<code>:cnext</code> / <code>:cprev</code>, <code>:cc N</code>) visit its hits, <code>:cdo {cmd}</code> runs an ex command at every hit and <code>:cfdo {cmd}</code> once per file — <code>:cdo s/old/new/</code> or <code>:cdo norm A;</code>, then <code>:cfdo w</code>. <code>:%s/old/new/g</code> inside a collection substitutes in the excerpts only.</li>
@@ -66,50 +97,26 @@
 <li><strong><code>Space a</code> on a file lists code actions only.</strong> The filesystem verbs are in the Directory buffer's <code>Space a</code> and under <code>:fs</code>.</li>
 <li><strong>Filesystem reviews are applied with <code>Enter</code> or <code>:fs apply</code></strong> and cancelled with <code>q</code> or <code>:fs cancel</code>.</li>
 </ul>
-<h3 id="removed">Removed</h3>
+<h3 id="removed-2">Removed</h3>
 <ul>
 <li><strong><code>:apply-change</code>, <code>:save-change</code>, <code>:undo-change</code> and <code>:cancel-change</code></strong>, the change receipt and the save receipt. The review buffer itself says what was changed and written.</li>
 <li><strong>Read-only collections.</strong> There is one kind, and it is editable.</li>
 </ul>
-<h3 id="fixed-2">Fixed</h3>
+<h3 id="fixed-3">Fixed</h3>
 <ul>
 <li><strong>The <code>:s</code> preview shows the change.</strong> A long line is cut to a window on the changed text, the same window for the removed and the added row; the card no longer covers the statusline.</li>
 <li><strong><code>:</code> in a very short terminal no longer panics</strong>; with no room for the card, the command line takes the top row.</li>
 <li><strong>Undoing a replace restores the files</strong>, not only the buffers.</li>
 <li><strong><code>cc</code> no longer leaves a second cursor</strong> on the line, which later edited two places at once.</li>
 </ul>
-<h2 id="release-0-60-0-2026-11-11">0.60.0 — 2026-11-11</h2>
-<h3 id="changed-3">Changed</h3>
-<ul>
-<li><strong>The file finder puts the file you meant first.</strong> A match in the file name now beats a match in a directory name, typing a whole name lists the files with exactly that name (shortest path first), and space-separated words must all match — <code>core.c sched</code> finds <code>kernel/sched/core.c</code>.</li>
-<li><strong>The finder remembers what you use.</strong> With nothing typed, <code>Space f</code> starts with your other open files, then the files you open most in this project; <code>Space f</code> <code>Enter</code> goes back to the file you were just in. When you type, a file you use often wins among equally good matches. This is remembered per project between runs.</li>
-<li><strong><code>Space b</code> starts on the previous buffer</strong>, so <code>Space b</code> <code>Enter</code> switches back instead of staying put.</li>
-<li><strong>Project search is about five times faster</strong> on large trees: it now uses several cores. On the Linux kernel sources a search finishes in about a quarter of a second instead of 1.2–1.3 seconds — the same as <code>rg</code> on the same number of threads. Results are still listed in the same order every time.</li>
-<li><strong>Searching is smart-case everywhere</strong> — the finder, project search and <code>/</code> in a buffer. An all-lowercase search matches either case; one capital letter makes case count. <code>case:ignore</code> and <code>case:sensitive</code> (or <code>\c</code> and <code>\C</code> in a buffer search) decide outright.</li>
-<li><strong>References and other location lists are readable</strong>: each row is <code>path:line</code> followed by the text on that line, with the path relative to your project, instead of a clipped absolute path.</li>
-<li><strong><code>:e</code> completes the path you typed</strong>: <code>:e src/ma&lt;Tab&gt;</code> becomes <code>:e src/main.rs</code>, not a long <code>file:///…</code> address.</li>
-</ul>
-<h3 id="added-2">Added</h3>
-<ul>
-<li><strong>Search toggles</strong>: <code>Alt-C</code> match case, <code>Alt-W</code> whole word, <code>Alt-R</code> regular expression, in project search and replace. <code>Alt-H</code> shows or hides hidden files and <code>Alt-I</code> files your ignore rules skip, in the finder and in search. Whenever a toggle is on, a line under the search field says so in plain words; it disappears when everything is back to default.</li>
-<li><strong><code>Ctrl-U</code> clears the search field</strong> in every picker.</li>
-</ul>
-<h3 id="removed-2">Removed</h3>
-<ul>
-<li><strong><code>:search-options</code></strong>: <code>Alt-H</code> and <code>Alt-I</code> replace it.</li>
-</ul>
-<h3 id="fixed-3">Fixed</h3>
-<ul>
-<li><strong>Enter in the finder could open the wrong file</strong> when you typed quickly in a large project: the selection drifted down the list as more files loaded. The selection now stays on the top result until you move it.</li>
-</ul>
   </div>
-  <p class="more"><a href="changelog-all.html">All 97 releases →</a></p>
+  <p class="more"><a href="changelog-all.html">All 98 releases →</a></p>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.62.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.63.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>

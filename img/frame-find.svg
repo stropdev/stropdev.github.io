@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 864.0 549.0" width="864.0" height="549.0" role="img" aria-labelledby="t d">
-<title id="t">strop 0.62.0: find</title>
+<title id="t">strop 0.63.0: find</title>
 <desc id="d">The strop file finder over 97,362 files with sched.h typed: a list of matching file names with their directories on the left, a preview of the selected file on the right.</desc>
 <rect width="864.0" height="549.0" rx="6" fill="#15171c"/>
 <g font-family="ui-monospace, &quot;DejaVu Sans Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace" font-size="14.0" fill="#e6e1d6" xml:space="preserve">
@@ -216,9 +216,10 @@
 <text x="348.00" y="515.30" textLength="84.00" lengthAdjust="spacingAndGlyphs" fill="#858c9a">paste yank</text>
 <text x="457.20" y="515.30" textLength="25.20" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">esc</text>
 <text x="499.20" y="515.30" textLength="336.00" lengthAdjust="spacingAndGlyphs" fill="#858c9a">close ─────────────────────────────────╯</text>
-<rect x="12.00" y="519.50" width="67.20" height="17.5" fill="#4b644d"/>
-<rect x="79.20" y="519.50" width="772.80" height="17.5" fill="#17191f"/>
-<text x="20.40" y="532.80" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#14161b" font-weight="bold">FILES</text>
-<text x="96.00" y="532.80" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#72716f">[scratch]</text>
-<text x="776.40" y="532.80" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#464b54">1:1  100%</text>
+<rect x="12.00" y="519.50" width="84.00" height="17.5" fill="#4b644d"/>
+<rect x="96.00" y="519.50" width="756.00" height="17.5" fill="#17191f"/>
+<text x="28.80" y="532.80" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#14161b" font-weight="bold">FILES</text>
+<text x="112.80" y="532.80" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#72716f">[scratch]</text>
+<text x="759.60" y="532.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#464b54">100%</text>
+<text x="810.00" y="532.80" textLength="25.20" lengthAdjust="spacingAndGlyphs" fill="#565961">1:1</text>
 </g></svg>
