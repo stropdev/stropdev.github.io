@@ -101,19 +101,8 @@ class Markdown:
             if not line.strip():
                 i += 1
                 continue
-            m = self.FENCE.match(line)
-            if m:
-                fence, lang = m.group(1), m.group(2)
-                code: List[str] = []
-                i += 1
-                while i < len(body) and body[i].strip() != fence:
-                    code.append(body[i])
-                    i += 1
-                if i >= len(body):
-                    raise ValueError("unterminated code fence")
-                i += 1
-                attr = f' class="language-{html.escape(lang)}"' if lang else ""
-                out.append(f"<pre><code{attr}>{html.escape(chr(10).join(code))}</code></pre>")
+            if self.FENCE.match(line):
+                i = self.fenced(body, i, 0, out)
                 continue
             m = self.HEADING.match(line)
             if m:
@@ -132,11 +121,32 @@ class Markdown:
             while i < len(body) and body[i].strip() and not self.block_start(body[i]):
                 para.append(body[i].strip())
                 i += 1
+            if not para:
+                # a line that looks like a block start no branch takes (a
+                # `|` row with no table separator): fail, never spin
+                raise ValueError(f"unsupported Markdown construct: {line!r}")
             rendered = self.inline(" ".join(para))
             if not self.lead:
                 self.lead = rendered
             out.append(f"<p>{rendered}</p>")
         return "\n".join(out)
+
+    def fenced(self, body: List[str], i: int, indent: int, out: List[str]) -> int:
+        """A fenced code block at `body[i]`, its lines `indent` cells in
+        (a fence inside a list item is indented with the item's text)."""
+        m = self.FENCE.match(body[i][indent:])
+        fence, lang = m.group(1), m.group(2)
+        code: List[str] = []
+        i += 1
+        while i < len(body) and body[i].strip() != fence:
+            line = body[i]
+            code.append(line[indent:] if line[:indent].strip() == "" else line)
+            i += 1
+        if i >= len(body):
+            raise ValueError("unterminated code fence")
+        attr = f' class="language-{html.escape(lang)}"' if lang else ""
+        out.append(f"<pre><code{attr}>{html.escape(chr(10).join(code))}</code></pre>")
+        return i + 1
 
     def block_start(self, line: str) -> bool:
         return bool(self.FENCE.match(line) or self.HEADING.match(line) or self.BULLET.match(line)
@@ -162,11 +172,28 @@ class Markdown:
             if not m:
                 break
             parts = [m.group(2) if ordered else m.group(1)]
+            blocks: List[str] = []
             i += 1
-            while i < len(body) and body[i].startswith(" " * indent) and body[i].strip():
-                parts.append(body[i].strip())
+            while i < len(body):
+                line = body[i]
+                if line.startswith(" " * indent) and self.FENCE.match(line[indent:]):
+                    i = self.fenced(body, i, indent, blocks)
+                    continue
+                if not line.strip():
+                    # a blank line inside an item continues it only when an
+                    # indented code fence follows
+                    if i + 1 < len(body) and body[i + 1].startswith(" " * indent) \
+                            and self.FENCE.match(body[i + 1][indent:]):
+                        i += 1
+                        continue
+                    break
+                if not line.startswith(" " * indent):
+                    break
+                if blocks:
+                    break
+                parts.append(line.strip())
                 i += 1
-            items.append(f"<li>{self.inline(' '.join(parts))}</li>")
+            items.append(f"<li>{self.inline(' '.join(parts))}{''.join(chr(10) + b for b in blocks)}</li>")
         tag = "ol" if ordered else "ul"
         out.append(f"<{tag}>\n" + "\n".join(items) + f"\n</{tag}>")
         return i

@@ -6,7 +6,7 @@
 <title>Edit over SSH — strop docs</title>
 <meta name="description" content="Edit files on another machine over SSH. strop uses the ssh already on your machine. Nothing is installed on the host.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.63.0">
+<meta name="strop-version" content="0.66.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/remote.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -44,14 +44,14 @@ strop remote &quot;ssh://user@devbox:2222/~/project/src/lib.rs&quot;</code></pre
 <p><code>strop remote URL</code> and <code>--remote URL</code> are the same command (see <a href="cli.html">cli.md</a>). <code>-R</code> opens read-only, as for a local file.</p>
 <h2 id="connecting">Connecting</h2>
 <p>Press <strong>Space o</strong> or run <strong><code>:remote</code></strong> to pick a host: the directories you opened before, the hosts you are connected to, and the hosts in your SSH config and <code>known_hosts</code>. Or select <strong>Add a host…</strong> and enter <code>host</code>, <code>user@host:port</code> or a complete <code>ssh://</code> address. Opening the list does not log in; Enter connects. A new host starts at <code>/</code>. strop remembers, on this machine only, the directory you last opened on each host (in <code>remote-destinations.json</code> under <code>$XDG_STATE_HOME/strop</code>, normally <code>~/.local/state/strop</code>).</p>
-<pre><code class="language-vim">:browse ssh://devbox/
+<pre><code class="language-vim">:e ssh://devbox/
 :filter app
 :remote connect ssh://devbox
 :remote list
 :remote disconnect ssh://devbox
 :remote clear</code></pre>
 <ul>
-<li><code>:browse ssh://HOST/DIR</code> lists a directory; <code>:filter TEXT</code> narrows the listing.</li>
+<li><code>:e ssh://HOST/DIR/</code> opens a folder; <code>:filter TEXT</code> narrows it.</li>
 <li><code>:remote home</code> lists your home directory on the current host; <code>:remote root</code> goes to <code>/</code>.</li>
 <li><code>:remote connect</code> logs in and keeps the connection; <code>:remote disconnect</code> closes it (the current host when no address is given); <code>:remote clear</code> closes every connection. The remembered directories stay.</li>
 <li><code>:remote list</code> shows the open connections.</li>
@@ -59,7 +59,7 @@ strop remote &quot;ssh://user@devbox:2222/~/project/src/lib.rs&quot;</code></pre
 <p><strong>Once connected, you can edit.</strong> There is no second confirmation before you save files, search, use Git or open a terminal on the host.</p>
 <p>Host aliases, keys, the agent and <code>ProxyJump</code> come from your <code>~/.ssh/config</code>. strop cannot ask you for a password or a passphrase, and cannot ask you to accept a new host key. Log in once with plain <code>ssh host</code> to accept the key, and use a key or an agent. If login fails, strop shows ssh's own error and a hint.</p>
 <p>strop logs in once per host and reuses that connection for every read, save, search and terminal, so you are not asked to log in again. The connection closes when strop exits. After a crash it closes by itself after ten idle minutes. (It is an OpenSSH <code>ControlMaster</code>; its socket is in a private directory under <code>$XDG_RUNTIME_DIR</code>.)</p>
-<p>A directory listing is an ordinary buffer: move and search in it as usual. Each row shows the name, the size, and the kind and permissions; <code>?</code> stands for something the host did not report. Hidden files are shown, and <code>.gitignore</code> is not applied. Enter opens an entry; <code>-</code>, Backspace or <code>../</code> goes up and puts the cursor back on the directory you came from. Tab completes host names and paths without logging in; paths on a host complete only once you are connected or have listed that directory before. In an <code>ssh://</code> address write a space as <code>%20</code>, <code>#</code> as <code>%23</code>, <code>?</code> as <code>%3F</code> and <code>%</code> as <code>%25</code>. A file is read whole and can be up to 256 MiB of UTF-8 text.</p>
+<p>A folder on a host is the same buffer of names as one on your machine (see <a href="filesystem.html">filesystem.md</a>): size and age beside each name, blank for something the host did not report. Hidden files are shown, and <code>.gitignore</code> is not applied. Enter opens an entry; <code>-</code> goes up and puts the cursor back on the folder you came from. Tab completes host names and paths without logging in; paths on a host complete only once you are connected or have listed that directory before. In an <code>ssh://</code> address write a space as <code>%20</code>, <code>#</code> as <code>%23</code>, <code>?</code> as <code>%3F</code> and <code>%</code> as <code>%25</code>. A file is read whole and can be up to 256 MiB of UTF-8 text.</p>
 <h2 id="saving">Saving</h2>
 <p><strong><code>:w</code></strong> uploads the buffer to a temporary name beside the file, gives it the file's permissions and renames it over the original, so nobody ever reads a half-written file. A symlink is saved through to the file it points at.</p>
 <ul>
@@ -69,7 +69,7 @@ strop remote &quot;ssh://user@devbox:2222/~/project/src/lib.rs&quot;</code></pre
 </ul>
 <p>What strop cannot protect against: if another program writes the file in the instant between strop's last check and its save, the later write wins, as in Vim. SFTP reports modification times in whole seconds, so a rewrite of the same size within the same second as your read goes unnoticed. When you replace a file that belongs to another user, the new file belongs to you.</p>
 <h2 id="file-management">File management</h2>
-<p><code>:fs create</code>, <code>:fs mkdir</code>, <code>:fs rename</code>/<code>move</code>, <code>:fs copy</code> and <code>:fs remove</code> (and renaming by editing the list) work on the host as they do on your machine: a review first, then <code>Enter</code> to do it. See <a href="filesystem.html#ssh-hosts">filesystem.md</a>. On a host there is no trash (removal is for good), an existing file is never overwritten, a directory is not copied, and if a later step fails the earlier ones stay done.</p>
+<p>Edit a folder's names and <code>:w</code> on the host as on your machine: the list of changes first, then <code>y</code> to make them. See <a href="filesystem.html#ssh-hosts">filesystem.md</a>. On a host there is no Trash (a delete is for good), an existing file is never overwritten, a folder is not copied, and if a later change fails the earlier ones stay made.</p>
 <h2 id="search-git-language-servers-terminal">Search, Git, language servers, terminal</h2>
 <p>They run <strong>on the host</strong>:</p>
 <ul>
@@ -81,14 +81,14 @@ strop remote &quot;ssh://user@devbox:2222/~/project/src/lib.rs&quot;</code></pre
 <p><code>rg</code>, <code>git</code> and the language server must be installed on the host. Each command runs through your login shell there, so a slow shell startup file slows every search and Git query. csh-family login shells are not supported for commands with special characters.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="terminal.html">← Terminals</a><a class="pager-next" href="cli.html">The command line →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/remote.md"><code>docs/remote.md</code></a> from the strop repository at <code>v0.63.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/remote.md"><code>docs/remote.md</code></a> from the strop repository at <code>v0.66.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.63.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.66.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

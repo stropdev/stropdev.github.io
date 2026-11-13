@@ -6,7 +6,7 @@
 <title>Git — strop docs</title>
 <meta name="description" content="Everything git is under Space g. Each git view is an ordinary read-only buffer: motions, /, yank and counts work, q closes it.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.63.0">
+<meta name="strop-version" content="0.66.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/git.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -55,22 +55,23 @@
 </table>
 <p>The same letters mean the same thing everywhere: <code>s</code> stages, <code>u</code> unstages, <code>X</code> discards.</p>
 <h2 id="status-space-g-g">Status — <code>Space g g</code></h2>
-<pre><code class="language-text">Head: main
-Upstream: origin/main, ahead 1
+<pre><code class="language-text">  Head: main
+  Upstream: origin/main, ahead 1
 
-Staged (1)
-A docs/notes.md
+─ Staged ──────────────────────────────────────────────────────────────────── 1
+  A docs/notes.md                                                          +12 -0
 
-Unstaged (2)
-M src/lib.rs
-@@ -1,3 +1,4 @@
- fn a() {}
-+fn b() {}
- fn c() {}
-M src/main.rs
+─ Unstaged ────────────────────────────────────────────────────────────────── 2
+▌ M src/lib.rs                                                              +1 -0
+│ @@ -1,3 +1,4 @@
+│  fn a() {}
+│ +fn b() {}
+│  fn c() {}
+  M src/main.rs                                                             +3 -1
 
-Untracked (1)
-? scratch.txt</code></pre>
+─ Untracked ───────────────────────────────────────────────────────────────── 1
+  ? scratch.txt</code></pre>
+<p>Each section starts with a rule that names it and counts its files; each file row ends in its own <code>+N -M</code> (or <code>binary</code>). The rows are entries, not lines, so there are no line numbers: <code>▌</code> marks the cursor's row, and a <code>│</code> runs down the rows of a file you expanded with <code>=</code>. An expanded diff reads like the diff view: the changed text on a quiet tint, the changed part of a line emphasised. The buffer holds the words — a section's row holds <code>Staged</code>, a diff row its <code>+</code> or <code>-</code> and the line — so a yank of a hunk is still a patch.</p>
 <p>The keys act on the row under the cursor. On a file row that is the file; on a diff row it is that hunk; on a section heading it is every file in the section.</p>
 <table>
 <thead><tr><th>key</th><th>does</th></tr></thead>
@@ -95,7 +96,7 @@ Untracked (1)
 <li>The <a href="filesystem.html#lock-files">lock files</a> strop leaves beside files it saved are never listed.</li>
 </ul>
 <h2 id="commit-space-g-c-or-cc-in-the-status-buffer">Commit — <code>Space g c</code>, or <code>cc</code> in the status buffer</h2>
-<p>The message is edited in <code>.git/COMMIT_EDITMSG</code>, an ordinary file buffer. It opens with an empty first line for the message and <code>#</code> lines that list what the commit will hold; <code>#</code> lines are left out of the message.</p>
+<p>The message is edited in <code>.git/COMMIT_EDITMSG</code>, an ordinary file buffer. It opens with an empty first line for the message and <code>#</code> lines that list what the commit will hold; <code>#</code> lines are left out of the message, and are drawn as comments. The first line, the subject, is bold; past column 72 it turns the warning colour, and so does a second line that is not empty — the two mistakes <code>git log</code> shows worst.</p>
 <ul>
 <li><code>:wq</code> commits. So does <code>:w</code> followed by <code>:q</code>.</li>
 <li><code>:q!</code> without writing aborts.</li>
@@ -114,22 +115,40 @@ Untracked (1)
 <p>The gutter marks the lines that differ from what is staged. <code>]c</code> / <code>[c</code> move between hunks, <code>Space g p</code> previews one, <code>Space g s</code> stages it, <code>Space g u</code> unstages the staged hunk under the cursor, and <code>Space g X</code> discards it in the buffer (an ordinary edit: <code>u</code> undoes it). Staging reads the file on disk, so save first.</p>
 <h2 id="log-history-blame">Log, history, blame</h2>
 <ul>
-<li><code>Space g l</code> is the commit graph. <code>enter</code> on a commit lists its files; <code>enter</code> on a file shows its diff, with the commit's other files in a sidebar (<code>tab</code> moves focus, <code>]f</code> / <code>[f</code> step through files).</li>
-<li><code>Space g h</code> is the log of the current file; from a visual selection, the history of those lines.</li>
+<li><code>Space g l</code> is the commit graph: one row per commit, in columns — the graph, the sha in grey, the branch and tag names in parentheses (the branch you are on in the accent), the subject, and at the right edge the author and the age (<code>2d</code>, <code>5m</code>, <code>6mo</code>). The shas and subjects line up; under 60 columns the author leaves, and a subject that does not fit ends in <code>…</code>. The buffer holds <code>graph sha  (refs) subject</code>, so a yanked row is the commit's sha and subject; the author and age are drawn.
+<pre><code class="language-text">▌ *   0d21f9e  (HEAD -&gt; main) notes: revision 5        Ada Example   2d
+  *   0d964a0  Merge branch &#x27;feature/surfaces&#x27;         Ada Example   3d
+  |\
+  | * e8c1034  (feature/surfaces) layout: one token    Ada Example   4d
+  * | c756836  notes: main moved on                    Ada Example   3d
+  |/</code></pre></li>
+<li><code>enter</code> on a commit opens it: a rule naming the commit with its author and age, the subject in bold and the rest of the message, then the files under a rule that counts them and their lines. Each file row has git's status letter, <code>R old → new</code> for a rename, and <code>+N -M</code> — or <code>binary</code> — beside its name. The view opens on the first file; <code>enter</code> on a file shows its diff, with the commit's other files in a sidebar (<code>tab</code> moves focus, <code>]f</code> / <code>[f</code> step through files).
+<pre><code class="language-text">─ commit 19b4e9aec5 ──────────────────── Ada Example · 3 days ago
+  rename the doc, change the logo
+
+─ Files ────────────────────────────────────── 3 files  +2 -0
+▌ R docs/old-name.md → docs/new-name.md                +0 -0
+  M logo.bin                                          binary
+  M src/lib.rs                                         +2 -0</code></pre></li>
+<li>A diff starts with a rule naming the file and its <code>+N -M</code>; each <code>@@</code> row is a band, with <code>⋮</code> where the line numbers jump. A binary file says <code>binary</code> on its rule; any other file with no line changes (a mode change, a pure rename) says <code>no line changes</code>.</li>
+<li><code>Space g h</code> is the log of the current file, named for it (<code>git log · src/lib.rs</code>); from a visual selection, the history of those lines.</li>
 <li><code>Space g B</code> shows who last changed each line, in the gutter; press it again to hide it. <code>enter</code> on a line opens the log at that commit. The gutter hides while the buffer has edits made after blame ran. In a read-only buffer (a file opened with <code>-R</code>, a git view) there is no gutter; a card shows the blame for the current line instead.</li>
 </ul>
+<h3 id="large-repositories">Large repositories</h3>
+<p>Without a commit-graph file, <code>git log --graph</code> reads every commit before it shows the first: about half a second on 150,000 commits, and twice that for one file's history. The first time the log or a file's history takes longer than a tenth of a second, strop writes a commit-graph for that repository in the background, and every later log is fast — about 10 ms, with a file's history showing its first rows within tens of milliseconds and the rest as git finds them.</p>
+<p>The file goes in strop's own state directory, <code>$XDG_STATE_HOME/strop/graphs/</code> (<code>~/.local/state/strop/graphs/</code> when that is not set). Your repository is not modified: nothing is written into <code>.git</code>, no lock is taken. It is used only for the log and file history; git checks it against the repository, so an out-of-date one never changes what the log shows. strop keeps graphs for the 16 repositories used most recently. A repository with a commit-graph of its own (<code>git gc</code> writes one) gets none from strop. Setting <code>GIT_ALTERNATE_OBJECT_DIRECTORIES</code> yourself turns this off.</p>
 <h2 id="ssh-projects">SSH projects</h2>
 <p>On an SSH host (<a href="remote.html">remote.md</a>) the gutter marks, log, blame, history and diffs work. Status, commit and the branch picker do not work there yet; they say so and do nothing. Staging and discarding hunks do not work there either.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="filesystem.html">← Create, rename, move and delete files</a><a class="pager-next" href="editor.html">Indentation, themes, completion and language servers →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/git.md"><code>docs/git.md</code></a> from the strop repository at <code>v0.63.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/git.md"><code>docs/git.md</code></a> from the strop repository at <code>v0.66.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.63.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.66.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

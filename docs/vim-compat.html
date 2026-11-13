@@ -6,7 +6,7 @@
 <title>Every key — strop docs</title>
 <meta name="description" content="Generated from the command table (strop compat). ✓ works today; (soon) is planned. What Neovim binds and strop does not is listed at the end, under Missing and Reassigned.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.63.0">
+<meta name="strop-version" content="0.66.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/vim-compat.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -31,7 +31,7 @@
   <aside class="doc-side">
     <p class="side-title"><a href="./">All docs</a></p>
     <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Git</p><ol class="side-docs"><li><a href="git.html">Git</a></li></ol><p class="side-title">Editing and code</p><ol class="side-docs"><li><a href="editor.html">Indentation, themes, completion and language servers</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal.html">Terminals</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html" aria-current="page">Every key</a></li><li><a href="scripting.html">Scripts and bug reports</a></li></ol>
-    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#moving">Moving</a></li><li><a href="#editing">Editing</a></li><li><a href="#insert">Insert</a></li><li><a href="#visual">Visual</a></li><li><a href="#search">Search</a></li><li><a href="#leader-space">Leader (space)</a></li><li><a href="#panes">Panes</a></li><li><a href="#git">Git</a></li><li><a href="#pickers">Pickers</a></li><li><a href="#terminal">Terminal</a></li><li><a href="#ex-commands">Ex commands</a></li><li><a href="#missing">Missing</a></li><li><a href="#reassigned">Reassigned</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#moving">Moving</a></li><li><a href="#editing">Editing</a></li><li><a href="#insert">Insert</a></li><li><a href="#visual">Visual</a></li><li><a href="#search">Search</a></li><li><a href="#leader-space">Leader (space)</a></li><li><a href="#panes">Panes</a></li><li><a href="#git">Git</a></li><li><a href="#folder">Folder</a></li><li><a href="#pickers">Pickers</a></li><li><a href="#terminal">Terminal</a></li><li><a href="#ex-commands">Ex commands</a></li><li><a href="#missing">Missing</a></li><li><a href="#reassigned">Reassigned</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
@@ -190,7 +190,7 @@
 <h2 id="leader-space">Leader (space)</h2>
 <ul>
 <li><code>✓ space |</code> — pipe line/selection through shell (:! runs)</li>
-<li><code>✓ space e</code> — show this file in its directory</li>
+<li><code>✓ space e</code> — this file's folder, cursor on the file</li>
 <li><code>✓ space f</code> — file finder</li>
 <li><code>✓ space o</code> — open remote destination</li>
 <li><code>✓ space t</code> — terminal in a split below (TERMINAL mode)</li>
@@ -204,7 +204,7 @@
 <li><code>✓ space P</code> — paste clipboard before</li>
 <li><code>✓ space d</code> — diagnostics picker</li>
 <li><code>✓ space k</code> — hover docs</li>
-<li><code>✓ space a</code> — actions here (fixes and code; files in a directory)</li>
+<li><code>✓ space a</code> — actions here (fixes and code; in a folder: search, terminal, copy path)</li>
 <li><code>✓ space s</code> — document symbols picker</li>
 <li><code>✓ space S</code> — workspace symbols picker</li>
 <li><code>✓ space j</code> — jumplist picker</li>
@@ -248,6 +248,14 @@
 <li><code>✓ ]f [f</code> — next / prev file in commit diff</li>
 <li><code>✓ enter</code> — open the commit that last changed this line (blame)</li>
 <li><code>✓ q</code> — close this view (read-only buffers)</li>
+</ul>
+<h2 id="folder">Folder</h2>
+<ul>
+<li><code>✓ enter -</code> — open the file or folder under the cursor / the parent folder</li>
+<li><code>✓ g.</code> — show or hide dotfiles</li>
+<li><code>✓ cw dd o yy p</code> — rename / delete / new (name/ for a folder) / copy: edit the names, then :w</li>
+<li><code>✓ :w :e!</code> — show the changes (y applies, q cancels) / drop them and list the folder again</li>
+<li><code>✓ :filter :e</code> — narrow to matching names (:filter alone clears) / list the folder again</li>
 </ul>
 <h2 id="pickers">Pickers</h2>
 <ul>
@@ -298,7 +306,7 @@
 <li><code>✓ :select-next :select-all :select-skip :select-pop</code> — occurrence selection: next / all / skip / pop last-added</li>
 <li><code>✓ :view :set</code> — readonly browsing (:set ro/noro; CLI: -R)</li>
 <li><code>✓ :tab-size :indent-style</code> — indent width and tabs or spaces for this file</li>
-<li><code>✓ :fs :browse :filter :remote :terminal-local</code> — file operations, browse a directory (local or ssh://), filter its listing, SSH hosts, a local shell</li>
+<li><code>✓ :remote :terminal-local</code> — SSH hosts / a local shell even from an SSH context</li>
 <li><code>✓ :copen :cwindow :cnext :cprevious :cNext :cc :cdo :cfdo</code> — the collection's hits (quickfix): show it, step hits, run a command at each hit line or file</li>
 </ul>
 <h2 id="missing">Missing</h2>
@@ -341,14 +349,14 @@
 </ul>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="cli.html">← The command line</a><a class="pager-next" href="scripting.html">Scripts and bug reports →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> from the strop repository at <code>v0.63.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> from the strop repository at <code>v0.66.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.63.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.66.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

@@ -6,7 +6,7 @@
 <title>What changed — strop</title>
 <meta name="description" content="What changed in strop, release by release.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.63.0">
+<meta name="strop-version" content="0.66.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="CHANGELOG.md">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
@@ -32,91 +32,74 @@
   <h1>What changed</h1>
   <p class="lede">The last 3 releases, newest first. Tarballs and checksums are on <a href="https://github.com/stropdev/strop/releases">GitHub releases</a>.</p>
   <div class="prose">
-<h2 id="release-0-63-0-2026-11-12">0.63.0 — 2026-11-12</h2>
+<h2 id="release-0-66-0-2026-11-13">0.66.0 — 2026-11-13</h2>
 <h3 id="changed">Changed</h3>
 <ul>
-<li><strong>Collecting search hits is one smooth step</strong> (plans/0097). <code>Ctrl-O</code> in search results, references or diagnostics now puts the cursor on the hit you had selected, not on the first row. Pressed while the search is still running, it waits and then collects instead of asking you to press it again.</li>
-<li><strong><code>]q</code> / <code>[q</code> step the hits inside the collection</strong>, from wherever the cursor is, so you can walk every hit and edit as you go. In any other buffer they still go to the next or previous hit in its file, counted from the hit you were last at. <code>:copen</code> returns to the collection on that hit.</li>
-<li><strong><code>Enter</code> in a collection opens the file at the cursor</strong>; <code>Ctrl-O</code> comes back.</li>
-<li><strong>A collection says what it holds</strong>: the first row and the buffer name carry the search (<code>search open_picker — 12 hits in 4 files</code>, <code>collection: search open_picker</code>), and each file's card shows its number of hits. Collecting the same search again brings its collection up to date instead of adding another buffer.</li>
-<li><strong>Plain words in the collection's messages</strong>: "hit" throughout, counts written out (<code>1 hit in 1 file</code>), and <code>hit 2 of 4: src/a.rs:11</code> when stepping.</li>
-<li><strong>The status line holds still</strong> (plans/0098). The keys you are typing (<code>d</code>, <code>d2</code>, <code>&quot;a3d</code>, <code>space g</code>) now sit in a slot of their own and grow to the right, instead of sliding left one cell per key. The line number, column and percentage are fixed-width, so moving from line 9 to 10 no longer shifts everything beside them; the percentage now comes before <code>line:col</code>.</li>
-<li><strong>A narrow status line shortens before it drops.</strong> A long branch name is cut to <code>feature/…</code> before it disappears, and pressing a key takes only the cells that key needs. Before, pressing <code>Space</code> on a full row could drop the whole branch and jump the file name across the screen.</li>
-<li><strong>Every mode label has room.</strong> The mode chip is two cells wider, so <code>PENDING</code>, <code>COMMAND</code> and <code>TERMINAL</code> no longer touch its edge. Groups on the row are always two cells apart, and the row no longer runs into the right edge of the screen.</li>
-<li><strong>The key card no longer sits on the status line</strong>: one empty row parts them. Its <code>+N more</code> line starts under the keys.</li>
-<li><strong>Inside the <code>:</code> card everything lines up</strong>: what you type, the completion names, the substitution summary and the changed lines start in one column, with <code>-</code> and <code>+</code> under the <code>:</code>. A summary too long for the card ends in <code>…</code>.</li>
-<li><strong>The status line no longer repeats the <code>:s</code> summary</strong> that the card already shows; the branch and diagnostics keep their place while you type a substitution.</li>
-<li><strong><code>Space s</code> opens at once</strong> (plans/0099): the current file's symbols are fetched when you open it and after each finished edit, and kept until the text changes. A second press asks nobody, and the list opens in the same moment as the key. Rows from before an edit are never shown: if the new list is not ready the picker waits for it rather than showing old line numbers.</li>
-<li><strong>Symbols without a language server</strong>: in Rust, Python, C, C++ and Lua files that no server serves — none installed, or still starting — <code>Space s</code> lists the declarations from the syntax tree, and says so. It used to answer only "no language server".</li>
-</ul>
-<h3 id="added">Added</h3>
-<ul>
-<li><strong><code>REC @a</code> in the status line while a macro records</strong>, from <code>qa</code> until <code>q</code>.</li>
-</ul>
-<h3 id="removed">Removed</h3>
-<ul>
-<li><strong><code>g&lt;Space&gt;</code>, <code>]e</code> / <code>[e</code> and <code>:collection</code></strong>. <code>Enter</code> opens the file, <code>]q</code> / <code>[q</code> step the hits, and <code>+</code> / <code>-</code> change the context.</li>
+<li><strong>Each file in a collection starts at a thick line</strong> (plans/0103). Search results, collected hits and the quickfix list are one buffer of many files; where one file's lines end and the next file's begin is now drawn with a heavy rule (<code>━━━━ src/b.rs ━━━━ 2 hits</code>), bright in every file, not only the one the cursor is in. Status sections, the diff's file headings and the picker keep the thin rule.</li>
+<li><strong>Split panes lose their corners.</strong> A pane title is a thin rule (<code>─ 1 src/main.rs ● ───</code>), brighter on the focused pane. Side by side, one vertical line runs the full height and meets the titles in a <code>┬</code>.</li>
+<li><strong>Stacked panes get a row back.</strong> The closing line under the upper pane is gone; the lower pane's title line is the boundary.</li>
 </ul>
 <h3 id="fixed">Fixed</h3>
 <ul>
-<li><strong>The leader prefix reads <code>space g</code></strong>, not <code>spaceg</code>.</li>
-<li><strong>Staging always says so.</strong> A stage, unstage or discard in the status buffer sometimes finished without its <code>staged a.txt</code> line, when the status refreshed while git was still writing.</li>
-<li><strong><code>cc</code> always opens the commit message.</strong> When the status buffer refreshed while the message file was opening, the commit message sometimes never appeared.</li>
+<li><strong>Quitting right after starting no longer crashes.</strong> If <code>:q</code> came before strop finished reading an earlier session's unsaved drafts, the editor panicked on its way out. The drafts are kept for next time.</li>
 </ul>
-<h2 id="release-0-62-0-2026-11-11">0.62.0 — 2026-11-11</h2>
+<h2 id="release-0-65-0-2026-11-13">0.65.0 — 2026-11-13</h2>
 <h3 id="changed-2">Changed</h3>
 <ul>
-<li><strong>Git keys mean one thing everywhere</strong>: <code>Space g u</code> now unstages the hunk under the cursor (as <code>u</code> does in the status buffer) and <code>Space g X</code> discards it. <code>Space g S</code> is gone. The blame gutter moved from <code>Space g b</code> to <code>Space g B</code>.</li>
-<li><strong>Git buffers are titled alike</strong>: <code>git status</code>, <code>git log</code>, <code>git files</code>, <code>git diff</code>, <code>git hunk</code>.</li>
+<li><strong>A folder is a buffer of names</strong> (plans/0102). <code>strop .</code>, <code>:e DIR</code> and <code>Space e</code> open a folder whose lines are its entries, one name per line, folders first and ending in <code>/</code>. Line 5 is the fifth entry: <code>5G</code>, counts and <code>dd</code> mean what they say. There is no heading row and no <code>../</code> row any more.</li>
+<li><strong>Change files by editing the names.</strong> <code>cw</code> renames, <code>o name</code> creates (<code>name/</code> makes a folder, <code>a/b.txt</code> creates <code>a/</code> too), <code>dd</code> deletes, <code>yyp</code> then a new name copies. Each changed row says what writing will do: <code>was main.rs</code>, <code>new</code>, <code>copy of lib.rs</code>. <code>:w</code> lists the changes, relative to the folder (<code>rename  main.rs → main.rx</code>); <code>y</code> makes them and <code>q</code> goes back with your edits kept. <code>u</code> undoes an edit, <code>:e!</code> drops them all.</li>
+<li><strong>After the changes are made the folder comes back by itself</strong>, listed again, with the cursor still on its entry, and the message says <code>3 changes applied</code>. Only when one fails does the list stay, saying <code>done</code> or <code>failed: …</code> beside each change.</li>
+<li><strong>Size and age beside each name</strong> (<code>8.5K   1d</code>), in one column measured per folder so it does not move as you scroll. Folder sizes and permissions are gone.</li>
+<li><strong>The folder's path reads like a file's</strong>: relative to the project (<code>crates/strop-engine/</code>) in the status line and pane title, with <code>27 items</code>, <code>3 of 9 · filter rs</code> or <code>· dotfiles hidden</code> where the indent setting would be.</li>
+<li><strong><code>Space a</code> in a folder</strong> offers three things: search in it, a terminal in it, copy its path.</li>
+<li><strong><code>?</code> has a Folder section</strong> listing <code>Enter</code>, <code>-</code>, <code>g.</code>, the edits, <code>:w</code>, <code>:e!</code> and <code>:filter</code>.</li>
 </ul>
+<h3 id="added">Added</h3>
 <ul>
-<li><strong>A language server that is not installed says so</strong>: <code>lsp: rust-analyzer not found on PATH — rustup component add rust-analyzer</code> instead of "refused". A server that fails to start says it did not start; a project that needs <code>:trust</code> says that.</li>
-<li><strong>The docs and the in-editor help are rewritten in plain words</strong> and checked against the editor: about a hundred corrections, among them five <code>:help</code> rows that described old behaviour. <code>docs/terminal-and-scripting.md</code> is now <code>docs/terminal.md</code> and <code>docs/scripting.md</code>.</li>
-<li><strong>The README demo shows the everyday loop</strong> — find a file, edit, search the project, replace across files, stage and commit — in the default palette.</li>
+<li><strong><code>g.</code> hides or shows dotfiles</strong>, remembered per folder.</li>
+<li><strong>An empty folder says so</strong> (<code>empty folder  ·  o adds a name, :w creates it</code>), and so does a filter that matches nothing.</li>
 </ul>
-<h3 id="added-2">Added</h3>
+<h3 id="removed">Removed</h3>
 <ul>
-<li><strong><code>Space g g</code> shows what changed</strong> (plans/0096): staged, unstaged and untracked files (and conflicts) in one buffer. <code>s</code> stages, <code>u</code> unstages and <code>-</code> toggles the file under the cursor — or the hunk, or the whole section from its heading. <code>=</code> shows a file's diff under its row, <code>]c</code> / <code>[c</code> move between hunks, <code>enter</code> opens the file at that line, and <code>X</code> discards after <code>y</code> confirms. The list keeps itself current: after each change, when files change on disk, and when you come back to the window.</li>
-<li><strong><code>Space g c</code> commits</strong> — <code>cc</code> from the status buffer, <code>ca</code> to amend. The message is written in a buffer that lists what the commit will hold; <code>:wq</code> commits and <code>:q!</code> aborts. The commit is made by <code>git</code> itself, so hooks, signing and your git configuration apply, and a hook's refusal is shown as it wrote it.</li>
-<li><strong><code>Space g b</code> switches branch</strong>: local and remote branches in the picker, the current one marked. <code>enter</code> switches; the last row creates a branch from the name you typed. If git refuses because your changes would be overwritten, you see its message and nothing changes. Open files follow the new branch.</li>
-<li><strong>Not yet on SSH projects</strong>: status, commit and the branch picker say they need a local repository there. Signs, log, blame and diffs work as before.</li>
+<li><strong><code>:fs</code> and every one of its verbs, and <code>:browse</code>.</strong> Open a folder with <code>:e DIR</code> (or <code>:e ssh://host/dir/</code>) and edit its names instead. Marks, receipts, <code>:fs operations</code>, <code>:fs verify</code> and <code>:fs undo</code> are gone; an unconfirmed change is checked on disk by itself. <code>Backspace</code> no longer goes up (<code>-</code> does), and <code>q</code> in a folder records a macro as in any buffer.</li>
+<li><strong>The copy and delete choices.</strong> A copy copies the file on disk and asks you to write it first if it has unsaved changes; a delete goes to the Trash, and on an SSH host is permanent and says <code>delete</code>.</li>
 </ul>
 <h3 id="fixed-2">Fixed</h3>
 <ul>
-<li><strong>A mistake in <code>config.toml</code> costs only that setting</strong>: an unknown theme name, an unknown key or a value strop cannot use is skipped and named in the warning, and every other setting in the file applies. It used to throw away the whole file.</li>
-<li><strong>The finder and project search no longer list the editor's own lock files</strong> (<code>.strop-lock-…</code>) that sit beside open files while hidden files are shown.</li>
+<li><strong>Lock files no longer pile up beside your files.</strong> Every file operation left a <code>.strop-lock-…</code> file behind, and the folder view listed them. They are now removed when the operation finishes, and never listed.</li>
+<li><strong><code>Ctrl-W v</code>, <code>Ctrl-W s</code>, <code>Ctrl-W o</code> and <code>Ctrl-W =</code> work in read-only views</strong>; they answered "readonly buffer".</li>
+<li><strong>Pressing <code>Enter</code> on a just-renamed row</strong> opens the file under its new name, even while the folder is still being listed again.</li>
+<li><strong><code>o</code> in a folder opens a line at once</strong>; it no longer waits on the code indenter.</li>
 </ul>
-<h2 id="release-0-61-0-2026-11-11">0.61.0 — 2026-11-11</h2>
+<h2 id="release-0-64-0-2026-11-13">0.64.0 — 2026-11-13</h2>
 <h3 id="changed-3">Changed</h3>
 <ul>
-<li><strong>Search hits are editable in place.</strong> <code>Ctrl-O</code> in search results, references or diagnostics opens a collection; edit inside any excerpt with any command and the change is in the file's buffer in the same keystroke. <code>:w</code> writes every changed file it shows, <code>u</code> undoes what you changed through it (in the files too). Card borders and the "lines omitted" rows are not text and refuse edits. (plans/0094)</li>
-<li><strong>Quickfix commands.</strong> The newest collection is the quickfix list: <code>:copen</code> shows it, <code>]q</code> / <code>[q</code> (<code>:cnext</code> / <code>:cprev</code>, <code>:cc N</code>) visit its hits, <code>:cdo {cmd}</code> runs an ex command at every hit and <code>:cfdo {cmd}</code> once per file — <code>:cdo s/old/new/</code> or <code>:cdo norm A;</code>, then <code>:cfdo w</code>. <code>:%s/old/new/g</code> inside a collection substitutes in the excerpts only.</li>
-<li><strong>Replace across files is two steps.</strong> <code>Space R</code>, type, <code>Enter</code> shows the diff; <code>Enter</code> again changes every file and writes it. <code>u</code> in that review puts the buffers and the files back and names any file it could not revert; <code>q</code> cancels.</li>
-<li><strong>Captures in replace.</strong> When the term is a regular expression with groups (<code>regex:</code>, or <code>Alt-R</code>), <code>$1</code>, <code>${name}</code> and <code>\1</code> in With expand per hit, in the live <code>-</code>/<code>+</code> rows and in the result alike.</li>
-<li><strong>Rename.</strong> <code>grn</code> prompts with the current name. A rename in one buffer applies at once; one across several files opens the same review as replace. References move from <code>gr</code> to <code>grr</code>, and <code>gra</code> (actions) and <code>gri</code> (implementation) join them: the four language-server keys of Neovim 0.11.</li>
-<li><strong><code>Space a</code> on a file lists code actions only.</strong> The filesystem verbs are in the Directory buffer's <code>Space a</code> and under <code>:fs</code>.</li>
-<li><strong>Filesystem reviews are applied with <code>Enter</code> or <code>:fs apply</code></strong> and cancelled with <code>q</code> or <code>:fs cancel</code>.</li>
-</ul>
-<h3 id="removed-2">Removed</h3>
-<ul>
-<li><strong><code>:apply-change</code>, <code>:save-change</code>, <code>:undo-change</code> and <code>:cancel-change</code></strong>, the change receipt and the save receipt. The review buffer itself says what was changed and written.</li>
-<li><strong>Read-only collections.</strong> There is one kind, and it is editable.</li>
+<li><strong>The log and a file's history are fast on huge repositories</strong> (plans/0101). The first <code>Space g l</code> or <code>Space g h</code> that takes more than a tenth of a second has strop write a commit-graph for that repository in the background; after that the log opens in about 10 ms on 150,000 commits instead of half a second, and a file's history shows its first rows at once and the rest as git finds them. The file lives in strop's state directory (<code>~/.local/state/strop/graphs/</code>); your repository is not touched.</li>
+<li><strong>Closing a collection closes the files it opened that you never looked at</strong> (plans/0101). Files you opened from it, edited through it, or had open before stay; a file with unsaved changes is never closed, and the message says how many stayed for that reason. <code>:q</code> on a collection now returns the cursor to where you pressed <code>Ctrl-O</code>.</li>
+<li><strong>One look for the collection and the git buffers</strong> (plans/0100). A file, a status section or a commit now starts with a rule across the pane that names it, with its count or <code>+N -M</code> at the right edge. One empty row separates two of them. A jump inside one — the lines a collection leaves out, a diff's <code>@@</code> row — is a band, with <code>⋮</code> where the line numbers jump. The cards with corners and no sides are gone.</li>
+<li><strong>The collection's rows hold words only.</strong> A file's row holds its path and a gap's row <code>12 lines not shown</code>; the rule, the hit count and the marks are drawn. <code>yy</code> on a file's row yanks its path, and a yank across a collection carries no box-drawing characters. A modified file is marked <code>●</code> and a read-only one <code>[RO]</code>, as in the status line, instead of <code>· modified</code> and <code>· read-only</code>. The cursor line is painted in a collection as in a file.</li>
+<li><strong>Status, log, file history and a commit's files have no line numbers</strong>: their rows are entries, not lines. The cursor row is marked with <code>▌</code> and a band, as in a directory listing. Section rows hold <code>Staged</code> and the count is drawn beside the rule.</li>
+<li><strong>An expanded diff in the status buffer reads like the diff view</strong>: the changed text on a quiet tint, the changed part of a line emphasised, and a <code>│</code> down the rows that belong to the file. <code>M</code> is drawn in the change colour, no longer the same grey as <code>?</code>.</li>
+<li><strong>The log is in columns</strong> (plans/0100): the graph, the sha, the branch and tag names in parentheses, the subject, and at the right edge the author and a short age (<code>2d</code>, <code>5m</code>, <code>6mo</code>). The shas and subjects line up however wide the graph; under 60 columns the author leaves, and a subject that does not fit ends in <code>…</code>. The log has one accent: the sha is grey, the graph lanes keep their colours, and only the branch you are on is in the accent colour. A row's text is <code>graph sha  (refs) subject</code>, so <code>yy</code> yanks the sha and subject; the author and age are drawn, not text.</li>
+<li><strong>A file's history is named for the file</strong>: <code>git log · src/lib.rs</code>.</li>
+<li><strong><code>enter</code> on a commit shows the commit</strong> (plans/0100): a rule naming it with its author and age, the subject in bold and the rest of the message, then the files under a rule that counts them and their lines. Each file has git's status letter, <code>R old → new</code> for a rename, and <code>+N -M</code> — or <code>binary</code> — beside its name at any width. The view opens on the first file, and <code>yy</code> on a file yanks its letter and path.</li>
+<li><strong>The status buffer shows each file's <code>+N -M</code></strong> (or <code>binary</code>) at the right edge of its row.</li>
+<li><strong>The diff and hunk views start with the file's rule</strong> and <code>+N -M</code>; a binary file says <code>binary</code>, and any other file with no line changes (a mode change, a pure rename) says <code>no line changes</code>, instead of <code>+0 -0</code>. The hunk preview (<code>Space g p</code>) is named for its file instead of "hunk", and has the file's syntax colours.</li>
+<li><strong>The commit message shows its two common mistakes</strong>: past column 72 the subject turns the warning colour, and so does a second line that is not empty. The subject is bold, and <code>#</code> lines are italic like every other comment.</li>
+<li><strong>Search's file headings and the collection's are drawn by the same code.</strong> In a narrow search list a long directory is now cut from the left before the rule beside the name goes.</li>
 </ul>
 <h3 id="fixed-3">Fixed</h3>
 <ul>
-<li><strong>The <code>:s</code> preview shows the change.</strong> A long line is cut to a window on the changed text, the same window for the removed and the added row; the card no longer covers the statusline.</li>
-<li><strong><code>:</code> in a very short terminal no longer panics</strong>; with no room for the card, the command line takes the top row.</li>
-<li><strong>Undoing a replace restores the files</strong>, not only the buffers.</li>
-<li><strong><code>cc</code> no longer leaves a second cursor</strong> on the line, which later edited two places at once.</li>
+<li><strong>A huge symbol list no longer restarts the language server</strong> (plans/0101). A reply too large to read now fails only the request that asked for it, and the server keeps running; before, <code>Space s</code> on a file with more than about 6,000 symbols dropped the connection and restarted the server. Lists of up to 20,000 symbols are read and kept, and very long files get their symbols fetched ahead of the key like any other.</li>
 </ul>
   </div>
-  <p class="more"><a href="changelog-all.html">All 98 releases →</a></p>
+  <p class="more"><a href="changelog-all.html">All 101 releases →</a></p>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.63.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.66.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>

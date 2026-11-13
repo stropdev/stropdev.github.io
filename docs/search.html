@@ -6,7 +6,7 @@
 <title>Find files, search and replace — strop docs</title>
 <meta name="description" content="The same filters work in every search field: Files (Space f), Search (Space /), Replace (Space R), document symbols (Space s), workspace symbols (Space S) and the jump list (Space j). Learn them once.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.63.0">
+<meta name="strop-version" content="0.66.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/search.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -103,11 +103,22 @@ kind:function parse AND NOT wrap</code></pre>
 <li><strong>Ctrl-O</strong> puts the included hits into a collection (below).</li>
 <li>With only filters typed (<code>language:rust path:src/</code>), Files lists the files they match; Search asks for the text to look for. Dotfiles are searched unless your ignore rules skip them. The <code>.git</code> directory never is. <code>Alt-H</code> and <code>Alt-I</code> in the field turn hidden and ignored files on and off.</li>
 </ul>
-<p>Opening a result hides Search. <code>Space /</code> brings it back with your query and results. It searches again in the directory (and on the host) it was first opened for, even if you are now in a file somewhere else. In a directory listing, <code>:fs search</code> or <strong>Space a → Search here</strong> searches only that directory. The project root stays where it is.</p>
+<p>Opening a result hides Search. <code>Space /</code> brings it back with your query and results. It searches again in the directory (and on the host) it was first opened for, even if you are now in a file somewhere else. In a folder, <strong>Space a → Search in this folder</strong> searches only that folder. The project root stays where it is.</p>
 <p>A search stops with an error when it passes 100,000 files, or meets a line longer than 1 MiB or with more than 4,096 hits in it. Past 100,000 result rows it keeps what it has and says so. It never shows part of the results as if they were all of them.</p>
 <h2 id="collections-edit-every-hit-in-one-buffer">Collections: edit every hit in one buffer</h2>
-<p><strong>Ctrl-O</strong> in search results, references (<code>grr</code>) or diagnostics (<code>Space d</code>) opens a collection: one card per file, each hit with two lines of context, highlighted like the file and with the file's line numbers. The cursor is on the hit that was selected in the list. If the search is still running, Ctrl-O waits for it and then collects; any other key takes that back.</p>
-<p>The first row says what was collected, for example <code>search open_picker — 12 hits in 4 files</code>, and the buffer is named <code>collection: search open_picker</code>. Collecting the same search again brings that collection up to date; a different search gets its own.</p>
+<p><strong>Ctrl-O</strong> in search results, references (<code>grr</code>) or diagnostics (<code>Space d</code>) opens a collection: one block per file, each hit with two lines of context, highlighted like the file and with the file's line numbers. The cursor is on the hit that was selected in the list. If the search is still running, Ctrl-O waits for it and then collects; any other key takes that back.</p>
+<pre><code class="language-text">     search token — 27 hits in 4 files
+
+──── src/a.rs ───────────────────────────────────────────────────────── 10 hits
+   1     let token_1 = parse_token(input, 1);
+   2     let value_2 = compute(2);
+   ⋮ 12 lines not shown
+  15     let token_15 = parse_token(input, 15);
+
+──── src/b.rs ● ──────────────────────────────────────────────────────── 2 hits
+   6     let token_6 = parse_token(input, 6);</code></pre>
+<p>The first row says what was collected, for example <code>search open_picker — 12 hits in 4 files</code>, and the buffer is named <code>collection: search open_picker</code>. Each file starts with a rule that names it and counts its hits; <code>●</code> marks a file with unsaved changes and <code>[RO]</code> one that cannot be written. A band marks the lines left out between two hits of one file. One empty row separates two files. Collecting the same search again brings that collection up to date; a different search gets its own.</p>
+<p>The buffer holds words only: a file's row holds its path, a band's row <code>12 lines not shown</code>. The rules, counts and marks are drawn around them, so <code>yy</code> on a file's row yanks its path and a yank across a collection carries no drawing characters.</p>
 <h3 id="moving">Moving</h3>
 <table>
 <thead><tr><th>Key</th><th>In the collection</th><th>In any other buffer</th></tr></thead>
@@ -124,12 +135,15 @@ kind:function parse AND NOT wrap</code></pre>
 <h3 id="editing">Editing</h3>
 <p>A collection is an ordinary buffer. What you edit in it is edited in the files:</p>
 <ul>
-<li>Edit inside a card with any command — <code>cw</code>, <code>dd</code>, <code>o</code>, <code>.</code>, a macro, visual mode, <code>:s</code>. The edit is made in the file's buffer in the same keystroke; open the file and it is already there. Edits made in the file appear in the collection the same way.</li>
+<li>Edit inside a file's lines with any command — <code>cw</code>, <code>dd</code>, <code>o</code>, <code>.</code>, a macro, visual mode, <code>:s</code>. The edit is made in the file's buffer in the same keystroke; open the file and it is already there. Edits made in the file appear in the collection the same way.</li>
 <li><code>:w</code> writes every changed file the collection shows. <code>:wq</code> does that and closes it.</li>
 <li><code>u</code> and <code>Ctrl-R</code> undo and redo what you changed through the collection, in the files too. Editing one of its files somewhere else starts the collection's history over; that file's own <code>u</code> still works.</li>
-<li>Card borders, the <code>⋮ N lines not shown</code> rows and the title are not text. An edit that would touch one, or join the last line of a card with the border under it, is refused and changes nothing.</li>
-<li><code>:%s/old/new/g</code> in a collection substitutes inside the cards only, with the usual live preview.</li>
+<li>Each file starts at a thick line (<code>━━━━ src/b.rs ━━━━ 2 hits</code>), so you always see where one file's lines end and the next file's begin.</li>
+<li>A file's row, the <code>N lines not shown</code> rows, the empty rows and the title are not the files' text. An edit that would touch one, or join the last line of a file with the row under it, is refused and changes nothing.</li>
+<li><code>:%s/old/new/g</code> in a collection substitutes inside the files' lines only, with the usual live preview.</li>
 </ul>
+<h3 id="closing">Closing</h3>
+<p><code>:q</code> closes the collection and returns the cursor to where you pressed <code>Ctrl-O</code>. The files the collection had to open for you close with it, unless you looked at one (<code>Enter</code>, <code>]q</code> from a file, <code>:e</code>, the finder), or changed one: a changed file stays open so that its <code>u</code> still works, and one with unsaved changes is never closed — the message says how many. A file that was open before you collected is never closed by it.</p>
 <h3 id="one-command-at-every-hit">One command at every hit</h3>
 <p>Vim's quickfix commands work on the collection you are in, or the one you were in last:</p>
 <table>
@@ -168,14 +182,14 @@ With  fetch_$1()</code></pre>
 <p>Search works the same in a directory on an SSH host: the same fields, the same include and exclude keys, the same previews, the same limits. It runs <code>rg</code> on the host. If the host has no <code>rg</code>, Search says so and does not run. A search on a host that takes longer than two minutes is stopped. Collections work there. Replace does not, yet: <code>Space R</code>, <code>Ctrl-T</code> and the With field say so.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-next" href="filesystem.html">Create, rename, move and delete files →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> from the strop repository at <code>v0.63.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> from the strop repository at <code>v0.66.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.63.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.66.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>
