@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 864.0 549.0" width="864.0" height="549.0" role="img" aria-labelledby="t d">
-<title id="t">strop 0.66.0: git</title>
+<title id="t">strop 0.67.0: git</title>
 <desc id="d">strop's git status buffer: sections for staged, unstaged and untracked files, with the diff of one file shown under its row.</desc>
 <rect width="864.0" height="549.0" rx="6" fill="#15171c"/>
 <g font-family="ui-monospace, &quot;DejaVu Sans Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace" font-size="14.0" fill="#e6e1d6" xml:space="preserve">

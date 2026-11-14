@@ -6,7 +6,7 @@
 <title>What changed — strop</title>
 <meta name="description" content="What changed in strop, release by release.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.66.0">
+<meta name="strop-version" content="0.67.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="CHANGELOG.md">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
@@ -32,19 +32,32 @@
   <h1>What changed</h1>
   <p class="lede">The last 3 releases, newest first. Tarballs and checksums are on <a href="https://github.com/stropdev/strop/releases">GitHub releases</a>.</p>
   <div class="prose">
-<h2 id="release-0-66-0-2026-11-13">0.66.0 — 2026-11-13</h2>
+<h2 id="release-0-67-0-2026-11-13">0.67.0 — 2026-11-13</h2>
 <h3 id="changed">Changed</h3>
+<ul>
+<li><strong>Splits nest, as in Vim</strong> (plans/0104). <code>:sp</code> then <code>:vs</code> divides the pane you are in and leaves the others where they were; before, the last split turned every pane the same way. The new pane opens next to the one you split, below or to the right, and panes are numbered in reading order.</li>
+<li><strong>Closing a pane gives its space to its neighbour</strong>, and the focus goes there, as in Vim.</li>
+<li><strong><code>Ctrl-W h/j/k/l</code> and <code>Space w h/j/k/l</code> go to the pane on that side</strong>, at the cursor's line or column, and stop at the edge instead of wrapping around.</li>
+<li><strong>Dividing lines join the title lines</strong> where they meet: <code>┬ ├ ┤ ┼ ┴</code>.</li>
+<li><strong>How a split's space is shared is proved.</strong> The arithmetic lives in the kernel and Lean proofs show the panes never overlap or run into the status line, fill their space exactly when there is room, each get at least a line, and are shared fairly by the number of panes across.</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li><strong>A broken link in the git guide</strong> to the lock files section.</li>
+</ul>
+<h2 id="release-0-66-0-2026-11-13">0.66.0 — 2026-11-13</h2>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li><strong>Each file in a collection starts at a thick line</strong> (plans/0103). Search results, collected hits and the quickfix list are one buffer of many files; where one file's lines end and the next file's begin is now drawn with a heavy rule (<code>━━━━ src/b.rs ━━━━ 2 hits</code>), bright in every file, not only the one the cursor is in. Status sections, the diff's file headings and the picker keep the thin rule.</li>
 <li><strong>Split panes lose their corners.</strong> A pane title is a thin rule (<code>─ 1 src/main.rs ● ───</code>), brighter on the focused pane. Side by side, one vertical line runs the full height and meets the titles in a <code>┬</code>.</li>
 <li><strong>Stacked panes get a row back.</strong> The closing line under the upper pane is gone; the lower pane's title line is the boundary.</li>
 </ul>
-<h3 id="fixed">Fixed</h3>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li><strong>Quitting right after starting no longer crashes.</strong> If <code>:q</code> came before strop finished reading an earlier session's unsaved drafts, the editor panicked on its way out. The drafts are kept for next time.</li>
 </ul>
 <h2 id="release-0-65-0-2026-11-13">0.65.0 — 2026-11-13</h2>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li><strong>A folder is a buffer of names</strong> (plans/0102). <code>strop .</code>, <code>:e DIR</code> and <code>Space e</code> open a folder whose lines are its entries, one name per line, folders first and ending in <code>/</code>. Line 5 is the fifth entry: <code>5G</code>, counts and <code>dd</code> mean what they say. There is no heading row and no <code>../</code> row any more.</li>
 <li><strong>Change files by editing the names.</strong> <code>cw</code> renames, <code>o name</code> creates (<code>name/</code> makes a folder, <code>a/b.txt</code> creates <code>a/</code> too), <code>dd</code> deletes, <code>yyp</code> then a new name copies. Each changed row says what writing will do: <code>was main.rs</code>, <code>new</code>, <code>copy of lib.rs</code>. <code>:w</code> lists the changes, relative to the folder (<code>rename  main.rs → main.rx</code>); <code>y</code> makes them and <code>q</code> goes back with your edits kept. <code>u</code> undoes an edit, <code>:e!</code> drops them all.</li>
@@ -64,42 +77,21 @@
 <li><strong><code>:fs</code> and every one of its verbs, and <code>:browse</code>.</strong> Open a folder with <code>:e DIR</code> (or <code>:e ssh://host/dir/</code>) and edit its names instead. Marks, receipts, <code>:fs operations</code>, <code>:fs verify</code> and <code>:fs undo</code> are gone; an unconfirmed change is checked on disk by itself. <code>Backspace</code> no longer goes up (<code>-</code> does), and <code>q</code> in a folder records a macro as in any buffer.</li>
 <li><strong>The copy and delete choices.</strong> A copy copies the file on disk and asks you to write it first if it has unsaved changes; a delete goes to the Trash, and on an SSH host is permanent and says <code>delete</code>.</li>
 </ul>
-<h3 id="fixed-2">Fixed</h3>
+<h3 id="fixed-3">Fixed</h3>
 <ul>
 <li><strong>Lock files no longer pile up beside your files.</strong> Every file operation left a <code>.strop-lock-…</code> file behind, and the folder view listed them. They are now removed when the operation finishes, and never listed.</li>
 <li><strong><code>Ctrl-W v</code>, <code>Ctrl-W s</code>, <code>Ctrl-W o</code> and <code>Ctrl-W =</code> work in read-only views</strong>; they answered "readonly buffer".</li>
 <li><strong>Pressing <code>Enter</code> on a just-renamed row</strong> opens the file under its new name, even while the folder is still being listed again.</li>
 <li><strong><code>o</code> in a folder opens a line at once</strong>; it no longer waits on the code indenter.</li>
 </ul>
-<h2 id="release-0-64-0-2026-11-13">0.64.0 — 2026-11-13</h2>
-<h3 id="changed-3">Changed</h3>
-<ul>
-<li><strong>The log and a file's history are fast on huge repositories</strong> (plans/0101). The first <code>Space g l</code> or <code>Space g h</code> that takes more than a tenth of a second has strop write a commit-graph for that repository in the background; after that the log opens in about 10 ms on 150,000 commits instead of half a second, and a file's history shows its first rows at once and the rest as git finds them. The file lives in strop's state directory (<code>~/.local/state/strop/graphs/</code>); your repository is not touched.</li>
-<li><strong>Closing a collection closes the files it opened that you never looked at</strong> (plans/0101). Files you opened from it, edited through it, or had open before stay; a file with unsaved changes is never closed, and the message says how many stayed for that reason. <code>:q</code> on a collection now returns the cursor to where you pressed <code>Ctrl-O</code>.</li>
-<li><strong>One look for the collection and the git buffers</strong> (plans/0100). A file, a status section or a commit now starts with a rule across the pane that names it, with its count or <code>+N -M</code> at the right edge. One empty row separates two of them. A jump inside one — the lines a collection leaves out, a diff's <code>@@</code> row — is a band, with <code>⋮</code> where the line numbers jump. The cards with corners and no sides are gone.</li>
-<li><strong>The collection's rows hold words only.</strong> A file's row holds its path and a gap's row <code>12 lines not shown</code>; the rule, the hit count and the marks are drawn. <code>yy</code> on a file's row yanks its path, and a yank across a collection carries no box-drawing characters. A modified file is marked <code>●</code> and a read-only one <code>[RO]</code>, as in the status line, instead of <code>· modified</code> and <code>· read-only</code>. The cursor line is painted in a collection as in a file.</li>
-<li><strong>Status, log, file history and a commit's files have no line numbers</strong>: their rows are entries, not lines. The cursor row is marked with <code>▌</code> and a band, as in a directory listing. Section rows hold <code>Staged</code> and the count is drawn beside the rule.</li>
-<li><strong>An expanded diff in the status buffer reads like the diff view</strong>: the changed text on a quiet tint, the changed part of a line emphasised, and a <code>│</code> down the rows that belong to the file. <code>M</code> is drawn in the change colour, no longer the same grey as <code>?</code>.</li>
-<li><strong>The log is in columns</strong> (plans/0100): the graph, the sha, the branch and tag names in parentheses, the subject, and at the right edge the author and a short age (<code>2d</code>, <code>5m</code>, <code>6mo</code>). The shas and subjects line up however wide the graph; under 60 columns the author leaves, and a subject that does not fit ends in <code>…</code>. The log has one accent: the sha is grey, the graph lanes keep their colours, and only the branch you are on is in the accent colour. A row's text is <code>graph sha  (refs) subject</code>, so <code>yy</code> yanks the sha and subject; the author and age are drawn, not text.</li>
-<li><strong>A file's history is named for the file</strong>: <code>git log · src/lib.rs</code>.</li>
-<li><strong><code>enter</code> on a commit shows the commit</strong> (plans/0100): a rule naming it with its author and age, the subject in bold and the rest of the message, then the files under a rule that counts them and their lines. Each file has git's status letter, <code>R old → new</code> for a rename, and <code>+N -M</code> — or <code>binary</code> — beside its name at any width. The view opens on the first file, and <code>yy</code> on a file yanks its letter and path.</li>
-<li><strong>The status buffer shows each file's <code>+N -M</code></strong> (or <code>binary</code>) at the right edge of its row.</li>
-<li><strong>The diff and hunk views start with the file's rule</strong> and <code>+N -M</code>; a binary file says <code>binary</code>, and any other file with no line changes (a mode change, a pure rename) says <code>no line changes</code>, instead of <code>+0 -0</code>. The hunk preview (<code>Space g p</code>) is named for its file instead of "hunk", and has the file's syntax colours.</li>
-<li><strong>The commit message shows its two common mistakes</strong>: past column 72 the subject turns the warning colour, and so does a second line that is not empty. The subject is bold, and <code>#</code> lines are italic like every other comment.</li>
-<li><strong>Search's file headings and the collection's are drawn by the same code.</strong> In a narrow search list a long directory is now cut from the left before the rule beside the name goes.</li>
-</ul>
-<h3 id="fixed-3">Fixed</h3>
-<ul>
-<li><strong>A huge symbol list no longer restarts the language server</strong> (plans/0101). A reply too large to read now fails only the request that asked for it, and the server keeps running; before, <code>Space s</code> on a file with more than about 6,000 symbols dropped the connection and restarted the server. Lists of up to 20,000 symbols are read and kept, and very long files get their symbols fetched ahead of the key like any other.</li>
-</ul>
   </div>
-  <p class="more"><a href="changelog-all.html">All 101 releases →</a></p>
+  <p class="more"><a href="changelog-all.html">All 102 releases →</a></p>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.66.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.67.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>

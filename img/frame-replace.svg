@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 864.0 549.0" width="864.0" height="549.0" role="img" aria-labelledby="t d">
-<title id="t">strop 0.66.0: search and replace</title>
+<title id="t">strop 0.67.0: search and replace</title>
 <desc id="d">strop's search with a Find field reading total_cents and a With field reading sum_cents; below, each hit grouped by file as a removed line and an added line, and a preview of the first file on the right.</desc>
 <rect width="864.0" height="549.0" rx="6" fill="#15171c"/>
 <g font-family="ui-monospace, &quot;DejaVu Sans Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace" font-size="14.0" fill="#e6e1d6" xml:space="preserve">
