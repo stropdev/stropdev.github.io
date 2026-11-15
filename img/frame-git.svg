@@ -1,124 +1,124 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 864.0 549.0" width="864.0" height="549.0" role="img" aria-labelledby="t d">
-<title id="t">strop 0.68.0: git</title>
+<title id="t">strop 0.69.0: git</title>
 <desc id="d">strop's git status buffer: sections for staged, unstaged and untracked files, with the diff of one file shown under its row.</desc>
-<rect width="864.0" height="549.0" rx="6" fill="#000000"/>
-<g font-family="ui-monospace, &quot;DejaVu Sans Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace" font-size="14.0" fill="#000000" xml:space="preserve">
-<rect x="12.00" y="12.00" width="831.60" height="17.5" fill="#1d1c1a"/>
+<rect width="864.0" height="549.0" rx="6" fill="#1d1c1a"/>
+<g font-family="ui-monospace, &quot;DejaVu Sans Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace" font-size="14.0" fill="#ede9e0" xml:space="preserve">
+<rect x="12.00" y="12.00" width="831.60" height="17.5" fill="#141312"/>
 <text x="28.80" y="25.30" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#928d83">Head:</text>
 <text x="79.20" y="25.30" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#dc7a59" font-weight="bold">main</text>
-<rect x="12.00" y="29.50" width="831.60" height="17.5" fill="#1d1c1a"/>
-<rect x="12.00" y="47.00" width="831.60" height="17.5" fill="#1d1c1a"/>
+<rect x="12.00" y="29.50" width="831.60" height="17.5" fill="#141312"/>
+<rect x="12.00" y="47.00" width="831.60" height="17.5" fill="#141312"/>
 <text x="12.00" y="60.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">─</text>
-<text x="28.80" y="60.30" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#b8b3a7" font-weight="bold">Staged</text>
+<text x="28.80" y="60.30" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#c4bfb3" font-weight="bold">Staged</text>
 <text x="87.60" y="60.30" textLength="739.20" lengthAdjust="spacingAndGlyphs" fill="#5a564f">────────────────────────────────────────────────────────────────────────────────────────</text>
-<text x="835.20" y="60.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#b8b3a7">1</text>
-<rect x="12.00" y="64.50" width="831.60" height="17.5" fill="#1d1c1a"/>
+<text x="835.20" y="60.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#c4bfb3">1</text>
+<rect x="12.00" y="64.50" width="831.60" height="17.5" fill="#141312"/>
 <text x="28.80" y="77.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#e8b45c">M</text>
-<text x="45.60" y="77.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#b8b3a7">src/</text>
-<text x="79.20" y="77.80" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#ede9e0">report.rs</text>
+<text x="45.60" y="77.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#c4bfb3">src/</text>
+<text x="79.20" y="77.80" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#f2eee6">report.rs</text>
 <text x="801.60" y="77.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#7cc68a">+3</text>
 <text x="826.80" y="77.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#ff7a85">-0</text>
-<rect x="12.00" y="82.00" width="831.60" height="17.5" fill="#1d1c1a"/>
-<rect x="12.00" y="99.50" width="831.60" height="17.5" fill="#1d1c1a"/>
+<rect x="12.00" y="82.00" width="831.60" height="17.5" fill="#141312"/>
+<rect x="12.00" y="99.50" width="831.60" height="17.5" fill="#141312"/>
 <text x="12.00" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#928d83">─</text>
-<text x="28.80" y="112.80" textLength="67.20" lengthAdjust="spacingAndGlyphs" fill="#ede9e0" font-weight="bold">Unstaged</text>
+<text x="28.80" y="112.80" textLength="67.20" lengthAdjust="spacingAndGlyphs" fill="#f2eee6" font-weight="bold">Unstaged</text>
 <text x="104.40" y="112.80" textLength="722.40" lengthAdjust="spacingAndGlyphs" fill="#928d83">──────────────────────────────────────────────────────────────────────────────────────</text>
-<text x="835.20" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#b8b3a7">2</text>
-<rect x="12.00" y="117.00" width="831.60" height="17.5" fill="#1d1c1a"/>
+<text x="835.20" y="112.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#c4bfb3">2</text>
+<rect x="12.00" y="117.00" width="831.60" height="17.5" fill="#141312"/>
 <text x="28.80" y="130.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#e8b45c">M</text>
-<text x="45.60" y="130.30" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#ede9e0">README.md</text>
+<text x="45.60" y="130.30" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#f2eee6">README.md</text>
 <text x="801.60" y="130.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#7cc68a">+2</text>
 <text x="826.80" y="130.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#ff7a85">-0</text>
-<rect x="12.00" y="134.50" width="831.60" height="17.5" fill="#242320"/>
+<rect x="12.00" y="134.50" width="831.60" height="17.5" fill="#1a1917"/>
 <text x="12.00" y="147.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#dc7a59">▌</text>
 <text x="28.80" y="147.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#e8b45c">M</text>
-<text x="45.60" y="147.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#b8b3a7">src/</text>
-<text x="79.20" y="147.80" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#ede9e0">ledger.rs</text>
+<text x="45.60" y="147.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#c4bfb3">src/</text>
+<text x="79.20" y="147.80" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#f2eee6">ledger.rs</text>
 <text x="801.60" y="147.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#7cc68a">+5</text>
 <text x="826.80" y="147.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#ff7a85">-1</text>
-<rect x="12.00" y="152.00" width="831.60" height="17.5" fill="#252421"/>
+<rect x="12.00" y="152.00" width="831.60" height="17.5" fill="#1c1b19"/>
 <text x="12.00" y="165.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">│</text>
 <text x="28.80" y="165.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#928d83">@@</text>
 <text x="54.00" y="165.30" textLength="42.00" lengthAdjust="spacingAndGlyphs" fill="#ff7a85">-22,7</text>
 <text x="104.40" y="165.30" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#7cc68a">+22,11</text>
 <text x="163.20" y="165.30" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#928d83">@@</text>
-<rect x="12.00" y="169.50" width="831.60" height="17.5" fill="#1d1c1a"/>
+<rect x="12.00" y="169.50" width="831.60" height="17.5" fill="#141312"/>
 <text x="12.00" y="182.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">│</text>
-<text x="104.40" y="182.80" textLength="109.20" lengthAdjust="spacingAndGlyphs" fill="#ede9e0">&amp;self.entries</text>
-<rect x="12.00" y="187.00" width="831.60" height="17.5" fill="#1d1c1a"/>
+<text x="104.40" y="182.80" textLength="109.20" lengthAdjust="spacingAndGlyphs" fill="#f2eee6">&amp;self.entries</text>
+<rect x="12.00" y="187.00" width="831.60" height="17.5" fill="#141312"/>
 <text x="12.00" y="200.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">│</text>
-<text x="70.80" y="200.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#ede9e0">}</text>
-<rect x="12.00" y="204.50" width="831.60" height="17.5" fill="#1d1c1a"/>
+<text x="70.80" y="200.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#f2eee6">}</text>
+<rect x="12.00" y="204.50" width="831.60" height="17.5" fill="#141312"/>
 <text x="12.00" y="217.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">│</text>
-<rect x="12.00" y="222.00" width="16.80" height="17.5" fill="#1d1c1a"/>
+<rect x="12.00" y="222.00" width="16.80" height="17.5" fill="#141312"/>
 <rect x="28.80" y="222.00" width="42.00" height="17.5" fill="#3a2125"/>
 <rect x="70.80" y="222.00" width="226.80" height="17.5" fill="#6a2c36"/>
 <rect x="297.60" y="222.00" width="546.00" height="17.5" fill="#3a2125"/>
 <text x="12.00" y="235.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">│</text>
 <text x="28.80" y="235.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#ff7a85">-</text>
-<text x="70.80" y="235.30" textLength="226.80" lengthAdjust="spacingAndGlyphs" fill="#ede9e0" font-weight="bold">/// The sum of every entry.</text>
-<rect x="12.00" y="239.50" width="16.80" height="17.5" fill="#1d1c1a"/>
+<text x="70.80" y="235.30" textLength="226.80" lengthAdjust="spacingAndGlyphs" fill="#f2eee6" font-weight="bold">/// The sum of every entry.</text>
+<rect x="12.00" y="239.50" width="16.80" height="17.5" fill="#141312"/>
 <rect x="28.80" y="239.50" width="42.00" height="17.5" fill="#1f3022"/>
 <rect x="70.80" y="239.50" width="268.80" height="17.5" fill="#2a5232"/>
 <rect x="339.60" y="239.50" width="504.00" height="17.5" fill="#1f3022"/>
 <text x="12.00" y="252.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">│</text>
 <text x="28.80" y="252.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#7cc68a">+</text>
-<text x="70.80" y="252.80" textLength="268.80" lengthAdjust="spacingAndGlyphs" fill="#ede9e0" font-weight="bold">pub fn is_empty(&amp;self) -&gt; bool {</text>
-<rect x="12.00" y="257.00" width="16.80" height="17.5" fill="#1d1c1a"/>
+<text x="70.80" y="252.80" textLength="268.80" lengthAdjust="spacingAndGlyphs" fill="#f2eee6" font-weight="bold">pub fn is_empty(&amp;self) -&gt; bool {</text>
+<rect x="12.00" y="257.00" width="16.80" height="17.5" fill="#141312"/>
 <rect x="28.80" y="257.00" width="814.80" height="17.5" fill="#1f3022"/>
 <text x="12.00" y="270.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">│</text>
 <text x="28.80" y="270.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#7cc68a">+</text>
-<text x="104.40" y="270.30" textLength="193.20" lengthAdjust="spacingAndGlyphs" fill="#ede9e0">self.entries.is_empty()</text>
-<rect x="12.00" y="274.50" width="16.80" height="17.5" fill="#1d1c1a"/>
+<text x="104.40" y="270.30" textLength="193.20" lengthAdjust="spacingAndGlyphs" fill="#f2eee6">self.entries.is_empty()</text>
+<rect x="12.00" y="274.50" width="16.80" height="17.5" fill="#141312"/>
 <rect x="28.80" y="274.50" width="814.80" height="17.5" fill="#1f3022"/>
 <text x="12.00" y="287.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">│</text>
 <text x="28.80" y="287.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#7cc68a">+</text>
-<text x="70.80" y="287.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#ede9e0">}</text>
-<rect x="12.00" y="292.00" width="16.80" height="17.5" fill="#1d1c1a"/>
+<text x="70.80" y="287.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#f2eee6">}</text>
+<rect x="12.00" y="292.00" width="16.80" height="17.5" fill="#141312"/>
 <rect x="28.80" y="292.00" width="814.80" height="17.5" fill="#1f3022"/>
 <text x="12.00" y="305.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">│</text>
 <text x="28.80" y="305.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#7cc68a">+</text>
-<rect x="12.00" y="309.50" width="16.80" height="17.5" fill="#1d1c1a"/>
+<rect x="12.00" y="309.50" width="16.80" height="17.5" fill="#141312"/>
 <rect x="28.80" y="309.50" width="814.80" height="17.5" fill="#1f3022"/>
 <text x="12.00" y="322.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">│</text>
 <text x="28.80" y="322.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#7cc68a">+</text>
-<text x="70.80" y="322.80" textLength="310.80" lengthAdjust="spacingAndGlyphs" fill="#ede9e0">/// The sum of every entry, in cents.</text>
-<rect x="12.00" y="327.00" width="831.60" height="17.5" fill="#1d1c1a"/>
+<text x="70.80" y="322.80" textLength="310.80" lengthAdjust="spacingAndGlyphs" fill="#f2eee6">/// The sum of every entry, in cents.</text>
+<rect x="12.00" y="327.00" width="831.60" height="17.5" fill="#141312"/>
 <text x="12.00" y="340.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">│</text>
-<text x="70.80" y="340.30" textLength="285.60" lengthAdjust="spacingAndGlyphs" fill="#ede9e0">pub fn total_cents(&amp;self) -&gt; i64 {</text>
-<rect x="12.00" y="344.50" width="831.60" height="17.5" fill="#1d1c1a"/>
+<text x="70.80" y="340.30" textLength="285.60" lengthAdjust="spacingAndGlyphs" fill="#f2eee6">pub fn total_cents(&amp;self) -&gt; i64 {</text>
+<rect x="12.00" y="344.50" width="831.60" height="17.5" fill="#141312"/>
 <text x="12.00" y="357.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">│</text>
-<text x="104.40" y="357.80" textLength="420.00" lengthAdjust="spacingAndGlyphs" fill="#ede9e0">self.entries.iter().map(|entry| entry.cents).sum()</text>
-<rect x="12.00" y="362.00" width="831.60" height="17.5" fill="#1d1c1a"/>
+<text x="104.40" y="357.80" textLength="420.00" lengthAdjust="spacingAndGlyphs" fill="#f2eee6">self.entries.iter().map(|entry| entry.cents).sum()</text>
+<rect x="12.00" y="362.00" width="831.60" height="17.5" fill="#141312"/>
 <text x="12.00" y="375.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">│</text>
-<text x="70.80" y="375.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#ede9e0">}</text>
-<rect x="12.00" y="379.50" width="831.60" height="17.5" fill="#1d1c1a"/>
-<rect x="12.00" y="397.00" width="831.60" height="17.5" fill="#1d1c1a"/>
+<text x="70.80" y="375.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#f2eee6">}</text>
+<rect x="12.00" y="379.50" width="831.60" height="17.5" fill="#141312"/>
+<rect x="12.00" y="397.00" width="831.60" height="17.5" fill="#141312"/>
 <text x="12.00" y="410.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">─</text>
-<text x="28.80" y="410.30" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#b8b3a7" font-weight="bold">Untracked</text>
+<text x="28.80" y="410.30" textLength="75.60" lengthAdjust="spacingAndGlyphs" fill="#c4bfb3" font-weight="bold">Untracked</text>
 <text x="112.80" y="410.30" textLength="714.00" lengthAdjust="spacingAndGlyphs" fill="#5a564f">─────────────────────────────────────────────────────────────────────────────────────</text>
-<text x="835.20" y="410.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#b8b3a7">1</text>
-<rect x="12.00" y="414.50" width="831.60" height="17.5" fill="#1d1c1a"/>
+<text x="835.20" y="410.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#c4bfb3">1</text>
+<rect x="12.00" y="414.50" width="831.60" height="17.5" fill="#141312"/>
 <text x="28.80" y="427.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#928d83">?</text>
-<text x="45.60" y="427.80" textLength="67.20" lengthAdjust="spacingAndGlyphs" fill="#ede9e0">notes.md</text>
+<text x="45.60" y="427.80" textLength="67.20" lengthAdjust="spacingAndGlyphs" fill="#f2eee6">notes.md</text>
 <text x="801.60" y="427.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#7cc68a">+4</text>
 <text x="826.80" y="427.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#ff7a85">-0</text>
-<rect x="12.00" y="432.00" width="831.60" height="17.5" fill="#1d1c1a"/>
+<rect x="12.00" y="432.00" width="831.60" height="17.5" fill="#141312"/>
 <text x="12.00" y="445.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">~</text>
-<rect x="12.00" y="449.50" width="831.60" height="17.5" fill="#1d1c1a"/>
+<rect x="12.00" y="449.50" width="831.60" height="17.5" fill="#141312"/>
 <text x="12.00" y="462.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">~</text>
-<rect x="12.00" y="467.00" width="831.60" height="17.5" fill="#1d1c1a"/>
+<rect x="12.00" y="467.00" width="831.60" height="17.5" fill="#141312"/>
 <text x="12.00" y="480.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">~</text>
-<rect x="12.00" y="484.50" width="831.60" height="17.5" fill="#1d1c1a"/>
+<rect x="12.00" y="484.50" width="831.60" height="17.5" fill="#141312"/>
 <text x="12.00" y="497.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">~</text>
-<rect x="12.00" y="502.00" width="831.60" height="17.5" fill="#1d1c1a"/>
+<rect x="12.00" y="502.00" width="831.60" height="17.5" fill="#141312"/>
 <text x="12.00" y="515.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#5a564f">~</text>
 <rect x="12.00" y="519.50" width="84.00" height="17.5" fill="#dc7a59"/>
-<rect x="96.00" y="519.50" width="756.00" height="17.5" fill="#252421"/>
-<text x="28.80" y="532.80" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#1d1c1a" font-weight="bold">NORMAL</text>
+<rect x="96.00" y="519.50" width="756.00" height="17.5" fill="#1c1b19"/>
+<text x="28.80" y="532.80" textLength="50.40" lengthAdjust="spacingAndGlyphs" fill="#141312" font-weight="bold">NORMAL</text>
 <text x="112.80" y="532.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#928d83">main</text>
-<text x="163.20" y="532.80" textLength="84.00" lengthAdjust="spacingAndGlyphs" fill="#ede9e0">git status</text>
+<text x="163.20" y="532.80" textLength="84.00" lengthAdjust="spacingAndGlyphs" fill="#f2eee6">git status</text>
 <text x="255.60" y="532.80" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#e8b45c">[RO]</text>
 <text x="759.60" y="532.80" textLength="25.20" lengthAdjust="spacingAndGlyphs" fill="#928d83">33%</text>
-<text x="810.00" y="532.80" textLength="25.20" lengthAdjust="spacingAndGlyphs" fill="#b8b3a7">8:1</text>
+<text x="810.00" y="532.80" textLength="25.20" lengthAdjust="spacingAndGlyphs" fill="#c4bfb3">8:1</text>
 </g></svg>

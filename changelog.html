@@ -6,7 +6,7 @@
 <title>What changed — strop</title>
 <meta name="description" content="What changed in strop, release by release.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.68.0">
+<meta name="strop-version" content="0.69.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="CHANGELOG.md">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
@@ -32,13 +32,19 @@
   <h1>What changed</h1>
   <p class="lede">The last 3 releases, newest first. Tarballs and checksums are on <a href="https://github.com/stropdev/strop/releases">GitHub releases</a>.</p>
   <div class="prose">
-<h2 id="release-0-68-0-2026-11-14">0.68.0 — 2026-11-14</h2>
+<h2 id="release-0-69-0-2026-11-15">0.69.0 — 2026-11-15</h2>
 <h3 id="changed">Changed</h3>
+<ul>
+<li><strong>Two cells between line numbers and text</strong> (plans/0105), in files, collections and diffs, so the code no longer reads as part of the number. The picker preview drops its <code>│</code> and uses the same gutter as the buffer, so a preview row looks like the row you land on.</li>
+<li><strong>Kiln is darker and higher in contrast</strong>: deeper charcoal backgrounds and brighter text, with the same accent and syntax colours.</li>
+</ul>
+<h2 id="release-0-68-0-2026-11-14">0.68.0 — 2026-11-14</h2>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li><strong>A new default theme, <code>kiln</code></strong>: warm charcoal with a terracotta accent and cream text, after the Claude Code terminal look. It meets the same contrast minimums as every other palette. <code>hone</code> stays available with <code>:theme hone</code> or <code>theme = &quot;hone&quot;</code>.</li>
 </ul>
 <h2 id="release-0-67-0-2026-11-13">0.67.0 — 2026-11-13</h2>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li><strong>Splits nest, as in Vim</strong> (plans/0104). <code>:sp</code> then <code>:vs</code> divides the pane you are in and leaves the others where they were; before, the last split turned every pane the same way. The new pane opens next to the one you split, below or to the right, and panes are numbered in reading order.</li>
 <li><strong>Closing a pane gives its space to its neighbour</strong>, and the focus goes there, as in Vim.</li>
@@ -50,25 +56,14 @@
 <ul>
 <li><strong>A broken link in the git guide</strong> to the lock files section.</li>
 </ul>
-<h2 id="release-0-66-0-2026-11-13">0.66.0 — 2026-11-13</h2>
-<h3 id="changed-3">Changed</h3>
-<ul>
-<li><strong>Each file in a collection starts at a thick line</strong> (plans/0103). Search results, collected hits and the quickfix list are one buffer of many files; where one file's lines end and the next file's begin is now drawn with a heavy rule (<code>━━━━ src/b.rs ━━━━ 2 hits</code>), bright in every file, not only the one the cursor is in. Status sections, the diff's file headings and the picker keep the thin rule.</li>
-<li><strong>Split panes lose their corners.</strong> A pane title is a thin rule (<code>─ 1 src/main.rs ● ───</code>), brighter on the focused pane. Side by side, one vertical line runs the full height and meets the titles in a <code>┬</code>.</li>
-<li><strong>Stacked panes get a row back.</strong> The closing line under the upper pane is gone; the lower pane's title line is the boundary.</li>
-</ul>
-<h3 id="fixed-2">Fixed</h3>
-<ul>
-<li><strong>Quitting right after starting no longer crashes.</strong> If <code>:q</code> came before strop finished reading an earlier session's unsaved drafts, the editor panicked on its way out. The drafts are kept for next time.</li>
-</ul>
   </div>
-  <p class="more"><a href="changelog-all.html">All 103 releases →</a></p>
+  <p class="more"><a href="changelog-all.html">All 104 releases →</a></p>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.68.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.69.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>

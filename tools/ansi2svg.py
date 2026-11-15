@@ -34,8 +34,8 @@ OTHER_ESCAPE = re.compile(r"\x1b(?:\[[0-?]*[ -/]*[@-~]|[@-Z\\-_])")
 
 # The 16 ANSI colours a capture may use by index; Kiln's ansi16 (0088 §3).
 ANSI16 = [
-    "#181715", "#ff7a85", "#7cc68a", "#e8b45c", "#a8b2f5", "#b49cf2", "#5fb3a8", "#d6d0c4",
-    "#5a564f", "#ff959e", "#9ad8a5", "#f0c67e", "#c2c9fa", "#c9b6f7", "#86cfc5", "#ede9e0",
+    "#0f0e0d", "#ff7a85", "#7cc68a", "#e8b45c", "#a8b2f5", "#b49cf2", "#5fb3a8", "#d6d0c4",
+    "#5a564f", "#ff959e", "#9ad8a5", "#f0c67e", "#c2c9fa", "#c9b6f7", "#86cfc5", "#f2eee6",
 ]
 
 

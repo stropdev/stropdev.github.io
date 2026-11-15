@@ -12,9 +12,9 @@
 /* KILN — dark default: warm charcoal base, terracotta accent. */
 :root, :root[data-palette="kiln"] {
   color-scheme: dark;
-  --bg-base: #1d1c1a; --bg-surface: #252421; --bg-raised: #2e2c29; --bg-selection: #3f4266;
-  --fg-text: #ede9e0; --fg-secondary: #b8b3a7; --fg-muted: #928d83; --fg-faint: #5a564f;
-  --accent: #dc7a59; --on-accent: #1d1c1a;
+  --bg-base: #141312; --bg-surface: #1c1b19; --bg-raised: #262421; --bg-selection: #3f4266;
+  --fg-text: #f2eee6; --fg-secondary: #c4bfb3; --fg-muted: #928d83; --fg-faint: #5a564f;
+  --accent: #dc7a59; --on-accent: #141312;
 }
 /* HONE — dark: graphite base, amber accent. */
 :root[data-palette="hone"] {
