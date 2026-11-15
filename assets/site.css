@@ -1,5 +1,5 @@
 /* strop.dev — the editor's own token set.
-   Six palettes, the same hex values the binary compiles in. Hone is the
+   Seven palettes, the same hex values the binary compiles in. Kiln is the
    default; Vellum answers a light-mode preference; the switcher stores an
    explicit choice in `data-palette` on <html>. Nothing here is a brand
    colour the editor does not have. */
@@ -9,8 +9,15 @@
   --mono: ui-monospace, "DejaVu Sans Mono", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 }
 
-/* HONE — dark default: graphite base, amber accent. */
-:root, :root[data-palette="hone"] {
+/* KILN — dark default: warm charcoal base, terracotta accent. */
+:root, :root[data-palette="kiln"] {
+  color-scheme: dark;
+  --bg-base: #1d1c1a; --bg-surface: #252421; --bg-raised: #2e2c29; --bg-selection: #3f4266;
+  --fg-text: #ede9e0; --fg-secondary: #b8b3a7; --fg-muted: #928d83; --fg-faint: #5a564f;
+  --accent: #dc7a59; --on-accent: #1d1c1a;
+}
+/* HONE — dark: graphite base, amber accent. */
+:root[data-palette="hone"] {
   color-scheme: dark;
   --bg-base: #15171c; --bg-surface: #1c1f25; --bg-raised: #23272f; --bg-selection: #30405a;
   --fg-text: #e6e1d6; --fg-secondary: #a8adb8; --fg-muted: #858c9a; --fg-faint: #4a5160;

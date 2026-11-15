@@ -17,7 +17,7 @@ and the frames on the front page are captured from the binary by
 | `changelog.html`, `changelog-all.html` | The last three releases, and all of them, from the editor repo's `CHANGELOG.md` |
 | `CHANGELOG.md`, `install.sh` | Vendored copies from the editor repo at the released tag (`install.sh` is what `curl -fsSL https://strop.dev/install.sh` serves) |
 | `img/frame-*.svg`, `img/frames.json` | The landing page's frames and their manifest (version, captions), written by `tools/frames.py` |
-| `assets/site.css`, `assets/site.js`, `assets/favicon.svg` | The editor's six palettes as CSS custom properties, the palette switcher and copy button, the icon |
+| `assets/site.css`, `assets/site.js`, `assets/favicon.svg` | The editor's seven palettes as CSS custom properties, the palette switcher and copy button, the icon |
 | `docs.html` | Meta-refresh stub for an old link |
 | `build.py`, `tools/` | The build (`tools/md.py` is its Markdown converter), the frame capture (`frames.py`, `ansi2svg.py`, `fixture/`) and the site checker; Python 3.8+, standard library only |
 | `notes/` | Working notes, not part of the site's content |

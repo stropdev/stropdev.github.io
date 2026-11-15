@@ -6,7 +6,7 @@
 <title>What changed — strop</title>
 <meta name="description" content="What changed in strop, release by release.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.67.0">
+<meta name="strop-version" content="0.68.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="CHANGELOG.md">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
@@ -32,8 +32,13 @@
   <h1>What changed</h1>
   <p class="lede">The last 3 releases, newest first. Tarballs and checksums are on <a href="https://github.com/stropdev/strop/releases">GitHub releases</a>.</p>
   <div class="prose">
-<h2 id="release-0-67-0-2026-11-13">0.67.0 — 2026-11-13</h2>
+<h2 id="release-0-68-0-2026-11-14">0.68.0 — 2026-11-14</h2>
 <h3 id="changed">Changed</h3>
+<ul>
+<li><strong>A new default theme, <code>kiln</code></strong>: warm charcoal with a terracotta accent and cream text, after the Claude Code terminal look. It meets the same contrast minimums as every other palette. <code>hone</code> stays available with <code>:theme hone</code> or <code>theme = &quot;hone&quot;</code>.</li>
+</ul>
+<h2 id="release-0-67-0-2026-11-13">0.67.0 — 2026-11-13</h2>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li><strong>Splits nest, as in Vim</strong> (plans/0104). <code>:sp</code> then <code>:vs</code> divides the pane you are in and leaves the others where they were; before, the last split turned every pane the same way. The new pane opens next to the one you split, below or to the right, and panes are numbered in reading order.</li>
 <li><strong>Closing a pane gives its space to its neighbour</strong>, and the focus goes there, as in Vim.</li>
@@ -46,7 +51,7 @@
 <li><strong>A broken link in the git guide</strong> to the lock files section.</li>
 </ul>
 <h2 id="release-0-66-0-2026-11-13">0.66.0 — 2026-11-13</h2>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li><strong>Each file in a collection starts at a thick line</strong> (plans/0103). Search results, collected hits and the quickfix list are one buffer of many files; where one file's lines end and the next file's begin is now drawn with a heavy rule (<code>━━━━ src/b.rs ━━━━ 2 hits</code>), bright in every file, not only the one the cursor is in. Status sections, the diff's file headings and the picker keep the thin rule.</li>
 <li><strong>Split panes lose their corners.</strong> A pane title is a thin rule (<code>─ 1 src/main.rs ● ───</code>), brighter on the focused pane. Side by side, one vertical line runs the full height and meets the titles in a <code>┬</code>.</li>
@@ -56,42 +61,14 @@
 <ul>
 <li><strong>Quitting right after starting no longer crashes.</strong> If <code>:q</code> came before strop finished reading an earlier session's unsaved drafts, the editor panicked on its way out. The drafts are kept for next time.</li>
 </ul>
-<h2 id="release-0-65-0-2026-11-13">0.65.0 — 2026-11-13</h2>
-<h3 id="changed-3">Changed</h3>
-<ul>
-<li><strong>A folder is a buffer of names</strong> (plans/0102). <code>strop .</code>, <code>:e DIR</code> and <code>Space e</code> open a folder whose lines are its entries, one name per line, folders first and ending in <code>/</code>. Line 5 is the fifth entry: <code>5G</code>, counts and <code>dd</code> mean what they say. There is no heading row and no <code>../</code> row any more.</li>
-<li><strong>Change files by editing the names.</strong> <code>cw</code> renames, <code>o name</code> creates (<code>name/</code> makes a folder, <code>a/b.txt</code> creates <code>a/</code> too), <code>dd</code> deletes, <code>yyp</code> then a new name copies. Each changed row says what writing will do: <code>was main.rs</code>, <code>new</code>, <code>copy of lib.rs</code>. <code>:w</code> lists the changes, relative to the folder (<code>rename  main.rs → main.rx</code>); <code>y</code> makes them and <code>q</code> goes back with your edits kept. <code>u</code> undoes an edit, <code>:e!</code> drops them all.</li>
-<li><strong>After the changes are made the folder comes back by itself</strong>, listed again, with the cursor still on its entry, and the message says <code>3 changes applied</code>. Only when one fails does the list stay, saying <code>done</code> or <code>failed: …</code> beside each change.</li>
-<li><strong>Size and age beside each name</strong> (<code>8.5K   1d</code>), in one column measured per folder so it does not move as you scroll. Folder sizes and permissions are gone.</li>
-<li><strong>The folder's path reads like a file's</strong>: relative to the project (<code>crates/strop-engine/</code>) in the status line and pane title, with <code>27 items</code>, <code>3 of 9 · filter rs</code> or <code>· dotfiles hidden</code> where the indent setting would be.</li>
-<li><strong><code>Space a</code> in a folder</strong> offers three things: search in it, a terminal in it, copy its path.</li>
-<li><strong><code>?</code> has a Folder section</strong> listing <code>Enter</code>, <code>-</code>, <code>g.</code>, the edits, <code>:w</code>, <code>:e!</code> and <code>:filter</code>.</li>
-</ul>
-<h3 id="added">Added</h3>
-<ul>
-<li><strong><code>g.</code> hides or shows dotfiles</strong>, remembered per folder.</li>
-<li><strong>An empty folder says so</strong> (<code>empty folder  ·  o adds a name, :w creates it</code>), and so does a filter that matches nothing.</li>
-</ul>
-<h3 id="removed">Removed</h3>
-<ul>
-<li><strong><code>:fs</code> and every one of its verbs, and <code>:browse</code>.</strong> Open a folder with <code>:e DIR</code> (or <code>:e ssh://host/dir/</code>) and edit its names instead. Marks, receipts, <code>:fs operations</code>, <code>:fs verify</code> and <code>:fs undo</code> are gone; an unconfirmed change is checked on disk by itself. <code>Backspace</code> no longer goes up (<code>-</code> does), and <code>q</code> in a folder records a macro as in any buffer.</li>
-<li><strong>The copy and delete choices.</strong> A copy copies the file on disk and asks you to write it first if it has unsaved changes; a delete goes to the Trash, and on an SSH host is permanent and says <code>delete</code>.</li>
-</ul>
-<h3 id="fixed-3">Fixed</h3>
-<ul>
-<li><strong>Lock files no longer pile up beside your files.</strong> Every file operation left a <code>.strop-lock-…</code> file behind, and the folder view listed them. They are now removed when the operation finishes, and never listed.</li>
-<li><strong><code>Ctrl-W v</code>, <code>Ctrl-W s</code>, <code>Ctrl-W o</code> and <code>Ctrl-W =</code> work in read-only views</strong>; they answered "readonly buffer".</li>
-<li><strong>Pressing <code>Enter</code> on a just-renamed row</strong> opens the file under its new name, even while the folder is still being listed again.</li>
-<li><strong><code>o</code> in a folder opens a line at once</strong>; it no longer waits on the code indenter.</li>
-</ul>
   </div>
-  <p class="more"><a href="changelog-all.html">All 102 releases →</a></p>
+  <p class="more"><a href="changelog-all.html">All 103 releases →</a></p>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.67.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.68.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>

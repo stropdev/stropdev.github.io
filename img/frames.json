@@ -1,8 +1,8 @@
 {
-  "version": "0.67.0",
+  "version": "0.68.0",
   "cols": 100,
   "rows": 30,
-  "palette": "hone",
+  "palette": "kiln",
   "frames": {
     "find": {
       "file": "img/frame-find.svg",

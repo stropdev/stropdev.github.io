@@ -64,7 +64,7 @@ DOC_GROUPS: List[Tuple[str, List[Tuple[str, str, str]]]] = [
     ]),
     ("Editing and code", [
         ("editor", "Indentation, themes, completion and language servers",
-         "What the editor does as you type, the six palettes, registers, windows, sessions, "
+         "What the editor does as you type, the seven palettes, registers, windows, sessions, "
          "and how language servers start."),
     ]),
     ("Terminals and other machines", [
@@ -83,7 +83,8 @@ DOC_GROUPS: List[Tuple[str, List[Tuple[str, str, str]]]] = [
 NOT_ON_SITE = {"nucleo-decision"}
 
 PALETTE_NAMES = [  # (data-palette, name, kind), in the switcher's order
-    ("hone", "Hone", "dark · default"), ("slate", "Slate", "low-chroma dark"),
+    ("kiln", "Kiln", "dark · default"), ("hone", "Hone", "dark"),
+    ("slate", "Slate", "low-chroma dark"),
     ("carbide", "Carbide", "high-contrast dark"), ("vellum", "Vellum", "light"),
     ("paper", "Paper", "light"), ("paper-dark", "Paper Dark", "dark"),
 ]
@@ -491,11 +492,12 @@ def vendor(repo: Path) -> List[str]:
 
 
 # --------------------------------------------------------------------------- palettes
-# The site's six palettes are the editor's, read from the compiled-in theme
+# The site's seven palettes are the editor's, read from the compiled-in theme
 # sources so the two can never disagree. Each CSS block is located by its
 # selector; only the token values inside it are rewritten.
 PALETTES = [  # (theme file, Rust const, CSS selector that opens the block)
-    ("hone.rs", "HONE", ':root, :root[data-palette="hone"] {'),
+    ("kiln.rs", "KILN", ':root, :root[data-palette="kiln"] {'),
+    ("hone.rs", "HONE", ':root[data-palette="hone"] {'),
     ("vellum.rs", "VELLUM", ":root:not([data-palette]) {"),
     ("vellum.rs", "VELLUM", ':root[data-palette="vellum"] {'),
     ("slate.rs", "SLATE", ':root[data-palette="slate"] {'),

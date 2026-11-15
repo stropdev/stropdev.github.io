@@ -6,7 +6,7 @@
 <title>Indentation, themes, completion and language servers — strop docs</title>
 <meta name="description" content="How strop indents, what the screen shows, how to change the theme, and how completion, registers, windows and sessions behave. The keys are listed in vim-compat.md and under Space ?. Searching is in s">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.67.0">
+<meta name="strop-version" content="0.68.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/editor.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -64,11 +64,12 @@
 <p>A failed save, a failed connection or a terminal that needs a decision leaves a message that stays until you deal with it. Moving, searching or a later success message does not clear it. <code>Space a</code> lists what you can do about it (retry, or dismiss the message) and <code>:explain</code> shows the full detail. Dismissing the message only hides it. It does not cancel anything and does not mark a save as done. <code>:messages</code> lists the last 50 messages.</p>
 <h2 id="themes">Themes</h2>
 <p><code>:theme</code> opens a list of the themes; Enter applies the selected one and Escape leaves the current theme as it is (once goes to the picker's Normal mode; twice closes it). <code>:theme vellum</code> switches directly. Each row shows the theme's label, six swatches (background, panel, text, accent, keyword, string) and <code>●</code> on the theme in use. Below the list you see the selected theme's name, as you would type it, and its description. In a small terminal the swatches and the description go first; the names and the search field stay.</p>
-<p>There are six themes. All six meet the same contrast minimums: main text at least 10:1, secondary text 7:1, comments and syntax colours 4.5:1.</p>
+<p>There are seven themes. All seven meet the same contrast minimums: main text at least 10:1, secondary text 7:1, comments and syntax colours 4.5:1.</p>
 <table>
 <thead><tr><th>Name</th><th>Character</th></tr></thead>
 <tbody>
-<tr><td><code>hone</code></td><td>Graphite dark with an amber accent; the default</td></tr>
+<tr><td><code>kiln</code></td><td>Warm charcoal with a terracotta accent, after the Claude Code terminal look; the default</td></tr>
+<tr><td><code>hone</code></td><td>Graphite dark with an amber accent</td></tr>
 <tr><td><code>slate</code></td><td>Muted dark: syntax told apart by brightness, one brass accent</td></tr>
 <tr><td><code>carbide</code></td><td>High-contrast dark for projectors and bright rooms (every colour at least 7:1)</td></tr>
 <tr><td><code>vellum</code></td><td>Warm paper, graphite text, burnt-umber accent</td></tr>
@@ -78,7 +79,7 @@
 </table>
 <p>Choose one at launch with <code>strop --theme vellum file.rs</code>, or keep the choice in <code>$XDG_CONFIG_HOME/strop/config.toml</code> (normally <code>~/.config/strop/config.toml</code>):</p>
 <pre><code class="language-toml">theme = &quot;vellum&quot;</code></pre>
-<p><code>--theme</code> wins over the config file, and the config file over the built-in default. <code>:theme</code> changes the running editor only; it does not rewrite the config. <code>:theme</code> with a name strop does not have keeps the current theme and lists the six names. A config file that names an unknown theme keeps the default theme and shows a warning with the six names; every other setting in the file still applies. The same goes for any key strop does not know or any value it cannot use: that one key is skipped and named.</p>
+<p><code>--theme</code> wins over the config file, and the config file over the built-in default. <code>:theme</code> changes the running editor only; it does not rewrite the config. <code>:theme</code> with a name strop does not have keeps the current theme and lists the theme names. A config file that names an unknown theme keeps the default theme and shows a warning with the theme names; every other setting in the file still applies. The same goes for any key strop does not know or any value it cannot use: that one key is skipped and named.</p>
 <p>Syntax, pickers, previews, diffs, diagnostics, help and the status line all follow the theme. Open terminals switch to the new theme's default colours; colours a program inside the terminal chose for itself are left alone. The themes are built into the binary: nothing to download or install.</p>
 <h2 id="pane-titles-and-previews">Pane titles and previews</h2>
 <p>With two or more panes, each pane starts at a title line: the pane's number and the file's path inside the project, set into a thin rule that is brighter on the focused pane. Side-by-side panes are divided by one vertical line that meets the titles; stacked panes are divided by the lower pane's title line alone. Two files with the same name are told apart by their directories. A file outside the project shows its full path, and a file on an SSH host shows the host (<code>ssh:devbox /etc/app.conf</code>). <code>●</code> marks unsaved changes and <code>[RO]</code> a read-only buffer. In a narrow pane the directories are shortened first; the number, the file name and the markers stay.</p>
@@ -160,14 +161,14 @@ auto_popup = true</code></pre>
 <p><code>:recover</code> lists every copy strop holds, numbered, including those of buffers that never had a file name. <code>:recover restore N</code> opens copy N in a new buffer without touching the file; <code>:recover discard N</code> deletes it. Unsaved text of files on SSH hosts is kept only after <code>:recover consent remote</code>, for the current run; <code>:recover consent off</code> stops it.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="git.html">← Git</a><a class="pager-next" href="terminal.html">Terminals →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> from the strop repository at <code>v0.67.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> from the strop repository at <code>v0.68.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.67.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.68.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>
