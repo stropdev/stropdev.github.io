@@ -32,10 +32,10 @@ from xml.sax.saxutils import escape
 SGR = re.compile(r"\x1b\[([0-9;]*)m")
 OTHER_ESCAPE = re.compile(r"\x1b(?:\[[0-?]*[ -/]*[@-~]|[@-Z\\-_])")
 
-# The 16 ANSI colours a capture may use by index; Kiln's ansi16 (0088 §3).
+# The 16 ANSI colours a capture may use by index; Hone's ansi16 (0087 §4.3).
 ANSI16 = [
-    "#0f0e0d", "#ff7a85", "#7cc68a", "#e8b45c", "#a8b2f5", "#b49cf2", "#5fb3a8", "#d6d0c4",
-    "#5a564f", "#ff959e", "#9ad8a5", "#f0c67e", "#c2c9fa", "#c9b6f7", "#86cfc5", "#f2eee6",
+    "#101217", "#e8707c", "#8fc48a", "#d9a85a", "#7fb2d4", "#c99ce0", "#8ecdb8", "#cfcac0",
+    "#4a5160", "#f08a94", "#a6d6a0", "#e8a848", "#9ccbe8", "#d9b2f0", "#a8e0d0", "#e6e1d6",
 ]
 
 

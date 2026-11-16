@@ -97,7 +97,7 @@ How it works, and why it is honest:
 - `tools/ansi2svg.py` turns the capture into an SVG: one rect per background
   run, one text run per style run, each pinned to its cells.
 - The editor runs with an empty `HOME` and a `PATH` of `/usr/bin:/bin`, in
-  the Kiln palette, at 100×30 cells.
+  the Hone palette, at 100×30 cells.
 
 Fixtures, built fresh in a temporary directory on every run:
 
@@ -119,11 +119,11 @@ is, with its caption and alt text. To change what a frame shows, edit its
 
 ## Palettes
 
-`assets/site.css` defines the editor's seven palettes — Kiln (default), Hone, Slate,
+`assets/site.css` defines the editor's seven palettes — Hone (default), Kiln, Slate,
 Carbide, Vellum, Paper, Paper Dark — as CSS custom properties. `build.py`
 rewrites their values, and the swatches of the switcher on `/`, from the
 theme sources on every build, so the site never shows a colour the binary
-does not ship. Kiln applies by default, Vellum under
+does not ship. Hone applies by default, Vellum under
 `prefers-color-scheme: light`; the switcher stores an explicit choice in
 `localStorage` (`strop-palette`) and a one-line script in each `<head>`
 applies it before first paint. Pressing the applied palette again returns to

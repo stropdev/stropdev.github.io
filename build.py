@@ -83,7 +83,7 @@ DOC_GROUPS: List[Tuple[str, List[Tuple[str, str, str]]]] = [
 NOT_ON_SITE = {"nucleo-decision"}
 
 PALETTE_NAMES = [  # (data-palette, name, kind), in the switcher's order
-    ("kiln", "Kiln", "dark · default"), ("hone", "Hone", "dark"),
+    ("hone", "Hone", "dark · default"), ("kiln", "Kiln", "dark"),
     ("slate", "Slate", "low-chroma dark"),
     ("carbide", "Carbide", "high-contrast dark"), ("vellum", "Vellum", "light"),
     ("paper", "Paper", "light"), ("paper-dark", "Paper Dark", "dark"),
@@ -496,8 +496,8 @@ def vendor(repo: Path) -> List[str]:
 # sources so the two can never disagree. Each CSS block is located by its
 # selector; only the token values inside it are rewritten.
 PALETTES = [  # (theme file, Rust const, CSS selector that opens the block)
-    ("kiln.rs", "KILN", ':root, :root[data-palette="kiln"] {'),
-    ("hone.rs", "HONE", ':root[data-palette="hone"] {'),
+    ("hone.rs", "HONE", ':root, :root[data-palette="hone"] {'),
+    ("kiln.rs", "KILN", ':root[data-palette="kiln"] {'),
     ("vellum.rs", "VELLUM", ":root:not([data-palette]) {"),
     ("vellum.rs", "VELLUM", ':root[data-palette="vellum"] {'),
     ("slate.rs", "SLATE", ':root[data-palette="slate"] {'),

@@ -6,7 +6,7 @@
 <title>Indentation, themes, completion and language servers — strop docs</title>
 <meta name="description" content="How strop indents, what the screen shows, how to change the theme, and how completion, registers, windows and sessions behave. The keys are listed in vim-compat.md and under Space ?. Searching is in s">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.69.0">
+<meta name="strop-version" content="0.70.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/editor.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -60,7 +60,7 @@
 <h2 id="what-is-on-screen">What is on screen</h2>
 <p>The accent colour marks where you are and what will happen next: the mode chip, the current line number, a pending operator, the cursor in an input field, and the characters a search matched. In a list, the selected row has a <code>▌</code> at its left. <code>●</code> marks the theme in use and buffers with unsaved changes. Pickers, the key hints, completion, hover and the <code>:</code> line are all drawn the same way: a rounded box with its title at the top left and its keys along the bottom edge.</p>
 <p>Things appear only when they have something to say. The scrollbar is hidden when the whole file fits. Pane titles appear when there are two or more panes. <code>LSP!</code> appears when a language server failed and <code>LSP?</code> when one was refused (see <a href="#trust"><code>:trust</code></a>). <code>Spaces:N</code> appears when a buffer's indent differs from your default. A line under a search field appears when a toggle is on, or when the search is not in the project directory.</p>
-<p>Messages appear on a row above the status line, and only while there is one to show: first the answer to your last key, then any message still waiting for you (<code>✗</code> failure, <code>▲</code> warning, <code>●</code> info) with the key that deals with it, <code>Space a</code> or <code>:explain</code>. The status line itself shows the mode, the branch, the path, then, only when not zero, the diagnostics count (<code>●1 ▲2</code>), the language-server badge, the indent and the position.</p>
+<p>Messages appear on a row above the status line, and only while there is one to show: first the answer to your last key, then any message still waiting for you (<code>✗</code> failure, <code>▲</code> warning, <code>●</code> info) with the key that deals with it, <code>Space a</code> or <code>:explain</code>. The status line itself shows the mode, the branch, the path, the class and method the cursor is in (<code>impl Modeline › fit</code>, from the same list as <code>Space s</code>), then, only when not zero, the diagnostics count (<code>●1 ▲2</code>), the language-server badge, the indent and the position.</p>
 <p>A failed save, a failed connection or a terminal that needs a decision leaves a message that stays until you deal with it. Moving, searching or a later success message does not clear it. <code>Space a</code> lists what you can do about it (retry, or dismiss the message) and <code>:explain</code> shows the full detail. Dismissing the message only hides it. It does not cancel anything and does not mark a save as done. <code>:messages</code> lists the last 50 messages.</p>
 <h2 id="themes">Themes</h2>
 <p><code>:theme</code> opens a list of the themes; Enter applies the selected one and Escape leaves the current theme as it is (once goes to the picker's Normal mode; twice closes it). <code>:theme vellum</code> switches directly. Each row shows the theme's label, six swatches (background, panel, text, accent, keyword, string) and <code>●</code> on the theme in use. Below the list you see the selected theme's name, as you would type it, and its description. In a small terminal the swatches and the description go first; the names and the search field stay.</p>
@@ -68,8 +68,8 @@
 <table>
 <thead><tr><th>Name</th><th>Character</th></tr></thead>
 <tbody>
-<tr><td><code>kiln</code></td><td>Warm charcoal with a terracotta accent, after the Claude Code terminal look; the default</td></tr>
-<tr><td><code>hone</code></td><td>Graphite dark with an amber accent</td></tr>
+<tr><td><code>hone</code></td><td>Graphite dark with an amber accent; the default</td></tr>
+<tr><td><code>kiln</code></td><td>Warm charcoal with a terracotta accent, after the Claude Code terminal look</td></tr>
 <tr><td><code>slate</code></td><td>Muted dark: syntax told apart by brightness, one brass accent</td></tr>
 <tr><td><code>carbide</code></td><td>High-contrast dark for projectors and bright rooms (every colour at least 7:1)</td></tr>
 <tr><td><code>vellum</code></td><td>Warm paper, graphite text, burnt-umber accent</td></tr>
@@ -86,7 +86,7 @@
 <p>In Files, Search and the symbol pickers, the preview takes the spare width when the result rows are short. When paths are long, the list keeps its width. In a narrow terminal the preview moves below the list, or is hidden.</p>
 <h2 id="language-servers">Language servers</h2>
 <p>strop starts the language server for a file's language when that server is installed; <code>Space ?</code> lists which server each language uses. The status line shows <code>LSP!</code> when a server failed and <code>LSP?</code> when one could not start: it is not installed (the message names it and says how to install it, e.g. <code>lsp: rust-analyzer not found on PATH — rustup component add rust-analyzer</code>), or the project has not been trusted yet. A long error from the server never pushes the mode or the position off the line. <code>:explain</code> opens the full story in a read-only buffer: which server, which project, and why it failed. When a server recovers, its failure message goes away. Messages about other projects or other problems stay.</p>
-<p><code>Space s</code> lists the current file's symbols. The list is fetched when the file is opened and after each edit, so it opens with the key and without asking the server again; it is never a list from before an edit. In Rust, Python, C, C++ and Lua files that no server serves, the list comes from the syntax tree (functions, methods, types, modules, constants) and the message line says so.</p>
+<p><code>Space s</code> lists the current file's symbols. The list is fetched when the file is opened and after each edit, so it opens with the key and without asking the server again; it is never a list from before an edit. In Rust, Python, C, C++, Lua, Go, Java, JavaScript, TypeScript, C#, PHP and Ruby files that no server serves, the list comes from the syntax tree (functions, methods, types, modules, constants, Rust <code>impl</code> blocks) and the message line says so.</p>
 <p>A server that crashes after it was ready restarts by itself, up to three times per project: a message says <code>restarting (1/3)</code>, the <code>LSP!</code> badge stays until the new server is ready, and every file the old server had open, library files included, is opened on the new one. After the third restart, or if the server never started, the next thing you ask of it (go to definition, hover, and so on) shows the reason and tries once more to start it. Repeat the command when the server is ready.</p>
 <h3 id="trust"><code>:trust</code></h3>
 <p>A project can name its own language-server command in <code>.strop/languages.toml</code>. strop does not run a command that comes from a project until you allow that project: the message reads <code>lsp: NAME needs :trust for this project</code>, and <code>:explain</code> shows the command. <code>:trust</code> allows the current project, and the server starts. The answer is remembered on this machine (under <code>$XDG_STATE_HOME/strop</code>, normally <code>~/.local/state/strop</code>). Servers from strop's built-in list and from your own config need no <code>:trust</code>.</p>
@@ -161,14 +161,14 @@ auto_popup = true</code></pre>
 <p><code>:recover</code> lists every copy strop holds, numbered, including those of buffers that never had a file name. <code>:recover restore N</code> opens copy N in a new buffer without touching the file; <code>:recover discard N</code> deletes it. Unsaved text of files on SSH hosts is kept only after <code>:recover consent remote</code>, for the current run; <code>:recover consent off</code> stops it.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="git.html">← Git</a><a class="pager-next" href="terminal.html">Terminals →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> from the strop repository at <code>v0.69.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> from the strop repository at <code>v0.70.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.69.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.70.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

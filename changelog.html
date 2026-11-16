@@ -6,7 +6,7 @@
 <title>What changed — strop</title>
 <meta name="description" content="What changed in strop, release by release.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.69.0">
+<meta name="strop-version" content="0.70.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="CHANGELOG.md">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
@@ -32,38 +32,36 @@
   <h1>What changed</h1>
   <p class="lede">The last 3 releases, newest first. Tarballs and checksums are on <a href="https://github.com/stropdev/strop/releases">GitHub releases</a>.</p>
   <div class="prose">
-<h2 id="release-0-69-0-2026-11-15">0.69.0 — 2026-11-15</h2>
+<h2 id="release-0-70-0-2026-11-16">0.70.0 — 2026-11-16</h2>
+<h3 id="added">Added</h3>
+<ul>
+<li><strong>The modeline shows the class and method the cursor is in</strong> (plans/0107): <code>impl Modeline › fit</code>, after the file name, read from the same list as <code>Space s</code>. It keeps its place while you move and follows your typing until the list is rebuilt; nothing is shown in a file with no symbols.</li>
+<li><strong><code>Space s</code> works without a language server in Go, Java, JavaScript, TypeScript, C#, PHP and Ruby files</strong>, from the syntax tree; Rust's list now includes <code>impl</code> blocks, so a method has its type above it, and <code>kind:impl</code> finds lines inside one.</li>
+</ul>
 <h3 id="changed">Changed</h3>
+<ul>
+<li><strong>The file finder keeps folders in one column</strong> (plans/0106): it no longer shifts while you scroll, and a long file name no longer pushes its folder out of line; a name too long for the column is shown whole, on its own.</li>
+<li><strong><code>hone</code> is the default theme again</strong>: graphite with the amber accent. <code>kiln</code> stays available with <code>:theme kiln</code> or <code>theme = &quot;kiln&quot;</code>.</li>
+</ul>
+<h2 id="release-0-69-0-2026-11-15">0.69.0 — 2026-11-15</h2>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li><strong>Two cells between line numbers and text</strong> (plans/0105), in files, collections and diffs, so the code no longer reads as part of the number. The picker preview drops its <code>│</code> and uses the same gutter as the buffer, so a preview row looks like the row you land on.</li>
 <li><strong>Kiln is darker and higher in contrast</strong>: deeper charcoal backgrounds and brighter text, with the same accent and syntax colours.</li>
 </ul>
 <h2 id="release-0-68-0-2026-11-14">0.68.0 — 2026-11-14</h2>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li><strong>A new default theme, <code>kiln</code></strong>: warm charcoal with a terracotta accent and cream text, after the Claude Code terminal look. It meets the same contrast minimums as every other palette. <code>hone</code> stays available with <code>:theme hone</code> or <code>theme = &quot;hone&quot;</code>.</li>
 </ul>
-<h2 id="release-0-67-0-2026-11-13">0.67.0 — 2026-11-13</h2>
-<h3 id="changed-3">Changed</h3>
-<ul>
-<li><strong>Splits nest, as in Vim</strong> (plans/0104). <code>:sp</code> then <code>:vs</code> divides the pane you are in and leaves the others where they were; before, the last split turned every pane the same way. The new pane opens next to the one you split, below or to the right, and panes are numbered in reading order.</li>
-<li><strong>Closing a pane gives its space to its neighbour</strong>, and the focus goes there, as in Vim.</li>
-<li><strong><code>Ctrl-W h/j/k/l</code> and <code>Space w h/j/k/l</code> go to the pane on that side</strong>, at the cursor's line or column, and stop at the edge instead of wrapping around.</li>
-<li><strong>Dividing lines join the title lines</strong> where they meet: <code>┬ ├ ┤ ┼ ┴</code>.</li>
-<li><strong>How a split's space is shared is proved.</strong> The arithmetic lives in the kernel and Lean proofs show the panes never overlap or run into the status line, fill their space exactly when there is room, each get at least a line, and are shared fairly by the number of panes across.</li>
-</ul>
-<h3 id="fixed">Fixed</h3>
-<ul>
-<li><strong>A broken link in the git guide</strong> to the lock files section.</li>
-</ul>
   </div>
-  <p class="more"><a href="changelog-all.html">All 104 releases →</a></p>
+  <p class="more"><a href="changelog-all.html">All 105 releases →</a></p>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.69.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.70.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>

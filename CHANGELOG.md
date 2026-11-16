@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.70.0 — 2026-11-16
+
+### Added
+
+- **The modeline shows the class and method the cursor is in** (plans/0107): `impl Modeline › fit`, after the file name, read from the same list as `Space s`. It keeps its place while you move and follows your typing until the list is rebuilt; nothing is shown in a file with no symbols.
+- **`Space s` works without a language server in Go, Java, JavaScript, TypeScript, C#, PHP and Ruby files**, from the syntax tree; Rust's list now includes `impl` blocks, so a method has its type above it, and `kind:impl` finds lines inside one.
+
+### Changed
+
+- **The file finder keeps folders in one column** (plans/0106): it no longer shifts while you scroll, and a long file name no longer pushes its folder out of line; a name too long for the column is shown whole, on its own.
+- **`hone` is the default theme again**: graphite with the amber accent. `kiln` stays available with `:theme kiln` or `theme = "kiln"`.
+
 ## 0.69.0 — 2026-11-15
 
 ### Changed

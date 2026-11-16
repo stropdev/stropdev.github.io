@@ -227,7 +227,7 @@ class Pane:
     def __init__(self, binary: Path, cwd: Path, file: Optional[str], env: Dict[str, str], socket: str):
         self.tmux = ["tmux", "-L", socket, "-f", os.devnull]
         command = ["env", "-i"] + [f"{k}={v}" for k, v in env.items()]
-        command += [str(binary), "--theme", "kiln"] + ([file] if file else [])
+        command += [str(binary), "--theme", "hone"] + ([file] if file else [])
         run(self.tmux + ["new-session", "-d", "-s", "frame", "-x", str(COLS), "-y", str(ROWS),
                          "-c", str(cwd)] + command)
 
@@ -294,9 +294,9 @@ class Pane:
         subprocess.run(self.tmux + ["kill-server"], capture_output=True)
 
 
-def kiln_defaults() -> Dict[str, str]:
+def hone_defaults() -> Dict[str, str]:
     css = (SITE / "assets" / "site.css").read_text(encoding="utf-8")
-    block = css[css.index(':root, :root[data-palette="kiln"] {'):]
+    block = css[css.index(':root, :root[data-palette="hone"] {'):]
     block = block[:block.index("}")]
     return {"bg": re.search(r"--bg-base: (#[0-9a-f]{6})", block).group(1),
             "fg": re.search(r"--fg-text: (#[0-9a-f]{6})", block).group(1)}
@@ -318,7 +318,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         if not shutil.which(tool):
             raise SystemExit(f"{tool} is required")
     version = run([str(binary), "--version"]).stdout.split()[-1]
-    colours = kiln_defaults()
+    colours = hone_defaults()
 
     work = Path(tempfile.mkdtemp(prefix="strop-frames-"))
     manifest_path = args.out / "frames.json"
@@ -359,7 +359,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                             "caption": cand["caption"].format(**facts), "alt": alt}
             print(f"wrote {out} ({tag}, {len(svg)} bytes)", file=sys.stderr)
         order = [s["name"] for s in SCENARIOS if s["name"] in frames]
-        manifest = {"version": version, "cols": COLS, "rows": ROWS, "palette": "kiln",
+        manifest = {"version": version, "cols": COLS, "rows": ROWS, "palette": "hone",
                     "frames": {n: frames[n] for n in order}}
         manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         print(f"wrote {manifest_path} (strop {version})", file=sys.stderr)

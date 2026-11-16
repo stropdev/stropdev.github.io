@@ -5,7 +5,7 @@ document.documentElement.classList.add("js");
 
 (function () {
   var KEY = "strop-palette";
-  var PALETTES = ["kiln", "hone", "slate", "carbide", "vellum", "paper", "paper-dark"];
+  var PALETTES = ["hone", "kiln", "slate", "carbide", "vellum", "paper", "paper-dark"];
   var buttons = Array.prototype.slice.call(document.querySelectorAll("[data-set-palette]"));
 
   function current() {
@@ -34,7 +34,7 @@ document.documentElement.classList.add("js");
 
   buttons.forEach(function (button) {
     button.addEventListener("click", function () {
-      // Pressing the applied palette again returns to automatic (Kiln, or Vellum in light mode).
+      // Pressing the applied palette again returns to automatic (Hone, or Vellum in light mode).
       set(button.dataset.setPalette === current() ? null : button.dataset.setPalette);
     });
   });
