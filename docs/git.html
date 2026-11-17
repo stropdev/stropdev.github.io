@@ -6,7 +6,7 @@
 <title>Git — strop docs</title>
 <meta name="description" content="Everything git is under Space g. Each git view is an ordinary read-only buffer: motions, /, yank and counts work, q closes it.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.70.0">
+<meta name="strop-version" content="0.71.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/git.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -103,6 +103,7 @@
 <li><code>ca</code> (or amending from the status buffer) starts from the last commit's message and needs nothing staged.</li>
 </ul>
 <p>The commit is made by <code>git commit</code> itself, so your hooks, signing and <code>user.*</code> configuration all apply. A hook that fails stops the commit and its output is shown; an empty message is refused by git. A signing setup that needs to ask for a passphrase in the terminal can not do so here — use an agent, or commit from a shell (<code>Space t</code>).</p>
+<p>Everything else strop asks git — blame, log, a commit's files, status — is a read, and a repository's own config cannot make it run a program: strop turns off its hooks, <code>core.fsmonitor</code>, diff <code>textconv</code> drivers, external diff programs, signature checks and the pager for those runs. A commit and a branch switch keep your hooks.</p>
 <p>With nothing staged, <code>Space g c</code> says so and opens nothing.</p>
 <h2 id="branches-space-g-b">Branches — <code>Space g b</code></h2>
 <p>A picker of local branches (the current one first) and then remote branches.</p>
@@ -141,14 +142,14 @@
 <p>On an SSH host (<a href="remote.html">remote.md</a>) the gutter marks, log, blame, history and diffs work. Status, commit and the branch picker do not work there yet; they say so and do nothing. Staging and discarding hunks do not work there either.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="filesystem.html">← Create, rename, move and delete files</a><a class="pager-next" href="editor.html">Indentation, themes, completion and language servers →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/git.md"><code>docs/git.md</code></a> from the strop repository at <code>v0.70.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/git.md"><code>docs/git.md</code></a> from the strop repository at <code>v0.71.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.70.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.71.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Find files, search and replace — strop docs</title>
-<meta name="description" content="The same filters work in every search field: Files (Space f), Search (Space /), Replace (Space R), document symbols (Space s), workspace symbols (Space S) and the jump list (Space j). Learn them once.">
+<meta name="description" content="One filter language works in every list that takes filters: Files (Space f), Search (Space /), Replace (Space R), document symbols (Space s), workspace symbols (Space S), buffers (Space b), the jump l">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.70.0">
+<meta name="strop-version" content="0.71.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/search.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -31,13 +31,13 @@
   <aside class="doc-side">
     <p class="side-title"><a href="./">All docs</a></p>
     <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html" aria-current="page">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Git</p><ol class="side-docs"><li><a href="git.html">Git</a></li></ol><p class="side-title">Editing and code</p><ol class="side-docs"><li><a href="editor.html">Indentation, themes, completion and language servers</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal.html">Terminals</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html">Every key</a></li><li><a href="scripting.html">Scripts and bug reports</a></li></ol>
-    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#finding-files-space-f">Finding files (<code>Space f</code>)</a></li><li><a href="#keys-in-the-search-field">Keys in the search field</a></li><li><a href="#the-filters">The filters</a></li><li><a href="#where-the-filters-apply">Where the filters apply</a></li><li><a href="#buffer-search">Buffer search</a></li><li><a href="#substitute-s">Substitute: <code>:s</code></a></li><li><a href="#search-across-the-project">Search across the project</a></li><li><a href="#collections-edit-every-hit-in-one-buffer">Collections: edit every hit in one buffer</a></li><li><a href="#replace-across-files">Replace across files</a></li><li><a href="#rename">Rename</a></li><li><a href="#searching-on-an-ssh-host">Searching on an SSH host</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#finding-files-space-f">Finding files (<code>Space f</code>)</a></li><li><a href="#keys-in-the-search-field">Keys in the search field</a></li><li><a href="#the-filters">The filters</a></li><li><a href="#what-each-list-takes">What each list takes</a></li><li><a href="#where-the-filters-apply">Where the filters apply</a></li><li><a href="#buffer-search">Buffer search</a></li><li><a href="#substitute-s">Substitute: <code>:s</code></a></li><li><a href="#search-across-the-project">Search across the project</a></li><li><a href="#collections-edit-every-hit-in-one-buffer">Collections: edit every hit in one buffer</a></li><li><a href="#replace-across-files">Replace across files</a></li><li><a href="#rename">Rename</a></li><li><a href="#searching-on-an-ssh-host">Searching on an SSH host</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
     <h1>Find files, search and replace</h1>
     <div class="prose">
-<p>The same filters work in every search field: Files (<code>Space f</code>), Search (<code>Space /</code>), Replace (<code>Space R</code>), document symbols (<code>Space s</code>), workspace symbols (<code>Space S</code>) and the jump list (<code>Space j</code>). Learn them once.</p>
+<p>One filter language works in every list that takes filters: Files (<code>Space f</code>), Search (<code>Space /</code>), Replace (<code>Space R</code>), document symbols (<code>Space s</code>), workspace symbols (<code>Space S</code>), buffers (<code>Space b</code>), the jump list (<code>Space j</code>), diagnostics (<code>Space d</code>) and locations (<code>grr</code>). Each list takes the filters its rows carry; <a href="#what-each-list-takes">What each list takes</a> says exactly which.</p>
 <h2 id="finding-files-space-f">Finding files (<code>Space f</code>)</h2>
 <ul>
 <li><strong>The top row is the best match, and Enter opens it.</strong> The bar stays on the top row while files are still streaming in; once you move it, it follows the file you moved to.</li>
@@ -60,31 +60,78 @@
 </table>
 <p>The toggles stay as you set them until you quit. Whenever one differs from the default, a row under the field says so in words — <code>match case · whole word · ignored files shown</code> — and the row disappears when everything is back to default. A qualifier typed in the query (<code>case:</code>, <code>hidden:</code>, <code>ignored:</code>, <code>regex:</code>) wins over a toggle.</p>
 <h2 id="the-filters">The filters</h2>
-<p><strong>Case is smart everywhere:</strong> an all-lowercase query matches either case; one capital letter makes case count. In Files, plain words are matched fuzzily. In Search, plain words are searched for exactly as typed, unless you press <code>Alt-R</code> or write <code>regex:</code>. Use <code>case:sensitive</code> or <code>case:ignore</code> to decide outright:</p>
+<p><strong>Case is smart everywhere:</strong> an all-lowercase query matches either case; one capital letter makes case count. Plain words are matched fuzzily in every list except Search, where they are searched for exactly as typed (unless you press <code>Alt-R</code> or write <code>regex:</code>). Use <code>case:sensitive</code> or <code>case:ignore</code> to decide outright:</p>
 <pre><code class="language-text">language:rust
 language:cpp path:src/ request_id
 glob:&quot;src/my files/**/*.rs&quot; -path:generated/ text:&quot;request-id&quot;
 language:rust regex:&quot;\brequest_(id|name)\b&quot;
 hidden:exclude ignored:include text:&quot;-test.rs&quot;
+kind:fn pcfg
 kind:function parse AND NOT wrap</code></pre>
 <ul>
 <li><code>language:NAME</code> — the file's language (the names <code>Space ?</code> lists under LSP servers, e.g. <code>rust</code>, <code>cpp</code>, <code>python</code>).</li>
 <li><code>path:TEXT</code> — text that appears in the file's path inside the project (no leading <code>/</code>).</li>
 <li><code>fpath:TEXT</code> — the same, matched fuzzily; use <code>fpath:modules/jweb/ parser</code> to stay in a directory while looking for <code>parser</code>.</li>
 <li><code>glob:PATTERN</code> — a glob over the path inside the project.</li>
+<li><code>kind:KIND</code> — what a symbol is; in Search, what declaration the line is in. The kinds are listed below.</li>
+<li><code>repo:NAME</code> — in Search, only the project (repository) of that name.</li>
 <li><code>hidden:include|exclude</code> / <code>ignored:include|exclude</code> — include or exclude hidden files and ignored files for this query.</li>
 <li><code>case:sensitive|ignore|smart</code> — how case is matched, in file names, paths, symbols and text. The default is <code>smart</code>: a term is case-sensitive only when it has a capital in it. <code>case:insensitive</code> means <code>case:ignore</code>.</li>
-<li><code>kind:</code> — in the symbol pickers, what the symbol is (<code>kind:function</code>, <code>kind:struct</code>, …).</li>
-<li><code>text:&quot;...&quot;</code> — text to search for exactly, even if it looks like a filter. <code>regex:&quot;...&quot;</code> — a regular expression.</li>
-<li>A <code>-</code> in front excludes: <code>-path:generated/</code>, <code>-language:json</code>.</li>
-<li><code>AND</code> / <code>OR</code> / <code>NOT</code> and parentheses combine terms. A filter next to text means both. In Search, plain words next to each other are one phrase: <code>request id</code> finds exactly that text.</li>
+<li><code>text:&quot;...&quot;</code> — text to match exactly, even if it looks like a filter. <code>regex:&quot;...&quot;</code> — a regular expression.</li>
+<li>A <code>-</code> in front excludes: <code>-path:generated/</code>, <code>-language:json</code>, <code>-kind:field</code>.</li>
+<li><code>AND</code> / <code>OR</code> / <code>NOT</code> and parentheses combine terms. A filter next to plain words means both, and the words stay fuzzy: <code>kind:fn pcfg</code> finds <code>parse_config</code>. In Search, plain words next to each other are one phrase: <code>request id</code> finds exactly that text.</li>
 </ul>
-<p><code>Ctrl-Space</code> in any search field suggests what can come next at the cursor. <code>:help query language</code> covers quoting, errors and examples.</p>
+<p>A filter a list does not take, a misspelt one or an unknown value is an error: the field marks the word with <code>^^^</code> and says what is wrong on the row under it, with the closest correct spelling (<code>unknown kind: fnc — did you mean kind:fn?</code>). The list stays as it was until the query is fixed; it never quietly ignores the filter.</p>
+<p><code>Ctrl-Space</code> in any list that takes filters suggests the ones it takes and their values. <code>:help query language</code> lists every filter with the lists that take it, every kind, and how quoting works.</p>
+<h2 id="what-each-list-takes">What each list takes</h2>
+<table>
+<thead><tr><th>List</th><th>Filters</th><th>Plain words</th></tr></thead>
+<tbody>
+<tr><td><code>space f</code> files</td><td><code>language:</code> <code>path:</code> <code>fpath:</code> <code>glob:</code> <code>hidden:</code> <code>ignored:</code> <code>case:</code> <code>text:</code> <code>regex:</code></td><td>fuzzy path</td></tr>
+<tr><td><code>space /</code> search hits</td><td><code>language:</code> <code>path:</code> <code>fpath:</code> <code>glob:</code> <code>kind:</code> <code>repo:</code> <code>hidden:</code> <code>ignored:</code> <code>case:</code> <code>text:</code> <code>regex:</code></td><td>literal content</td></tr>
+<tr><td><code>space s</code> symbols</td><td><code>kind:</code> <code>language:</code> <code>path:</code> <code>fpath:</code> <code>glob:</code> <code>case:</code> <code>text:</code> <code>regex:</code></td><td>fuzzy</td></tr>
+<tr><td><code>space S</code> workspace symbols</td><td><code>kind:</code> <code>language:</code> <code>path:</code> <code>fpath:</code> <code>glob:</code> <code>hidden:</code> <code>ignored:</code> <code>case:</code> <code>text:</code> <code>regex:</code></td><td>fuzzy</td></tr>
+<tr><td><code>space b</code> buffers</td><td><code>language:</code> <code>path:</code> <code>fpath:</code> <code>glob:</code> <code>case:</code> <code>text:</code> <code>regex:</code></td><td>fuzzy path</td></tr>
+<tr><td><code>space j</code> jumps</td><td><code>language:</code> <code>path:</code> <code>fpath:</code> <code>glob:</code> <code>case:</code> <code>text:</code> <code>regex:</code></td><td>fuzzy</td></tr>
+<tr><td><code>space d</code> diagnostics</td><td><code>language:</code> <code>path:</code> <code>fpath:</code> <code>glob:</code> <code>case:</code> <code>text:</code> <code>regex:</code></td><td>fuzzy</td></tr>
+<tr><td><code>grr gri</code> locations</td><td><code>language:</code> <code>path:</code> <code>fpath:</code> <code>glob:</code> <code>case:</code> <code>text:</code> <code>regex:</code></td><td>fuzzy</td></tr>
+<tr><td><code>:filter</code> folder entries</td><td><code>language:</code> <code>path:</code> <code>fpath:</code> <code>glob:</code> <code>hidden:</code> <code>ignored:</code> <code>case:</code> <code>text:</code> <code>regex:</code></td><td>literal content</td></tr>
+</tbody>
+</table>
+<p><code>Space R</code> is Search with the With field showing. Actions (<code>Space a</code>), the theme and tab-size selectors, branches (<code>Space g b</code>) and SSH destinations take no filters: what you type there is matched as plain text, so a colon is just a colon.</p>
+<h3 id="kinds">Kinds</h3>
+<p><code>kind:</code> takes any word in a row below, in any case, or the start of one when only one kind starts that way (<code>kind:stru</code> is <code>struct</code>; <code>kind:f</code> could be several and asks for more). The list shows each symbol's chip. <code>kind:function</code> also keeps methods and constructors.</p>
+<table>
+<thead><tr><th><code>kind:</code></th><th>Chip</th><th>Also</th><th>Language servers' kinds</th></tr></thead>
+<tbody>
+<tr><td><code>function</code></td><td><code>fn</code></td><td><code>func</code> <code>fun</code> <code>def</code> <code>sub</code> <code>proc</code></td><td>Function</td></tr>
+<tr><td><code>method</code></td><td><code>meth</code></td><td></td><td>Method</td></tr>
+<tr><td><code>constructor</code></td><td><code>ctor</code></td><td><code>new</code> <code>init</code></td><td>Constructor</td></tr>
+<tr><td><code>class</code></td><td><code>class</code></td><td></td><td>Class</td></tr>
+<tr><td><code>struct</code></td><td><code>struct</code></td><td><code>record</code></td><td>Struct</td></tr>
+<tr><td><code>interface</code></td><td><code>iface</code></td><td><code>trait</code> <code>protocol</code></td><td>Interface</td></tr>
+<tr><td><code>impl</code></td><td><code>impl</code></td><td><code>object</code></td><td>Object</td></tr>
+<tr><td><code>enum</code></td><td><code>enum</code></td><td></td><td>Enum</td></tr>
+<tr><td><code>variant</code></td><td><code>variant</code></td><td><code>enummember</code></td><td>EnumMember</td></tr>
+<tr><td><code>module</code></td><td><code>mod</code></td><td><code>namespace</code> <code>ns</code> <code>package</code> <code>pkg</code></td><td>Module, Namespace, Package</td></tr>
+<tr><td><code>file</code></td><td><code>file</code></td><td></td><td>File</td></tr>
+<tr><td><code>field</code></td><td><code>field</code></td><td></td><td>Field</td></tr>
+<tr><td><code>property</code></td><td><code>prop</code></td><td><code>attribute</code> <code>attr</code></td><td>Property</td></tr>
+<tr><td><code>variable</code></td><td><code>var</code></td><td><code>let</code> <code>local</code></td><td>Variable</td></tr>
+<tr><td><code>constant</code></td><td><code>const</code></td><td><code>static</code></td><td>Constant</td></tr>
+<tr><td><code>type</code></td><td><code>type</code></td><td><code>typeparam</code> <code>generic</code> <code>alias</code></td><td>TypeParameter</td></tr>
+<tr><td><code>event</code></td><td><code>event</code></td><td></td><td>Event</td></tr>
+<tr><td><code>operator</code></td><td><code>op</code></td><td></td><td>Operator</td></tr>
+<tr><td><code>key</code></td><td><code>key</code></td><td></td><td>Key</td></tr>
+<tr><td><code>value</code></td><td><code>val</code></td><td><code>string</code> <code>number</code> <code>boolean</code> <code>array</code> <code>null</code></td><td>String, Number, Boolean, Array, Null</td></tr>
+<tr><td><code>other</code></td><td><code>sym</code></td><td></td><td></td></tr>
+</tbody>
+</table>
 <h2 id="where-the-filters-apply">Where the filters apply</h2>
 <ul>
 <li>In <strong>Files</strong> the filters decide which files are listed.</li>
-<li>In <strong>Search</strong> and <strong>Replace</strong> they decide which files are searched.</li>
-<li>In <strong>document symbols</strong> and the <strong>jump list</strong> they filter the rows already in the list, as you type, and plain words rank the rows by fuzzy match. On the jump list, <code>language:cpp path:tests</code> keeps the jumps inside C++ files under <code>tests/</code>.</li>
+<li>In <strong>Search</strong> and <strong>Replace</strong> they decide which files are searched, and <code>kind:</code> which lines count: <code>kind:fn retry</code> finds <code>retry</code> inside functions.</li>
+<li>In the other lists they filter the rows already in the list, as you type, and plain words rank what is left by fuzzy match. On the jump list, <code>language:cpp path:tests</code> keeps the jumps inside C++ files under <code>tests/</code>.</li>
 <li>A row a filter cannot judge is kept, not hidden. A buffer with no file has no path, so <code>path:</code> keeps it.</li>
 </ul>
 <p>The jump list holds the places you jumped from, plus a row for where you are now. It is a history of places, not of edits.</p>
@@ -182,14 +229,14 @@ With  fetch_$1()</code></pre>
 <p>Search works the same in a directory on an SSH host: the same fields, the same include and exclude keys, the same previews, the same limits. It runs <code>rg</code> on the host. If the host has no <code>rg</code>, Search says so and does not run. A search on a host that takes longer than two minutes is stopped. Collections work there. Replace does not, yet: <code>Space R</code>, <code>Ctrl-T</code> and the With field say so.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-next" href="filesystem.html">Create, rename, move and delete files →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> from the strop repository at <code>v0.70.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> from the strop repository at <code>v0.71.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.70.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.71.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

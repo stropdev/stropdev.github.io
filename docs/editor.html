@@ -6,7 +6,7 @@
 <title>Indentation, themes, completion and language servers — strop docs</title>
 <meta name="description" content="How strop indents, what the screen shows, how to change the theme, and how completion, registers, windows and sessions behave. The keys are listed in vim-compat.md and under Space ?. Searching is in s">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.70.0">
+<meta name="strop-version" content="0.71.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/editor.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -105,6 +105,13 @@
 <li><strong>Not yet</strong>: folds, tab pages, the <code>=</code>, <code>gq</code> and <code>gw</code> operators, <code>U</code>, search offsets (<code>/pat/e</code>). <code>=</code>, <code>gq</code>, <code>gw</code> and <code>zf</code> still take their motion, so typing <code>gqip</code> never runs <code>ip</code> as commands; they then say they are not supported.</li>
 </ul>
 <h2 id="the-command-line">The command line</h2>
+<p><code>:</code>, <code>/</code>, <code>?</code> and <code>|</code> open the command line on the bottom row, beside the mode chip. <code>Esc</code> or <code>Ctrl-C</code> cancels it at once, and so does <code>Backspace</code> on an empty line. It edits like Vim's: <code>Ctrl-W</code> deletes a word, <code>Ctrl-U</code> everything before the cursor, <code>Ctrl-B</code> / <code>Home</code> and <code>Ctrl-E</code> / <code>End</code> go to the start and end, <code>Ctrl-R {register}</code> inserts a register and <code>Ctrl-R Ctrl-W</code> / <code>Ctrl-R Ctrl-A</code> the word or WORD under the cursor.</p>
+<ul>
+<li><strong>History</strong>: <code>Up</code> / <code>Down</code> recall older and newer lines that start with what you typed; <code>Ctrl-P</code> / <code>Ctrl-N</code> recall any line. <code>:</code> and <code>/ ?</code> keep 200 lines each, per project, with the session.</li>
+<li><strong>Completion</strong>: a menu of commands opens as you type a name; its top row is the command <code>Enter</code> runs. <code>Tab</code> / <code>Shift-Tab</code> (or <code>Ctrl-N</code> / <code>Ctrl-P</code> while it shows) write the next row into the line, and after the last one put back what you typed; <code>Ctrl-Y</code> keeps a row, <code>Ctrl-E</code> puts back what you typed. After a name, <code>Tab</code> or <code>Ctrl-D</code> lists what the command takes: files (<code>:e</code>, <code>:w</code>, <code>:sp</code>, <code>:vs</code>, <code>:view</code>), directories (<code>:cd</code>), buffers (<code>:b</code>, <code>:bd</code>), themes, help topics, or the command's own words (<code>:set</code>, <code>:remote</code>, <code>:recover</code>, <code>:tab-size</code>, <code>:indent-style</code>, <code>:sort</code>).</li>
+<li>The right end of the line says what the command takes (<code>:w[!] [file]</code>), how many matches a search has, the lines a range names, or what a <code>:s</code> will change — while it is typed, <code>:s</code> shows each changed line as it will read, in place.</li>
+<li><strong>The command-line window</strong>: <code>q:</code> (or <code>q/</code>, <code>q?</code>, or <code>Ctrl-F</code> on an open line) opens the history in a split below as an ordinary buffer, the line being typed last. Edit with any key; <code>Enter</code> runs the line under the cursor, <code>Ctrl-C</code> or <code>:q</code> closes it.</li>
+</ul>
 <p><code>:</code> takes Vim's ranges and Vim's names. A range is line numbers, <code>.</code>, <code>$</code>, <code>%</code>, marks (<code>&#x27;a</code>, and <code>&#x27;&lt;,&#x27;&gt;</code> — which <code>:</code> typed from Visual mode fills in), <code>/pattern/</code> and <code>?pattern?</code>, each with <code>+N</code> / <code>-N</code> offsets, joined by <code>,</code> or <code>;</code>. A reversed range or one past the last line is refused with a message. Commands take their Vim abbreviations (<code>:s</code>, <code>:g</code>, <code>:norm</code>, <code>:d</code>, <code>:m</code>, <code>:t</code>, <code>:bn</code>, <code>:wqa</code> …) and <code>!</code> where Vim does.</p>
 <ul>
 <li><strong>Lines</strong>: <code>:d [x] [count]</code>, <code>:y [x] [count]</code>, <code>:m {address}</code>, <code>:t {address}</code> (<code>:co</code>), <code>:j[!]</code>, <code>:pu[!] [x]</code>, <code>:&gt;</code> / <code>:&lt;</code> (<code>:&gt;&gt;</code> twice), <code>:sort[!] [u][n][i]</code>, and <code>:{range}!cmd</code> to filter lines through a shell command.</li>
@@ -161,14 +168,14 @@ auto_popup = true</code></pre>
 <p><code>:recover</code> lists every copy strop holds, numbered, including those of buffers that never had a file name. <code>:recover restore N</code> opens copy N in a new buffer without touching the file; <code>:recover discard N</code> deletes it. Unsaved text of files on SSH hosts is kept only after <code>:recover consent remote</code>, for the current run; <code>:recover consent off</code> stops it.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="git.html">← Git</a><a class="pager-next" href="terminal.html">Terminals →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> from the strop repository at <code>v0.70.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> from the strop repository at <code>v0.71.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.70.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.71.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

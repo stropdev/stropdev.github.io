@@ -6,7 +6,7 @@
 <title>Coming from Neovim — strop</title>
 <meta name="description" content="What works in strop the way it does in Neovim, what strop does differently on purpose, and what is missing.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.70.0">
+<meta name="strop-version" content="0.71.0">
 <meta name="strop-describes" content="0.62">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="./assets/site.css">
@@ -55,7 +55,11 @@
       <li><a href="docs/vim-compat.html#folder">Folder</a><span>5 rows</span></li>
       <li><a href="docs/vim-compat.html#pickers">Pickers</a><span>12 rows</span></li>
       <li><a href="docs/vim-compat.html#terminal">Terminal</a><span>7 rows</span></li>
-      <li><a href="docs/vim-compat.html#ex-commands">Ex commands</a><span>24 rows</span></li>
+      <li><a href="docs/vim-compat.html#command-line">Command line</a><span>26 rows</span></li>
+      <li><a href="docs/vim-compat.html#command-line-text">Command line: text</a><span>25 rows</span></li>
+      <li><a href="docs/vim-compat.html#command-line-buffers">Command line: buffers</a><span>5 rows</span></li>
+      <li><a href="docs/vim-compat.html#command-line-files-and-windows">Command line: files and windows</a><span>23 rows</span></li>
+      <li><a href="docs/vim-compat.html#command-line-strop">Command line: strop</a><span>23 rows</span></li>
     </ul>
 
     <h2 id="differs">What differs</h2>
@@ -93,7 +97,6 @@
 <li>Normal: <code>==</code> <code>=j</code> <code>=ip</code> — the reindent operator</li>
 <li>Normal: <code>gqq</code> <code>gqip</code> <code>gwip</code> — reflow text to the text width</li>
 <li>Normal: <code>dis</code> <code>das</code> — the sentence text objects</li>
-<li>Normal: <code>q:</code> <code>q/</code> — the command-line window</li>
 <li>Normal: <code>ga</code> <code>g8</code> — show the character under the cursor as a code</li>
 <li>Normal: <code>gx</code> <code>gf</code> <code>gF</code> — open the URL or file name under the cursor</li>
 <li>Normal: <code>gR</code> — virtual replace mode</li>
@@ -109,14 +112,14 @@
 <li>Ex: <code>:tabnew</code> <code>:tabnext</code> <code>:tabclose</code> <code>:fold</code> <code>:mksession</code> <code>:digraphs</code> — tab pages, folds, session files, digraphs</li>
 </ul>
     <p>Also not there: key remapping, autocommands, folds, tab pages, spell checking, digraphs, diff mode, and builds for anything but Linux and WSL on x86_64. If one of these is what you live in, strop is not ready for you yet.</p>
-    <p class="provenance">The section list and the lists of missing and reassigned keys on this page are generated from <a href="docs/vim-compat.html"><code>docs/vim-compat.md</code></a> at <code>v0.70.0</code>, which the binary prints with <code>strop compat</code>.</p>
+    <p class="provenance">The section list and the lists of missing and reassigned keys on this page are generated from <a href="docs/vim-compat.html"><code>docs/vim-compat.md</code></a> at <code>v0.71.0</code>, which the binary prints with <code>strop compat</code>.</p>
   </div>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.70.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.71.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>

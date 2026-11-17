@@ -6,7 +6,7 @@
 <title>Every key — strop docs</title>
 <meta name="description" content="Generated from the command table (strop compat). ✓ works today; (soon) is planned. What Neovim binds and strop does not is listed at the end, under Missing and Reassigned.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.70.0">
+<meta name="strop-version" content="0.71.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/vim-compat.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -31,7 +31,7 @@
   <aside class="doc-side">
     <p class="side-title"><a href="./">All docs</a></p>
     <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Git</p><ol class="side-docs"><li><a href="git.html">Git</a></li></ol><p class="side-title">Editing and code</p><ol class="side-docs"><li><a href="editor.html">Indentation, themes, completion and language servers</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal.html">Terminals</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html" aria-current="page">Every key</a></li><li><a href="scripting.html">Scripts and bug reports</a></li></ol>
-    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#moving">Moving</a></li><li><a href="#editing">Editing</a></li><li><a href="#insert">Insert</a></li><li><a href="#visual">Visual</a></li><li><a href="#search">Search</a></li><li><a href="#leader-space">Leader (space)</a></li><li><a href="#panes">Panes</a></li><li><a href="#git">Git</a></li><li><a href="#folder">Folder</a></li><li><a href="#pickers">Pickers</a></li><li><a href="#terminal">Terminal</a></li><li><a href="#ex-commands">Ex commands</a></li><li><a href="#missing">Missing</a></li><li><a href="#reassigned">Reassigned</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#moving">Moving</a></li><li><a href="#editing">Editing</a></li><li><a href="#insert">Insert</a></li><li><a href="#visual">Visual</a></li><li><a href="#search">Search</a></li><li><a href="#leader-space">Leader (space)</a></li><li><a href="#panes">Panes</a></li><li><a href="#git">Git</a></li><li><a href="#folder">Folder</a></li><li><a href="#pickers">Pickers</a></li><li><a href="#terminal">Terminal</a></li><li><a href="#command-line">Command line</a></li><li><a href="#command-line-text">Command line: text</a></li><li><a href="#command-line-buffers">Command line: buffers</a></li><li><a href="#command-line-files-and-windows">Command line: files and windows</a></li><li><a href="#command-line-strop">Command line: strop</a></li><li><a href="#missing">Missing</a></li><li><a href="#reassigned">Reassigned</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
@@ -282,32 +282,122 @@
 <li><code>✓ :q :bd!</code> — :q hides a running terminal (space b returns), :bd! stops it; :qa refuses while terminals run, :qa! stops them</li>
 <li><code>✓ :r !cmd</code> — insert a command's output below the cursor</li>
 </ul>
-<h2 id="ex-commands">Ex commands</h2>
+<h2 id="command-line">Command line</h2>
 <ul>
-<li><code>✓ :</code> — ex command line (from Visual it opens with '&lt;,'&gt;)</li>
+<li><code>✓ :</code> — the command line (from Visual it opens with '&lt;,'&gt;)</li>
 <li><code>✓ :N :N,M :. :$ :% :&#x27;a :&#x27;&lt;,&#x27;&gt; :/pat/ :?pat? :.+N :N;+M</code> — ranges: lines, marks, searches and offsets; :N alone goes to the line</li>
-<li><code>✓ :s/pat/new/[flags] :&amp; :&amp;&amp; :~</code> — substitute with live preview (&amp; \1 ~ \r \u \U in the replacement; flags g i I n c &amp;) / repeat it</li>
-<li><code>✓ :g/pat/cmd :g!/pat/cmd :v/pat/cmd :norm {keys}</code> — run a command on matching (or the other) lines / type Normal keys on each line</li>
-<li><code>✓ :d {x} :y {x} :m {addr} :t {addr} :co {addr} :j :pu {x}</code> — delete / yank / move / copy / join / put lines (x: a register; a count may follow)</li>
-<li><code>✓ :&gt; :&lt; :sort :!cmd</code> — indent / unindent / sort lines (! reversed; u n i) / run a command, or with a range filter the lines through it</li>
-<li><code>✓ :k {a} :mark {a} :delm {a} :marks :reg {x} :di {x}</code> — set / delete marks; list marks and registers</li>
-<li><code>✓ :u :red :@: :@{x}</code> — undo / redo / repeat the last command line / run register x as commands</li>
-<li><code>✓ :b {n|name} :bn :bp :bN :bd {n} :ls :buffers :files</code> — go to a buffer by number or name fragment / next / previous / delete / list</li>
-<li><code>✓ :w :w {file} :up :wa</code> — write / write-as / write if modified / write every modified buffer</li>
-<li><code>✓ :q :q! :wq :x :exi :clo :on :trust</code> — quit (force) / write-quit / close this window / only this window / trust the project</li>
-<li><code>✓ :qa :qall :quita :wqa :xa</code> — quit all (fails on unsaved; bang discards) / write all and quit</li>
-<li><code>✓ :e :e {file} :ene :new :vne</code> — edit file / new unnamed buffer (here, split, vertical split)</li>
-<li><code>✓ :cd {dir|-} :pwd</code> — change the project root (Files, Search, terminals) / go back / show it</li>
-<li><code>✓ :help :mes :explain</code> — help buffer (this text — / searches it) / message history / why: workspaces, LSP, config</li>
-<li><code>✓ :theme</code> — choose a built-in interface palette</li>
-<li><code>✓ :jumps :symbols</code> — jumplist / document symbols picker</li>
-<li><code>✓ :format :rename</code> — format buffer / rename symbol: :rename NEW</li>
-<li><code>✓ :recover</code> — recover unsaved text after a crash: list, restore N, discard N</li>
-<li><code>✓ :select-next :select-all :select-skip :select-pop</code> — occurrence selection: next / all / skip / pop last-added</li>
-<li><code>✓ :view :set</code> — readonly browsing (:set ro/noro; CLI: -R)</li>
-<li><code>✓ :tab-size :indent-style</code> — indent width and tabs or spaces for this file</li>
-<li><code>✓ :remote :terminal-local</code> — SSH hosts / a local shell even from an SSH context</li>
-<li><code>✓ :copen :cwindow :cnext :cprevious :cNext :cc :cdo :cfdo</code> — the collection's hits (quickfix): show it, step hits, run a command at each hit line or file</li>
+<li><code>✓ enter ctrl-j ctrl-m</code> — run the line (a failed line says so in error ink)</li>
+<li><code>✓ esc ctrl-[ ctrl-c</code> — cancel; the view returns to where it was</li>
+<li><code>✓ backspace ctrl-h</code> — delete before the cursor; on an empty line, cancel</li>
+<li><code>✓ delete</code> — delete under the cursor (at the end: before it)</li>
+<li><code>✓ ctrl-w</code> — delete the word before the cursor</li>
+<li><code>✓ ctrl-u</code> — delete everything before the cursor</li>
+<li><code>✓ left</code> — one character left</li>
+<li><code>✓ right</code> — one character right</li>
+<li><code>✓ ctrl-b home</code> — start of the line</li>
+<li><code>✓ ctrl-e end</code> — end of the line; with a completion selected: put back what was typed</li>
+<li><code>✓ ctrl-r</code> — insert a register (" a-z 0 : / +); ctrl-r ctrl-w / ctrl-a: the word / WORD under the cursor</li>
+<li><code>✓ tab</code> — next completion, written into the line (after the last: what was typed)</li>
+<li><code>✓ s-tab</code> — previous completion</li>
+<li><code>✓ ctrl-p</code> — older history line; previous completion while the menu is open</li>
+<li><code>✓ ctrl-n</code> — newer history line; next completion while the menu is open</li>
+<li><code>✓ up</code> — older history line that starts with what is typed; the row above once one is selected</li>
+<li><code>✓ down</code> — newer history line that starts with what is typed; the row below once one is selected</li>
+<li><code>✓ ctrl-y</code> — keep the selected completion, close the menu</li>
+<li><code>✓ ctrl-d</code> — list the completions</li>
+<li><code>✓ ctrl-f</code> — edit this line in the command-line window</li>
+<li><code>✓ ctrl-l</code> — repaint the screen</li>
+<li><code>✓ q: q/ q?</code> — the command-line window: the : (or / ?) history as a buffer, the line being typed last</li>
+<li><code>✓ enter</code> — in the command-line window: run the cursor's line (Insert too)</li>
+<li><code>✓ ctrl-c :q</code> — in the command-line window: close it</li>
+</ul>
+<h2 id="command-line-text">Command line: text</h2>
+<ul>
+<li><code>✓ :s/pat/new/[flags]</code> — replace matches, with a live preview (flags g i I c n &amp;)</li>
+<li><code>✓ :&amp;[&amp;]</code> — repeat the last :s (:&amp;&amp; keeps its flags)</li>
+<li><code>✓ :~</code> — repeat the last :s with the last search pattern</li>
+<li><code>✓ :g[!]/pat/cmd</code> — run cmd on every matching line (! on the others)</li>
+<li><code>✓ :v/pat/cmd</code> — run cmd on every line that does not match</li>
+<li><code>✓ :norm[al] {keys}</code> — type Normal-mode keys on each line of the range</li>
+<li><code>✓ :d [x] [count]</code> — delete lines (into register x)</li>
+<li><code>✓ :y [x] [count]</code> — yank lines (into register x)</li>
+<li><code>✓ :m {address}</code> — move lines below the address</li>
+<li><code>✓ :t {address}</code> — copy lines below the address (also :copy)</li>
+<li><code>✓ :j[!] [count]</code> — join lines (! keeps the white space)</li>
+<li><code>✓ :pu[!] [x]</code> — put register x below the line (! above)</li>
+<li><code>✓ :&gt; [count]</code> — indent lines (:&gt;&gt; twice)</li>
+<li><code>✓ :&lt; [count]</code> — unindent lines (:&lt;&lt; twice)</li>
+<li><code>✓ :sor[t][!] [u][n][i]</code> — sort lines (! reversed)</li>
+<li><code>✓ :[range]!cmd</code> — run a shell command; with a range, filter the lines through it</li>
+<li><code>✓ :@: :@x</code> — repeat the last command line / run register x as commands</li>
+<li><code>✓ :r !cmd</code> — insert the command's output below the cursor</li>
+<li><code>✓ :u[ndo]</code> — undo one change</li>
+<li><code>✓ :red[o]</code> — redo one undone change</li>
+<li><code>✓ :k {a}</code> — set mark a on the line (also :mark)</li>
+<li><code>✓ :marks</code> — list the marks</li>
+<li><code>✓ :delm[arks][!] {a b c-e}</code> — delete marks (! every lowercase mark)</li>
+<li><code>✓ :reg [names]</code> — list the registers (also :display)</li>
+<li><code>✓ :noh[lsearch]</code> — clear the persistent search highlight</li>
+</ul>
+<h2 id="command-line-buffers">Command line: buffers</h2>
+<ul>
+<li><code>✓ :b {number|name}</code> — go to a buffer by number or unique name fragment</li>
+<li><code>✓ :bn[ext]</code> — go to the next buffer</li>
+<li><code>✓ :bp[revious]</code> — go to the previous buffer (also :bNext)</li>
+<li><code>✓ :bd[elete][!] [number]</code> — delete a buffer (! discards changes, stops a terminal)</li>
+<li><code>✓ :ls[!]</code> — list the buffers (also :buffers :files)</li>
+</ul>
+<h2 id="command-line-files-and-windows">Command line: files and windows</h2>
+<ul>
+<li><code>✓ :w[!] [file]</code> — write the buffer (! over a file changed on disk)</li>
+<li><code>✓ :wa[ll][!]</code> — write every modified buffer</li>
+<li><code>✓ :wq[!] [file]</code> — write and quit</li>
+<li><code>✓ :wqa[ll][!]</code> — write every modified buffer and quit (also :xall)</li>
+<li><code>✓ :x[it][!] [file]</code> — write if modified, then quit (also :exit)</li>
+<li><code>✓ :up[date][!] [file]</code> — write if modified</li>
+<li><code>✓ :q[uit][!]</code> — close the window, or the buffer in the last one</li>
+<li><code>✓ :qa[ll][!]</code> — quit all (fails on unsaved; ! discards) (also :quitall)</li>
+<li><code>✓ :clo[se]</code> — close the window (never the last one)</li>
+<li><code>✓ :on[ly]</code> — close every other window</li>
+<li><code>✓ :e[dit][!] [file]</code> — edit a file, or reload this one</li>
+<li><code>✓ :ene[w]</code> — edit a new, unnamed buffer</li>
+<li><code>✓ :new</code> — split with a new, unnamed buffer</li>
+<li><code>✓ :vne[w]</code> — split vertically with a new, unnamed buffer</li>
+<li><code>✓ :vie[w] {file}</code> — open a file readonly</li>
+<li><code>✓ :sp[lit] [file]</code> — split below</li>
+<li><code>✓ :vs[plit] [file]</code> — split to the right</li>
+<li><code>✓ :cd [dir|-]</code> — change the project root (- goes back)</li>
+<li><code>✓ :pw[d]</code> — show the project root (Files, Search, terminals)</li>
+<li><code>✓ :se[t] {ro|noro}</code> — make this buffer readonly, or writable again</li>
+<li><code>✓ :h[elp] [topic]</code> — the help buffer (this text; / searches it)</li>
+<li><code>✓ :mes[sages]</code> — the last 50 echo-row messages</li>
+<li><code>✓ :ju[mps]</code> — the jumplist picker</li>
+</ul>
+<h2 id="command-line-strop">Command line: strop</h2>
+<ul>
+<li><code>✓ :ter[minal] [cmd]</code> — an interactive shell in the selected namespace</li>
+<li><code>✓ :terminal-local [cmd]</code> — a local shell, even from an SSH context</li>
+<li><code>✓ :theme [name]</code> — choose a built-in interface palette</li>
+<li><code>✓ :filter [text]</code> — narrow the folder to matching names; alone it clears</li>
+<li><code>✓ :remote [root|home|connect|disconnect|clear|list]</code> — choose a remote destination, or manage connections</li>
+<li><code>✓ :trust</code> — authorize the pending endpoint or project command</li>
+<li><code>✓ :explain</code> — why: workspaces, LSP readiness/failures, effective config</li>
+<li><code>✓ :format</code> — format the buffer through the language server</li>
+<li><code>✓ :rename {new}</code> — rename the symbol under the cursor</li>
+<li><code>✓ :symbols</code> — the document symbols picker</li>
+<li><code>✓ :cope[n]</code> — show the collection, on its current hit (the quickfix list) (also :cwindow)</li>
+<li><code>✓ :cn[ext]</code> — next hit of the collection</li>
+<li><code>✓ :cp[revious]</code> — previous hit of the collection (also :cNext)</li>
+<li><code>✓ :cc [N]</code> — hit N of the collection</li>
+<li><code>✓ :cdo {cmd}</code> — run a command on every hit line of the collection</li>
+<li><code>✓ :cfdo {cmd}</code> — run a command once in every file of the collection</li>
+<li><code>✓ :select-next</code> — select the next occurrence of the word or selection</li>
+<li><code>✓ :select-all</code> — select every occurrence in the buffer</li>
+<li><code>✓ :select-skip</code> — skip the next occurrence candidate</li>
+<li><code>✓ :select-pop</code> — drop the last-added occurrence</li>
+<li><code>✓ :tab-size [N|auto]</code> — indentation width for this file (alone: a selector)</li>
+<li><code>✓ :indent-style [spaces|tabs|auto]</code> — indent with tabs or spaces in this file</li>
+<li><code>✓ :recover [list|restore N|discard N]</code> — recover unsaved text after a crash</li>
 </ul>
 <h2 id="missing">Missing</h2>
 <p>Neovim binds these; in strop the key does nothing. An operator on this list (<code>=</code>, <code>gq</code>, <code>gw</code>, <code>zf</code>) still takes its motion, so the motion's keys never run as commands.</p>
@@ -318,7 +408,6 @@
 <li>Normal: <code>==</code> <code>=j</code> <code>=ip</code> — the reindent operator</li>
 <li>Normal: <code>gqq</code> <code>gqip</code> <code>gwip</code> — reflow text to the text width</li>
 <li>Normal: <code>dis</code> <code>das</code> — the sentence text objects</li>
-<li>Normal: <code>q:</code> <code>q/</code> — the command-line window</li>
 <li>Normal: <code>ga</code> <code>g8</code> — show the character under the cursor as a code</li>
 <li>Normal: <code>gx</code> <code>gf</code> <code>gF</code> — open the URL or file name under the cursor</li>
 <li>Normal: <code>gR</code> — virtual replace mode</li>
@@ -349,14 +438,14 @@
 </ul>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="cli.html">← The command line</a><a class="pager-next" href="scripting.html">Scripts and bug reports →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> from the strop repository at <code>v0.70.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> from the strop repository at <code>v0.71.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.70.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.71.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

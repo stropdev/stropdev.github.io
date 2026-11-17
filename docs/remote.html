@@ -6,7 +6,7 @@
 <title>Edit over SSH — strop docs</title>
 <meta name="description" content="Edit files on another machine over SSH. strop uses the ssh already on your machine. Nothing is installed on the host.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.70.0">
+<meta name="strop-version" content="0.71.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/remote.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -41,7 +41,7 @@
 <pre><code class="language-sh">strop ssh://devbox/etc/
 strop +120 ssh://user@devbox/var/log/app.log
 strop remote &quot;ssh://user@devbox:2222/~/project/src/lib.rs&quot;</code></pre>
-<p><code>strop remote URL</code> and <code>--remote URL</code> are the same command (see <a href="cli.html">cli.md</a>). <code>-R</code> opens read-only, as for a local file.</p>
+<p><code>strop remote URL</code> is described in <a href="cli.html">cli.md</a>. <code>-R</code> opens read-only, as for a local file.</p>
 <h2 id="connecting">Connecting</h2>
 <p>Press <strong>Space o</strong> or run <strong><code>:remote</code></strong> to pick a host: the directories you opened before, the hosts you are connected to, and the hosts in your SSH config and <code>known_hosts</code>. Or select <strong>Add a host…</strong> and enter <code>host</code>, <code>user@host:port</code> or a complete <code>ssh://</code> address. Opening the list does not log in; Enter connects. A new host starts at <code>/</code>. strop remembers, on this machine only, the directory you last opened on each host (in <code>remote-destinations.json</code> under <code>$XDG_STATE_HOME/strop</code>, normally <code>~/.local/state/strop</code>).</p>
 <pre><code class="language-vim">:e ssh://devbox/
@@ -81,14 +81,14 @@ strop remote &quot;ssh://user@devbox:2222/~/project/src/lib.rs&quot;</code></pre
 <p><code>rg</code>, <code>git</code> and the language server must be installed on the host. Each command runs through your login shell there, so a slow shell startup file slows every search and Git query. csh-family login shells are not supported for commands with special characters.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="terminal.html">← Terminals</a><a class="pager-next" href="cli.html">The command line →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/remote.md"><code>docs/remote.md</code></a> from the strop repository at <code>v0.70.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/remote.md"><code>docs/remote.md</code></a> from the strop repository at <code>v0.71.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.70.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.71.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

@@ -6,7 +6,7 @@
 <title>The command line — strop docs</title>
 <meta name="description" content="strop FILE opens a file. This page lists the other commands and the options. strop --help prints the same list (in colour on a terminal, plain when piped).">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.70.0">
+<meta name="strop-version" content="0.71.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/cli.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -44,7 +44,6 @@
 <table>
 <thead><tr><th>Command</th><th>What it does</th></tr></thead>
 <tbody>
-<tr><td><code>strop edit [FILE]</code></td><td>open a file, directory, or an empty buffer (the default)</td></tr>
 <tr><td><code>strop remote URL</code></td><td>open an <code>ssh://</code> file or directory for editing</td></tr>
 <tr><td><code>strop headless SCRIPT [FILE]</code></td><td>run a script of keys against a file, with no screen</td></tr>
 <tr><td><code>strop replay LOG</code></td><td>show a recorded session again (<code>--script</code> prints its keys as a script)</td></tr>
@@ -64,30 +63,28 @@
 <tr><td><code>-R</code>, <code>--readonly</code></td><td>open read-only</td></tr>
 <tr><td><code>+LINE</code></td><td>initial line for FILE (or use <code>FILE:LINE</code>)</td></tr>
 <tr><td><code>--theme NAME</code></td><td>colour theme for this run (see <a href="editor.html#themes">Themes</a>)</td></tr>
-<tr><td><code>--remote URL</code></td><td>same as <code>strop remote URL</code></td></tr>
-<tr><td><code>--script PATH</code></td><td>same as <code>strop headless PATH</code></td></tr>
 <tr><td><code>--log[=PATH]</code></td><td>record this session to a file, for a bug report (<code>STROP_LOG=PATH</code> works too; without PATH the file is <code>strop-log.jsonl</code>)</td></tr>
 <tr><td><code>--log-content</code></td><td>include file text in the recording (sensitive)</td></tr>
 <tr><td><code>--log-terminal-content</code></td><td>also what you type and see in terminals</td></tr>
 <tr><td><code>-h</code>, <code>--help</code> / <code>-V</code>, <code>--version</code></td><td>help and version</td></tr>
 </tbody>
 </table>
-<p>Older spellings still work: <code>--log-file PATH</code> for <code>--log=PATH</code>, and <code>--headless SCRIPT</code> for <code>--script SCRIPT</code>.</p>
+<p><code>--log-file PATH</code> is <code>--log=PATH</code> with the path as its own argument.</p>
 <h2 id="remote-locations">Remote locations</h2>
 <pre><code class="language-text">ssh://[user@]host[:port]/absolute/path[:LINE]</code></pre>
-<p><code>strop --remote &quot;ssh://user@devbox:2222/etc/app.conf:120&quot;</code> and <code>strop remote ssh://user@devbox:2222/etc/app.conf:120</code> are the same command. Once connected you can edit and save; <code>-R</code> opens read-only. To read a growing log, pipe it in: <code>ssh devbox tail -f /var/log/app.log | strop -</code>. Details are in <a href="remote.html">remote.md</a>.</p>
+<p><code>strop remote ssh://user@devbox:2222/etc/app.conf:120</code> opens that file at line 120; a plain <code>strop ssh://…</code> operand does the same. Once connected you can edit and save; <code>-R</code> opens read-only. To read a growing log, pipe it in: <code>ssh devbox tail -f /var/log/app.log | strop -</code>. Details are in <a href="remote.html">remote.md</a>.</p>
 <h2 id="exit-codes">Exit codes</h2>
 <p><code>0</code> on success. Otherwise nonzero, with a one-line <code>strop: …</code> explanation on stderr.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="remote.html">← Edit over SSH</a><a class="pager-next" href="vim-compat.html">Every key →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/cli.md"><code>docs/cli.md</code></a> from the strop repository at <code>v0.70.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/cli.md"><code>docs/cli.md</code></a> from the strop repository at <code>v0.71.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.70.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.71.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>
