@@ -1,5 +1,5 @@
 {
-  "version": "0.71.0",
+  "version": "0.72.0",
   "cols": 100,
   "rows": 30,
   "palette": "hone",
@@ -30,6 +30,15 @@
       "height": 549,
       "caption": "<kbd>Space</kbd> <kbd>g</kbd> <kbd>g</kbd>: the status buffer of the same project, with one file's diff opened by <kbd>=</kbd>. <kbd>s</kbd> stages and <kbd>u</kbd> unstages the file or hunk under the cursor.",
       "alt": "strop's git status buffer: sections for staged, unstaged and untracked files, with the diff of one file shown under its row."
+    },
+    "help": {
+      "file": "img/frame-help.svg",
+      "tab": "Help",
+      "surface": "help-sections",
+      "width": 864,
+      "height": 549,
+      "caption": "<kbd>Space</kbd> <kbd>?</kbd>: every key strop has, in one read-only buffer. The top line lists its sections; <kbd>]]</kbd> and <kbd>[[</kbd> move between them, <kbd>Enter</kbd> on a name opens it, and <kbd>/</kbd> searches all of it. Keys are coloured by kind: plain keys, named keys like <code>space</code>, <code>ctrl-</code> chords, placeholders.",
+      "alt": "strop's help page: a row of section names at the top, then the Move section: keys on the left in several colours and what they do on the right."
     }
   }
 }

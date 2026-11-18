@@ -6,7 +6,7 @@
 <title>Every key — strop docs</title>
 <meta name="description" content="Generated from the command table (strop compat). ✓ works today; (soon) is planned. What Neovim binds and strop does not is listed at the end, under Missing and Reassigned.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.71.0">
+<meta name="strop-version" content="0.72.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/vim-compat.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -31,7 +31,7 @@
   <aside class="doc-side">
     <p class="side-title"><a href="./">All docs</a></p>
     <p class="side-title">Find and change</p><ol class="side-docs"><li><a href="search.html">Find files, search and replace</a></li><li><a href="filesystem.html">Create, rename, move and delete files</a></li></ol><p class="side-title">Git</p><ol class="side-docs"><li><a href="git.html">Git</a></li></ol><p class="side-title">Editing and code</p><ol class="side-docs"><li><a href="editor.html">Indentation, themes, completion and language servers</a></li></ol><p class="side-title">Terminals and other machines</p><ol class="side-docs"><li><a href="terminal.html">Terminals</a></li><li><a href="remote.html">Edit over SSH</a></li></ol><p class="side-title">Reference</p><ol class="side-docs"><li><a href="cli.html">The command line</a></li><li><a href="vim-compat.html" aria-current="page">Every key</a></li><li><a href="scripting.html">Scripts and bug reports</a></li></ol>
-    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#moving">Moving</a></li><li><a href="#editing">Editing</a></li><li><a href="#insert">Insert</a></li><li><a href="#visual">Visual</a></li><li><a href="#search">Search</a></li><li><a href="#leader-space">Leader (space)</a></li><li><a href="#panes">Panes</a></li><li><a href="#git">Git</a></li><li><a href="#folder">Folder</a></li><li><a href="#pickers">Pickers</a></li><li><a href="#terminal">Terminal</a></li><li><a href="#command-line">Command line</a></li><li><a href="#command-line-text">Command line: text</a></li><li><a href="#command-line-buffers">Command line: buffers</a></li><li><a href="#command-line-files-and-windows">Command line: files and windows</a></li><li><a href="#command-line-strop">Command line: strop</a></li><li><a href="#missing">Missing</a></li><li><a href="#reassigned">Reassigned</a></li></ol>
+    <p class='side-title side-toc-title'>On this page</p><ol class='side-toc'><li><a href="#moving">Moving</a></li><li><a href="#editing">Editing</a></li><li><a href="#insert">Insert</a></li><li><a href="#visual">Visual</a></li><li><a href="#search">Search</a></li><li><a href="#leader-space">Leader (space)</a></li><li><a href="#panes">Panes</a></li><li><a href="#git">Git</a></li><li><a href="#folder">Folder</a></li><li><a href="#pickers">Pickers</a></li><li><a href="#terminal">Terminal</a></li><li><a href="#command-line">Command line</a></li><li><a href="#command-line-text">Command line: text</a></li><li><a href="#command-line-buffers">Command line: buffers</a></li><li><a href="#command-line-files-and-windows">Command line: files and windows</a></li><li><a href="#command-line-tab-pages">Command line: tab pages</a></li><li><a href="#command-line-strop">Command line: strop</a></li><li><a href="#missing">Missing</a></li><li><a href="#reassigned">Reassigned</a></li></ol>
   </aside>
   <article class="doc">
     <p class="eyebrow">Docs</p>
@@ -50,11 +50,12 @@
 <li><code>✓ - +</code> — line up / down, on the first non-blank</li>
 <li><code>✓ ( )</code> — sentence back / forward</li>
 <li><code>✓ [( [{ ]) ]}</code> — the unmatched bracket before / after</li>
+<li><code>✓ ]] [[</code> — help: next / previous section</li>
 <li><code>✓ g_ g0 g^ g$ gj gk</code> — last non-blank; line start, first non-blank, end; line down / up</li>
 <li><code>✓ gn gN</code> — select the next / previous search match (cgn then . changes each)</li>
 <li><code>✓ 0 $ G %</code> — line/file/pair jumps</li>
 <li><code>✓ gg</code> — top of file</li>
-<li><code>✓ enter</code> — line down, first non-blank (collection: open the file here; blame: the line's commit)</li>
+<li><code>✓ enter</code> — line down, first non-blank (collection: open the file here; blame: the line's commit; help: the section under the cursor)</li>
 <li><code>✓ tab</code> — jump list forward (ctrl-i)</li>
 <li><code>✓ ctrl-d ctrl-u ctrl-f ctrl-b</code> — half/full page scroll (count = lines)</li>
 <li><code>✓ ctrl-e ctrl-y</code> — scroll the window one line down / up</li>
@@ -215,13 +216,16 @@
 <ul>
 <li><code>✓ :vs :sp</code> — split vertical / horizontal</li>
 <li><code>✓ space w h / l / j / k / w / 1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9</code> — pane move / cycle / focus 1-9</li>
-<li><code>✓ ctrl-o / ctrl-i (tab)</code> — jump back / forward (jumplist)</li>
+<li><code>✓ ctrl-o / ctrl-i</code> — jump back / forward (jumplist; tab is ctrl-i)</li>
 <li><code>✓ space w v / -</code> — pane split (vertical / horizontal)</li>
 <li><code>✓ space w q</code> — close pane (last → buffer)</li>
-<li><code>✓ ctrl-w h ctrl-w j ctrl-w k ctrl-w l ctrl-w w ctrl-w W ctrl-w p</code> — window: left / down / up / right / next / previous / last used (ctrl-w ctrl-{key} is the same)</li>
-<li><code>✓ ctrl-w s ctrl-w v ctrl-w n</code> — window: split below / split right / new empty buffer below</li>
-<li><code>✓ ctrl-w c ctrl-w q ctrl-w o</code> — window: close / quit (:q) / keep only this one</li>
+<li><code>✓ ctrl-w h / j / k / l / w / W / p</code> — window: left / down / up / right / next / previous / last used (ctrl-w ctrl-{key} is the same)</li>
+<li><code>✓ ctrl-w s / v / n</code> — window: split below / split right / new empty buffer below</li>
+<li><code>✓ ctrl-w c / q / o</code> — window: close / quit (:q) / keep only this one</li>
 <li><code>✓ ctrl-w =</code> — window: equal sizes (panes always are)</li>
+<li><code>✓ gt gT</code> — next / previous tab page; 3gt goes to tab page 3, 3gT three back</li>
+<li><code>✓ g tab</code> — the tab page used before this one</li>
+<li><code>✓ ctrl-w T</code> — window: move this pane to a new tab page</li>
 <li><code>✓ ctrl-l</code> — redraw: full repaint when the terminal desyncs</li>
 </ul>
 <h2 id="git">Git</h2>
@@ -355,7 +359,7 @@
 <li><code>✓ :wqa[ll][!]</code> — write every modified buffer and quit (also :xall)</li>
 <li><code>✓ :x[it][!] [file]</code> — write if modified, then quit (also :exit)</li>
 <li><code>✓ :up[date][!] [file]</code> — write if modified</li>
-<li><code>✓ :q[uit][!]</code> — close the window, or the buffer in the last one</li>
+<li><code>✓ :q[uit][!]</code> — close the window; the tab page when it is the last window in it; the buffer when it is the last window</li>
 <li><code>✓ :qa[ll][!]</code> — quit all (fails on unsaved; ! discards) (also :quitall)</li>
 <li><code>✓ :clo[se]</code> — close the window (never the last one)</li>
 <li><code>✓ :on[ly]</code> — close every other window</li>
@@ -372,6 +376,18 @@
 <li><code>✓ :h[elp] [topic]</code> — the help buffer (this text; / searches it)</li>
 <li><code>✓ :mes[sages]</code> — the last 50 echo-row messages</li>
 <li><code>✓ :ju[mps]</code> — the jumplist picker</li>
+</ul>
+<h2 id="command-line-tab-pages">Command line: tab pages</h2>
+<ul>
+<li><code>✓ :tabn[ext] [N]</code> — go to the next tab page, or to tab page N</li>
+<li><code>✓ :tabp[revious] [N]</code> — go to the previous tab page, or N back (also :tabNext)</li>
+<li><code>✓ :tabfir[st]</code> — go to the first tab page (also :tabrewind)</li>
+<li><code>✓ :tabl[ast]</code> — go to the last tab page</li>
+<li><code>✓ :tabnew [file]</code> — open a new tab page after this one (also :tabedit)</li>
+<li><code>✓ :tab {split|new}</code> — open the split in a new tab page; :tab split shows this buffer alone</li>
+<li><code>✓ :tabc[lose][!] [N]</code> — close this tab page, or tab page N; its buffers stay open</li>
+<li><code>✓ :tabo[nly][!]</code> — close every other tab page</li>
+<li><code>✓ :tabm[ove] [N]</code> — move this tab page after tab page N (0 first, $ or nothing last, +N -N relative)</li>
 </ul>
 <h2 id="command-line-strop">Command line: strop</h2>
 <ul>
@@ -403,7 +419,6 @@
 <p>Neovim binds these; in strop the key does nothing. An operator on this list (<code>=</code>, <code>gq</code>, <code>gw</code>, <code>zf</code>) still takes its motion, so the motion's keys never run as commands.</p>
 <ul>
 <li>Normal: <code>zfj</code> <code>zo</code> <code>zc</code> <code>za</code> <code>zR</code> <code>zM</code> <code>zj</code> <code>zk</code> <code>zd</code> — folds</li>
-<li>Normal: <code>gt</code> <code>gT</code> — tab pages</li>
 <li>Normal: <code>U</code> — undo every change on the line</li>
 <li>Normal: <code>==</code> <code>=j</code> <code>=ip</code> — the reindent operator</li>
 <li>Normal: <code>gqq</code> <code>gqip</code> <code>gwip</code> — reflow text to the text width</li>
@@ -412,15 +427,16 @@
 <li>Normal: <code>gx</code> <code>gf</code> <code>gF</code> — open the URL or file name under the cursor</li>
 <li>Normal: <code>gR</code> — virtual replace mode</li>
 <li>Normal: <code>K</code> — look the word under the cursor up (hover is <code>space k</code>)</li>
-<li>Normal: <code>]]</code> <code>[[</code> <code>][</code> <code>[]</code> <code>]m</code> <code>[m</code> — section and method motions</li>
+<li>Normal: <code>][</code> <code>[]</code> <code>]m</code> <code>[m</code> — section-end and method motions</li>
 <li>Normal: <code>z=</code> <code>zg</code> <code>]s</code> <code>[s</code> — spelling</li>
 <li>Normal: <code>gm</code> <code>gM</code> <code>go</code> — middle of the line, byte offset</li>
 <li>Normal: <code>zh</code> <code>zl</code> <code>zH</code> <code>zL</code> <code>ze</code> <code>zs</code> — horizontal scrolling</li>
 <li>Normal: <code>do</code> <code>dp</code> — diff mode</li>
-<li>Normal: <code>ctrl-w x</code> <code>ctrl-w r</code> <code>ctrl-w T</code> <code>ctrl-w H</code> <code>ctrl-w J</code> <code>ctrl-w K</code> <code>ctrl-w L</code> <code>ctrl-w +</code> <code>ctrl-w -</code> <code>ctrl-w _</code> <code>ctrl-w |</code> — move, rotate and resize windows (panes are always equal)</li>
+<li>Normal: <code>ctrl-w x</code> <code>ctrl-w r</code> <code>ctrl-w H</code> <code>ctrl-w J</code> <code>ctrl-w K</code> <code>ctrl-w L</code> <code>ctrl-w +</code> <code>ctrl-w -</code> <code>ctrl-w _</code> <code>ctrl-w |</code> — move, rotate and resize windows (panes are always equal)</li>
 <li>Visual: <code>=</code> <code>gq</code> <code>gw</code> <code>zf</code> — reindent, reflow and fold the selection</li>
 <li>Insert: <code>ctrl-v</code> <code>ctrl-k</code> <code>ctrl-a</code> — insert a literal key, a digraph, the last inserted text</li>
-<li>Ex: <code>:tabnew</code> <code>:tabnext</code> <code>:tabclose</code> <code>:fold</code> <code>:mksession</code> <code>:digraphs</code> — tab pages, folds, session files, digraphs</li>
+<li>Ex: <code>:fold</code> <code>:mksession</code> <code>:digraphs</code> — folds, session files, digraphs</li>
+<li>Ex: <code>:tabs</code> <code>:tabdo</code> <code>:tabfind</code> <code>:tcd</code> — list tab pages, run a command in each, find into one, a directory per tab page</li>
 </ul>
 <h2 id="reassigned">Reassigned</h2>
 <p>Neovim binds these; strop uses the key for something else.</p>
@@ -438,14 +454,14 @@
 </ul>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="cli.html">← The command line</a><a class="pager-next" href="scripting.html">Scripts and bug reports →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> from the strop repository at <code>v0.71.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/vim-compat.md"><code>docs/vim-compat.md</code></a> from the strop repository at <code>v0.72.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.71.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.72.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

@@ -138,6 +138,26 @@ SCENARIOS = [
             },
         ],
     },
+    {
+        "name": "help",
+        "tab": "Help",
+        "candidates": [
+            {
+                "id": "help-sections",
+                "project": "tally",
+                "file": "README.md",
+                "script": "settle\nkeys <space>?\nsettle\n",
+                "expect": ["Move  Edit  Visual  Leader", "━ Move", "h j k l"],
+                "caption": "<kbd>Space</kbd> <kbd>?</kbd>: every key strop has, in one read-only buffer. "
+                           "The top line lists its sections; <kbd>]]</kbd> and <kbd>[[</kbd> move between "
+                           "them, <kbd>Enter</kbd> on a name opens it, and <kbd>/</kbd> searches all of it. "
+                           "Keys are coloured by kind: plain keys, named keys like <code>space</code>, "
+                           "<code>ctrl-</code> chords, placeholders.",
+                "alt": "strop's help page: a row of section names at the top, then the Move section: "
+                       "keys on the left in several colours and what they do on the right.",
+            },
+        ],
+    },
 ]
 
 STUB_C = ("/* SPDX-License-Identifier: GPL-2.0 */\n"

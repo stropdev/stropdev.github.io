@@ -6,7 +6,7 @@
 <title>What changed — strop</title>
 <meta name="description" content="What changed in strop, release by release.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.71.0">
+<meta name="strop-version" content="0.72.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="CHANGELOG.md">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
@@ -32,8 +32,24 @@
   <h1>What changed</h1>
   <p class="lede">The last 3 releases, newest first. Tarballs and checksums are on <a href="https://github.com/stropdev/strop/releases">GitHub releases</a>.</p>
   <div class="prose">
-<h2 id="release-0-71-0-2026-11-17">0.71.0 — 2026-11-17</h2>
+<h2 id="release-0-72-0-2026-11-18">0.72.0 — 2026-11-18</h2>
 <h3 id="added">Added</h3>
+<ul>
+<li><strong>Tab pages, as in Vim</strong> (plans/0113): a second layout of panes over the same buffers. <code>:tab split</code> shows the pane you are in on its own and <code>:q</code> brings the split back; <code>Ctrl-W T</code> moves a pane to a new tab page; <code>:tabnew [file]</code> opens one. <code>gt</code>, <code>gT</code>, <code>3gt</code>, <code>3gT</code> and <code>g Tab</code> move between them; <code>:tabnext</code>, <code>:tabprevious</code>, <code>:tabfirst</code>, <code>:tablast</code>, <code>:tabclose [N]</code>, <code>:tabonly</code> and <code>:tabmove [N|+N|-N|$]</code> do the rest. Buffers, registers and marks are shared; each tab page keeps its panes, each pane its cursor and jump list.</li>
+<li><strong>The tab line</strong>: with two or more tab pages the top row lists them — the number, the file name of its current pane, <code>+2</code> for more panes, <code>●</code> for unsaved changes — with the current one on the text background. With one tab page nothing on screen changes.</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li><strong>The help page is rebuilt</strong> (plans/0112): keys are coloured by what they are (plain keys, <code>space</code> and other named keys, <code>ctrl-</code> chords, placeholders), a top line lists nine sections and <code>]]</code> / <code>[[</code> or <code>Enter</code> on a name jumps to one, descriptions wrap instead of running off an 80-column screen. The status line names the section the cursor is in, <code>:help</code> completion lists the sections first, and help has no line numbers.</li>
+<li><strong><code>:q</code>, <code>:close</code> and <code>Ctrl-W c</code> on a tab page's only pane close the tab page</strong>, not the buffer; with one tab page they work as before.</li>
+<li><strong>Recorded traces from 0.71 are refused</strong> (the editor's semantics version is 8: the seed carries tab pages).</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>The Windows rows of the help whose descriptions were off screen at 80 columns.</li>
+</ul>
+<h2 id="release-0-71-0-2026-11-17">0.71.0 — 2026-11-17</h2>
+<h3 id="added-2">Added</h3>
 <ul>
 <li><strong>The command line lives on the bottom row, as in Vim</strong> (plans/0110). A menu opens as you type: the top row is always the command Enter runs, then names that start with what you typed, then close matches, each with its short form and what it does. <code>Tab</code>/<code>Shift-Tab</code> cycle; arguments complete by what the command takes — files, folders, buffers, themes, help topics. The right end of the row shows the command's usage, the lines a range names (<code>4–6 · 3 lines</code>), the changes a <code>:s</code> will make, or the error.</li>
 <li><strong>Command-line history</strong>: <code>Up</code>/<code>Down</code> recall earlier lines that start with what you typed, 200 each for <code>:</code> and <code>/</code>, kept per project. <code>q:</code>, <code>q/</code> and <code>Ctrl-F</code> open the history as a buffer you can edit with every key; <code>Enter</code> runs the line.</li>
@@ -41,7 +57,7 @@
 <li><strong><code>:s</code> previews in place</strong>: the changed lines read as they will after <code>Enter</code>, and the row counts the changes, including those off screen.</li>
 <li><strong><code>Ctrl-C</code> stops a long <code>:g</code> or ranged <code>:normal</code></strong> between lines.</li>
 </ul>
-<h3 id="changed">Changed</h3>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li><strong>A filter a list cannot apply is an error, not silence.</strong> A misspelt filter, an unknown value or one the list does not take (<code>kind:</code> in Files) marks the word with <code>^^^</code>, says what is wrong on the row under the field with the nearest correct spelling, and leaves the list as it was until it is fixed.</li>
 <li><strong><code>type:</code> is gone</strong>; write <code>kind:</code>. <code>type:function</code> now says <code>did you mean kind:?</code>.</li>
@@ -61,7 +77,7 @@
 <li><strong>Session, trace and trust files in old formats are refused</strong> rather than read.</li>
 <li><strong>The release binary is built with whole-program optimisation</strong> (fat LTO, one codegen unit).</li>
 </ul>
-<h3 id="fixed">Fixed</h3>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li><strong><code>kind:</code> filters <code>Space s</code> and <code>Space S</code></strong> (plans/0109). It used to keep every row: only nine exact words were values and anything else was ignored without a word, a language server's fields, variants and type parameters passed every <code>kind:</code> filter, and a <code>kind:</code> turned the words beside it into an exact phrase. Now <code>kind:</code> takes the full word, the chip the list shows (<code>fn</code>, <code>meth</code>, <code>iface</code>, <code>const</code>, …) and common language words (<code>trait</code>, <code>func</code>, <code>def</code>, …), in any case, or the start of one; all 26 kinds a language server reports have one; and <code>kind:fn pcfg</code> finds <code>parse_config</code>.</li>
 <li><strong>Files obeys <code>AND</code>/<code>OR</code>/<code>NOT</code></strong>: <code>NOT path:src</code> and <code>path:a OR path:b</code> used to list every file.</li>
@@ -86,30 +102,24 @@
 </ul>
 <p>mber`).</p>
 <h2 id="release-0-70-0-2026-11-16">0.70.0 — 2026-11-16</h2>
-<h3 id="added-2">Added</h3>
+<h3 id="added-3">Added</h3>
 <ul>
 <li><strong>The modeline shows the class and method the cursor is in</strong> (plans/0107): <code>impl Modeline › fit</code>, after the file name, read from the same list as <code>Space s</code>. It keeps its place while you move and follows your typing until the list is rebuilt; nothing is shown in a file with no symbols.</li>
 <li><strong><code>Space s</code> works without a language server in Go, Java, JavaScript, TypeScript, C#, PHP and Ruby files</strong>, from the syntax tree; Rust's list now includes <code>impl</code> blocks, so a method has its type above it, and <code>kind:impl</code> finds lines inside one.</li>
 </ul>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li><strong>The file finder keeps folders in one column</strong> (plans/0106): it no longer shifts while you scroll, and a long file name no longer pushes its folder out of line; a name too long for the column is shown whole, on its own.</li>
 <li><strong><code>hone</code> is the default theme again</strong>: graphite with the amber accent. <code>kiln</code> stays available with <code>:theme kiln</code> or <code>theme = &quot;kiln&quot;</code>.</li>
 </ul>
-<h2 id="release-0-69-0-2026-11-15">0.69.0 — 2026-11-15</h2>
-<h3 id="changed-3">Changed</h3>
-<ul>
-<li><strong>Two cells between line numbers and text</strong> (plans/0105), in files, collections and diffs, so the code no longer reads as part of the number. The picker preview drops its <code>│</code> and uses the same gutter as the buffer, so a preview row looks like the row you land on.</li>
-<li><strong>Kiln is darker and higher in contrast</strong>: deeper charcoal backgrounds and brighter text, with the same accent and syntax colours.</li>
-</ul>
   </div>
-  <p class="more"><a href="changelog-all.html">All 106 releases →</a></p>
+  <p class="more"><a href="changelog-all.html">All 107 releases →</a></p>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.71.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.72.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>

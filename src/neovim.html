@@ -17,7 +17,7 @@ class: guide
       <li>Registers by Vim's rules: <code>"0</code>, <code>"1</code>–<code>"9</code>, <code>"-</code>, <code>"A</code> to append, <code>"_</code>, the read-only ones, and macros as register content. <code>Ctrl-R</code> pastes a register in every text field, not only in Insert mode.</li>
       <li>Marks, the jump list and the change list; character, line and block Visual; <code>Ctrl-A</code> / <code>Ctrl-X</code>; Replace mode.</li>
       <li>The <code>:</code> line with Vim's ranges and abbreviations: <code>:s</code> with <code>&amp;</code>, <code>\1</code> and the <code>c</code> flag, <code>:g</code>, <code>:v</code>, <code>:norm</code>, <code>:m</code>, <code>:t</code>, <code>:d</code>, <code>:y</code>, <code>:sort</code>, <code>:b</code>, <code>:ls</code>, <code>:wa</code>, <code>:cd</code>.</li>
-      <li>Window commands on <code>Ctrl-W</code>, quickfix commands (<code>:copen</code>, <code>:cnext</code>, <code>:cdo</code>, <code>:cfdo</code>), and a terminal that behaves like Neovim's, down to <code>Ctrl-\ Ctrl-N</code>.</li>
+      <li>Window commands on <code>Ctrl-W</code>, tab pages (<code>gt</code>, <code>:tab split</code>, <code>Ctrl-W T</code>), quickfix commands (<code>:copen</code>, <code>:cnext</code>, <code>:cdo</code>, <code>:cfdo</code>), and a terminal that behaves like Neovim's, down to <code>Ctrl-\ Ctrl-N</code>.</li>
     </ul>
     <p>How it is checked: before a release, about 4,000 key sequences are typed into both editors and the resulting text, cursor, mode and registers are compared. The few cases where strop knowingly differs are listed with a reason; everything else has to match. <a href="engineering.html#keys">More on that</a>.</p>
     <p>The full keymap is generated from the binary's command table, by section:</p>
@@ -43,7 +43,7 @@ class: guide
     <h2 id="missing">What is missing</h2>
     <p>Beyond plugins and scripting, these Neovim keys do nothing in strop. An operator on the list (<code>=</code>, <code>gq</code>, <code>gw</code>, <code>zf</code>) still takes its motion and then says it is not supported, so the motion's keys never run as commands by accident.</p>
     {{compat_missing}}
-    <p>Also not there: key remapping, autocommands, folds, tab pages, spell checking, digraphs, diff mode, and builds for anything but Linux and WSL on x86_64. If one of these is what you live in, strop is not ready for you yet.</p>
+    <p>Also not there: key remapping, autocommands, folds, spell checking, digraphs, diff mode, and builds for anything but Linux and WSL on x86_64. If one of these is what you live in, strop is not ready for you yet.</p>
     <p class="provenance">The section list and the lists of missing and reassigned keys on this page are generated from <a href="docs/vim-compat.html"><code>docs/vim-compat.md</code></a> at <code>{{describe}}</code>, which the binary prints with <code>strop compat</code>.</p>
   </div>
 </div>
