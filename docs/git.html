@@ -6,7 +6,7 @@
 <title>Git — strop docs</title>
 <meta name="description" content="Everything git is under Space g. Each git view is an ordinary read-only buffer: motions, /, yank and counts work, q closes it.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.72.0">
+<meta name="strop-version" content="0.73.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/git.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -72,7 +72,7 @@
 ─ Untracked ───────────────────────────────────────────────────────────────── 1
   ? scratch.txt</code></pre>
 <p>Each section starts with a rule that names it and counts its files; each file row ends in its own <code>+N -M</code> (or <code>binary</code>). The rows are entries, not lines, so there are no line numbers: <code>▌</code> marks the cursor's row, and a <code>│</code> runs down the rows of a file you expanded with <code>=</code>. An expanded diff reads like the diff view: the changed text on a quiet tint, the changed part of a line emphasised. The buffer holds the words — a section's row holds <code>Staged</code>, a diff row its <code>+</code> or <code>-</code> and the line — so a yank of a hunk is still a patch.</p>
-<p>The keys act on the row under the cursor. On a file row that is the file; on a diff row it is that hunk; on a section heading it is every file in the section.</p>
+<p>The keys act on the row under the cursor. On a file row that is the file; on a diff row it is that hunk; on a section heading it is every file in the section. Tabs and newlines in filenames appear as <code>\t</code> and <code>\n</code>, and a literal backslash appears as <code>\\</code>. These spellings are for display only: opening the file or staging a hunk always uses the original name.</p>
 <table>
 <thead><tr><th>key</th><th>does</th></tr></thead>
 <tbody>
@@ -142,14 +142,14 @@
 <p>On an SSH host (<a href="remote.html">remote.md</a>) the gutter marks, log, blame, history and diffs work. Status, commit and the branch picker do not work there yet; they say so and do nothing. Staging and discarding hunks do not work there either.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="filesystem.html">← Create, rename, move and delete files</a><a class="pager-next" href="editor.html">Indentation, themes, completion and language servers →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/git.md"><code>docs/git.md</code></a> from the strop repository at <code>v0.72.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/git.md"><code>docs/git.md</code></a> from the strop repository at <code>v0.73.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.72.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.73.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

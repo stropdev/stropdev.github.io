@@ -6,7 +6,7 @@
 <title>What changed — strop</title>
 <meta name="description" content="What changed in strop, release by release.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.72.0">
+<meta name="strop-version" content="0.73.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="CHANGELOG.md">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
@@ -32,6 +32,20 @@
   <h1>What changed</h1>
   <p class="lede">The last 3 releases, newest first. Tarballs and checksums are on <a href="https://github.com/stropdev/strop/releases">GitHub releases</a>.</p>
   <div class="prose">
+<h2 id="release-0-73-0-2026-11-20">0.73.0 — 2026-11-20</h2>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li><strong>Quitting:</strong> a filesystem notification already in the queue when the last pane closes can no longer crash the editor. Accepted writes still finish, and the recording can be replayed offline.</li>
+<li><strong>Read-only startup:</strong> <code>strop -R headless SCRIPT FILE</code> honours <code>-R</code> just like the interactive editor. Opening an SSH file at a line keeps both the requested line and read-only mode.</li>
+<li><strong>Git filenames:</strong> staging or unstaging a hunk uses the original pathname bytes, including literal backslashes and non-UTF-8 names. Status shows one row per entry even when its name contains a newline or tab; opening or staging that row acts on the original file.</li>
+<li><strong>File lifecycle:</strong> after <code>:e!</code>, a later external change warns again instead of silently leaving a dirty buffer out of date. Closing all file buffers and quitting on scratch no longer restores those files on the next launch; their recent-file history is kept.</li>
+<li><strong>Search and Replace:</strong> Boolean searches respect smart case for each match, not just each line. The replacement review counts the edits it actually proposes. Reopening Search restores the selected hit and scroll position even when workers returned files out of order.</li>
+<li><strong>Vim motions and operators:</strong> Visual Block <code>$</code> keeps extending to each row's end after <code>j</code> or <code>k</code>; counted <code>|</code> uses screen columns rather than bytes. Word motions respect combining marks, and a counted <code>iw</code> or <code>aw</code> change with too few words left at EOF no longer changes text or registers.</li>
+</ul>
+<h3 id="compatibility">Compatibility</h3>
+<ul>
+<li>Full session replay uses editor semantics version 9. Replay a 0.72 recording with 0.72, or record it again with 0.73.</li>
+</ul>
 <h2 id="release-0-72-0-2026-11-18">0.72.0 — 2026-11-18</h2>
 <h3 id="added">Added</h3>
 <ul>
@@ -44,7 +58,7 @@
 <li><strong><code>:q</code>, <code>:close</code> and <code>Ctrl-W c</code> on a tab page's only pane close the tab page</strong>, not the buffer; with one tab page they work as before.</li>
 <li><strong>Recorded traces from 0.71 are refused</strong> (the editor's semantics version is 8: the seed carries tab pages).</li>
 </ul>
-<h3 id="fixed">Fixed</h3>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li>The Windows rows of the help whose descriptions were off screen at 80 columns.</li>
 </ul>
@@ -77,7 +91,7 @@
 <li><strong>Session, trace and trust files in old formats are refused</strong> rather than read.</li>
 <li><strong>The release binary is built with whole-program optimisation</strong> (fat LTO, one codegen unit).</li>
 </ul>
-<h3 id="fixed-2">Fixed</h3>
+<h3 id="fixed-3">Fixed</h3>
 <ul>
 <li><strong><code>kind:</code> filters <code>Space s</code> and <code>Space S</code></strong> (plans/0109). It used to keep every row: only nine exact words were values and anything else was ignored without a word, a language server's fields, variants and type parameters passed every <code>kind:</code> filter, and a <code>kind:</code> turned the words beside it into an exact phrase. Now <code>kind:</code> takes the full word, the chip the list shows (<code>fn</code>, <code>meth</code>, <code>iface</code>, <code>const</code>, …) and common language words (<code>trait</code>, <code>func</code>, <code>def</code>, …), in any case, or the start of one; all 26 kinds a language server reports have one; and <code>kind:fn pcfg</code> finds <code>parse_config</code>.</li>
 <li><strong>Files obeys <code>AND</code>/<code>OR</code>/<code>NOT</code></strong>: <code>NOT path:src</code> and <code>path:a OR path:b</code> used to list every file.</li>
@@ -101,25 +115,14 @@
 <li><strong>A random-key test runs in every build</strong> over multibyte, CRLF and unterminated files: no crash, the cursor always on a character, undo returns the original text.</li>
 </ul>
 <p>mber`).</p>
-<h2 id="release-0-70-0-2026-11-16">0.70.0 — 2026-11-16</h2>
-<h3 id="added-3">Added</h3>
-<ul>
-<li><strong>The modeline shows the class and method the cursor is in</strong> (plans/0107): <code>impl Modeline › fit</code>, after the file name, read from the same list as <code>Space s</code>. It keeps its place while you move and follows your typing until the list is rebuilt; nothing is shown in a file with no symbols.</li>
-<li><strong><code>Space s</code> works without a language server in Go, Java, JavaScript, TypeScript, C#, PHP and Ruby files</strong>, from the syntax tree; Rust's list now includes <code>impl</code> blocks, so a method has its type above it, and <code>kind:impl</code> finds lines inside one.</li>
-</ul>
-<h3 id="changed-3">Changed</h3>
-<ul>
-<li><strong>The file finder keeps folders in one column</strong> (plans/0106): it no longer shifts while you scroll, and a long file name no longer pushes its folder out of line; a name too long for the column is shown whole, on its own.</li>
-<li><strong><code>hone</code> is the default theme again</strong>: graphite with the amber accent. <code>kiln</code> stays available with <code>:theme kiln</code> or <code>theme = &quot;kiln&quot;</code>.</li>
-</ul>
   </div>
-  <p class="more"><a href="changelog-all.html">All 107 releases →</a></p>
+  <p class="more"><a href="changelog-all.html">All 108 releases →</a></p>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.72.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.73.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>
