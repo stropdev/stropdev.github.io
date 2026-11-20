@@ -135,7 +135,7 @@ automatic.
 ATX headings, paragraphs, `-`/`1.` lists with wrapped lines, fenced code,
 pipe tables, inline code, links, reference links, bold, italic — and fails
 the build on anything else rather than guessing. Relative `*.md` links
-become `*.html`; `../plans/…` links point at GitHub.
+become `*.html`; `rfcs/…` links point to the decision in the editor repository.
 
 ## DNS (manual, Porkbun)
 

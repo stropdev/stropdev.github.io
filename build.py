@@ -291,8 +291,8 @@ def palettes_html(repo: Path) -> str:
 def docs_link(url: str) -> str:
     if url.startswith(("http://", "https://", "#", "mailto:")):
         return url
-    if url.startswith("../plans/"):
-        return f"{REPO_URL}/blob/main/plans/{url[len('../plans/'):]}"
+    if url.startswith("rfcs/"):
+        return f"{REPO_URL}/blob/main/docs/{url}"
     if url.startswith("../"):
         return f"{REPO_URL}/blob/main/{url[3:]}"
     m = re.match(r"^([A-Za-z0-9_-]+)\.md(#.*)?$", url)
