@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 864.0 549.0" width="864.0" height="549.0" role="img" aria-labelledby="t d">
-<title id="t">strop 0.74.0: help</title>
+<title id="t">strop 0.75.0: help</title>
 <desc id="d">strop's help page: a row of section names at the top, then the Move section: keys on the left in several colours and what they do on the right.</desc>
 <rect width="864.0" height="549.0" rx="6" fill="#15171c"/>
 <g font-family="ui-monospace, &quot;DejaVu Sans Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace" font-size="14.0" fill="#e6e1d6" xml:space="preserve">
@@ -7,7 +7,7 @@
 <text x="37.20" y="25.30" textLength="33.60" lengthAdjust="spacingAndGlyphs" fill="#15171c" font-weight="bold">Move</text>
 <text x="87.60" y="25.30" textLength="478.80" lengthAdjust="spacingAndGlyphs" fill="#858c9a">Edit  Visual  Leader  Windows  Git  Lists  Commands  More</text>
 <text x="843.60" y="25.30" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">▮</text>
-<text x="37.20" y="42.80" textLength="100.80" lengthAdjust="spacingAndGlyphs" font-weight="bold">strop 0.74.0</text>
+<text x="37.20" y="42.80" textLength="100.80" lengthAdjust="spacingAndGlyphs" font-weight="bold">strop 0.75.0</text>
 <text x="146.40" y="42.80" textLength="8.40" lengthAdjust="spacingAndGlyphs" fill="#858c9a">·</text>
 <text x="163.20" y="42.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">]]</text>
 <text x="188.40" y="42.80" textLength="16.80" lengthAdjust="spacingAndGlyphs" fill="#e8a848" font-weight="bold">[[</text>

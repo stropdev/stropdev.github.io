@@ -6,7 +6,7 @@
 <title>What changed — strop</title>
 <meta name="description" content="What changed in strop, release by release.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.74.0">
+<meta name="strop-version" content="0.75.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="CHANGELOG.md">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
@@ -32,8 +32,26 @@
   <h1>What changed</h1>
   <p class="lede">The last 3 releases, newest first. Tarballs and checksums are on <a href="https://github.com/stropdev/strop/releases">GitHub releases</a>.</p>
   <div class="prose">
-<h2 id="release-0-74-0-2026-11-21">0.74.0 — 2026-11-21</h2>
+<h2 id="release-0-75-0-2026-11-21">0.75.0 — 2026-11-21</h2>
+<h3 id="added">Added</h3>
+<ul>
+<li><strong>Lean 4:</strong> open a <code>.lean</code> file to highlight declarations, proof syntax, strings and nested comments. The grammar ships in the binary; no Lean installation or language server is needed.</li>
+</ul>
 <h3 id="fixed">Fixed</h3>
+<ul>
+<li><strong>Visual shifts:</strong> with a four-space shift width, <code>Vj2&gt;</code> indents the two selected lines by eight spaces. Undo reverses the shift in one step, and <code>.</code> repeats its depth, not just its selection height.</li>
+<li><strong>Git:</strong> staging a hunk through a directory symlink uses the same tracked path as staging through the canonical directory. On an uncommitted line, <code>Enter</code> in the blame card stays in the source instead of opening history at HEAD.</li>
+<li><strong>Collections:</strong> changing context keeps marks and carets on surviving source text. Rebuilding a collection preserves the visible source line in a parked tab, not just the old row number.</li>
+<li><strong>Batch writes:</strong> a review and a collection saving the same file each report their own result. A successful write of an older revision counts as written; edits made in the meantime stay dirty.</li>
+<li><strong>Installer:</strong> if <code>bin/strop</code> is a directory, installation fails without changing its contents or writing a success receipt.</li>
+<li><strong>Release packaging:</strong> two source commits with the same version no longer share an output archive. Publication checks the draft's bytes against those qualified for the tagged commit.</li>
+</ul>
+<h3 id="compatibility">Compatibility</h3>
+<ul>
+<li>Full session replay uses editor semantics version 11. Replay a 0.74 recording with 0.74, or record it again with 0.75.</li>
+</ul>
+<h2 id="release-0-74-0-2026-11-21">0.74.0 — 2026-11-21</h2>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li><strong>Counted replace:</strong> <code>5rx</code> on <code>abc</code> leaves the line untouched, as in Vim. A count that fits still replaces exactly that many characters.</li>
 <li><strong>Git blame:</strong> <code>Space g B</code> asks you to save a modified buffer instead of showing the disk line's commit beside different text. Pressing <code>Enter</code> on a shifted line cannot open a card for the wrong commit either.</li>
@@ -41,12 +59,12 @@
 <li><strong>Pickers:</strong> choosing the current buffer in <code>Space b</code> keeps the caret, scroll position and jump history. The results scrollbar reaches the bottom when the last result is selected.</li>
 <li><strong>Documentation:</strong> the 0.71.0 trace-format note now gives the complete <code>EnumMember</code> name.</li>
 </ul>
-<h3 id="compatibility">Compatibility</h3>
+<h3 id="compatibility-2">Compatibility</h3>
 <ul>
 <li>Full session replay uses editor semantics version 10. Use 0.73 to replay a 0.73 recording, or record it again with 0.74.</li>
 </ul>
 <h2 id="release-0-73-0-2026-11-20">0.73.0 — 2026-11-20</h2>
-<h3 id="fixed-2">Fixed</h3>
+<h3 id="fixed-3">Fixed</h3>
 <ul>
 <li><strong>Quitting:</strong> a filesystem notification already in the queue when the last pane closes can no longer crash the editor. Accepted writes still finish, and the recording can be replayed offline.</li>
 <li><strong>Read-only startup:</strong> <code>strop -R headless SCRIPT FILE</code> honours <code>-R</code> just like the interactive editor. Opening an SSH file at a line keeps both the requested line and read-only mode.</li>
@@ -55,34 +73,18 @@
 <li><strong>Search and Replace:</strong> Boolean searches respect smart case for each match, not just each line. The replacement review counts the edits it actually proposes. Reopening Search restores the selected hit and scroll position even when workers returned files out of order.</li>
 <li><strong>Vim motions and operators:</strong> Visual Block <code>$</code> keeps extending to each row's end after <code>j</code> or <code>k</code>; counted <code>|</code> uses screen columns rather than bytes. Word motions respect combining marks, and a counted <code>iw</code> or <code>aw</code> change with too few words left at EOF no longer changes text or registers.</li>
 </ul>
-<h3 id="compatibility-2">Compatibility</h3>
+<h3 id="compatibility-3">Compatibility</h3>
 <ul>
 <li>Full session replay uses editor semantics version 9. Replay a 0.72 recording with 0.72, or record it again with 0.73.</li>
 </ul>
-<h2 id="release-0-72-0-2026-11-18">0.72.0 — 2026-11-18</h2>
-<h3 id="added">Added</h3>
-<ul>
-<li><strong>Tab pages, as in Vim</strong> (plans/0113): a second layout of panes over the same buffers. <code>:tab split</code> shows the pane you are in on its own and <code>:q</code> brings the split back; <code>Ctrl-W T</code> moves a pane to a new tab page; <code>:tabnew [file]</code> opens one. <code>gt</code>, <code>gT</code>, <code>3gt</code>, <code>3gT</code> and <code>g Tab</code> move between them; <code>:tabnext</code>, <code>:tabprevious</code>, <code>:tabfirst</code>, <code>:tablast</code>, <code>:tabclose [N]</code>, <code>:tabonly</code> and <code>:tabmove [N|+N|-N|$]</code> do the rest. Buffers, registers and marks are shared; each tab page keeps its panes, each pane its cursor and jump list.</li>
-<li><strong>The tab line</strong>: with two or more tab pages the top row lists them — the number, the file name of its current pane, <code>+2</code> for more panes, <code>●</code> for unsaved changes — with the current one on the text background. With one tab page nothing on screen changes.</li>
-</ul>
-<h3 id="changed">Changed</h3>
-<ul>
-<li><strong>The help page is rebuilt</strong> (plans/0112): keys are coloured by what they are (plain keys, <code>space</code> and other named keys, <code>ctrl-</code> chords, placeholders), a top line lists nine sections and <code>]]</code> / <code>[[</code> or <code>Enter</code> on a name jumps to one, descriptions wrap instead of running off an 80-column screen. The status line names the section the cursor is in, <code>:help</code> completion lists the sections first, and help has no line numbers.</li>
-<li><strong><code>:q</code>, <code>:close</code> and <code>Ctrl-W c</code> on a tab page's only pane close the tab page</strong>, not the buffer; with one tab page they work as before.</li>
-<li><strong>Recorded traces from 0.71 are refused</strong> (the editor's semantics version is 8: the seed carries tab pages).</li>
-</ul>
-<h3 id="fixed-3">Fixed</h3>
-<ul>
-<li>The Windows rows of the help whose descriptions were off screen at 80 columns.</li>
-</ul>
   </div>
-  <p class="more"><a href="changelog-all.html">All 109 releases →</a></p>
+  <p class="more"><a href="changelog-all.html">All 110 releases →</a></p>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.74.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.75.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>

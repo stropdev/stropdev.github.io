@@ -6,7 +6,7 @@
 <title>Indentation, themes, completion and language servers — strop docs</title>
 <meta name="description" content="How strop indents, what the screen shows, how to change the theme, and how completion, registers, windows and sessions behave. The keys are listed in vim-compat.md and under Space ?. Searching is in s">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.74.0">
+<meta name="strop-version" content="0.75.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/editor.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -58,6 +58,7 @@
 <p>Changing these settings does not change text already in the file. The status line shows <code>Spaces:N</code> or <code>Tabs:N</code> when a file's indent differs from your default; <code>:explain</code> says whether it was detected, configured or set by hand.</p>
 <p>With the cursor on a bracket, that bracket and its partner are highlighted (the same pair <code>%</code> jumps between). The view does not scroll to show a partner that is off screen.</p>
 <h2 id="what-is-on-screen">What is on screen</h2>
+<p>Lean 4 files (<code>.lean</code>) have built-in syntax highlighting for declarations, proofs, literals and nested comments. It works without Lean or a language server. The colours describe the source text, not whether a proof checks.</p>
 <p>The accent colour marks where you are and what will happen next: the mode chip, the current line number, a pending operator, the cursor in an input field, and the characters a search matched. In a list, the selected row has a <code>▌</code> at its left. <code>●</code> marks the theme in use and buffers with unsaved changes. Pickers, the key hints, completion, hover and the <code>:</code> line are all drawn the same way: a rounded box with its title at the top left and its keys along the bottom edge.</p>
 <p>Things appear only when they have something to say. The scrollbar is hidden when the whole file fits. Pane titles appear when there are two or more panes. <code>LSP!</code> appears when a language server failed and <code>LSP?</code> when one was refused (see <a href="#trust"><code>:trust</code></a>). <code>Spaces:N</code> appears when a buffer's indent differs from your default. A line under a search field appears when a toggle is on, or when the search is not in the project directory.</p>
 <p>Messages appear on a row above the status line, and only while there is one to show: first the answer to your last key, then any message still waiting for you (<code>✗</code> failure, <code>▲</code> warning, <code>●</code> info) with the key that deals with it, <code>Space a</code> or <code>:explain</code>. The status line itself shows the mode, the branch, the path, the class and method the cursor is in (<code>impl Modeline › fit</code>, from the same list as <code>Space s</code>), then, only when not zero, the diagnostics count (<code>●1 ▲2</code>), the language-server badge, the indent and the position.</p>
@@ -180,14 +181,14 @@ auto_popup = true</code></pre>
 <p><code>:recover</code> lists every copy strop holds, numbered, including those of buffers that never had a file name. <code>:recover restore N</code> opens copy N in a new buffer without touching the file; <code>:recover discard N</code> deletes it. Unsaved text of files on SSH hosts is kept only after <code>:recover consent remote</code>, for the current run; <code>:recover consent off</code> stops it.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="git.html">← Git</a><a class="pager-next" href="terminal.html">Terminals →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> from the strop repository at <code>v0.74.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/editor.md"><code>docs/editor.md</code></a> from the strop repository at <code>v0.75.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.74.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.75.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>
