@@ -6,7 +6,7 @@
 <title>The command line — strop docs</title>
 <meta name="description" content="strop FILE opens a file. This page lists the other commands and the options. strop --help prints the same list (in colour on a terminal, plain when piped).">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.73.0">
+<meta name="strop-version" content="0.74.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/cli.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -40,6 +40,7 @@
 <p><code>strop FILE</code> opens a file. This page lists the other commands and the options. <code>strop --help</code> prints the same list (in colour on a terminal, plain when piped).</p>
 <pre><code class="language-text">Usage: strop [OPTIONS] [FILE[:LINE] | DIR | ssh://URL | -]</code></pre>
 <p>With no command, strop opens the file or directory, or an empty buffer. <code>strop</code> alone in a project brings back the files you had open there (see <a href="editor.html#sessions">Sessions</a>). <code>strop -</code> reads standard input (<a href="editor.html#reading-stdin">Reading stdin</a>).</p>
+<p>Use <code>--</code> to open a file whose name would otherwise be a command or option: <code>strop -- compat</code> edits the file <code>compat</code>. Commands such as <code>strop compat</code> and <code>strop config</code> do not take an editor file or stdin operand.</p>
 <h2 id="commands">Commands</h2>
 <table>
 <thead><tr><th>Command</th><th>What it does</th></tr></thead>
@@ -69,7 +70,7 @@
 <tr><td><code>-h</code>, <code>--help</code> / <code>-V</code>, <code>--version</code></td><td>help and version</td></tr>
 </tbody>
 </table>
-<p><code>--log-file PATH</code> is <code>--log=PATH</code> with the path as its own argument.</p>
+<p><code>--log-file PATH</code> is <code>--log=PATH</code> with the path as its own argument. Both use the exact filename, including non-UTF-8 bytes.</p>
 <h2 id="remote-locations">Remote locations</h2>
 <pre><code class="language-text">ssh://[user@]host[:port]/absolute/path[:LINE]</code></pre>
 <p><code>strop remote ssh://user@devbox:2222/etc/app.conf:120</code> opens that file at line 120; a plain <code>strop ssh://…</code> operand does the same. Once connected you can edit and save; <code>-R</code> opens read-only. To read a growing log, pipe it in: <code>ssh devbox tail -f /var/log/app.log | strop -</code>. Details are in <a href="remote.html">remote.md</a>.</p>
@@ -77,14 +78,14 @@
 <p><code>0</code> on success. Otherwise nonzero, with a one-line <code>strop: …</code> explanation on stderr.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-prev" href="remote.html">← Edit over SSH</a><a class="pager-next" href="vim-compat.html">Every key →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/cli.md"><code>docs/cli.md</code></a> from the strop repository at <code>v0.73.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/cli.md"><code>docs/cli.md</code></a> from the strop repository at <code>v0.74.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.73.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.74.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>

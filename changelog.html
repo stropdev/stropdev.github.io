@@ -6,7 +6,7 @@
 <title>What changed — strop</title>
 <meta name="description" content="What changed in strop, release by release.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.73.0">
+<meta name="strop-version" content="0.74.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="CHANGELOG.md">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
@@ -32,8 +32,21 @@
   <h1>What changed</h1>
   <p class="lede">The last 3 releases, newest first. Tarballs and checksums are on <a href="https://github.com/stropdev/strop/releases">GitHub releases</a>.</p>
   <div class="prose">
-<h2 id="release-0-73-0-2026-11-20">0.73.0 — 2026-11-20</h2>
+<h2 id="release-0-74-0-2026-11-21">0.74.0 — 2026-11-21</h2>
 <h3 id="fixed">Fixed</h3>
+<ul>
+<li><strong>Counted replace:</strong> <code>5rx</code> on <code>abc</code> leaves the line untouched, as in Vim. A count that fits still replaces exactly that many characters.</li>
+<li><strong>Git blame:</strong> <code>Space g B</code> asks you to save a modified buffer instead of showing the disk line's commit beside different text. Pressing <code>Enter</code> on a shifted line cannot open a card for the wrong commit either.</li>
+<li><strong>Command line:</strong> a command such as <code>strop compat</code> refuses an extra file instead of silently discarding it. Use <code>strop -- compat</code> to edit a file named <code>compat</code>. <code>--log=PATH</code> preserves native filename bytes just like <code>--log-file PATH</code>.</li>
+<li><strong>Pickers:</strong> choosing the current buffer in <code>Space b</code> keeps the caret, scroll position and jump history. The results scrollbar reaches the bottom when the last result is selected.</li>
+<li><strong>Documentation:</strong> the 0.71.0 trace-format note now gives the complete <code>EnumMember</code> name.</li>
+</ul>
+<h3 id="compatibility">Compatibility</h3>
+<ul>
+<li>Full session replay uses editor semantics version 10. Use 0.73 to replay a 0.73 recording, or record it again with 0.74.</li>
+</ul>
+<h2 id="release-0-73-0-2026-11-20">0.73.0 — 2026-11-20</h2>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li><strong>Quitting:</strong> a filesystem notification already in the queue when the last pane closes can no longer crash the editor. Accepted writes still finish, and the recording can be replayed offline.</li>
 <li><strong>Read-only startup:</strong> <code>strop -R headless SCRIPT FILE</code> honours <code>-R</code> just like the interactive editor. Opening an SSH file at a line keeps both the requested line and read-only mode.</li>
@@ -42,7 +55,7 @@
 <li><strong>Search and Replace:</strong> Boolean searches respect smart case for each match, not just each line. The replacement review counts the edits it actually proposes. Reopening Search restores the selected hit and scroll position even when workers returned files out of order.</li>
 <li><strong>Vim motions and operators:</strong> Visual Block <code>$</code> keeps extending to each row's end after <code>j</code> or <code>k</code>; counted <code>|</code> uses screen columns rather than bytes. Word motions respect combining marks, and a counted <code>iw</code> or <code>aw</code> change with too few words left at EOF no longer changes text or registers.</li>
 </ul>
-<h3 id="compatibility">Compatibility</h3>
+<h3 id="compatibility-2">Compatibility</h3>
 <ul>
 <li>Full session replay uses editor semantics version 9. Replay a 0.72 recording with 0.72, or record it again with 0.73.</li>
 </ul>
@@ -58,71 +71,18 @@
 <li><strong><code>:q</code>, <code>:close</code> and <code>Ctrl-W c</code> on a tab page's only pane close the tab page</strong>, not the buffer; with one tab page they work as before.</li>
 <li><strong>Recorded traces from 0.71 are refused</strong> (the editor's semantics version is 8: the seed carries tab pages).</li>
 </ul>
-<h3 id="fixed-2">Fixed</h3>
+<h3 id="fixed-3">Fixed</h3>
 <ul>
 <li>The Windows rows of the help whose descriptions were off screen at 80 columns.</li>
 </ul>
-<h2 id="release-0-71-0-2026-11-17">0.71.0 — 2026-11-17</h2>
-<h3 id="added-2">Added</h3>
-<ul>
-<li><strong>The command line lives on the bottom row, as in Vim</strong> (plans/0110). A menu opens as you type: the top row is always the command Enter runs, then names that start with what you typed, then close matches, each with its short form and what it does. <code>Tab</code>/<code>Shift-Tab</code> cycle; arguments complete by what the command takes — files, folders, buffers, themes, help topics. The right end of the row shows the command's usage, the lines a range names (<code>4–6 · 3 lines</code>), the changes a <code>:s</code> will make, or the error.</li>
-<li><strong>Command-line history</strong>: <code>Up</code>/<code>Down</code> recall earlier lines that start with what you typed, 200 each for <code>:</code> and <code>/</code>, kept per project. <code>q:</code>, <code>q/</code> and <code>Ctrl-F</code> open the history as a buffer you can edit with every key; <code>Enter</code> runs the line.</li>
-<li><strong>Vim's command-line keys</strong>: <code>Ctrl-W</code>, <code>Ctrl-U</code>, <code>Ctrl-B</code>, <code>Ctrl-E</code>, <code>Ctrl-R {register}</code>, <code>Ctrl-P</code>/<code>Ctrl-N</code>, <code>Home</code>, <code>End</code>, <code>Del</code>; <code>Home</code>, <code>End</code> and <code>Del</code> also work in Insert mode and in list fields.</li>
-<li><strong><code>:s</code> previews in place</strong>: the changed lines read as they will after <code>Enter</code>, and the row counts the changes, including those off screen.</li>
-<li><strong><code>Ctrl-C</code> stops a long <code>:g</code> or ranged <code>:normal</code></strong> between lines.</li>
-</ul>
-<h3 id="changed-2">Changed</h3>
-<ul>
-<li><strong>A filter a list cannot apply is an error, not silence.</strong> A misspelt filter, an unknown value or one the list does not take (<code>kind:</code> in Files) marks the word with <code>^^^</code>, says what is wrong on the row under the field with the nearest correct spelling, and leaves the list as it was until it is fixed.</li>
-<li><strong><code>type:</code> is gone</strong>; write <code>kind:</code>. <code>type:function</code> now says <code>did you mean kind:?</code>.</li>
-<li><strong>Buffers, diagnostics and locations take the path filters</strong> (<code>path:</code>, <code>language:</code>, <code>glob:</code>, <code>fpath:</code>, <code>case:</code>, <code>text:</code>, <code>regex:</code>), and so does the jump list as before. <code>docs/search.md</code> has a table of exactly what each list takes, and <code>Space ?</code> lists every filter with the lists that take it.</li>
-<li><strong>Every list that takes filters says so</strong>: the row under an empty field shows its everyday filters, the footer shows <code>ctrl-space filters</code>, and Ctrl-Space offers only the filters that list takes. Actions, themes, branches and SSH destinations take none: there a colon is just a colon.</li>
-<li><strong><code>repo:</code> is Search's alone</strong>; Files and workspace symbols never applied it.</li>
-<li><strong>Filtering a kept list happens off the input thread</strong>, in the pass that ranks it, over facts each row carries from when the list was built: a keystroke allocates nothing per row.</li>
-<li><strong>Recorded traces store a symbol's kind by name in strop's kind table</strong> (<code>Variant</code>, not the protocol's `EnumMe</li>
-<li><strong><code>Esc</code> closes the command line at once</strong>, as in Vim; Normal-mode editing of the line is the command-line window.</li>
-<li><strong>Errors look like errors</strong>: a failed command or a search with no match shows <code>✗</code> in the error colour.</li>
-<li><strong><code>?</code> lists every command</strong> with its usage, written from the same table that runs it.</li>
-<li><strong>Highlighting</strong>: a line longer than 3000 bytes is coloured up to there (Vim's <code>synmaxcol</code>); a typed <code>#!</code> line takes effect when you write the file; Markdown with forty code blocks opens in tens of milliseconds instead of a second or two.</li>
-<li><strong>New files get the usual permissions</strong> (your umask), not owner-only.</li>
-<li><strong>git never runs a repository's own programs for reading</strong>: blame, log, diff and show run without its fsmonitor, textconv, external diff, pager or hooks. Commit keeps your hooks.</li>
-<li><strong>A line break is a newline</strong>, as in Vim: a lone carriage return, form feed or Unicode line separator is text.</li>
-<li><strong>Commands are words</strong>: <code>strop headless</code>, <code>strop replay</code>, <code>strop remote</code>, <code>strop bench</code>. The <code>--headless</code>, <code>--script</code>, <code>--replay</code>, <code>--remote</code> and <code>--bench</code> flags are gone.</li>
-<li><strong>Session, trace and trust files in old formats are refused</strong> rather than read.</li>
-<li><strong>The release binary is built with whole-program optimisation</strong> (fat LTO, one codegen unit).</li>
-</ul>
-<h3 id="fixed-3">Fixed</h3>
-<ul>
-<li><strong><code>kind:</code> filters <code>Space s</code> and <code>Space S</code></strong> (plans/0109). It used to keep every row: only nine exact words were values and anything else was ignored without a word, a language server's fields, variants and type parameters passed every <code>kind:</code> filter, and a <code>kind:</code> turned the words beside it into an exact phrase. Now <code>kind:</code> takes the full word, the chip the list shows (<code>fn</code>, <code>meth</code>, <code>iface</code>, <code>const</code>, …) and common language words (<code>trait</code>, <code>func</code>, <code>def</code>, …), in any case, or the start of one; all 26 kinds a language server reports have one; and <code>kind:fn pcfg</code> finds <code>parse_config</code>.</li>
-<li><strong>Files obeys <code>AND</code>/<code>OR</code>/<code>NOT</code></strong>: <code>NOT path:src</code> and <code>path:a OR path:b</code> used to list every file.</li>
-<li><strong>Search with only filters asks for text</strong> instead of listing every line, several times.</li>
-<li><strong><code>-repo:</code> excludes the project</strong>; it used to keep only that project.</li>
-<li><strong><code>glob:</code> matches the same paths everywhere</strong>; the symbol lists and Search's line filter used their own glob matching.</li>
-<li><strong><code>yyp</code> on a last line with no newline crashed</strong> when the line began with a non-ASCII letter, and put the cursor one column off otherwise.</li>
-<li><strong><code>Ctrl-W</code> or <code>Ctrl-U</code> in Insert mode after an arrow key crashed</strong> next to a non-ASCII letter. An arrow key now starts a new insert, as in Vim.</li>
-<li><strong><code>v$d</code> in a CRLF file deleted only the carriage return</strong>; <code>ck</code>, <code>cip</code> and others missed a last line without a newline; <code>j</code>/<code>k</code> over wide characters kept the wrong column; an inclusive motion left a combining mark behind.</li>
-<li><strong><code>@a</code> while recording into <code>a</code> never returned.</strong></li>
-<li><strong>Opening a FIFO, a device or a non-UTF-8 file from the command line</strong> hung or quit; it now opens the editor with the same message <code>:e</code> gives.</li>
-<li><strong><code>SIGTERM</code> and <code>SIGHUP</code> left the terminal raw</strong> and skipped the session save.</li>
-<li><strong><code>:g</code> took seconds on a few thousand lines</strong>; it is now linear.</li>
-<li><strong>A failed highlight was retried every frame</strong>, eight nested code blocks lost all colour, and a closing tag lost its colour once its opening tag scrolled away (Markdown, PHP).</li>
-<li><strong>Marks in a multi-cursor edit, and an excerpt in a collection</strong>, could move to the wrong place; a refused multi-cursor insert moved the cursors anyway.</li>
-</ul>
-<h3 id="proved">Proved</h3>
-<ul>
-<li><strong>Edits move spans, highlights and cursors through one proved function.</strong> The kernel's edit map now also maps spans, the multi-cursor filter that drops overlapping edits, and the way highlights carry through an edit and merge with a fresh result; Lean proofs cover each. Every proved claim now has a mutant that breaks it, and a kernel function without a claim fails the build.</li>
-<li><strong>The two TLA+ models are gone</strong> after fifteen releases without a catch; a Loom test checks the worker's cancel and finish happen exactly once, and an exhaustive test covers the list generation guard.</li>
-<li><strong>A random-key test runs in every build</strong> over multibyte, CRLF and unterminated files: no crash, the cursor always on a character, undo returns the original text.</li>
-</ul>
-<p>mber`).</p>
   </div>
-  <p class="more"><a href="changelog-all.html">All 108 releases →</a></p>
+  <p class="more"><a href="changelog-all.html">All 109 releases →</a></p>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.73.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.74.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>

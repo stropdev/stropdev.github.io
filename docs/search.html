@@ -6,7 +6,7 @@
 <title>Find files, search and replace — strop docs</title>
 <meta name="description" content="One filter language works in every list that takes filters: Files (Space f), Search (Space /), Replace (Space R), document symbols (Space s), workspace symbols (Space S), buffers (Space b), the jump l">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.73.0">
+<meta name="strop-version" content="0.74.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="docs/search.md">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -44,7 +44,7 @@
 <li><strong>A file name beats a directory name.</strong> <code>sched</code> lists files named <code>sched…</code> before files that merely live under <code>sched/</code>; typing a whole name (<code>sched.h</code>) lists the files with exactly that name, shortest path first.</li>
 <li><strong>Spaces separate terms; every term must match.</strong> <code>core.c sched</code> finds <code>kernel/sched/core.c</code>. A term containing <code>/</code> is matched against the path.</li>
 <li><strong>It remembers what you use.</strong> With nothing typed, the list starts with your other open files (most recent first), then the current file, then the files you open most in this project. So <code>Space f</code> <code>Enter</code> goes back to the file you were just in. When you type, a file you use often wins among equally good matches.</li>
-<li><strong><code>Space b</code></strong> lists buffers most recent first with the bar on the previous buffer, so <code>Space b</code> <code>Enter</code> switches back.</li>
+<li><strong><code>Space b</code></strong> lists buffers most recent first with the bar on the previous buffer, so <code>Space b</code> <code>Enter</code> switches back. Choosing the current buffer just closes the list: the caret, viewport and jump history stay put.</li>
 </ul>
 <h2 id="keys-in-the-search-field">Keys in the search field</h2>
 <table>
@@ -229,14 +229,14 @@ With  fetch_$1()</code></pre>
 <p>Search works the same in a directory on an SSH host: the same fields, the same include and exclude keys, the same previews, the same limits. It runs <code>rg</code> on the host. If the host has no <code>rg</code>, Search says so and does not run. A search on a host that takes longer than two minutes is stopped. Collections work there. Replace does not, yet: <code>Space R</code>, <code>Ctrl-T</code> and the With field say so.</p>
     </div>
     <nav class="pager" aria-label="Documents"><a class="pager-next" href="filesystem.html">Create, rename, move and delete files →</a></nav>
-    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> from the strop repository at <code>v0.73.0</code>.</p>
+    <p class="provenance">This page is <a href="https://github.com/stropdev/strop/blob/main/docs/search.md"><code>docs/search.md</code></a> from the strop repository at <code>v0.74.0</code>.</p>
   </article>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.73.0</a> · <a href="../#palette">Palette</a></p>
+    <p><a href="../start.html">First ten minutes</a> · <a href="../engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.74.0</a> · <a href="../#palette">Palette</a></p>
   </div>
 </footer>
 <script src="../assets/site.js"></script>
