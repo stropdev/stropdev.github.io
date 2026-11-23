@@ -6,7 +6,7 @@
 <title>What changed — strop</title>
 <meta name="description" content="What changed in strop, release by release.">
 <meta name="color-scheme" content="dark light">
-<meta name="strop-version" content="0.76.0">
+<meta name="strop-version" content="0.77.0">
 <meta name="strop-describes" content="0.62">
 <meta name="strop-source" content="CHANGELOG.md">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
@@ -32,6 +32,22 @@
   <h1>What changed</h1>
   <p class="lede">The last 3 releases, newest first. Tarballs and checksums are on <a href="https://github.com/stropdev/strop/releases">GitHub releases</a>.</p>
   <div class="prose">
+<h2 id="release-0-77-0-2026-11-23">0.77.0 — 2026-11-23</h2>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li><strong>Scrolling:</strong> each frame reaches the terminal as one update with the cursor hidden until it is placed, so nothing flickers at the end of a line while you scroll.</li>
+<li><strong>Git gutter:</strong> deleting the last lines of a file, or all of its text, marks the last remaining line; <code>&lt;space&gt;gs</code>, <code>&lt;space&gt;gu</code> and <code>&lt;space&gt;gX</code> work from that line, and an emptied file stages as an empty file, not a deletion. <code>]c</code> and <code>[c</code> never move past the last line. A replaced line shows the change colour, and a line added next to a replacement shows the add colour.</li>
+<li><strong>Updates:</strong> <code>strop update</code> and <code>install.sh</code> stop if the release catalog is not a strop catalog in a format they understand, instead of guessing at it. The message links to the <a href="https://github.com/stropdev/strop/releases">releases page</a> so you can install by hand.</li>
+<li><strong>Release verification:</strong> the public catalog matches a local build only when both name product <code>strop</code> with the expected schema and agree on everything except publication time. A different product, schema, size, URL or an extra field fails the check.</li>
+<li><strong>Tab pages:</strong> closing another tab page, <code>:tabonly</code> and <code>:tabmove</code> no longer abandon a file that is still loading on the current page.</li>
+<li><strong>Language servers:</strong> a server that declares implementation, declaration or type definition as <code>false</code> is no longer asked for them; <code>gI</code>, <code>gD</code> and <code>gy</code> say the server does not support them, as they do when it declares nothing.</li>
+<li><strong>Repeating Visual commands:</strong> <code>.</code> after a Visual command repeats it on the same amount of text from the cursor, as Vim does: the same number of lines, and the same width, or the same end column on a later line. Visual <code>r</code>, <code>Ctrl-A</code> and <code>Ctrl-X</code> now repeat; a selection over several lines no longer comes up one character short; a named register is kept; a count on <code>.</code> is ignored. After a Visual put, <code>.</code> deletes that amount of text and puts nothing, as in Vim, instead of repeating the change before it.</li>
+<li><strong>Repeating puts:</strong> <code>.</code> after <code>p</code>, <code>P</code>, <code>gp</code>, <code>gP</code>, <code>]p</code> or <code>[p</code> puts from the same register with the same count, instead of the unnamed register once. A count on <code>.</code> replaces the count, and <code>&quot;1p..</code> puts registers 1, 2 and 3 in turn, as in Vim.</li>
+</ul>
+<h3 id="compatibility">Compatibility</h3>
+<ul>
+<li>Full session replay uses editor semantics version 13. Replay a 0.76 recording with 0.76, or record it again.</li>
+</ul>
 <h2 id="release-0-76-0-2026-11-21">0.76.0 — 2026-11-21</h2>
 <h3 id="added">Added</h3>
 <ul>
@@ -41,13 +57,13 @@
 <ul>
 <li>On the <a href="https://github.com/stropdev/strop/issues/262">mixed-project fixture</a>, warm p95 time to the first selectable row fell from 59.28 to 22.64 ms for rare search and from 30.59 to 8.31 ms for document symbols. Cold workspace symbols with a ready server took 125.00 ms instead of 95.32 ms. Workspace discovery runs on demand.</li>
 </ul>
-<h3 id="fixed">Fixed</h3>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li><strong>Symbol jumps:</strong> selecting a document or workspace symbol lands on its token even when non-ASCII text comes before it. Each language server's rows retain its negotiated column encoding; syntax outlines keep byte columns.</li>
 <li><strong>Workspace symbols:</strong> warming a project starts root and configuration discovery in the marker's directory, not its parent. A project-specific command still requires trust for that project.</li>
 <li><strong>Search results:</strong> a cached path can prioritize a fresh check, but cannot hide new files or override an unsaved buffer. Truncated results stay openable individually and cannot authorize collection or replacement review.</li>
 </ul>
-<h3 id="compatibility">Compatibility</h3>
+<h3 id="compatibility-2">Compatibility</h3>
 <ul>
 <li>Full session replay uses editor semantics version 12. Replay a 0.75 recording with 0.75, or record it again.</li>
 </ul>
@@ -56,7 +72,7 @@
 <ul>
 <li><strong>Lean 4:</strong> open a <code>.lean</code> file to highlight declarations, proof syntax, strings and nested comments. The grammar ships in the binary; no Lean installation or language server is needed.</li>
 </ul>
-<h3 id="fixed-2">Fixed</h3>
+<h3 id="fixed-3">Fixed</h3>
 <ul>
 <li><strong>Visual shifts:</strong> with a four-space shift width, <code>Vj2&gt;</code> indents the two selected lines by eight spaces. Undo reverses the shift in one step, and <code>.</code> repeats its depth, not just its selection height.</li>
 <li><strong>Git:</strong> staging a hunk through a directory symlink uses the same tracked path as staging through the canonical directory. On an uncommitted line, <code>Enter</code> in the blame card stays in the source instead of opening history at HEAD.</li>
@@ -65,31 +81,18 @@
 <li><strong>Installer:</strong> if <code>bin/strop</code> is a directory, installation fails without changing its contents or writing a success receipt.</li>
 <li><strong>Release packaging:</strong> two source commits with the same version no longer share an output archive. Publication checks the draft's bytes against those qualified for the tagged commit.</li>
 </ul>
-<h3 id="compatibility-2">Compatibility</h3>
+<h3 id="compatibility-3">Compatibility</h3>
 <ul>
 <li>Full session replay uses editor semantics version 11. Replay a 0.74 recording with 0.74, or record it again with 0.75.</li>
 </ul>
-<h2 id="release-0-74-0-2026-11-21">0.74.0 — 2026-11-21</h2>
-<h3 id="fixed-3">Fixed</h3>
-<ul>
-<li><strong>Counted replace:</strong> <code>5rx</code> on <code>abc</code> leaves the line untouched, as in Vim. A count that fits still replaces exactly that many characters.</li>
-<li><strong>Git blame:</strong> <code>Space g B</code> asks you to save a modified buffer instead of showing the disk line's commit beside different text. Pressing <code>Enter</code> on a shifted line cannot open a card for the wrong commit either.</li>
-<li><strong>Command line:</strong> a command such as <code>strop compat</code> refuses an extra file instead of silently discarding it. Use <code>strop -- compat</code> to edit a file named <code>compat</code>. <code>--log=PATH</code> preserves native filename bytes just like <code>--log-file PATH</code>.</li>
-<li><strong>Pickers:</strong> choosing the current buffer in <code>Space b</code> keeps the caret, scroll position and jump history. The results scrollbar reaches the bottom when the last result is selected.</li>
-<li><strong>Documentation:</strong> the 0.71.0 trace-format note now gives the complete <code>EnumMember</code> name.</li>
-</ul>
-<h3 id="compatibility-3">Compatibility</h3>
-<ul>
-<li>Full session replay uses editor semantics version 10. Use 0.73 to replay a 0.73 recording, or record it again with 0.74.</li>
-</ul>
   </div>
-  <p class="more"><a href="changelog-all.html">All 111 releases →</a></p>
+  <p class="more"><a href="changelog-all.html">All 112 releases →</a></p>
 </div>
 </main>
 <footer class="foot">
   <div class="shell foot-inner">
     <p>MIT license · © 2026 <a href="https://github.com/tknawara">Tarek Nawara</a></p>
-    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.76.0</a> · <a href="./#palette">Palette</a></p>
+    <p><a href="./start.html">First ten minutes</a> · <a href="./engineering.html">Engineering</a> · <a href="https://github.com/stropdev/strop/releases/latest">Release v0.77.0</a> · <a href="./#palette">Palette</a></p>
   </div>
 </footer>
 <script src="./assets/site.js"></script>
